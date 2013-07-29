@@ -1057,12 +1057,12 @@ EOHTML;
 
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
-		<form action=" . $this->getHTTPPrefix() . "://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
+		<form action="//www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
 	 	<input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
   		<input type="text" name="q" size="25" />
   		<input type="submit" name="sa" value="Search" />
 		</form>
-		<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>
+		<script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>
 EOHTML;
 		return $strn;
 	}
