@@ -40,6 +40,7 @@ class App {
 	private $DB_CLASS_PATH		= "/home/data/httpd/eclipse-php-classes/system/"; # ends with '/'
 
 	private $WWW_PREFIX			= "";  # default is relative
+	private $HTTP_PREFIX    = "http"; #default is http
 
 	# Additional page-related variables
 	public $ExtraHtmlHeaders   = "";
@@ -48,19 +49,19 @@ class App {
 	public  $Promotion			= FALSE;
 	public  $CustomPromotionPath = "";
 	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus", "Nova");
-	
+
 	#Open Graph Protocol Variables
 	private $OGTitle            = "";
 	private $OGDescription      = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
 	private $OGImage      	    = "http://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
-	
+
 	#Doctype
 	private $doctype 			= FALSE;
-	
+
 	#Google Analytics Variables
 	private $projectGoogleAnalyticsCode = "";
 	private $googleJavaScript = "";
-	
+
 	#jQuery Variables
 	private $jQueryVersion = FALSE;
 
@@ -69,13 +70,13 @@ class App {
 
 	# Database config and handle cache
 	private $databases;
-	
+
 	# Flag to determine whether the "deprecated" theme should be loaded.
 	private $OutDated			= false;
-	
+
 	# Flag to determine whether this is development mode or not (for databases)
 	public $devmode 			= false;
-	
+
 	# Flag to log SQL even on production systems
 	public $logsql				= false;
 
@@ -101,7 +102,7 @@ class App {
 
 		# Configure databases (not connected)
 		$this->configureDatabases();
-		
+
 		# Make it easy to override database and other settings (don't check app-config.php in to CVS!)
 		if($this->devmode) {
 			if(file_exists(getcwd() . '/app-config.php')) {
@@ -115,7 +116,7 @@ class App {
 			{
 				include_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/system/app-config.php');
 				app_config($this);
-			}			
+			}
 		}
 
 		# Initialize backtrace storage
@@ -175,6 +176,20 @@ class App {
 
 	function getWWWPrefix() {
 		return $this->WWW_PREFIX;
+	}
+
+	/**
+ 	* @return: a string
+ 	*
+ 	* return https if $_SERVER['HTTPS'] exist otherwise this function returns http
+ 	*/
+	function getHTTPPrefix() {
+		$protocol = $this->HTTP_PREFIX;
+		if(isset($_SERVER['HTTPS'])) {
+				$protocol = "https";
+		}
+		$this->HTTP_PREFIX = $protocol;
+		return $this->HTTP_PREFIX ;
 	}
 
 	function getUserLanguage() {
@@ -439,13 +454,13 @@ class App {
 		  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', 'UA-910670-2']);
 		  _gaq.push(['_trackPageview']);
-		
+
 		  (function() {
 		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		  })();
-		
+
 		</script>
 EOHTML;
 
@@ -460,13 +475,13 @@ EOHTML;
 		  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', '$gaCode']);
 		  _gaq.push(['_trackPageview']);
-		
+
 		  (function() {
 		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		  })();
-		
+
 		</script>
 EOHTML;
 		}
@@ -731,17 +746,17 @@ EOHTML;
 				}
         	}
         }
-        
+
         /**
          * @param layout string Button layout (standard, condensed)
          * @param showfaces bool
          * @author droy
          * @since 2011-05-18
          * @return: HTML string for facebook like
-         * Generate HTML string for facebook like button 
+         * Generate HTML string for facebook like button
          */
         function getFacebookLikeButtonHTML($_layout="standard", $_showfaces=false) {
-        	
+
         	$width 	= 450;
         	$height	=  22;
 
@@ -756,7 +771,7 @@ EOHTML;
         	if($_showfaces) {
         		$height = 82;
         	}
-        	$str = "<iframe src='http://www.facebook.com/plugins/like.php?href=" . $this->getCurrentURL() . "&layout=" . $_layout . "&" . ($_showfaces ? "show_faces=true" : "") . "&width=$width&action=like' style='border: medium none; overflow: hidden; width: " . $width . "px; height: " . $height . "px;' frameborder='0' scrolling='no'></iframe>";
+        	$str = "<iframe src='" . $this->getHTTPPrefix . "://www.facebook.com/plugins/like.php?href=" . $this->getCurrentURL() . "&layout=" . $_layout . "&" . ($_showfaces ? "show_faces=true" : "") . "&width=$width&action=like' style='border: medium none; overflow: hidden; width: " . $width . "px; height: " . $height . "px;' frameborder='0' scrolling='no'></iframe>";
         	return $str;
         }
         /**
@@ -775,7 +790,7 @@ EOHTML;
 		function useJSON() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/json/JSON.php");
         }
-        
+
         function useProjectInfo() {
         	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoList.class.php");
         }
@@ -882,7 +897,7 @@ EOHTML;
 		 */
 		function useSession($required="") {
 			require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
-        	$ssn = new Session();  # constructor calls validate 
+        	$ssn = new Session();  # constructor calls validate
         	if ($ssn->getGID() == "" && $required == "required") {
         		$ssn->redirectToLogin();
 			}
@@ -919,27 +934,27 @@ EOHTML;
 	function getOGTitle(){
 		return '<meta property="og:title" content="' . $this->OGTitle . '" />' . PHP_EOL;
 	}
-			
+
 	function setOGTitle($title){
 		$this->OGTitle = $title;
 	}
-				
+
 	function getOGDescription(){
 		return '<meta property="og:description" content="' . $this->OGDescription . '" />' . PHP_EOL;
 	}
-					
+
 	function setOGDescription($description){
 		$this->OGDescription = $description;
 	}
-						
+
 	function getOGImage(){
 		return '<meta property="og:image" content="' . $this->OGImage . '" />' . PHP_EOL;
 	}
-							
+
 	function setOGImage($image){
 		$this->OGImage = $image;
 	}
-	
+
 	function setDoctype($doctype) {
 		$accepted = array('html5', 'xhtml');
 		if (in_array($doctype, $accepted)) {
@@ -947,7 +962,7 @@ EOHTML;
 		}
 		return;
 	}
-	
+
 	function getDoctype() {
 		$doc = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">';
@@ -955,7 +970,7 @@ EOHTML;
 			case 'html5':
 				$doc = '<!DOCTYPE html>
 <html>';
-				break;			
+				break;
 		}
 		return $doc;
 	}
@@ -964,19 +979,19 @@ EOHTML;
 	 * @param string $date
 	 * @return boolean
 	 */
-	private function validateDateFormat($date) {	
+	private function validateDateFormat($date) {
 		if (preg_match ("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $date, $d)) {
 			//date validation
 			if (checkdate($d[2],$d[3],$d[1])) {
 				return TRUE;
 			}
-		}		
-		return FALSE;	
+		}
+		return FALSE;
 	}
-	
+
 	/**
 	 * Function to set the OutDated flag
-	 * @param string $when. 
+	 * @param string $when.
 	 *   Accepted formats 'YYYY-MM-DD' or 'now'.
 	 *
 	 * @return boolean
@@ -988,29 +1003,29 @@ EOHTML;
 		}
 		return FALSE;
 	}
-	
+
 	/**
 	 * Function to set the version of jQuery
 	 * @param string $version
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function setjQueryVersion($version = FALSE){
 		//Only set jQueryVersion if we have a copy on eclipse.org
-		$supported = array('1.4.4', '1.5.1', '1.5.2', '1.7.2', '1.9.1', '2.0.0');		
+		$supported = array('1.4.4', '1.5.1', '1.5.2', '1.7.2', '1.9.1', '2.0.0');
 		if(in_array($version, $supported)){
 			$this->jQueryVersion = $version;
 			return TRUE;
 		}
 		return FALSE;
 	}
-	
+
 	/**
 	 * Return markup needed to load jQuery
 	 * @return string|boolean
 	 */
-	function getjQuery(){		
-		if($this->jQueryVersion){		
+	function getjQuery(){
+		if($this->jQueryVersion){
 			$strn = <<<EOHTML
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/$this->jQueryVersion/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -1023,25 +1038,26 @@ EOHTML;
 		}
 		return FALSE;
 	}
-	
+
 	/**
 	 * Return The Eclipse Foundation Twitter and Facebook badge
 	 * @return string
 	 */
 	function getSocialBadge(){
+		$protocol = $this->getHTTPPrefix();
 		$strn = <<<EOHTML
 		<script type="text/javascript">
 		/* <![CDATA[ */
-		document.write('<div id=\"badge_facebook\"><iframe src=\"http:\/\/www.facebook.com\/plugins\/like.php?href=http:\/\/www.facebook.com\/pages\/Eclipse\/259655700571&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like\" frameborder=\"0\" scrolling=\"no\"><\/iframe><\/div><div id=\"badge_twitter\"><a href=\"https:\/\/twitter.com\/EclipseFdn\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @EclipseFdn<\/a><script type=\"text\/javascript\">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"\/\/platform.twitter.com\/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");<\/script><\/div>');
+		document.write('<div id=\"badge_facebook\"><iframe src=\"$protocol:\/\/www.facebook.com\/plugins\/like.php?href=http:\/\/www.facebook.com\/pages\/Eclipse\/259655700571&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like\" frameborder=\"0\" scrolling=\"no\"><\/iframe><\/div><div id=\"badge_twitter\"><a href=\"https:\/\/twitter.com\/EclipseFdn\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @EclipseFdn<\/a><script type=\"text\/javascript\">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"\/\/platform.twitter.com\/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");<\/script><\/div>');
 		/* ]]> */
 		</script>
 EOHTML;
 		return $strn;
 	}
-	
+
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
-		<form action="http://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
+		<form action=" . $this->getHTTPPrefix() . "://www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
 	 	<input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
   		<input type="text" name="q" size="25" />
   		<input type="submit" name="sa" value="Search" />
@@ -1050,7 +1066,7 @@ EOHTML;
 EOHTML;
 		return $strn;
 	}
-	
+
 	function setGoogleAnalyticsTrackingCode($gaUniqueID) {
 		$this->projectGoogleAnalyticsCode = $gaUniqueID;
 	}
@@ -1088,7 +1104,7 @@ EOHTML;
 		$this->setDatabase( "live",			"localhost", "dashboard", "draobhsad", "live_demo" );
 		$this->setDatabase( "epic", 		"localhost", "dashboard", "draobhsad", "epic_demo" );
 		$this->setDatabase( "conferences",  "localhost", "dashboard", "draobhsad", "conferences_demo" );
-		$this->setDatabase( "marketplace", 	"localhost", "dashboard", "draobhsad", "marketplace_demo" );		
+		$this->setDatabase( "marketplace", 	"localhost", "dashboard", "draobhsad", "marketplace_demo" );
 		#-----------------------------------------------------------------------------------------------------
 
 		#-----------------------------------------------------------------------------------------------------
@@ -1130,7 +1146,7 @@ EOHTML;
 		$this->set("conferences_db_classfile",	'dbconnection.conferences_rw.class.php');
 		$this->set("conferences_db_class", 	 	'DBConnectionConferencesRW');
 		$this->set("marketplace_db_classfile_ro",	 	'dbconnection_marketplace_ro.class.php');
-		$this->set("marketplace_db_class_ro",	 	 	'DBConnectionMarket');			
+		$this->set("marketplace_db_class_ro",	 	 	'DBConnectionMarket');
 		#-----------------------------------------------------------------------------------------------------
 	}
 
@@ -1142,7 +1158,7 @@ EOHTML;
 				$dbh = $rec['CONNECTION'];
 				if( $dbh == null ) {
 					$dbh = mysql_connect( $rec['HOST'], $rec['USERNAME'], $rec['PASSWORD']);
-				}				
+				}
 				if(get_magic_quotes_gpc())
 				{
 					trigger_error("magic_quotes_gpc is currently set to ON in your php.ini. This is highly DISCOURAGED.  Please change your setting or comment out this line.");
@@ -1150,7 +1166,7 @@ EOHTML;
 		} else { 				# For PRODUCTION machines
 			$class = null;
 
-			if(strtoupper(substr(trim($query), 0, 6)) == 'SELECT' 
+			if(strtoupper(substr(trim($query), 0, 6)) == 'SELECT'
 			&& strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") {  // Try to use read-only when possible
 				$classfile = $this->get($key . '_db_classfile_ro');
 				$class = $this->get($key . '_db_class_ro');
