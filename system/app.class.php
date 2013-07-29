@@ -186,7 +186,9 @@ class App {
 	function getHTTPPrefix() {
 		$protocol = $this->HTTP_PREFIX;
 		if(isset($_SERVER['HTTPS'])) {
+			if($_SERVER['HTTPS']){
 				$protocol = "https";
+			}
 		}
 		$this->HTTP_PREFIX = $protocol;
 		return $this->HTTP_PREFIX ;
