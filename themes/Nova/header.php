@@ -15,7 +15,6 @@ global $App;
 if(isset($App)) {
 	$www_prefix = $App->getWWWPrefix();
 }
-$http_protocol = $App->getHTTPPrefix();
 ?>
 <?php print $this->getDoctype();?>
 
@@ -63,11 +62,11 @@ $http_protocol = $App->getHTTPPrefix();
 				?>
 			</div>
 <div id="otherSites"><div id="sites"><ul id="sitesUL">
-<li><a href='<?php print $http_protocol?>://marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<span>Eclipse Marketplace</span></a></li>
-<li><a href='<?php print $http_protocol?>://www.youtube.com/user/EclipseFdn' target="_blank"><img alt="Eclipse YouTube Channel" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<span>Eclipse YouTube Channel</span></a></li>
-<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<span>Bugzilla</span></a></li>
-<li><a href='<?php print $http_protocol?>://www.eclipse.org/forums/'><img alt="Forums" src="<?= $http_protocol?>://dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<span>Eclipse Forums</span></a></li>
-<li><a href='<?php print $http_protocol?>://www.planeteclipse.org/'><img alt="Planet Eclipse" src="<?= $http_protocol?>://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<span>Planet Eclipse</span></a></li>
-<li><a href='<?php print $http_protocol?>://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<span>Eclipse Wiki</span></a></li>
-<li><a href='https://portal.eclipse.org'><img alt="MyFoundation Portal" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><span>My Foundation Portal</span></a></li>
+<li><a href='//marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="//dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<span>Eclipse Marketplace</span></a></li>
+<li><a href='//www.youtube.com/user/EclipseFdn' target="_blank"><img alt="Eclipse YouTube Channel" src="//dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<span>Eclipse YouTube Channel</span></a></li>
+<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="//dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<span>Bugzilla</span></a></li>
+<li><a href='//www.eclipse.org/forums/'><img alt="Forums" src="//dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<span>Eclipse Forums</span></a></li>
+<li><a href='//www.planeteclipse.org/'><img alt="Planet Eclipse" src="//dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<span>Planet Eclipse</span></a></li>
+<li><a href='//wiki.eclipse.org/'><img alt="Eclipse Wiki" src="//dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<span>Eclipse Wiki</span></a></li>
+<li><a href='https://portal.eclipse.org'><img alt="MyFoundation Portal" src="//dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><span>My Foundation Portal</span></a></li>
 </ul></div></div></div>
