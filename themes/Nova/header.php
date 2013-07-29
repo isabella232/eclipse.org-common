@@ -1,4 +1,4 @@
-<? 
+<?
 /*******************************************************************************
  * Copyright (c) 2008 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
@@ -14,24 +14,16 @@ $www_prefix = "";
 global $App;
 if(isset($App)) {
 	$www_prefix = $App->getWWWPrefix();
-	
-	$image_protocol = "http";
-	
-	if(isset($_SERVER['HTTPS'])) {
-		if($_SERVER['HTTPS']) {
-			$image_protocol = "https";
-		}
-	}
 }
-	
+$http_protocol = $App->getHTTPPrefix();
 ?>
 <?php print $this->getDoctype();?>
 
 <head>
 	<title><?= $pageTitle ?></title><meta name="author" content="<?= $pageAuthor ?>" />
-	<?php 
+	<?php
 	if ($App->OGTitle != "") {
-		echo($App->getOGTitle());		
+		echo($App->getOGTitle());
 	}
 	echo($App->getOGDescription());
 	echo($App->getOGImage());
@@ -48,10 +40,10 @@ if(isset($App)) {
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/print.css" media="print" />
 	<!--[if lte IE 7]> 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/ie_style.css" media="screen"/> <![endif]-->
 	<!--[if IE 6]> 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/Nova/css/ie6_style.css" media="screen"/> <![endif]-->
-	<!-- Dependencies --> 
+	<!-- Dependencies -->
 	<!-- Source File -->
 <?php if($App->getjQuery()) echo $App->getjQuery(); ?>
-	
+
 	<?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
 </head>
 <body>
@@ -71,11 +63,11 @@ if(isset($App)) {
 				?>
 			</div>
 <div id="otherSites"><div id="sites"><ul id="sitesUL">
-<li><a href='http://marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<span>Eclipse Marketplace</span></a></li>
-<li><a href='http://www.youtube.com/user/EclipseFdn' target="_blank"><img alt="Eclipse YouTube Channel" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<span>Eclipse YouTube Channel</span></a></li>
-<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<span>Bugzilla</span></a></li>
-<li><a href='http://www.eclipse.org/forums/'><img alt="Forums" src="<?= $image_protocol?>://dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<span>Eclipse Forums</span></a></li>
-<li><a href='http://www.planeteclipse.org/'><img alt="Planet Eclipse" src="<?= $image_protocol?>://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<span>Planet Eclipse</span></a></li>
-<li><a href='http://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<span>Eclipse Wiki</span></a></li>
-<li><a href='http://portal.eclipse.org'><img alt="MyFoundation Portal" src="<?= $image_protocol?>://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><span>My Foundation Portal</span></a></li>
+<li><a href='<?php print $http_protocol?>://marketplace.eclipse.org'><img alt="Eclipse Marketplace" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/marketplace.png"/>&nbsp;<span>Eclipse Marketplace</span></a></li>
+<li><a href='<?php print $http_protocol?>://www.youtube.com/user/EclipseFdn' target="_blank"><img alt="Eclipse YouTube Channel" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/audio-input-microphone-bw.png"/>&nbsp;<span>Eclipse YouTube Channel</span></a></li>
+<li><a href='https://bugs.eclipse.org/bugs/'><img alt="Bugzilla" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/system-search-bw.png"/>&nbsp;<span>Bugzilla</span></a></li>
+<li><a href='<?php print $http_protocol?>://www.eclipse.org/forums/'><img alt="Forums" src="<?= $http_protocol?>://dev.eclipse.org/large_icons/apps/internet-group-chat.png"/>&nbsp;<span>Eclipse Forums</span></a></li>
+<li><a href='<?php print $http_protocol?>://www.planeteclipse.org/'><img alt="Planet Eclipse" src="<?= $http_protocol?>://dev.eclipse.org/large_icons/devices/audio-card.png"/>&nbsp;<span>Planet Eclipse</span></a></li>
+<li><a href='<?php print $http_protocol?>://wiki.eclipse.org/'><img alt="Eclipse Wiki" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/accessories-text-editor-bw.png"/>&nbsp;<span>Eclipse Wiki</span></a></li>
+<li><a href='https://portal.eclipse.org'><img alt="MyFoundation Portal" src="<?= $http_protocol?>://dev.eclipse.org/custom_icons/preferences-system-network-proxy-bw.png"/><span>My Foundation Portal</span></a></li>
 </ul></div></div></div>

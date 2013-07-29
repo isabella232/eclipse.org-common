@@ -53,7 +53,7 @@ class App {
 	#Open Graph Protocol Variables
 	private $OGTitle            = "";
 	private $OGDescription      = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
-	private $OGImage      	    = "http://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
+	private $OGImage      	    = "https://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
 
 	#Doctype
 	private $doctype 			= FALSE;
