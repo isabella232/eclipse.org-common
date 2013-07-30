@@ -773,7 +773,7 @@ EOHTML;
         	if($_showfaces) {
         		$height = 82;
         	}
-        	$str = "<iframe src='" . $this->getHTTPPrefix . "://www.facebook.com/plugins/like.php?href=" . $this->getCurrentURL() . "&layout=" . $_layout . "&" . ($_showfaces ? "show_faces=true" : "") . "&width=$width&action=like' style='border: medium none; overflow: hidden; width: " . $width . "px; height: " . $height . "px;' frameborder='0' scrolling='no'></iframe>";
+        	$str = "<iframe src='//www.facebook.com/plugins/like.php?href=" . $this->getCurrentURL() . "&layout=" . $_layout . "&" . ($_showfaces ? "show_faces=true" : "") . "&width=$width&action=like' style='border: medium none; overflow: hidden; width: " . $width . "px; height: " . $height . "px;' frameborder='0' scrolling='no'></iframe>";
         	return $str;
         }
         /**
