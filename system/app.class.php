@@ -48,7 +48,7 @@ class App {
 	public  $PageRSSTitle		= "";
 	public  $Promotion			= FALSE;
 	public  $CustomPromotionPath = "";
-	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus", "Nova");
+	private $THEME_LIST 		=  array("", "Phoenix", "Miasma", "Lazarus", "Nova", "bootnova");
 
 	#Open Graph Protocol Variables
 	private $OGTitle            = "";
