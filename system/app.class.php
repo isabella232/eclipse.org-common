@@ -1063,7 +1063,7 @@ EOHTML;
 	function getTwitterFollowWidget($_twitterhandle)
 	{
 		$output = '';
-		$output = '<a href="https://twitter.com/$_twitterhandle" class="twitter-follow-button" data-show-count="false">Follow @$_twitterhandle</a>';
+		$output = '<a href="https://twitter.com/'. $_twitterhandle .'" class="twitter-follow-button" data-show-count="false">Follow @' .$_twitterhandle . '</a>';
 		// Only include the script once per page
 		if ($this->twitterScriptInserted == FALSE) {
 			$this->twitterScriptInserted = TRUE;
