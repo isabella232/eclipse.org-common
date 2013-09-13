@@ -65,6 +65,9 @@ class App {
 	#jQuery Variables
 	private $jQueryVersion = FALSE;
 
+	# Twitter Follow Widget Variables
+	private $twitterScriptInserted = FALSE;
+	
 	# Set to TRUE to disable all database operations
 	private $DB_READ_ONLY		= false;
 
@@ -1057,6 +1060,19 @@ EOHTML;
 		return $strn;
 	}
 
+	function getTwitterFollowWidget($_twitterhandle)
+	{
+		$output = '';
+		$output = '<a href="https://twitter.com/$_twitterhandle" class="twitter-follow-button" data-show-count="false">Follow @$_twitterhandle</a>';
+		// Only include the script once per page
+		if ($this->twitterScriptInserted == FALSE) {
+			$this->twitterScriptInserted = TRUE;
+			$output .= "<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
+		}
+		return $output;
+	
+	}
+	
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
 		<form action="//www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
