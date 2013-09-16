@@ -121,12 +121,12 @@ body {
 }
 
 /* Content */
-#main-content-area{
+.main-content-area{
   background: @white; 
   padding-top:20px;
 }
 
-#main-content-area.visible-leftnavbg{
+.main-content-area.visible-leftnavbg{
   #maincontent{
     .make-sm-column(8);
     .make-md-column(9);
@@ -282,7 +282,7 @@ footer {
 	.message-box-container {
     padding: 10px 10px 10px 10px;
   }
-	#main-content-area{
+	.main-content-area{
     padding-top: 0;
   }
   #maincontent,
@@ -299,14 +299,14 @@ footer {
 }
 
 @media (min-width: @screen-sm) {
-  #main-content-area.visible-leftnavbg{
+  .main-content-area.visible-leftnavbg{
     background:@white url("@{image-path}nav-normal-245.gif") repeat-y;
   }
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: @screen-md) {
-  #main-content-area.visible-leftnavbg{
+  .main-content-area.visible-leftnavbg{
     #maincontent{
       .make-md-column(9);
     }

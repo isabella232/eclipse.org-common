@@ -34,7 +34,7 @@ $theme_url = '/eclipse.org-common/themes/bootnova/';
     <?php if( isset($extraHtmlHeaders) ) print $extraHtmlHeaders; ?>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
-			<script src="<?php print $theme_url;?>components/html5shiv/dist/html5shiv.js"></script>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 			<script src="<?php print $theme_url;?>assets/js/respond.min.js"></script>
 		<![endif]-->
     </head>

@@ -222,7 +222,7 @@ input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"
 .fade{opacity:0;-webkit-transition:opacity .15s linear;transition:opacity .15s linear}.fade.in{opacity:1}
 .collapse{display:none}.collapse.in{display:block}
 .collapsing{position:relative;height:0;overflow:hidden;-webkit-transition:height .35s ease;transition:height .35s ease}
-@font-face{font-family:'Glyphicons Halflings';src:url('../components/bootstrap/fonts/glyphicons-halflings-regular.eot');src:url('../components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('../components/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'),url('../components/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('../components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg')}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased}
+@font-face{font-family:'Glyphicons Halflings';src:url('/eclipse.org-common/themes/bootnova/components/bootstrap/fonts/glyphicons-halflings-regular.eot');src:url('/eclipse.org-common/themes/bootnova/components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('/eclipse.org-common/themes/bootnova/components/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'),url('/eclipse.org-common/themes/bootnova/components/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('/eclipse.org-common/themes/bootnova/components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg')}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased}
 .glyphicon-asterisk:before{content:"\2a"}
 .glyphicon-plus:before{content:"\2b"}
 .glyphicon-euro:before{content:"\20ac"}
@@ -842,6 +842,7 @@ h3{border-bottom:1px dotted #d4d4dd;color:#515151;font-size:18px;line-height:18p
 h4{font-size:15px;line-height:15px;font-weight:bold;margin-bottom:5px;padding-top:5px;color:#515151}
 ol>li{list-style-image:none !important;list-style-type:decimal}
 li{list-style-image:url('/eclipse.org-common/themes/bootnova/assets/images/bullet.gif');list-style-position:outside}
+ul.dropdown-menu li{list-style:none}
 p,table{margin-bottom:20px}
 strong{font-weight:bold}
 sub{vertical-align:sub;font-size:80%}
@@ -859,8 +860,8 @@ body{background:#efefef url('/eclipse.org-common/themes/bootnova/assets/images/b
 #menu ul{padding-top:18px}#menu ul li{font-size:13px;cursor:pointer;text-transform:capitalize;color:#0d3656;padding:0 7px}#menu ul li a{font-weight:400;color:#0d3656;text-align:center}
 #search form{margin-top:12px;margin-bottom:12px;text-align:right}#search form #search-box{width:200px;height:30px}
 #search form #search-button{background:#efefef !important}
-#main-content-area{background:#fff;padding-top:20px}
-#main-content-area.visible-leftnavbg #maincontent{padding-right:15px;position:relative;min-height:1px;padding-left:15px;padding-right:15px}@media (min-width:768px){#main-content-area.visible-leftnavbg #maincontent{float:left;width:66.66666666666666%}}@media (min-width:992px){#main-content-area.visible-leftnavbg #maincontent{float:left;width:75%}}
+.main-content-area{background:#fff;padding-top:20px}
+.main-content-area.visible-leftnavbg #maincontent{padding-right:15px;position:relative;min-height:1px;padding-left:15px;padding-right:15px}@media (min-width:768px){.main-content-area.visible-leftnavbg #maincontent{float:left;width:66.66666666666666%}}@media (min-width:992px){.main-content-area.visible-leftnavbg #maincontent{float:left;width:75%}}
 #leftcol{position:relative;min-height:1px;padding-left:15px;padding-right:15px;}@media (min-width:768px){#leftcol{float:left;width:33.33333333333333%}}@media (min-width:992px){#leftcol{float:left;width:25%}}#leftcol #leftnav{padding:0}#leftcol #leftnav li.separator{border-top:1px dotted #d4d4dd;list-style-image:none;list-style:none;margin-left:0;margin-top:5px;padding:5px 0;padding-top:5px}#leftcol #leftnav li.separator img{vertical-align:sub}
 #leftcol #leftnav li.separator a{color:#333;font-size:12px}
 #leftcol #leftnav li{list-style-image:url('/eclipse.org-common/themes/bootnova/assets/images/leftNav.gif');margin-left:30px;padding:0}#leftcol #leftnav li a{font-size:12px;line-height:12px}
@@ -878,6 +879,6 @@ footer #copyright{padding-bottom:0;margin-bottom:15px;clear:none;float:right;col
 .message-box{margin:10px 0;padding:15px 10px 15px 50px;background-repeat:no-repeat;background-position:10px center;color:#333;font-size:14px}
 .message-box.error{background-color:#ffbaba;border:1px solid #d8000c;background-image:url('/eclipse.org-common/themes/bootnova/assets/images/message-24-error.png')}
 .deprecated .message-box-container{padding:10px 10px 10px 10px}
-.deprecated #main-content-area{padding-top:0}
+.deprecated .main-content-area{padding-top:0}
 .deprecated #maincontent,.deprecated #fullcolumn,.deprecated .leftContent{background:url("/eclipse.org-common/themes/bootnova/assets/images/bg-deprecated.gif") center 75px no-repeat}
-@media (max-width:767px){body{margin-top:40px}}@media (min-width:768px){#main-content-area.visible-leftnavbg{background:#fff url("/eclipse.org-common/themes/bootnova/assets/images/nav-normal-245.gif") repeat-y}}@media (min-width:992px){#main-content-area.visible-leftnavbg #maincontent{position:relative;min-height:1px;padding-left:15px;padding-right:15px} #rightcolumn{padding-right:0;padding-left:15px} #fullcolumn{padding-left:0}}@media (min-width:992px) and (min-width:992px){#main-content-area.visible-leftnavbg #maincontent{float:left;width:75%}}
+@media (max-width:767px){body{margin-top:40px}}@media (min-width:768px){.main-content-area.visible-leftnavbg{background:#fff url("/eclipse.org-common/themes/bootnova/assets/images/nav-normal-245.gif") repeat-y}}@media (min-width:992px){.main-content-area.visible-leftnavbg #maincontent{position:relative;min-height:1px;padding-left:15px;padding-right:15px} #rightcolumn{padding-right:0;padding-left:15px} #fullcolumn{padding-left:0}}@media (min-width:992px) and (min-width:992px){.main-content-area.visible-leftnavbg #maincontent{float:left;width:75%}}

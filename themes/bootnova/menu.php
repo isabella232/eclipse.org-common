@@ -102,7 +102,7 @@
 			</div>
 		</div>
 
-		<div id="main-content-area" class="row<?php if ($Nav != NULL) : print ' visible-leftnavbg'; endif;?>">
+		<div id="main-content-container-row" class="main-content-area row<?php if ($Nav != NULL) : print ' visible-leftnavbg'; endif;?>">
 			<?php if ($App->OutDated == TRUE) {?>
 				<div class="message-box-container">
 					<div class="message-box error">This page is deprecated and may contain some information that is no longer relevant or accurate.</div>

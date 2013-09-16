@@ -1,10 +1,6 @@
 var components = {
     "packages": [
         {
-            "name": "html5shiv",
-            "main": "html5shiv-built.js"
-        },
-        {
             "name": "bootstrap",
             "main": "bootstrap-built.js"
         },
