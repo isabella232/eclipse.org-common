@@ -37,13 +37,5 @@
 	<!--Bootstrap -->
 	<script src="<?php print $theme_url;?>components/bootstrap/js/bootstrap.min.js"></script>
 
-	<!-- Google Analytics -->
-	<script>
-		var _gaq=[['_setAccount','UA-910670-2'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src='//www.google-analytics.com/ga.js';
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
-
 </body>
 </html>
