@@ -1,5 +1,5 @@
 
-Bootnova is an eclipse.org theme that's using boostrap. The look and feel is based of the original "Nova" theme, created by Nathan Gervais.
+Bootnova is an eclipse.org theme that's using Twitter Bootstrap. The look and feel is based off the original "Nova" theme, created by Nathan Gervais.
 
 Read the Bootstrap [Getting Started page](http://getbootstrap.com/getting-started/) for information on the framework contents, templates and examples, and more.
 
@@ -9,6 +9,8 @@ Read the Bootstrap [Getting Started page](http://getbootstrap.com/getting-starte
 You will need to install [composer](http://www.getcomposer.org) to update the CSS of this theme (styles.less > bootstrap.min.css).
 
 * composer
+* Your favourite less compiler. I recommend [less](http://lesscss.org/) or [codekit](http://incident57.com/codekit/) for Mac.
+
 
 ## General steps to get going
 
@@ -21,19 +23,28 @@ You will need to install [composer](http://www.getcomposer.org) to update the CS
 
 Have a bug or a feature request? [Please open a new issue](https://bugs.eclipse.org/bugs/buglist.cgi?product=Community&component=Website&resolution=---).
 
+
 ## How to use
 On a page using the eclipse.org-common $App Class:
 
 ```php
-$theme = 'bootnova';
-$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+$App->generatePage($theme = 'bootnova', $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ```
+
 
 ## Links
 
 * [Using Phoenix](http://wiki.eclipse.org/Using_Phoenix)
 * [Phoenix Documentation](http://wiki.eclipse.org/Phoenix_Documentation)
 
+
+## Authors
+
+**Christopher Guindon**
+
++ [http://twitter.com/chrisguindon](http://twitter.com/chrisguindon)
++ [http://github.com/chrisguindon](http://github.com/chrisguindon)
++ [http://www.chrisguindon.com](http://www.chrisguindon.com)
 
 
 
