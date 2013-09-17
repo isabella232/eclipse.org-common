@@ -5,12 +5,12 @@ Read the Bootstrap [Getting Started page](http://getbootstrap.com/getting-starte
 
 
 ## Requirements
+
 You will need to install [composer](http://www.getcomposer.org) to update the CSS of this theme (styles.less > bootstrap.min.css).
 
 * composer
 
 ## General steps to get going
-
 
 * Clone the repo: `git clone git://git.eclipse.org/gitroot/www.eclipse.org/eclipse.org-common.git`.
 * Fetch dependencies with [composer](http://www.getcomposer.org): `composer install`.
