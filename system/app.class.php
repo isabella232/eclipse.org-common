@@ -124,6 +124,9 @@ class App {
 
 		# Initialize backtrace storage
 		$this->query_btrace = array();
+		
+		# Set server timezone
+		date_default_timezone_set("America/Montreal");
 	}
 
 
@@ -1143,6 +1146,8 @@ EOHTML;
 		$this->set("foundation_db_class",	 	'FoundationDBConnectionRW');
 		$this->set("foundation_db_classfile_ro",'dbconnection_foundation_ro.class.php');
 		$this->set("foundation_db_class_ro", 	'DBConnectionFoundation');
+		$this->set("gerrit_db_classfile_ro",	'dbconnection_gerrit_ro.class.php');
+		$this->set("gerrit_db_class_ro",		'DBConnectionGerrit');
 		$this->set("ipzilla_db_classfile_ro",	'dbconnection_ipzilla_ro.class.php');
 		$this->set("ipzilla_db_class_ro",	 	'DBConnectionIPZillaRO');
 		$this->set("ipzilla_db_classfile",	 	'dbconnection_ipzilla_rw.class.php');
@@ -1164,7 +1169,7 @@ EOHTML;
 		$this->set("conferences_db_classfile",	'dbconnection.conferences_rw.class.php');
 		$this->set("conferences_db_class", 	 	'DBConnectionConferencesRW');
 		$this->set("marketplace_db_classfile_ro",	 	'dbconnection_marketplace_ro.class.php');
-		$this->set("marketplace_db_class_ro",	 	 	'DBConnectionMarket');
+		$this->set("marketplace_db_class_ro",	  	'DBConnectionMarket');
 		#-----------------------------------------------------------------------------------------------------
 	}
 
@@ -1314,6 +1319,7 @@ EOHTML;
 	function eclipse_sql ($statement) 	{ return $this->sql ($statement, "eclipse"); }			// Whole Eclipse database
 	function epic_sql ($statement) 		{ return $this->sql ($statement, "epic"); }				// EPIC (read-only!)
 	function foundation_sql($statement) { return $this->sql ($statement, "foundation"); }		// Foundation internal database
+	function gerrit_sql($statement) 	{ return $this->sql ($statement, "gerrit"); }			// Gerrit
 	function ipzilla_sql ($statement) 	{ return $this->sql ($statement, "ipzilla"); }			// IPZilla
 	function ipzillatest_sql ($statement) { return $this->sql ($statement, "ipzillatest"); }	// IPZilla test database
 	function live_sql ($statement) 		{ return $this->sql ($statement, "live"); }				// Eclipse Live (read-only!)

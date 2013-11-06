@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="src" path="classes/drops"/>
-	<buildpathentry kind="src" path="classes/friends"/>
-	<buildpathentry kind="src" path="classes/membership"/>
-	<buildpathentry kind="src" path="classes/polls"/>
-	<buildpathentry kind="src" path="classes/projects"/>
-	<buildpathentry kind="src" path="json"/>
-	<buildpathentry kind="src" path="system"/>
-	<buildpathentry kind="src" path="themes/Lazarus"/>
-	<buildpathentry kind="src" path="themes/Miasma"/>
-	<buildpathentry kind="src" path="themes/Nova"/>
-	<buildpathentry kind="src" path="themes/Phoenix"/>
-	<buildpathentry kind="src" path="themes/PlainText"/>
+	<buildpathentry kind="src" path=""/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 </buildpath>
