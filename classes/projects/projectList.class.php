@@ -160,20 +160,20 @@ class ProjectList {
 			$App = new App();
 			$sql = "SELECT DISTINCT /* projectList.class.php */
 						PRJ.ProjectID,
-						PRJ.name,
-						PRJ.level,
+						PRJ.Name,
+						PRJ.Level,
 						PRJ.ParentProjectID,
-						PRJ.description,
-						PRJ.urldownload,
-						PRJ.urlindex,
-						PRJ.sortorder,
-						PRJ.isactive
+						PRJ.Description,
+						PRJ.UrlDownload,
+						PRJ.UrlIndex,
+						PRJ.IsActive
 		        	FROM
 						Projects AS PRJ 
 					INNER JOIN PeopleProjects AS PPL ON PRJ.ProjectID = PPL.ProjectID
 					WHERE
 						PRJ.IsActive
 						AND PPL.PersonID = " . $App->returnQuotedString($App->sqlSanitize($_uid)) . "
+						AND PPL.Relation IN ('CM', 'PL', 'PD', 'PM')
 						AND (PPL.InactiveDate IS NULL OR PPL.InactiveDate > NOW())";
 			$result = $App->foundation_sql($sql);
 		
@@ -181,14 +181,13 @@ class ProjectList {
 			{
 				$Project 	= new Project();
 				$Project->setProjectID		($myrow["ProjectID"]);
-				$Project->setName			($myrow["name"]);
-				$Project->setLevel			($myrow["level"]);
+				$Project->setName			($myrow["Name"]);
+				$Project->setLevel			($myrow["Level"]);
 				$Project->setParentProjectID($myrow["ParentProjectID"]);
-				$Project->setDescription	($myrow["description"]);
-				$Project->setUrlDownload	($myrow["urldownload"]);
-				$Project->setUrlIndex		($myrow["urlindex"]);
-				$Project->setSortOrder		($myrow["sortorder"]);
-				$Project->setIsActive		($myrow["isactive"]);
+				$Project->setDescription	($myrow["Description"]);
+				$Project->setUrlDownload	($myrow["UrlDownload"]);
+				$Project->setUrlIndex		($myrow["UrlIndex"]);
+				$Project->setIsActive		($myrow["IsActive"]);
 				$this->add($Project);
 			}
 			 
