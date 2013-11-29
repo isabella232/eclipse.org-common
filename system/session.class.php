@@ -11,6 +11,7 @@
  *******************************************************************************/
 
 define('ECLIPSE_SESSION', 'ECLIPSESESSION');
+define('ECLIPSE_ENV', 'ECLIPSE_ENV');
 define('HTACCESS', '/home/data/httpd/friends.eclipse.org/html/.htaccess');
 define('LOGINPAGE', 'https://dev.eclipse.org/site_login/');
 
@@ -124,7 +125,7 @@ class Session {
 		$sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), null) . "' LIMIT 1";
         $App->eclipse_sql($sql);
 		setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org", 1, TRUE);
-			
+		setcookie(ECLIPSE_ENV, 	   "", time() - 3600, "/", ".eclipse.org", 0, TRUE);
 		if(!$App->devmode) {
 			# Log this event
 			$EvtLog = new EvtLog();
@@ -192,6 +193,10 @@ class Session {
 
 			setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org", 1, TRUE);
 			
+			# 422767 Session broken between http and https
+			# Set to "S" for Secure.  We could eventually append more environment data, separated by semicolons and such
+			setcookie(ECLIPSE_ENV, 	   "S", 			$cookie_time, "/", ".eclipse.org", 0, TRUE);
+
 			# uncomment for local dev
 			# setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/");
 		}
