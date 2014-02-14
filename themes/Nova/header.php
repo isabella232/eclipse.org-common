@@ -49,7 +49,7 @@ print $this->getDoctype();
 		<div id="clearHeader">
 			<div id="logo">
 				<?php if ($App->Promotion == FALSE) { ?>
-					 <img src="/eclipse.org-common/themes/Nova/images/eclipse.png" alt="Eclipse.org"/>
+					 <img src="/eclipse.org-common/themes/Nova/images/eclipse-800x426.png" alt="Eclipse.org" width="171" height="91"/>
 				<?php } else {
 						if ($App->CustomPromotionPath != "") {
 							include($App->CustomPromotionPath);
