@@ -67,7 +67,7 @@ class App {
 
 	# Twitter Follow Widget Variables
 	private $twitterScriptInserted = FALSE;
-	
+
 	# Set to TRUE to disable all database operations
 	private $DB_READ_ONLY		= false;
 
@@ -124,7 +124,7 @@ class App {
 
 		# Initialize backtrace storage
 		$this->query_btrace = array();
-		
+
 		# Set server timezone
 		date_default_timezone_set("America/Montreal");
 	}
@@ -1013,6 +1013,13 @@ EOHTML;
 	}
 
 	/**
+	 * Return value of the private property OutDated.
+	 */
+	function getOutDated() {
+		return $this->OutDated;
+	}
+
+	/**
 	 * Function to set the version of jQuery
 	 * @param string $version
 	 *
@@ -1073,9 +1080,9 @@ EOHTML;
 			$output .= "<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
 		}
 		return $output;
-	
+
 	}
-	
+
 	function getGoogleSearchHTML() {
 		$strn = <<<EOHTML
 		<form action="//www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">

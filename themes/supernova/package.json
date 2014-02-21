@@ -1,0 +1,20 @@
+{
+  "name": "supernova",
+  "version": "0.0.1",
+  "description": "Supernova is a responsive theme for eclipse.org.",
+  "main": "Gruntfile.js",
+  "author": "Christopher Guindon",
+  "license": "EPL",
+  "bugs": {
+    "url": "https://bugs.eclipse.org/bugs/buglist.cgi?component=Website&list_id=8318814&product=Community&resolution=---"
+  },
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-less": "~0.9.0",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-phpunit": "~0.3.2"
+  }
+}
