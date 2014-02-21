@@ -43,7 +43,8 @@ function supernova_variables(&$variables) {
 	$variables['body']['id'] = 'body_supernova';
 
 	// Logos
-	$variables['logo'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x426.png" alt="Eclipse.org logo" width="171" height="91"/>';
+	$variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" width="213" height="50"/>';
+	$variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39"/>';
 
 	// Main-menu
 	if ($Menu != NULL) {
@@ -57,7 +58,7 @@ function supernova_variables(&$variables) {
 	// Nav menu
 	if ($Nav != NULL) {
 	  $variables['menu']['nav']['link_count'] = $Nav->getLinkCount();
-	  $variables['menu']['nav']['img_separator'] = '<img src="' . $variables['theme_url'] . 'public/images/separator.png"/>';
+	  $variables['menu']['nav']['img_separator'] = '<img src="' . $variables['theme_url'] . 'public/images/template/separator.png"/>';
 
 	  for ($i = 0; $i < $variables['menu']['nav']['link_count']; $i++) {
 	    $variables['menu']['nav']['#items'][] = $Nav->getLinkAt($i);
@@ -71,7 +72,7 @@ function supernova_variables(&$variables) {
 	} else if ($App->Promotion == TRUE) {
 	  include($App->getPromotionPath($theme));
 	} else {
-	  print '<a href="//www.eclipse.org/">' . $variables['logo'] . '</a>';
+	  print '<a href="//www.eclipse.org/">' . $variables['logo']['default'] . '</a>';
 	}
 	$variables['promotion'] = ob_get_clean();
 

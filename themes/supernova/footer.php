@@ -16,8 +16,9 @@
 		<footer role="contentinfo">
 		  <div class="container">
         <div class="row">
-          <div class="col-md-7">
-				    <ul class="list-inline">
+          <section class="col-md-3">
+            <h2>Explore</h2>
+				    <ul>
 					    <li><a href="//eclipse.org/">Home</a></li>
 					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
 				    	<li><a href="//eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
@@ -25,10 +26,39 @@
 				    	<li><a href="//eclipse.org/legal/">Legal</a></li>
 					    <li><a href="//eclipse.org/org/foundation/contact.php">Contact Us</a></li>
 				    </ul>
-			    </div>
-			    <div class="col-md-5">
-	    	   <p id="copyright"><?php print $variables['footer']['copyright'];?></p>
-	        </div>
+			    </section>
+			    <section class="col-md-3">
+            <h2>Explore</h2>
+				    <ul>
+					    <li><a href="//eclipse.org/">Home</a></li>
+					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+				    	<li><a href="//eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+				    	<li><a href="//eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+				    	<li><a href="//eclipse.org/legal/">Legal</a></li>
+					    <li><a href="//eclipse.org/org/foundation/contact.php">Contact Us</a></li>
+				    </ul>
+			    </section>
+			    <section class="col-md-3">
+            <h2>Explore</h2>
+				    <ul>
+					    <li><a href="//eclipse.org/">Home</a></li>
+					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+				    	<li><a href="//eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+				    	<li><a href="//eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+				    	<li><a href="//eclipse.org/legal/">Legal</a></li>
+					    <li><a href="//eclipse.org/org/foundation/contact.php">Contact Us</a></li>
+				    </ul>
+			    </section>
+			    <section class="col-md-3">
+			      <?php print $variables['logo']['white']; ?>
+			      <ul class="social-media list-inline">
+			        <li class="social-media-icon social-media-twitter"><a href="https://twitter.com/EclipseFdn"><span class="sr-only">Twitter</span></a></li>
+			        <li class="social-media-icon social-media-google"><a href="https://plus.google.com/+Eclipse"><span class="sr-only">Google+</span></a></li>
+			        <li class="social-media-icon social-media-facebook"><a href="https://www.facebook.com/eclipse.org"><span class="sr-only">Facebook</span></a></li>
+					    <li class="social-media-icon social-media-youtube"><a href="https://www.youtube.com/user/EclipseFdn"><span class="sr-only">Youtube</span></a></li>
+				    </ul>
+	    	    <p id="copyright"><?php print $variables['footer']['copyright'];?></p>
+	        </section>
         </div>
       </div>
 		</footer>

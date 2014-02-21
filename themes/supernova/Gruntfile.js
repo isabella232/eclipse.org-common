@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     }
                 },
                 less: {
-                    files: ['./app/stylesheets/*.less'], // watched files
+                    files: ['./app/stylesheets/*.less', './app/stylesheets/**/*.less'], // watched files
                     tasks: ['less'], // tasks to run
                     options: {
                         livereload: true
