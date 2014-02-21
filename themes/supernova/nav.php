@@ -14,8 +14,8 @@
 
 ?>
 <!-- nav -->
-<div id="leftcol">
-  <ul id="leftnav">
+<aside id="aside-left-nav">
+  <ul id="ul-left-nav">
 	  <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
 
 			<?php if ($link->getURL() == "") :?>
@@ -54,4 +54,4 @@
 		<?php endforeach; ?>
 	</ul>
   <?php print $Nav->getHTMLBlock(); ?>
-</div>
+</aside>

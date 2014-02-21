@@ -12,6 +12,7 @@ module.exports = function (grunt) {
                     files: {
                         // compiling styles.less into styles.css
                         "./public/stylesheets/styles.min.css": "./app/stylesheets/styles.less",
+                        "./public/stylesheets/backport.min.css": "./app/stylesheets/backport.less",
                     }
                 }
             },

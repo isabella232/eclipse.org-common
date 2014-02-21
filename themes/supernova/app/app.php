@@ -90,4 +90,4 @@ $variables['page']['Menu'] = $Menu;
 $variables['page']['html'] = $html;
 supernova_variables($variables);
 
-print_r($variables);
+//print_r($variables);
