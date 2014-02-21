@@ -4,10 +4,15 @@
 
 footer{
 	background: url("../images/template/footer-bg.jpg") center top;
-	color:#a8a7a9;  
+	color:#a8a7a9; 
+	padding-top:66px;
+	padding-bottom:46px; 
 	
 	h2{
-	  color:#a8a7a9;  
+	  color:#a8a7a9; 
+	  &.section-title{
+	     margin-top:0;
+	  } 
 	}
 	
 	a:link,
@@ -19,11 +24,16 @@ footer{
 	a:hover{
 	   color:#fff;
 	}
+	
+	.logo-eclipse-white{
+	  margin-bottom:15px;
+	}
 }
 .social-media{
 	.social-media-icon{
 	  background-image: url("../images/template/social-media.png");
 	  background-repeat: no-repeat;
+	  margin-bottom:20px;
 	 
 	  a{
 	    height:31px;
@@ -31,7 +41,32 @@ footer{
       display:block;
 	  }
 	}
-	.social-media-facebook{
-	  background-position:0px 0;
+	.social-media-twitter{
+	  background-position:0px 0px;
+	  &:hover{
+	    background-position:0px -82px;
+	  }
 	}
+	
+	.social-media-google{
+    background-position:-43px 0px;
+    &:hover{
+      background-position:-43px -82px;
+    }
+  }
+  
+  .social-media-facebook{
+    background-position:-85px 0px;
+    &:hover{
+      background-position:-85px -82px;
+    }
+  }
+  
+  .social-media-youtube{
+    background-position:-128px 0px;
+    &:hover{
+      background-position:-128px -82px;
+    }
+  }
+	
 }

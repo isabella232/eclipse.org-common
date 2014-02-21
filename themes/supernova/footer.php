@@ -17,7 +17,7 @@
 		  <div class="container">
         <div class="row">
           <section class="col-md-3">
-            <h2>Explore</h2>
+            <h2 class="section-title">Explore</h2>
 				    <ul>
 					    <li><a href="//eclipse.org/">Home</a></li>
 					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
@@ -28,7 +28,7 @@
 				    </ul>
 			    </section>
 			    <section class="col-md-3">
-            <h2>Explore</h2>
+            <h2 class="section-title">Resources</h2>
 				    <ul>
 					    <li><a href="//eclipse.org/">Home</a></li>
 					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
@@ -39,7 +39,7 @@
 				    </ul>
 			    </section>
 			    <section class="col-md-3">
-            <h2>Explore</h2>
+            <h2 class="section-title">Getting started</h2>
 				    <ul>
 					    <li><a href="//eclipse.org/">Home</a></li>
 					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
