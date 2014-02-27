@@ -17,39 +17,47 @@
 		  <div class="container">
         <div class="row">
           <section class="col-md-3">
-            <h2 class="section-title">About</h2>
+            <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav nav-pills nav-stacked">
-					    <li><a href="<?php print $variables['url']; ?>">Home</a></li>
+				      <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
+				      <li><a href="<?php print $variables['url']; ?>org/foundation/contact.php">Contact Us</a></li>
+				      <li><a href="<?php print $variables['url']; ?>org/documents/">Governance</a></li>
+				      <li><a href="<?php print $variables['url']; ?>artwork/">Logo and Artwork</a></li>
+              <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
+				    </ul>
+			    </section>
+          <section class="col-md-3">
+            <h2 class="section-title">Legal</h2>
+				    <ul class="nav nav-pills nav-stacked">
 					    <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
 				    	<li><a href="<?php print $variables['url']; ?>legal/termsofuse.php">Terms of Use</a></li>
 				    	<li><a href="<?php print $variables['url']; ?>legal/copyright.php">Copyright Agent</a></li>
-				    	<li><a href="<?php print $variables['url']; ?>legal/">Legal</a></li>
-					    <li><a href="<?php print $variables['url']; ?>org/foundation/contact.php">Contact Us</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>org/documents/epl-v10.php">Eclipse Public License </a></li>
+				    	<li><a href="<?php print $variables['url']; ?>legal/">Legal Resources </a></li>
+
 				    </ul>
 			    </section>
+
 			    <section class="col-md-3">
-            <h2 class="section-title">Resources</h2>
+            <h2 class="section-title">Useful Links</h2>
 				    <ul class="nav nav-pills nav-stacked">
-					    <li><a href="<?php print $variables['url']; ?>membership/exploreMembership.php">Members</a></li>
-					    <li><a href="<?php print $variables['url']; ?>resources/">Resources</a></li>
-				    	<li><a href="//projects.eclipse.org/">Projects</a></li>
-				    	<li><a href="<?php print $variables['url']; ?>downloads/">Downloads</a></li>
-				    	<li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
-					    <li><a href="//marketplace.eclipse.org/">Plugins</a></li>
-				    </ul>
-			    </section>
-			    <section class="col-md-3">
-            <h2 class="section-title">Getting started</h2>
-				    <ul class="nav nav-pills nav-stacked">
+				      <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
 						  <li><a href="//help.eclipse.org/">Documentation</a></li>
-					    <li><a href="<?php print $variables['url']; ?>contribute/">Contribute</a></li>
-				    	<li><a href="//bugs.eclipse.org/">Report a Bug</a></li>
-				    	<li><a href="<?php print $variables['url']; ?>ide/">IDE & Tools</a></li>
-				    	<li><a href="//projects.eclipse.org/">Community of Projects</a></li>
-					    <li><a href="<?php print $variables['url']; ?>org/workinggroups/">Collaborative Working Groups</a></li>
+					    <li><a href="<?php print $variables['url']; ?>contribute/">How to Contribute</a></li>
+					    <li><a href="<?php print $variables['url']; ?>mail/">Mailing Lists</a></li>
+					    <li><a href="<?php print $variables['url']; ?>forums/">Forums</a></li>
+							<li><a href="//marketplace.eclipse.org">Marketplace</a></li>
+
 				    </ul>
 			    </section>
 			    <section class="col-md-3">
+			      <h2 class="section-title">Other</h2>
+			      <ul class="nav nav-pills nav-stacked">
+			       	<li><a href="<?php print $variables['url']; ?>ide/">IDE and Tools</a></li>
+				    	<li><a href="//projects.eclipse.org/">Community of Projects</a></li>
+					    <li><a href="<?php print $variables['url']; ?>org/workinggroups/">Working Groups</a></li>
+					  </ul>
+
 			      <?php print $variables['logo']['white']; ?>
 			      <ul class="social-media list-inline">
 			        <li class="social-media-icon social-media-twitter"><a href="https://twitter.com/EclipseFdn"><span class="sr-only">Twitter</span></a></li>
