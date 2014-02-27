@@ -17,9 +17,21 @@ function solstice_variables(&$variables) {
 	$Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
 
+	// If the main menu is custom, do not change it
+	$NewMenu = new $Menu();
+	$main_menu = $Menu->getMenuArray();
+	if($NewMenu->getMenuArray() == $main_menu){
+		$Menu = new $Menu();
+	  $Menu->setMenuItemList(array());
+	  $Menu->addMenuItem("Getting Started ", "/users/", "_self");
+	  $Menu->addMenuItem("Members", "/membership/", "_self");
+	  $Menu->addMenuItem("Projects", "/projects/", "_self");
+	  $main_menu = $Menu->getMenuArray();
+	}
+
 	$theme = $variables['page']['theme'];
 
-	$variables['url'] = '//eclipse.localhost/';
+	$variables['url'] = $App->getWWWPrefix() . '/';
 
 	$classes = array();
 	$deprecated = "";
@@ -51,20 +63,11 @@ function solstice_variables(&$variables) {
 	$variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39" class="logo-eclipse-white"/>';
 
 	// Main-menu
-	if ($Menu != NULL) {
-		// Need to fix this, this is for testing only.
-		$skip = array('Home', 'Downloads', 'Resources', 'Committers');
-		for ($i = 0; $i < $Menu->getMenuItemCount(); $i++) {
-			$item = $Menu->getMenuItemAt($i);
-
-      if (in_array($item->getText(), $skip)) {
-        continue;
-      }
-
-			$items[] = '<li><a href="' . $item->getURL() .'" target="' . $item->getTarget() .'">' . $item->getText() . '</a></li>';
-		}
-		$variables['menu']['main_menu'] = implode($items, '');
+	foreach ($main_menu as $item) {
+		$items[] = '<li><a href="' . $item->getURL() .'" target="' . $item->getTarget() .'">' . $item->getText() . '</a></li>';
 	}
+	$variables['menu']['main_menu'] = implode($items, '');
+
 
 	// Nav menu
 	if ($Nav != NULL) {
