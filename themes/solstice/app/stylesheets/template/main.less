@@ -3,30 +3,39 @@
 // --------------------------------------------------
 
 main{
-	background:#e4e4e4;
+	background:#fafafa;
 	padding-top: 20px;
+	position:relative;
 }
 
 .container{
-  max-width: 980px;
+  /*max-width: 980px;*/
   margin: 0 auto;
 }
 
 #midcolumn{
-	.make-md-column(8);
+	.make-md-column(7);
 }
 
 #rightcolumn{
-	.make-md-column(2);
+	.make-md-column(3);
 }
 
 .sideitem{
-	margin-bottom: 30px;
-	h6{
-	  color:#fff;
-	  background:orange;
-	  padding:3px 6px;
-	}
+	color:#fff;
+  background:@brand-info;
+  padding:10px 20px;
+  a{
+    color:#fff;
+    font-weight:bold;
+  }
+  h6{
+    margin-top:0;
+    padding-top:10px;
+    font-size:2rem;
+    font-weight:bold;
+    
+  }
 }
 
 #ul-left-nav{

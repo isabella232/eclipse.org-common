@@ -31,7 +31,7 @@
 	      </div>
 	      <div class="row" id="row-nav-links">
 		      <!-- Demo navbar -->
-			    <div class="navbar yamm  col-md-9">
+			    <div class="navbar yamm  col-md-8">
 			        <div class="navbar-header">
 			          <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
 			        </div>
@@ -93,7 +93,7 @@
 			          </ul>
 			        </div>
 			    </div>
-		      <div class="action-links col-md-3">
+		      <div class="action-links col-md-4">
 		        <div id="button-container">
 			        <!-- Split button -->
 							<div class="btn-group">
@@ -115,12 +115,15 @@
 		    </div>
 		  </div>
 		</header>
-
+		<section id="breadcrumb">
+		  <div class="container">
+				<ol class="breadcrumb">
+		      <li><a href="<?php print $variables['url']; ?>">Home</a></li>
+		      <li><a href="<?php print $variables['url']; ?>org">About us</a></li>
+		      <li class="active"><?php print $variables['page']['title'];?></li>
+		    </ol>
+	    </div>
+    </section>
 		<main role="main">
 		  <div class="container">
-		    <ol class="breadcrumb">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About us</a></li>
-          <li class="active">About the Eclipse Foundation</li>
-        </ol>
         <?php print $variables['deprecated'];?>

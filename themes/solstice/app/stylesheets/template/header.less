@@ -6,26 +6,63 @@ header{
 }
 
 #row-nav-links {
-	
 }
 
 #row-logo-search {
   padding-top:40px;
 }
+
 #search{
 	margin-top:20px;
+	text-align:right;
+	.form-inline #search-box{
+	  width: 60%;
+	}
 }
-.yamm .dropdown-menu {
-    left: 0;
-    width: 100%;
-}
+
 #logo{
 	img{
-	   margin:10px 0 15px 25px;
+	   margin:10px 0 15px 0px;
 	}
 }
 
 #form-eclipse-search,
 #button-container {
   float:right;
+}
+
+#button-container{
+	.btn{
+	  text-transform: uppercase;
+	  font-size:1.7rem;
+	  padding:10px 20px;
+	  font-weight:bold;
+  }
+  .btn-warning{
+    padding:10px 34px;
+  }
+  .dropdown-toggle{
+  padding-left:8px;
+  padding-right:8px;
+  }
+}
+
+/* Breadcrumbs*/
+
+#breadcrumb{
+	background:url('../images/template/breadcrumbs-bg.jpg');
+	background-size:100%;
+	.breadcrumb{
+	  margin-top:15px;
+	  padding-left:0;
+	  margin-bottom:15px;
+	  text-transform:uppercase;
+	  background:none;
+	  &> .active {
+	    color:#fff;
+    }    
+	  a{
+	    color:#ababab;
+	  }
+	}
 }
