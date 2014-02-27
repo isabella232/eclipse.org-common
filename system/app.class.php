@@ -96,6 +96,9 @@ class App {
 			$this->WWW_PREFIX = "http://www.eclipse.org";
 		}
 
+    // DELETE THIS BEFORE GOING LIVE
+		$this->WWW_PREFIX = '//' . $_SERVER['HTTP_HOST'];
+
 		$this->databases = array();
 
 		# Figure out if we're in devmode by whether the classes are installed or not
@@ -108,6 +111,7 @@ class App {
 
 		# Make it easy to override database and other settings (don't check app-config.php in to CVS!)
 		if($this->devmode) {
+
 			if(file_exists(getcwd() . '/app-config.php')) {
 				include_once(getcwd() . '/app-config.php');
 				# We call a function inside app-config.php and pass it a reference to ourselves because
@@ -430,6 +434,9 @@ class App {
 		if($theme == "") {
 			$theme = "Phoenix";
 		}
+
+		// DELETE THIS BEFORE GOING LIVE
+		$theme = "solstice";
 
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
