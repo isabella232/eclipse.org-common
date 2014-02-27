@@ -23,10 +23,10 @@ class Menu {
 	#
 	# HISTORY:
 	#
-	#*****************************************************************************	
-	
+	#*****************************************************************************
+
 	private $MenuItemList = array();
-	
+
 	private $projectBranding = "";
 
 	function getProjectBranding() {
@@ -36,20 +36,20 @@ class Menu {
 	function setProjectBranding($_projectBranding) {
 	  $this->projectBranding = $_projectBranding;
 	}
-	
+
 	function getMenuItemList() {
 		return $this->MenuItemList;
 	}
-	
+
 	function setMenuItemList($_MenuItemList) {
 		$this->MenuItemList = $_MenuItemList;
 	}
-	
+
 	# Main constructor
 	function Menu() {
 
 		$www_prefix = "";
-		
+
 		global $App;
 
 		if(!isset($App)) {
@@ -64,7 +64,7 @@ class Menu {
 		$MenuText = "Downloads";
 		$MenuItem = new MenuItem($MenuText, $www_prefix . "/downloads/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
-		
+
 		$MenuText = "Users";
 		$MenuItem = new MenuItem($MenuText, $www_prefix . "/users/", "_self", 0);
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
@@ -90,11 +90,11 @@ class Menu {
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 
 	}
-	
+
 	function addMenuItem($_Text, $_URL, $_Target) {
 		# Menu Items must be added at position 1 .. position 0 is dashboard, last position is Signout
 		$MenuItem = new MenuItem($_Text, $_URL, $_Target, 0);
-			
+
 		# Add incoming menuitem
 		$this->MenuItemList[count($this->MenuItemList)] = $MenuItem;
 	}
@@ -102,14 +102,20 @@ class Menu {
 	function getMenuItemCount() {
 		return count($this->MenuItemList);
 	}
-	
+
 	function getMenuItemAt($_Pos) {
 		if($_Pos < $this->getMenuItemCount()) {
 			return $this->MenuItemList[$_Pos];
 		}
 	}
-	
-	
+
+	function getMenuArray() {
+		$return = array();
+		foreach($this->MenuItemList as $menu){
+			$return[] = $menu;
+		}
+		return $return;
+	}
 
 }
 ?>
