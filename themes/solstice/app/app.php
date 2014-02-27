@@ -10,24 +10,28 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
-function supernova_variables(&$variables) {
+function solstice_variables(&$variables) {
 
 	global $App;
 
 	$Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
+
+	$theme = $variables['page']['theme'];
+
+	$variables['url'] = '//eclipse.localhost/';
+
 	$classes = array();
 	$deprecated = "";
 	$items = array();
 
 	$variables['App'] = $App;
-	$variables['theme_url'] = '/eclipse.org-common/themes/supernova/';
+	$variables['theme_url'] = '/eclipse.org-common/themes/solstice/';
 
 	// HTML headers
 	$variables['head']['og_title'] = $App->getOGTitle();
 	$variables['head']['og_description'] = $App->getOGDescription();
 	$variables['head']['og_image'] = $App->getOGImage();
-	$variables['head']['extra_headers'] = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
 
 	// Deprecated message
 	if ($App->getOutDated()) {
@@ -40,7 +44,7 @@ function supernova_variables(&$variables) {
 
 	// Body
 	$variables['body']['classes'] = implode($classes, ' ');
-	$variables['body']['id'] = 'body_supernova';
+	$variables['body']['id'] = 'body_solstice';
 
 	// Logos
 	$variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" width="213" height="50"  class="logo-eclipse-default"/>';
@@ -48,8 +52,15 @@ function supernova_variables(&$variables) {
 
 	// Main-menu
 	if ($Menu != NULL) {
+		// Need to fix this, this is for testing only.
+		$skip = array('Home', 'Downloads', 'Resources', 'Committers');
 		for ($i = 0; $i < $Menu->getMenuItemCount(); $i++) {
 			$item = $Menu->getMenuItemAt($i);
+
+      if (in_array($item->getText(), $skip)) {
+        continue;
+      }
+
 			$items[] = '<li><a href="' . $item->getURL() .'" target="' . $item->getTarget() .'">' . $item->getText() . '</a></li>';
 		}
 		$variables['menu']['main_menu'] = implode($items, '');
@@ -76,9 +87,11 @@ function supernova_variables(&$variables) {
 	}
 	$variables['promotion'] = ob_get_clean();
 
+	// FOR TESTING ONLY,
+	$variables['promotion'] = '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
+
 	// Eclipse Copyright
 	$variables['footer']['copyright'] = 'Copyright &copy; ' . date("Y") . ' The Eclipse Foundation. All Rights Reserved.';
-
 }
 
 $variables = array();
@@ -89,6 +102,8 @@ $variables['page']['theme'] = $theme;
 $variables['page']['Nav'] = $Nav;
 $variables['page']['Menu'] = $Menu;
 $variables['page']['html'] = $html;
-supernova_variables($variables);
+$variables['page']['extra_headers'] = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
+
+solstice_variables($variables);
 
 //print_r($variables);

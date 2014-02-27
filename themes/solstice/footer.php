@@ -17,36 +17,36 @@
 		  <div class="container">
         <div class="row">
           <section class="col-md-3">
-            <h2 class="section-title">Explore</h2>
-				    <ul>
-					    <li><a href="//eclipse.org/">Home</a></li>
-					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
-				    	<li><a href="//eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
-				    	<li><a href="//eclipse.org/legal/copyright.php">Copyright Agent</a></li>
-				    	<li><a href="//eclipse.org/legal/">Legal</a></li>
-					    <li><a href="//eclipse.org/org/foundation/contact.php">Contact Us</a></li>
+            <h2 class="section-title">About</h2>
+				    <ul class="nav nav-pills nav-stacked">
+					    <li><a href="<?php print $variables['url']; ?>">Home</a></li>
+					    <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>legal/termsofuse.php">Terms of Use</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>legal/copyright.php">Copyright Agent</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>legal/">Legal</a></li>
+					    <li><a href="<?php print $variables['url']; ?>org/foundation/contact.php">Contact Us</a></li>
 				    </ul>
 			    </section>
 			    <section class="col-md-3">
             <h2 class="section-title">Resources</h2>
-				    <ul>
-					    <li><a href="//eclipse.org/">Home</a></li>
-					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
-				    	<li><a href="//eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
-				    	<li><a href="//eclipse.org/legal/copyright.php">Copyright Agent</a></li>
-				    	<li><a href="//eclipse.org/legal/">Legal</a></li>
-					    <li><a href="//eclipse.org/org/foundation/contact.php">Contact Us</a></li>
+				    <ul class="nav nav-pills nav-stacked">
+					    <li><a href="<?php print $variables['url']; ?>membership/exploreMembership.php">Members</a></li>
+					    <li><a href="<?php print $variables['url']; ?>resources/">Resources</a></li>
+				    	<li><a href="//projects.eclipse.org/">Projects</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>downloads/">Downloads</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
+					    <li><a href="//marketplace.eclipse.org/">Plugins</a></li>
 				    </ul>
 			    </section>
 			    <section class="col-md-3">
             <h2 class="section-title">Getting started</h2>
-				    <ul>
-					    <li><a href="//eclipse.org/">Home</a></li>
-					    <li><a href="//eclipse.org/legal/privacy.php">Privacy Policy</a></li>
-				    	<li><a href="//eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
-				    	<li><a href="//eclipse.org/legal/copyright.php">Copyright Agent</a></li>
-				    	<li><a href="//eclipse.org/legal/">Legal</a></li>
-					    <li><a href="//eclipse.org/org/foundation/contact.php">Contact Us</a></li>
+				    <ul class="nav nav-pills nav-stacked">
+						  <li><a href="//help.eclipse.org/">Documentation</a></li>
+					    <li><a href="<?php print $variables['url']; ?>contribute/">Contribute</a></li>
+				    	<li><a href="//bugs.eclipse.org/">Report a Bug</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>ide/">IDE & Tools</a></li>
+				    	<li><a href="//projects.eclipse.org/">Community of Projects</a></li>
+					    <li><a href="<?php print $variables['url']; ?>org/workinggroups/">Collaborative Working Groups</a></li>
 				    </ul>
 			    </section>
 			    <section class="col-md-3">

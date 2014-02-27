@@ -1,4 +1,4 @@
-# Supernova
+# Solstice
 
 ## General steps to get going
 

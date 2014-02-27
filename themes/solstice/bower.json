@@ -1,10 +1,10 @@
 {
-  "name": "supernova",
+  "name": "solstice",
   "version": "0.0.1",
   "authors": [
     "Christopher Guindon <chris.guindon@eclipse.org>"
   ],
-  "description": "Supernova is a responsive theme for eclipse.org.",
+  "description": "Solstice is a responsive theme for eclipse.org.",
   "license": "EPL",
   "homepage": "http://www.chrisguindon.com",
   "private": true,
@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "3.1.1"
+    "bootstrap": "3.1.1",
+    "yamm3":"git://github.com/chrisguindon/yamm3#69ba4a32b3b7228421920d6300011745be374029"
   }
 }

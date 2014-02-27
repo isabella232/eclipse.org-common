@@ -9,13 +9,12 @@
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    gbarbier mia-software com - bug 284239
- *    Christopher Guindon (Eclipse Foundation) - Initial implementation of supernova
+ *    Christopher Guindon (Eclipse Foundation) - Initial implementation of solstice
  *******************************************************************************/
-
 ?>
 <!-- nav -->
-<aside id="aside-left-nav">
-  <ul id="ul-left-nav">
+<aside id="aside-left-nav" class="col-md-2">
+  <ul id="ul-left-nav" class="nav nav-pills nav-stacked">
 	  <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
 
 			<?php if ($link->getURL() == "") :?>
@@ -37,9 +36,10 @@
 			<?php else: // if $link->getURL() is not empty. ?>
 
 			  <?php if($link->getTarget() == "__SEPARATOR") :?>
-				  <li class="separator"><a class="separator" href="<?php print $link->getURL() ?>">
-					  <?php print $link->getText() ?>
-						  <?php print $variables['menu']['nav']['img_separator'];?>
+				  <li class="separator">
+				    <a class="separator" href="<?php print $link->getURL() ?>">
+					    <?php print $link->getText() ?>
+						    <?php print $variables['menu']['nav']['img_separator'];?>
 						</a>
 					</li>
 			  <?php else:?>

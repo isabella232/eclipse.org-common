@@ -28,7 +28,7 @@ include_once 'app/app.php';
 
     <link rel="stylesheet" href="<?php print $variables['theme_url'];?>public/stylesheets/styles.min.css">
 
-    <?php print $variables['head']['extra_headers'];?>
+    <?php print $variables['page']['extra_headers'];?>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

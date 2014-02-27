@@ -1,7 +1,7 @@
 {
-  "name": "supernova",
+  "name": "solstice",
   "version": "0.0.1",
-  "description": "Supernova is a responsive theme for eclipse.org.",
+  "description": "Solstice is a responsive theme for eclipse.org.",
   "main": "Gruntfile.js",
   "author": "Christopher Guindon",
   "license": "EPL",
