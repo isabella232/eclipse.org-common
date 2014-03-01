@@ -97,7 +97,7 @@
 		        <div id="button-container">
 			        <!-- Split button -->
 							<div class="btn-group">
-							  <button type="button" class="btn btn-info">Sign in</button>
+							  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info">Sign in</a>
 							  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
 							    <span class="caret"></span>
 							    <span class="sr-only">Toggle Dropdown</span>
@@ -109,7 +109,7 @@
 							    <li><a href="<?php print $variables['url']; ?>donate/">Friends of Eclipse</a></li>
 							  </ul>
 							</div>
-						  <a href="#" class="btn btn-warning">Download</a>
+						  <a href="<?php print $variables['url']; ?>downloads/" class="btn btn-warning">Download</a>
 					  </div>
 		      </div>
 		    </div>

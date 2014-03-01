@@ -90,6 +90,9 @@ function solstice_variables(&$variables) {
 	}
 	$variables['promotion'] = ob_get_clean();
 
+	$parts = parse_url($_SERVER['REQUEST_URI']);
+	$variables['uri'] = $parts;
+
 	// FOR TESTING ONLY,
 	$variables['promotion'] = '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
 

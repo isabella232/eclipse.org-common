@@ -6,15 +6,27 @@ main{
 	background:#fafafa;
 	padding-top: 20px;
 	position:relative;
+	padding-bottom:2.8em;
 }
 
 .container{
   /*max-width: 980px;*/
   margin: 0 auto;
 }
-
+#fullcolumn{
+	.make-md-column(12);
+}
 #midcolumn{
 	.make-md-column(7);
+	padding-right:30px;
+	/* This is bad but needed to support old content pages. */
+	#midcolumn{
+    width:100%;
+    padding:0;
+  }
+}
+#midcolumn.no-right-sidebar{
+	.make-md-column(10);
 }
 
 #rightcolumn{
