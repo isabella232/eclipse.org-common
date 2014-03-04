@@ -14,7 +14,7 @@ class FeedParser {
 
 	private $url = "";
 
-	private $count = 5;
+	private $count = 3;
 
 	private $description = TRUE;
 
@@ -50,6 +50,10 @@ class FeedParser {
 
 	public function setDescription($show = TRUE) {
 		$this->description = ($show) ? TRUE : FALSE;
+	}
+
+	public function setMore($url, $caption = 'View all', $prefix = '> ') {
+		$this->more = $prefix . '<a href="' . $url . '">' . $caption . '</a>';
 	}
 
 	private function parse_feed() {
@@ -100,7 +104,7 @@ class FeedParser {
 				$output .= '<div class="news_item">';
 				$output .= '<div class="news_item_date">' .$item['date'] . '</div>';
 				$output .= '<div class="news_item_title">';
-				$output .= '<a href="' . $item['link'] . '">' . $item['title'] . '</a>';
+				$output .= '<h3><a href="' . $item['link'] . '">' . $item['title'] . '</a></h3>';
 				$output .= '</div>';
 				if ($this->description) {
 					$output .= '<div class="news_item_description">' .$item['description'] . '</div>';
@@ -108,7 +112,7 @@ class FeedParser {
 				$output .= '</div>';
 			}
 			if (!empty($this->more)) {
-				$output .= '<a href="' . $this->more . '">View All</a>';
+				$output .= '<div class="news_view_all">' . $this->more . '</div>';
 			}
 		}
 		print $output;
