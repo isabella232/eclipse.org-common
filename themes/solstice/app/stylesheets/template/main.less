@@ -3,21 +3,21 @@
 // --------------------------------------------------
 
 main{
-	background:#fafafa;
-	padding-top: 20px;
 	position:relative;
-	padding-bottom:2.8em;
+  padding-top: 2em;
 }
 
 .container{
   /*max-width: 980px;*/
   margin: 0 auto;
 }
+
 #fullcolumn{
-	.make-md-column(12);
+	.make-md-column(24);
 }
+
 #midcolumn{
-	.make-md-column(7);
+	.make-md-column(14);
 	padding-right:30px;
 	/* This is bad but needed to support old content pages. */
 	#midcolumn{
@@ -25,12 +25,13 @@ main{
     padding:0;
   }
 }
+
 #midcolumn.no-right-sidebar{
-	.make-md-column(10);
+	.make-md-column(20);
 }
 
 #rightcolumn{
-	.make-md-column(3);
+	.make-md-column(6);
 }
 .sideitem{
 	color:#fff;
