@@ -15,7 +15,12 @@
 
 		<footer role="contentinfo">
 		  <div class="container">
+
         <div class="row">
+        	<h1>
+						<strong>Eclipse</strong> <span>&gt;</span> The Eclipse Foundation
+						open source community website.
+				</h1>
           <section class="col-md-3">
             <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav">

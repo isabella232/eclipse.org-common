@@ -4,7 +4,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
- * <?php print $variables['url']; ?>legal/epl-v10.html
+ * http://eclipse.org/legal/epl-v10.html
  *
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
@@ -62,7 +62,7 @@
 			                        <li><a href="http://wiki.eclipse.org/Auto_IWG">Automotive</a></li>
 			                        <li><a href="http://locationtech.org">LocationTech</a></li>
 			                        <li><a href="http://lts.eclipse.org">Long-Term Support</a></li>
-			                        <li><a href="http:/iot.eclipse.org">Machine-to-Machine</a></li>
+			                        <li><a href="http://iot.eclipse.org">Internet of Things</a></li>
 			                        <li><a href="http://polarsys.org">PolarSys</a></li>
 			                      </ul>
 			                      <ul class="col-sm-3 list-unstyled">
