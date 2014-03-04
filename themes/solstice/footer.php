@@ -20,8 +20,8 @@
         	<h1>
 						<strong>Eclipse</strong> <span>&gt;</span> The Eclipse Foundation
 						open source community website.
-				</h1>
-          <section class="col-md-3">
+					</h1>
+          <section class="col-md-6">
             <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav">
 				      <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
@@ -31,7 +31,7 @@
               <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
 				    </ul>
 			    </section>
-          <section class="col-md-3">
+          <section class="col-md-6">
             <h2 class="section-title">Legal</h2>
 				    <ul class="nav">
 					    <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
@@ -43,7 +43,7 @@
 				    </ul>
 			    </section>
 
-			    <section class="col-md-3">
+			    <section class="col-md-6">
             <h2 class="section-title">Useful Links</h2>
 				    <ul class="nav">
 				      <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
@@ -55,7 +55,7 @@
 
 				    </ul>
 			    </section>
-			    <section class="col-md-3">
+			    <section class="col-md-6">
 			      <h2 class="section-title">Other</h2>
 			      <ul class="nav">
 			       	<li><a href="<?php print $variables['url']; ?>ide/">IDE and Tools</a></li>
@@ -72,7 +72,7 @@
         </div>
 
         <div id="copyright" class="row">
-					<div class="col-md-12">
+					<div class="col-md-24">
             <?php print $variables['logo']['white']; ?>
  						<p id="copyright-text"><?php print $variables['footer']['copyright'];?></p>
 				  </div>

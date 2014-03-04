@@ -15,10 +15,10 @@
 		<header role="banner">
 		  <div class="container">
 			  <div class="row" id="row-logo-search">
-				  <div id="logo" class="col-sm-8">
+				  <div id="logo" class="col-sm-16">
 	          <?php print $variables['promotion'];?>
 				  </div>
-				  <div id="search" class="col-md-4">
+				  <div id="search" class="col-md-8">
 					  <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="form-inline">
 						  <fieldset class="form-group">
 							  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
@@ -31,7 +31,7 @@
 	      </div>
 	      <div class="row" id="row-nav-links">
 		      <!-- Demo navbar -->
-			    <div class="navbar yamm  col-md-8">
+			    <div class="navbar yamm  col-md-16">
 			        <div class="navbar-header">
 			          <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
 			        </div>
@@ -45,7 +45,7 @@
 			                  <!-- Content container to add padding -->
 			                  <div class="yamm-content">
 			                    <div class="row">
-			                      <ul class="col-sm-3 list-unstyled">
+			                      <ul class="col-sm-6 list-unstyled">
 			                        <li>
 			                          <p><strong>Getting Started</strong></p>
 			                        </li>
@@ -55,7 +55,7 @@
 															<li><a href="<?php print $variables['url']; ?>projects/">Projects</a></li>
 															<li><a href="//events.eclipse.org/">Events</a></li>
 			                      </ul>
-			                      <ul class="col-sm-3 list-unstyled">
+			                      <ul class="col-sm-6 list-unstyled">
 			                        <li>
 			                          <p><strong>Working Groups</strong></p>
 			                        </li>
@@ -65,7 +65,7 @@
 			                        <li><a href="http://iot.eclipse.org">Internet of Things</a></li>
 			                        <li><a href="http://polarsys.org">PolarSys</a></li>
 			                      </ul>
-			                      <ul class="col-sm-3 list-unstyled">
+			                      <ul class="col-sm-6 list-unstyled">
 			                        <li>
 			                          <p><strong>Explore</strong></p>
 			                        </li>
@@ -75,7 +75,7 @@
 															<li><a href="//www.planeteclipse.org/">Planet Eclipse</a></li>
 															<li><a href="//wiki.eclipse.org/">Eclipse Wiki</a></li>
 			                      </ul>
-			                      <ul class="col-sm-3 list-unstyled">
+			                      <ul class="col-sm-6 list-unstyled">
 			                        <li>
 			                          <p><strong>Legal</strong></p>
 			                        </li>
@@ -93,7 +93,7 @@
 			          </ul>
 			        </div>
 			    </div>
-		      <div class="action-links col-md-4">
+		      <div class="action-links col-md-8">
 		        <div id="button-container">
 			        <!-- Split button -->
 							<div class="btn-group">
