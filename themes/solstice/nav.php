@@ -14,7 +14,7 @@
 ?>
 <!-- nav -->
 <aside id="aside-left-nav" class="col-md-4">
-  <ul class="ul-left-nav">
+  <ul class="ul-left-nav fa-ul">
 	  <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
 
 			<?php if ($link->getURL() == "") :?>
