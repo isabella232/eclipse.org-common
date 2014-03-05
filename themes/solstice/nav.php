@@ -14,36 +14,40 @@
 ?>
 <!-- nav -->
 <aside id="aside-left-nav" class="col-md-4">
-  <ul class="ul-left-nav nav">
+  <ul class="ul-left-nav">
 	  <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
 
 			<?php if ($link->getURL() == "") :?>
 				<?php if ($link->getTarget() == "__SEPARATOR") : ?>
 				  <li class="separator">
+				    <i class="fa fa-arrow-right color-orange fa-fw"></i>
 				    <a class="separator">
-						  <?php print $link->getText() ?><?php print $variables['menu']['nav']['img_separator'];?>
+						  <?php print $link->getText() ?>
 						</a>
 					</li>
 				<?php else: ?>
 					<li>
+					  <i class="fa fa-arrow-right color-orange fa-fw"></i>
 					  <a class="nolink" href="#"><?php print $link->getText() ?></a>
 					</li>
 				<?php endif; ?>
 			<?php elseif (stripos($link->getURL(), 'project_summary.php') !== FALSE) :?>
 			  <li class="about">
+			    <i class="fa fa-arrow-right color-orange fa-fw"></i>
 			    <a href="<?php print $link->getURL() ?>"><?=$link->getText();?></a>
 				</li>
 			<?php else: // if $link->getURL() is not empty. ?>
 
 			  <?php if($link->getTarget() == "__SEPARATOR") :?>
 				  <li class="separator">
+				    <i class="fa fa-arrow-right color-orange fa-fw"></i>
 				    <a class="separator" href="<?php print $link->getURL() ?>">
 					    <?php print $link->getText() ?>
-						    <?php print $variables['menu']['nav']['img_separator'];?>
 						</a>
 					</li>
 			  <?php else:?>
 				  <li>
+				    <i class="fa fa-arrow-right color-orange fa-fw"></i>
 				    <a href="<?php print $link->getURL() ?>" target="<?php print ($link->getTarget() == "_blank") ? "_blank" : "_self" ?>">
 					    <?php print $link->getText() ?>
 					  </a>

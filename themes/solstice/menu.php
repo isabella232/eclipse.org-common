@@ -97,7 +97,7 @@
 		        <div id="button-container">
 			        <!-- Split button -->
 							<div class="btn-group">
-							  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info">Sign in</a>
+							  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info"><i class="fa fa-user fa-fw"></i> Sign in</a>
 							  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
 							    <span class="caret"></span>
 							    <span class="sr-only">Toggle Dropdown</span>
