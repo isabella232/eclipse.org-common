@@ -30,12 +30,11 @@ include_once 'app/app.php';
     <link rel="stylesheet" href="<?php print $variables['theme_url'];?>public/stylesheets/styles.min.css">
 
     <?php print $variables['page']['extra_headers'];?>
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="<?php print $variables['body']['classes'];?>" id="<?php print $variables['body']['id'];?>">
+  <body class="<?php print $variables['theme_variables']['body_classes'];?>" id="<?php print $variables['body']['id'];?>">
 	  <a class="sr-only" href="#content">Skip to main content</a>
