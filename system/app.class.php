@@ -68,6 +68,9 @@ class App {
 	# Twitter Follow Widget Variables
 	private $twitterScriptInserted = FALSE;
 
+	# Variables to customize theme (Solstice and up).
+	private $theme_variables = array();
+
 	# Set to TRUE to disable all database operations
 	private $DB_READ_ONLY		= false;
 
@@ -989,7 +992,31 @@ EOHTML;
 		}
 		return $doc;
 	}
-    /**
+
+	public function getThemeVariables() {
+		$v = $this->theme_variables;
+		// Set default variables for all themes.
+		if (empty($v)) {
+      $v['hide_breadcrumbs'] = FALSE;
+      $v['breadcrumbs_html'] = "";
+      $v['body_classes'] = '';
+      $v['main_container_classes'] = 'container';
+			$this->theme_variables = $v;
+		}
+
+		return $this->theme_variables;
+	}
+
+	public function setThemeVariables($variables) {
+		$current_variables = $this->getThemeVariables();
+		if (is_array($variables)) {
+		  $this->theme_variables = array_merge($current_variables, $variables);
+		}
+
+	}
+
+
+  /**
 	 * Function to validate a date
 	 * @param string $date
 	 * @return boolean
