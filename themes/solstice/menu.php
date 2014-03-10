@@ -115,15 +115,18 @@
 		    </div>
 		  </div>
 		</header>
-		<section id="breadcrumb">
-		  <div class="container">
-				<ol class="breadcrumb">
-		      <li><a href="<?php print $variables['url']; ?>">Home</a></li>
-		      <li><a href="<?php print $variables['url']; ?>org">About us</a></li>
-		      <li class="active"><?php print $variables['page']['title'];?></li>
-		    </ol>
-	    </div>
-    </section>
+		<?php if (!$variables['theme_variables']['hide_breadcrumbs']) :?>
+			<section id="breadcrumb" class="<?php print $variables['theme_variables']['breadcrumbs_classes'];?>">
+			  <div class="container">
+					<ol class="breadcrumb">
+			      <li><a href="<?php print $variables['url']; ?>">Home</a></li>
+			      <li><a href="<?php print $variables['url']; ?>org">About us</a></li>
+			      <li class="active"><?php print $variables['page']['title'];?></li>
+			    </ol>
+			    <?php print $variables['theme_variables']['breadcrumbs_html'];?>
+		    </div>
+	    </section>
+    <?php endif; ?>
 		<main role="main">
-		  <div class="container">
+		  <div class="<?php print $variables['theme_variables']['main_container_classes'];?>">
         <?php print $variables['deprecated'];?>
