@@ -45,6 +45,8 @@ function solstice_variables(&$variables) {
 	$variables['App'] = $App;
 	$variables['theme_url'] = '/eclipse.org-common/themes/solstice/';
 
+	$variables['page']['extra_js_footer'] = $App->ExtraJSFooter;
+
 	// HTML headers
 	$variables['head']['og_title'] = $App->getOGTitle();
 	$variables['head']['og_description'] = $App->getOGDescription();

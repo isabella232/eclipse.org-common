@@ -43,7 +43,8 @@ class App {
 	private $HTTP_PREFIX    = "http"; #default is http
 
 	# Additional page-related variables
-	public $ExtraHtmlHeaders   = "";
+	public  $ExtraHtmlHeaders   = "";
+	public  $ExtraJSFooter   = "";
 	public	$PageRSS			= "";
 	public  $PageRSSTitle		= "";
 	public  $Promotion			= FALSE;
@@ -526,6 +527,10 @@ EOHTML;
 
 	function AddExtraHtmlHeader( $string ) {
 		$this->ExtraHtmlHeaders .= $string;
+	}
+
+	function AddExtraJSFooter( $string ) {
+		$this->ExtraJSFooter.= $string;
 	}
 
 	function getThemeURL($_theme) {
