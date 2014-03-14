@@ -9,6 +9,12 @@
 .right{
 	text-align:right;
 }
+.float-right{
+	float:right;
+}
+.float-left{
+	float:left;
+}
 
 .left{
 	text-align:left;
@@ -31,4 +37,25 @@
 /* Colors */
 .orange{
 	color:@eclipse-orange;
+}
+
+/* Other */
+.header-row{
+	padding:4px 6px;
+	h2{
+	 margin:0.6em 0;
+	 font-size:1.4em;
+	}
+	&.contrast{
+	  background:#371e1d;
+    color:#b1b1b1;    
+    select{
+      color:#000;
+    }
+	}
+	&.pink{
+		background:#fad9d9;
+		border-top:1px solid #808080;
+		border-bottom:1px solid #808080;
+	}
 }

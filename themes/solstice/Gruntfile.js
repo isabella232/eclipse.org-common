@@ -63,20 +63,12 @@ module.exports = function(grunt) {
                 './bower_components/jquery/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './app/javascript/main.js'],
                 // tasks to run
                 tasks: ['concat:js_frontend', 'uglify:frontend'],
-                options: {
-                    livereload: true
-                    // reloads the browser
-                }
             },
             less: {
                 files: ['./app/stylesheets/*.less', './app/stylesheets/**/*.less'],
                 // watched files
                 tasks: ['less'],
                 // tasks to run
-                options: {
-                    livereload: true
-                    // reloads the browser
-                }
             },
         }
     });
