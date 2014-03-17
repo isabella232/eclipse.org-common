@@ -13,14 +13,16 @@
 		  </div>
 		</main> <!-- /#main-content-container-row -->
 
-		<footer role="contentinfo">
+		<footer role="contentinfo" class="background-stretch">
 		  <div class="container">
 
         <div class="row">
+        	<!--
         	<h1>
 						<strong>Eclipse</strong> <span>&gt;</span> The Eclipse Foundation
 						open source community website.
 					</h1>
+					-->
           <section class="col-md-6">
             <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav">

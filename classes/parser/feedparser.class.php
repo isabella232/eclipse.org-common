@@ -14,7 +14,7 @@ class FeedParser {
 
 	private $url = "";
 
-	private $count = 3;
+	private $count = 4;
 
 	private $description = TRUE;
 
@@ -26,7 +26,7 @@ class FeedParser {
 
 	private $date_format = "Y/m/d";
 
-	private $limit = 300;
+	private $limit = 200;
 
 	public function setUrl($url) {
 	  $this->url = $url;

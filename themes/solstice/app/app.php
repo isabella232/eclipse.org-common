@@ -66,7 +66,7 @@ function solstice_variables(&$variables) {
 	$variables['body']['id'] = 'body_solstice';
 
 	// Logos
-	$variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" width="213" height="50"  class="logo-eclipse-default"/>';
+	$variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-beta.png" alt="Eclipse.org logo" width="213" class="logo-eclipse-default"/>';
 	$variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39" class="logo-eclipse-white"/>';
 
 	// Main-menu
