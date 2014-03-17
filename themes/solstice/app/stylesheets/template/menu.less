@@ -1,62 +1,74 @@
-.yamm{
-  left:-35px;
-  ul li {
-    text-transform:uppercase;  
-  }
-  
-  .dropdown{
-    li{
-      text-transform:none;
-    }
-  }
-  
-  li{
-    a{
-      margin-left:20px;
-      color: #787878;
-      &:hover,
-      &:active{
-        background:none;
-        color:@brand-primary;
-      }
-    }
-  }
-  
-  .dropdown-menu {
-    left: 0;
-    width: 100%;
-    a{
-      margin:0;
-    }
-  }
-  
+@media (min-width: @screen-sm-min) {
+	.yamm{
+		left:-35px;
+	  ul li {
+	    text-transform:uppercase;  
+	  }
+	  
+	  .dropdown{
+	    li{
+	      text-transform:none;
+	    }
+	  }
+	  
+	  li{
+	    a{
+	      margin-left:20px;
+	      color: #787878;
+	      &:hover,
+	      &:active{
+	        background:none;
+	        color:@brand-primary;
+	      }
+	    }
+	  }
+	  
+	  .dropdown-menu {
+	    left: 0;
+	    width: 100%;
+	    a{
+	      margin:0;
+	    }
+	  }
+	  
+	}
+	
+	/* Sidebar nav */
+	#aside-left-nav{
+	  padding-left:0;
+	  left:-15px;
+	}
+	.ul-left-nav{
+	  padding-left:0;
+	  > li {
+	    padding-left:10px;
+	    list-style:none;
+	    margin-bottom:0.45em;
+	  &.separator{
+	    padding-left:0px;
+	    font-weight:bold;
+	    img{
+	      position:absolute;
+	      top:6px;
+	    }
+	  } 
+	    > a{
+	      /*padding: 6px 15px 6px 20px;
+	      background:url('../images/lists/bullet-ul-left-nav.png') 5px 12px no-repeat;*/
+	      color:#545454;
+	      display:inline;
+	    
+	    }
+	  }
+	}
 }
 
-/* Sidebar nav */
-#aside-left-nav{
-  padding-left:0;
-  left:-15px;
-}
-.ul-left-nav{
-  padding-left:0;
-  > li {
-    padding-left:10px;
-    list-style:none;
-    margin-bottom:0.45em;
-  &.separator{
-    padding-left:0px;
-    font-weight:bold;
-    img{
-      position:absolute;
-      top:6px;
-    }
-  } 
-    > a{
-      /*padding: 6px 15px 6px 20px;
-      background:url('../images/lists/bullet-ul-left-nav.png') 5px 12px no-repeat;*/
-      color:#545454;
-      display:inline;
-    
-    }
+// This is a HACK. FIX THIS!!
+@media (max-width: @screen-xs-max) {
+	#main-menu{
+	  .navbar-inverse;
+	}
+  .navbar-nav{
+    margin:0;
   }
 }

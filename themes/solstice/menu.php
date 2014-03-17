@@ -14,11 +14,11 @@
 
 		<header role="banner">
 		  <div class="container">
-			  <div class="row" id="row-logo-search">
+			  <div class="row hidden-xs" id="row-logo-search">
 				  <div id="logo" class="col-sm-16">
 	          <?php print $variables['promotion'];?>
 				  </div>
-				  <div id="search" class="col-md-8">
+				  <div id="search" class="col-sm-8">
 					  <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="form-inline">
 						  <fieldset class="form-group">
 							  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
@@ -31,15 +31,21 @@
 	      </div>
 	      <div class="row" id="row-nav-links">
 		      <!-- Demo navbar -->
-			    <div class="navbar yamm  col-md-16">
+			    <div id="main-menu" class="navbar yamm col-sm-18 col-md-15">
 			        <div class="navbar-header">
-			          <button type="button" data-toggle="collapse" data-target="#navbar-collapse-1" class="navbar-toggle"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-			        </div>
+					      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+					        <span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					      </button>
+					       <a class="navbar-brand visible-xs" href="#">Eclipse</a>
+    					</div>
 			        <div id="navbar-collapse-1" class="navbar-collapse collapse">
 			          <ul class="nav navbar-nav">
 			            <?php print $variables['menu']['main_menu']; ?>
 			            <!-- Classic list -->
-			            <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">More<b class="caret"></b></a>
+			            <li class="dropdown hidden-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">More<b class="caret"></b></a>
 			              <ul class="dropdown-menu">
 			                <li>
 			                  <!-- Content container to add padding -->
@@ -93,10 +99,10 @@
 			          </ul>
 			        </div>
 			    </div>
-		      <div class="action-links col-md-8">
+		      <div class="action-links col-md-9 col-sm-6 hidden-xs">
 		        <div id="button-container">
 			        <!-- Split button -->
-							<div class="btn-group">
+							<div class="btn-group hidden-sm">
 							  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info"><i class="fa fa-user fa-fw"></i> Sign in</a>
 							  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
 							    <span class="caret"></span>
