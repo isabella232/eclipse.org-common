@@ -440,8 +440,9 @@ class App {
 		}
 
 		// DELETE THIS BEFORE GOING LIVE
-		$theme = "solstice";
-
+		if (!isset($_GET['nova'])){
+			$theme = "solstice";
+		}
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
 		}
