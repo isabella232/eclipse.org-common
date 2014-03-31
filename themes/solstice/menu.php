@@ -11,17 +11,18 @@
  *******************************************************************************/
 
 ?>
-
 		<header role="banner">
+
 		  <div class="container">
+		  	  <a target="_blank" class="btn btn-sm btn-info call-for-action hidden-xs" href="https://www.surveymonkey.com/s/eclipsedesign">
+	      Submit feedback
+	    </a>
 			  <div class="row hidden-xs" id="row-logo-search">
 				  <div id="logo" class="col-sm-16">
 	          <?php print $variables['promotion'];?>
 				  </div>
 				  <div id="search" class="col-sm-8">
-				    <a target="_blank" class="btn btn-sm btn-default call-for-action" href="https://www.surveymonkey.com/s/eclipsedesign">
-	            Submit feedback
-	          </a>
+
 					  <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="form-inline">
 						  <fieldset class="form-group">
 							  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
