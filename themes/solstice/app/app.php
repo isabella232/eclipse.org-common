@@ -13,7 +13,7 @@
 function solstice_variables(&$variables) {
 
 	global $App;
-
+  $base_url = '://staging.eclipse.org/';
 	$Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
 
@@ -68,6 +68,7 @@ function solstice_variables(&$variables) {
 	// Logos
 	$variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-beta.png" alt="Eclipse.org logo" width="213" class="logo-eclipse-default"/>';
 	$variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39" class="logo-eclipse-white"/>';
+	$variables['logo']['mobile'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-beta.png" alt="Eclipse.org logo" width="137" class="logo-eclipse-default"/>';
 
 	// Main-menu
 	foreach ($main_menu as $item) {
@@ -75,7 +76,16 @@ function solstice_variables(&$variables) {
 	}
 	$variables['menu']['main_menu'] = implode($items, '');
 
+  $mobile_links = array(
+  	'Working Groups' => '/org/workinggroups/',
+  	'Events'	=> 'http://events.eclipse.org/',
+  	'About Us' => '/org/',
+  );
 
+  foreach ($mobile_links as $key => $value) {
+  	$items[] = '<li class="visible-xs"><a href="' . $value .'" target="_self">' . $key . '</a></li>';
+  }
+  $variables['menu']['main_menu'] = implode($items, '');
 	// Nav menu
 	if ($Nav != NULL) {
 	  $variables['menu']['nav']['link_count'] = $Nav->getLinkCount();
@@ -93,9 +103,10 @@ function solstice_variables(&$variables) {
 	} else if ($App->Promotion == TRUE) {
 	  include($App->getPromotionPath($theme));
 	} else {
-	  print '<a href="//www.eclipse.org/">' . $variables['logo']['default'] . '</a>';
+	  print '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
 	}
 	$variables['promotion'] = ob_get_clean();
+	$variables['logo_mobile'] =  '<a href="' . $variables['url'] . '" class="navbar-brand visible-xs">' . $variables['logo']['mobile'] . '</a>';
 
 	$variables['uri'] = parse_url($_SERVER['REQUEST_URI']);
 
