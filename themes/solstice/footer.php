@@ -23,7 +23,7 @@
 						open source community website.
 					</h1>
 					-->
-          <section class="col-md-6">
+          <section class="col-sm-12 col-md-6">
             <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav">
 				      <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
@@ -33,7 +33,7 @@
               <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
 				    </ul>
 			    </section>
-          <section class="col-md-6">
+          <section class="col-sm-12 col-md-6">
             <h2 class="section-title">Legal</h2>
 				    <ul class="nav">
 					    <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
@@ -45,7 +45,7 @@
 				    </ul>
 			    </section>
 
-			    <section class="col-md-6">
+			    <section class="col-sm-12 col-md-6">
             <h2 class="section-title">Useful Links</h2>
 				    <ul class="nav">
 				      <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
@@ -57,7 +57,7 @@
 
 				    </ul>
 			    </section>
-			    <section class="col-md-6">
+			    <section class="col-sm-12 col-md-6">
 			      <h2 class="section-title">Other</h2>
 			      <ul class="nav">
 			       	<li><a href="<?php print $variables['url']; ?>ide/">IDE and Tools</a></li>
