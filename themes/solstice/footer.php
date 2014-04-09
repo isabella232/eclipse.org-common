@@ -13,7 +13,7 @@
 		  </div>
 		</main> <!-- /#main-content-container-row -->
 
-		<footer role="contentinfo" class="background-stretch">
+		<footer role="contentinfo">
 		  <div class="container">
 
         <div class="row">

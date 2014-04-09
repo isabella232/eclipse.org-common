@@ -15,8 +15,9 @@
     "test",
     "tests"
   ],
-  "dependencies": {
+  "devDependencies": {
     "bootstrap": "3.1.1",
-    "yamm3":"git://github.com/chrisguindon/yamm3#69ba4a32b3b7228421920d6300011745be374029"
+    "yamm3": "git://github.com/chrisguindon/yamm3#69ba4a32b3b7228421920d6300011745be374029",
+    "fontawesome": "~4.0.3"
   }
 }
