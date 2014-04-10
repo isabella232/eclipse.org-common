@@ -77,7 +77,7 @@ class FeedParser {
 
 			$description = (string) $item->description;
 			if (strlen($description) > $this->limit) {
-				$description = substr($description, 0, $this->limit);
+				$description = substr(strip_tags($description), 0, $this->limit);
 				$description = strip_tags($description, "<a>");
 				$description .= "...";
 			}
