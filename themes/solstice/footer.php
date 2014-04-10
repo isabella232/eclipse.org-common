@@ -23,7 +23,7 @@
 						open source community website.
 					</h1>
 					-->
-          <section class="col-sm-12 col-md-6">
+          <section id="footer-eclipse-foundation" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
             <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav">
 				      <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
@@ -33,7 +33,7 @@
               <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
 				    </ul>
 			    </section>
-          <section class="col-sm-12 col-md-6">
+          <section id="footer-legal" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
             <h2 class="section-title">Legal</h2>
 				    <ul class="nav">
 					    <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
@@ -45,7 +45,7 @@
 				    </ul>
 			    </section>
 
-			    <section class="col-sm-12 col-md-6">
+			    <section id="footer-useful-links" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
             <h2 class="section-title">Useful Links</h2>
 				    <ul class="nav">
 				      <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
@@ -54,10 +54,10 @@
 					    <li><a href="<?php print $variables['url']; ?>mail/">Mailing Lists</a></li>
 					    <li><a href="<?php print $variables['url']; ?>forums/">Forums</a></li>
 							<li><a href="//marketplace.eclipse.org">Marketplace</a></li>
-
 				    </ul>
 			    </section>
-			    <section class="col-sm-12 col-md-6">
+
+			    <section id="footer-other" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
 			      <h2 class="section-title">Other</h2>
 			      <ul class="nav">
 			       	<li><a href="<?php print $variables['url']; ?>ide/">IDE and Tools</a></li>
@@ -71,20 +71,17 @@
 					    <li class="social-media-icon social-media-youtube"><a href="https://www.youtube.com/user/EclipseFdn"><span class="sr-only">Youtube</span></a></li>
 				    </ul>
 	        </section>
-        </div>
+	        <div id="copyright">
+					  <div class="col-xs-offset-1 col-sm-14 col-md-24 col-md-offset-0">
+              <?php print $variables['logo']['white']; ?>
+ 						  <p id="copyright-text"><?php print $variables['footer']['copyright'];?></p>
+				    </div>
+          </div>
 
-        <div id="copyright" class="row">
-					<div class="col-md-24">
-            <?php print $variables['logo']['white']; ?>
- 						<p id="copyright-text"><?php print $variables['footer']['copyright'];?></p>
-				  </div>
         </div>
-
       </div>
 		</footer>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<?php print $variables['theme_url'];?>public/javascript/main.min.js"></script>
     <?php print $variables['page']['extra_js_footer'];?>

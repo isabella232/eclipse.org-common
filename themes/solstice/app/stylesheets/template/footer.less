@@ -3,6 +3,17 @@
 // --------------------------------------------------
 
 footer{
+	@media (max-width: @screen-md-min ) {
+    #copyright-text{
+      text-align: left;
+      clear:both;
+    }
+  }
+  @media (max-width: @screen-sm-min) and (min-width: 350px) {
+    section{
+      .make-xs-column(10);
+    }
+  }
 	background: url("../images/template/footer-bg.jpg") no-repeat center center; 
 	.background-size(cover);
 	padding-top:3.5em;
@@ -54,10 +65,11 @@ footer{
     float:left;
     margin-top:20px;
     margin-right:15px;
+    clear:both;
   }	
 }
 #copyright-text{
-	 padding-top:30px;
+	 padding-top:15px;
 	 text-align:right;
 
 }

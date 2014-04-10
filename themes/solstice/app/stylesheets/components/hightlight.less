@@ -14,6 +14,13 @@
 }
 
 .highlight{
+	padding:5em 0 2.5em 0;
+	@media (min-width: @screen-md-min) {
+	   padding:6.5em 0 4em 0;
+    .highlight-content{
+      padding-top:3em;
+    }
+  }
 	p, li{
 	   font-size:1.2em;
 	}
@@ -25,7 +32,7 @@
 	h1{
 	 margin-bottom:0.5em;
 	}
-  padding:6.5em 0 4em 0;
+  
   overflow:hidden;
   position:relative;
   color:#7d7d7d;
@@ -34,13 +41,12 @@
     right:17%;
     top:0;
   }
-  .highlight-content{
-    padding-top:3em;
-    p{
-      padding-bottom:1.35em;
-    }
-     
+ 
+    
+  p{
+    padding-bottom:1.35em;
   }
+
 }
 .highlight-left{
   .triangle{
@@ -51,17 +57,12 @@
 
 .highlight-white{
   background:#fff;
-
- 
 }
 
 .highlight-black{
   background:#252525;
-
 }
 
 .highlight-grey{
-  background:@eclipse-highlight-grey;
-
-  
+  background:@eclipse-highlight-grey; 
 }
