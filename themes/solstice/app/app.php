@@ -13,14 +13,14 @@
 function solstice_variables(&$variables) {
 
 	global $App;
-  $base_url = '://staging.eclipse.org/';
+  $base_url = '//staging.eclipse.org/';
 	$Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
 
 	// If the main menu is custom, do not change it
 	$NewMenu = new $Menu();
 	$main_menu = $Menu->getMenuArray();
-	if($NewMenu->getMenuArray() == $main_menu){
+	if ($NewMenu->getMenuArray() == $main_menu) {
 		$Menu = new $Menu();
 	  $Menu->setMenuItemList(array());
 	  $Menu->addMenuItem("Getting Started ", "/users/", "_self");
@@ -74,18 +74,114 @@ function solstice_variables(&$variables) {
 	foreach ($main_menu as $item) {
 		$items[] = '<li><a href="' . $item->getURL() .'" target="' . $item->getTarget() .'">' . $item->getText() . '</a></li>';
 	}
+
 	$variables['menu']['main_menu'] = implode($items, '');
 
-  $mobile_links = array(
-  	'Working Groups' => '/org/workinggroups/',
-  	'Events'	=> 'http://events.eclipse.org/',
-  	'About Us' => '/org/',
+	$variables['menu']['more'] = array();
+	$variables['menu']['more']['Getting Started'][] = array(
+		'url' => '//download.eclipse.org',
+		'caption' => 'Download Eclipse'
+	);
+	$variables['menu']['more']['Getting Started'][] = array(
+		'url' => 'http://help.eclipse.org',
+		'caption' => 'Documentation'
+	);
+	$variables['menu']['more']['Getting Started'][] = array(
+	  'url' => $variables['url'] . 'community/eclipse_newsletter/',
+		'caption' => 'Newsletter'
+	);
+	$variables['menu']['more']['Getting Started'][] = array(
+		'url' => $variables['url'] . 'projects/',
+		'caption' => 'Projects'
+	);
+	$variables['menu']['more']['Getting Started'][] = array(
+		'url' => 'http://events.eclipse.org',
+		'caption' => 'Events'
   );
 
-  foreach ($mobile_links as $key => $value) {
-  	$items[] = '<li class="visible-xs"><a href="' . $value .'" target="_self">' . $key . '</a></li>';
+  $variables['menu']['more']['Working Groups'][] = array(
+  	'url' => 'http://wiki.eclipse.org/Auto_IWG',
+  	'caption' => 'Automotive'
+  );
+  $variables['menu']['more']['Working Groups'][] = array(
+  		'url' => 'http://locationtech.org',
+  		'caption' => 'LocationTech'
+  );
+  $variables['menu']['more']['Working Groups'][] = array(
+  		'url' => 'http://lts.eclipse.org',
+  		'caption' => 'Long-Term Support'
+  );
+  $variables['menu']['more']['Working Groups'][] = array(
+  		'url' => 'http://iot.eclipse.org',
+  		'caption' => 'Internet of Things'
+  );
+  $variables['menu']['more']['Working Groups'][] = array(
+  		'url' => 'http://polarsys.org',
+  		'caption' => 'PolarSys'
+  );
+
+
+  $variables['menu']['more']['Explore'][] = array(
+  		'url' => 'http://marketplace.eclipse.org',
+  		'caption' => 'Eclipse Marketplace'
+  );
+  $variables['menu']['more']['Explore'][] = array(
+  		'url' => 'https://bugs.eclipse.org/bugs/',
+  		'caption' => 'Bugzilla'
+  );
+  $variables['menu']['more']['Explore'][] = array(
+  		'url' => $variables['url'] . 'forums/',
+  		'caption' => 'Eclipse Forums'
+  );
+  $variables['menu']['more']['Explore'][] = array(
+  		'url' => '//www.planeteclipse.org/',
+  		'caption' => 'Planet Eclipse'
+  );
+  $variables['menu']['more']['Explore'][] = array(
+  		'url' => '//wiki.eclipse.org/',
+  		'caption' => 'Eclipse Wiki'
+  );
+
+
+  $variables['menu']['more']['Legal'][] = array(
+  		'url' => $variables['url'] . 'legal/privacy.php',
+  		'caption' => 'Privacy Policy'
+  );
+  $variables['menu']['more']['Legal'][] = array(
+  		'url' => $variables['url'] . 'legal/termsofuse.php',
+  		'caption' => 'Terms of Use'
+  );
+  $variables['menu']['more']['Legal'][] = array(
+  		'url' => $variables['url'] . 'legal/copyright.php',
+  		'caption' => 'Copyright Agent'
+  );
+  $variables['menu']['more']['Legal'][] = array(
+  		'url' => $variables['url'] . 'legal/',
+  		'caption' => 'Legal'
+  );
+  $variables['menu']['more']['Legal'][] = array(
+  		'url' => $variables['url'] . 'org/foundation/contact.php',
+  		'caption' => 'Contact Us'
+  );
+
+  $variables['menu']['mobile_more'] = "";
+  $variables['menu']['desktop_more'] = '';
+  foreach ($variables['menu']['more'] as $key => $value) {
+  	$first = TRUE;
+  	foreach ($value as $link){
+  		if ($first) {
+  			$first = FALSE;
+  			$variables['menu']['desktop_more'] .= '<ul class="col-sm-6 list-unstyled"><li><p><strong>' . $key . '</strong></p></li>';
+  			$variables['menu']['mobile_more'] .= '<li class="dropdown visible-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">' . $key . ' <b class="caret"></b></a><ul class="dropdown-menu">';
+  		}
+  		$l = '<li><a href="' . $link['url'] . '">' . $link['caption'] . '</a></li>';
+  		$variables['menu']['desktop_more'] .= $l;
+  		$variables['menu']['mobile_more'] .= $l;
+  	}
+  	$variables['menu']['mobile_more'] .= '</ul></li>';
+  	$variables['menu']['desktop_more'] .= '</ul>';
   }
-  $variables['menu']['main_menu'] = implode($items, '');
+
 	// Nav menu
 	if ($Nav != NULL) {
 	  $variables['menu']['nav']['link_count'] = $Nav->getLinkCount();
