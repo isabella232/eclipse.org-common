@@ -172,6 +172,9 @@ function solstice_variables(&$variables) {
   		if ($first) {
   			$first = FALSE;
   			$variables['menu']['desktop_more'] .= '<ul class="col-sm-6 list-unstyled"><li><p><strong>' . $key . '</strong></p></li>';
+
+  			// Rename the Getting Stated link on the mobile menu
+  			$key = ($key == 'Getting Started') ? 'Discover' : $key;
   			$variables['menu']['mobile_more'] .= '<li class="dropdown visible-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">' . $key . ' <b class="caret"></b></a><ul class="dropdown-menu">';
   		}
   		$l = '<li><a href="' . $link['url'] . '">' . $link['caption'] . '</a></li>';
