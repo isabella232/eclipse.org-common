@@ -11,6 +11,10 @@
 		if($("#rightcolumn").length == 0) {
 			$("#midcolumn").attr("class", "no-right-sidebar");	
 		}
+		// add a class if left column is non-existant.
+		if($("#aside-left-nav").length == 0) {
+			$("#midcolumn").attr("class", "no-left-nav");	
+		}
 	});
 	
 	
