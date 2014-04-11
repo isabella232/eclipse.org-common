@@ -13,6 +13,9 @@
 		  </div>
 		</main> <!-- /#main-content-container-row -->
 
+    <p id="back-to-top">
+      <a class="visible-xs" href="#top">Back to the top</a>
+    </p>
 		<footer role="contentinfo">
 		  <div class="container">
 
@@ -23,7 +26,7 @@
 						open source community website.
 					</h1>
 					-->
-          <section id="footer-eclipse-foundation" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
+          <section id="footer-eclipse-foundation" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0">
             <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav">
 				      <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
@@ -33,7 +36,7 @@
               <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
 				    </ul>
 			    </section>
-          <section id="footer-legal" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
+          <section id="footer-legal" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0">
             <h2 class="section-title">Legal</h2>
 				    <ul class="nav">
 					    <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
@@ -45,7 +48,7 @@
 				    </ul>
 			    </section>
 
-			    <section id="footer-useful-links" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
+			    <section id="footer-useful-links" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0">
             <h2 class="section-title">Useful Links</h2>
 				    <ul class="nav">
 				      <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
@@ -57,13 +60,15 @@
 				    </ul>
 			    </section>
 
-			    <section id="footer-other" class="col-xs-offset-1 col-sm-7 col-md-6 col-md-offset-0">
+			    <section id="footer-other" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0">
+
 			      <h2 class="section-title">Other</h2>
 			      <ul class="nav">
 			       	<li><a href="<?php print $variables['url']; ?>ide/">IDE and Tools</a></li>
 				    	<li><a href="//projects.eclipse.org/">Community of Projects</a></li>
 					    <li><a href="<?php print $variables['url']; ?>org/workinggroups/">Working Groups</a></li>
 					  </ul>
+
 						<ul class="social-media list-inline">
 			        <li class="social-media-icon social-media-twitter"><a href="https://twitter.com/EclipseFdn"><span class="sr-only">Twitter</span></a></li>
 			        <li class="social-media-icon social-media-google"><a href="https://plus.google.com/+Eclipse"><span class="sr-only">Google+</span></a></li>
@@ -71,8 +76,8 @@
 					    <li class="social-media-icon social-media-youtube"><a href="https://www.youtube.com/user/EclipseFdn"><span class="sr-only">Youtube</span></a></li>
 				    </ul>
 	        </section>
-	        <div id="copyright">
-					  <div class="col-xs-offset-1 col-sm-14 col-md-24 col-md-offset-0">
+	        <div id="copyright"  class="col-xs-offset-1  col-sm-14 col-md-24 col-md-offset-0">
+					  <div>
               <?php print $variables['logo']['white']; ?>
  						  <p id="copyright-text"><?php print $variables['footer']['copyright'];?></p>
 				    </div>
