@@ -32,9 +32,9 @@ function solstice_variables(&$variables) {
 	$theme = $variables['page']['theme'];
 	$variables['theme_variables'] = $App->getThemeVariables();
 	if (!empty($variables['theme_variables']['breadcrumbs_html'])) {
-		$variables['theme_variables']['breadcrumbs_classes'] = 'large-breadcrumbs';
+		$variables['theme_variables']['breadcrumbs_classes'] = 'large-breadcrumbs hidden-print';
 	} else {
-		$variables['theme_variables']['breadcrumbs_classes'] = 'defaut-breadcrumbs';
+		$variables['theme_variables']['breadcrumbs_classes'] = 'defaut-breadcrumbs hidden-print';
 	}
 	$variables['url'] = $App->getWWWPrefix() . '/';
 

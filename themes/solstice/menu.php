@@ -17,7 +17,7 @@
 				  <div id="logo" class="col-sm-16">
 	          <?php print $variables['promotion'];?>
 				  </div>
-				  <div id="search" class="col-sm-8">
+				  <div id="search" class="col-sm-8 hidden-print">
 		        <a target="_blank" class="btn btn-sm btn-info call-for-action hidden-xs" href="https://www.surveymonkey.com/s/eclipsedesign">
 	            Submit feedback
 	          </a>
@@ -31,7 +31,7 @@
 					  <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>
 				  </div>
 	      </div>
-	      <div class="row" id="row-nav-links">
+	      <div class="row hidden-print" id="row-nav-links">
 		      <!-- Demo navbar -->
 			    <div id="main-menu" class="navbar yamm col-sm-18 col-md-15">
 		        <div id="navbar-collapse-1" class="navbar-collapse collapse">

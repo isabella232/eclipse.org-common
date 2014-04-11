@@ -13,7 +13,7 @@
  *******************************************************************************/
 ?>
 <!-- nav -->
-<aside id="aside-left-nav" class="col-md-4">
+<aside id="aside-left-nav" class="col-md-4 hidden-print">
   <ul class="ul-left-nav fa-ul">
 	  <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
 
