@@ -32,19 +32,27 @@ header{
 }
 
 #button-container{
+	margin-top:0.5em;
 	.btn{
-	  text-transform: uppercase;
-	  font-size:1.1em;
-	  padding:10px 20px;
-	  font-weight:bold;
+    text-transform: uppercase;
+    font-weight:bold;
+    font-size:12.5px;
   }
-  .btn-warning{
-    padding:10px 34px;
+	@media (min-width: @screen-lg-min) {
+	  margin-top:0;
+    .btn{
+      font-size:1.1em;
+      padding:10px 20px;
+    }
+    .btn-warning{
+      padding:10px 34px;
+    }
+    .dropdown-toggle{
+      padding-left:8px;
+      padding-right:8px;
+    }
   }
-  .dropdown-toggle{
-    padding-left:8px;
-    padding-right:8px;
-  }
+ 
 }
 
 /* Breadcrumbs*/

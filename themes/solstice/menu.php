@@ -33,7 +33,7 @@
 	      </div>
 	      <div class="row hidden-print" id="row-nav-links">
 		      <!-- Demo navbar -->
-			    <div id="main-menu" class="navbar yamm col-sm-18 col-md-15">
+			    <div id="main-menu" class="navbar yamm col-sm-16 col-md-18 col-lg-17">
 		        <div id="navbar-collapse-1" class="navbar-collapse collapse">
 		          <ul class="nav navbar-nav">
 		            <?php print $variables['menu']['main_menu']; ?>
@@ -64,10 +64,10 @@
 				      <?php print $variables['logo_mobile']; ?>
     				</div>
 			    </div>
-		      <div class="action-links col-md-9 col-sm-6 hidden-xs">
+		      <div class="action-links hidden-xs col-sm-8 col-md-6 col-lg-7">
 		        <div id="button-container">
 			        <!-- Split button -->
-							<div class="btn-group hidden-sm">
+							<div class="btn-group">
 							  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info"><i class="fa fa-user fa-fw"></i> Sign in</a>
 							  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
 							    <span class="caret"></span>
