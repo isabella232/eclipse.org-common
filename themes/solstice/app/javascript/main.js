@@ -19,7 +19,7 @@
 	
 	// scroll button.
 	$(window).on("load resize scroll", function(){
-		if ($(window).width() < 1200){
+		if ($(window).width() < 1270){
 			$('.scrollup').hide();
 			return false;
 		}

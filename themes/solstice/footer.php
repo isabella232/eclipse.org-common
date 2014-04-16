@@ -14,10 +14,10 @@
 		</main> <!-- /#main-content-container-row -->
 
     <p id="back-to-top">
-      <a class="visible-xs" href="#top">Back to the top</a>
+      <a class="visible-xs" href="#top"></a>
     </p>
 		<footer role="contentinfo">
-		  <a href="#" class="scrollup">Scroll</a>
+
 		  <div class="container">
 
         <div class="row">
@@ -77,7 +77,7 @@
  						  <p id="copyright-text"><?php print $variables['footer']['copyright'];?></p>
 				    </div>
           </div>
-
+        <a href="#" class="scrollup">Back to the top</a>
         </div>
       </div>
 		</footer>
