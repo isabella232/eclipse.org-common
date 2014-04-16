@@ -17,15 +17,10 @@
       <a class="visible-xs" href="#top">Back to the top</a>
     </p>
 		<footer role="contentinfo">
+		  <a href="#" class="scrollup">Scroll</a>
 		  <div class="container">
 
         <div class="row">
-        	<!--
-        	<h1>
-						<strong>Eclipse</strong> <span>&gt;</span> The Eclipse Foundation
-						open source community website.
-					</h1>
-					-->
           <section id="footer-eclipse-foundation" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
             <h2 class="section-title">Eclipse Foundation</h2>
 				    <ul class="nav">

@@ -17,5 +17,25 @@
 		}
 	});
 	
+	// scroll button.
+	$(window).on("load resize scroll", function(){
+		if ($(window).width() < 1200){
+			$('.scrollup').hide();
+			return false;
+		}
+        if ($(this).scrollTop() > 100) {
+            $('.scrollup').fadeIn();
+        } else {
+            $('.scrollup').fadeOut();
+        }
+    });
+	
+	// scroll back to the top of the page.
+	$('.scrollup').click(function(){
+		$("html, body").animate({ scrollTop: 0 }, 600);
+		return false;
+	});
+	
+	
 	
 })(jQuery, document);
