@@ -78,43 +78,64 @@ function solstice_variables(&$variables) {
 	$variables['menu']['main_menu'] = implode($items, '');
 
 	$variables['menu']['more'] = array();
-	$variables['menu']['more']['Getting Started'][] = array(
+
+	$variables['menu']['more']['Community'][] = array(
+			'url' => 'http://events.eclipse.org',
+			'caption' => 'Events'
+	);
+
+	$variables['menu']['more']['Community'][] = array(
+			'url' => $variables['url'] . 'forums/',
+			'caption' => 'Forums'
+	);
+
+	$variables['menu']['more']['Community'][] = array(
+			'url' => '//www.planeteclipse.org/',
+			'caption' => 'Planet Eclipse'
+	);
+
+  /*
+	$variables['menu']['more']['Community'][] = array(
 		'url' => '//download.eclipse.org',
 		'caption' => 'Download Eclipse'
 	);
-	$variables['menu']['more']['Getting Started'][] = array(
+
+	$variables['menu']['more']['Community'][] = array(
 		'url' => 'http://help.eclipse.org',
 		'caption' => 'Documentation'
 	);
-	$variables['menu']['more']['Getting Started'][] = array(
-	  'url' => $variables['url'] . 'community/eclipse_newsletter/',
-		'caption' => 'Newsletter'
-	);
-	$variables['menu']['more']['Getting Started'][] = array(
+
+	$variables['menu']['more']['Community'][] = array(
 		'url' => $variables['url'] . 'projects/',
 		'caption' => 'Projects'
 	);
-	$variables['menu']['more']['Getting Started'][] = array(
-		'url' => 'http://events.eclipse.org',
-		'caption' => 'Events'
-  );
+*/
+	$variables['menu']['more']['Community'][] = array(
+	  'url' => $variables['url'] . 'community/eclipse_newsletter/',
+		'caption' => 'Newsletter'
+	);
+
 
   $variables['menu']['more']['Working Groups'][] = array(
   	'url' => 'http://wiki.eclipse.org/Auto_IWG',
   	'caption' => 'Automotive'
   );
-  $variables['menu']['more']['Working Groups'][] = array(
-  		'url' => 'http://locationtech.org',
-  		'caption' => 'LocationTech'
-  );
-  $variables['menu']['more']['Working Groups'][] = array(
-  		'url' => 'http://lts.eclipse.org',
-  		'caption' => 'Long-Term Support'
-  );
+
   $variables['menu']['more']['Working Groups'][] = array(
   		'url' => 'http://iot.eclipse.org',
   		'caption' => 'Internet of Things'
   );
+
+  $variables['menu']['more']['Working Groups'][] = array(
+  		'url' => 'http://locationtech.org',
+  		'caption' => 'LocationTech'
+  );
+
+  $variables['menu']['more']['Working Groups'][] = array(
+  		'url' => 'http://lts.eclipse.org',
+  		'caption' => 'Long-Term Support'
+  );
+
   $variables['menu']['more']['Working Groups'][] = array(
   		'url' => 'http://polarsys.org',
   		'caption' => 'PolarSys'
@@ -123,25 +144,23 @@ function solstice_variables(&$variables) {
 
   $variables['menu']['more']['Explore'][] = array(
   		'url' => 'http://marketplace.eclipse.org',
-  		'caption' => 'Eclipse Marketplace'
+  		'caption' => 'Marketplace'
   );
   $variables['menu']['more']['Explore'][] = array(
   		'url' => 'https://bugs.eclipse.org/bugs/',
   		'caption' => 'Bugzilla'
   );
-  $variables['menu']['more']['Explore'][] = array(
-  		'url' => $variables['url'] . 'forums/',
-  		'caption' => 'Eclipse Forums'
-  );
-  $variables['menu']['more']['Explore'][] = array(
-  		'url' => '//www.planeteclipse.org/',
-  		'caption' => 'Planet Eclipse'
-  );
+
   $variables['menu']['more']['Explore'][] = array(
   		'url' => '//wiki.eclipse.org/',
-  		'caption' => 'Eclipse Wiki'
+  		'caption' => 'Wiki'
   );
 
+
+  $variables['menu']['more']['Legal'][] = array(
+  		'url' => $variables['url'] . 'legal/epl-v10.html',
+  		'caption' => 'Eclipse Public License'
+  );
 
   $variables['menu']['more']['Legal'][] = array(
   		'url' => $variables['url'] . 'legal/privacy.php',
@@ -159,10 +178,14 @@ function solstice_variables(&$variables) {
   		'url' => $variables['url'] . 'legal/',
   		'caption' => 'Legal'
   );
+
+
+  /*
   $variables['menu']['more']['Legal'][] = array(
   		'url' => $variables['url'] . 'org/foundation/contact.php',
   		'caption' => 'Contact Us'
   );
+  */
 
   $variables['menu']['mobile_more'] = "";
   $variables['menu']['desktop_more'] = '';
@@ -172,9 +195,6 @@ function solstice_variables(&$variables) {
   		if ($first) {
   			$first = FALSE;
   			$variables['menu']['desktop_more'] .= '<ul class="col-sm-6 list-unstyled"><li><p><strong>' . $key . '</strong></p></li>';
-
-  			// Rename the Getting Stated link on the mobile menu
-  			$key = ($key == 'Getting Started') ? 'Discover' : $key;
   			$variables['menu']['mobile_more'] .= '<li class="dropdown visible-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">' . $key . ' <b class="caret"></b></a><ul class="dropdown-menu">';
   		}
   		$l = '<li><a href="' . $link['url'] . '">' . $link['caption'] . '</a></li>';
