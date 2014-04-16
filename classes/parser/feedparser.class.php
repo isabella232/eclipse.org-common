@@ -40,6 +40,10 @@ class FeedParser {
       </a>';
 	}
 
+	public function setPressReleaseFlag($flag = FALSE){
+    $this->press_release = $flag;
+	}
+
 	public function setCount($count) {
 		if (is_int($count)) {
 			$this->count = $count;
@@ -78,6 +82,10 @@ class FeedParser {
 
 			if ($count >= $this->count) {
 				break;
+			}
+
+			if ($this->press_release && $item->pressrelease != 1) {
+        continue;
 			}
 
 			$date = strtotime((string) $item->pubDate);
