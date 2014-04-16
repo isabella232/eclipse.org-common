@@ -24,12 +24,20 @@ class FeedParser {
 
 	private $more = "";
 
+	private $rssLink = "";
+
 	private $date_format = "Y/m/d";
 
 	private $limit = 200;
 
 	public function setUrl($url) {
 	  $this->url = $url;
+	}
+
+	public function setRssLink($url) {
+    $this->rssLink = '<a href="' . $url . '" class="link-rss-feed  orange" title="Subscribe to our RSS-feed">
+    		<i class="fa fa-rss"></i> <span>Subscribe to our RSS-feed</span>
+      </a>';
 	}
 
 	public function setCount($count) {
@@ -97,8 +105,7 @@ class FeedParser {
 
 	public function output() {
 		$this->parse_feed();
-		$output = "";
-
+		$output = '<div class="news_item_header">' . $this->rssLink . '</div>';
 		if (!empty($this->items)) {
 			foreach ($this->items as $item) {
 				$output .= '<div class="news_item">';
@@ -111,8 +118,8 @@ class FeedParser {
 				}
 				$output .= '</div>';
 			}
-			if (!empty($this->more)) {
-				$output .= '<div class="news_view_all">' . $this->more . '</div>';
+			if (!empty($this->more) || !empty($this->rssLink)) {
+				$output .= '<div class="news_view_all">' . $this->more . $this->rssLink . '</div>';
 			}
 		}
 		print $output;
