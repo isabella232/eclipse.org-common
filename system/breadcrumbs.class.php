@@ -126,15 +126,15 @@ class Breadcrumb extends Menu {
 		}
 	}
 
-	/**
+  /**
    * Unset a link from CrumbList
    *
    * @param int|array $_Key
    */
   private function _removeCrumb($_Key){
-  	if (isset($this->CrumbList[$_Key])) {
-  		unset($this->CrumbList[$_Key]);
-  	}
+    if (isset($this->CrumbList[$_Key])) {
+      unset($this->CrumbList[$_Key]);
+    }
   }
 
   /**
