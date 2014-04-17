@@ -157,7 +157,7 @@ class Breadcrumb extends Menu {
       $this->_removeCrumb($_Key);
     }
 
-    // 'reindex' the CrumbList array.
+    // 'reindex' CrumbList.
     $this->CrumbList = array_values($this->CrumbList);
   }
 
