@@ -1,7 +1,16 @@
 
 /* #bigButtons */
 main{
-	#bigbuttons{
+	#bigbuttons{	
+	
+    padding-top:1.8em;
+    margin-bottom:1em;
+    .make-sm-column(10);
+    .make-sm-column-offset(14);
+	  .make-md-column(15);
+	  .make-md-column-offset(9);
+	  .make-lg-column(16);
+    .make-lg-column-offset(6);
 	  h3{
 	    display:none;
 	  }
@@ -11,19 +20,38 @@ main{
 	  top:auto;
 	  left:auto;
 	  ul{ 
-	  .list-inline;
-	    li{
+	    .list-inline;
+	    li{	    
+	      @media (min-width: @screen-sm-min) {
+	        float:right;
+        } 
 	      background:none;
+	      
 	    }
 	  }
 	  a{
 	    position:relative;
 	    margin:0;
-	    text-decoration:none;
 	    top:auto;
 	    left:auto;
+	    &:hover{
+	      text-decoration:none;
+	    
+	    }
 	  }
   }
+}
+
+div#novaContent{
+  @media (max-width: @screen-xs-max) {
+    background-image:none;
+  }
+  background-position:left top; 
+  @media (min-width: @screen-lg-min) {
+    background-position:center top; 
+  }
+  
+  padding-top:0;
 }
 
 #fullcolumn{

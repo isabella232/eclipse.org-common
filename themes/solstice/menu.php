@@ -95,5 +95,5 @@
 		    </section>
 	    <?php endif; ?>
 		<main role="main">
-		  <div class="<?php print $variables['theme_variables']['main_container_classes'];?>">
+		  <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
 	        <?php print $variables['deprecated'];?>
