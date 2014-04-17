@@ -144,7 +144,7 @@ class Breadcrumb extends Menu {
    */
 	function removeCrumb($_Key = NULL) {
 
-    if ($_Key == NULL) {
+    if ($_Key === NULL) {
       return;
     }
 
