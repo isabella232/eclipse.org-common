@@ -16,6 +16,25 @@ function solstice_variables(&$variables) {
   $base_url = '//staging.eclipse.org/';
 	$Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
+  $Breadcrumb = $variables['page']['Breadcrumb'];
+
+	// Breadcrumbs
+	$crumb_list = $Breadcrumb->getCrumbList();
+
+  // fetch key of the last element of the array.
+  $crumb_last_key = $Breadcrumb->getCrumbCount()-1;
+
+  $variables['breadcrumbs'] = '<ol class="breadcrumb">';
+	foreach ($crumb_list as $k => $v) {
+		// add .active class to the last item of the breadcrumbs
+		if($k == $crumb_last_key) {
+			$variables['breadcrumbs'] .= '<li class="active">' . $v->getText() . '</li>';
+		}
+		else {
+			$variables['breadcrumbs'] .= '<li><a href="' . $v->getURL() . '">' . $v->getText() . '</a></li>';
+		}
+	}
+	$variables['breadcrumbs'] .= "</ol>";
 
 	// If the main menu is custom, do not change it
 	$NewMenu = new $Menu();
@@ -244,6 +263,7 @@ $variables['page']['theme'] = $theme;
 $variables['page']['Nav'] = $Nav;
 $variables['page']['Menu'] = $Menu;
 $variables['page']['html'] = $html;
+$variables['page']['Breadcrumb'] = $Breadcrumb;
 $variables['page']['extra_headers'] = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
 
 solstice_variables($variables);

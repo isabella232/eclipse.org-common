@@ -430,9 +430,13 @@ class App {
 		return str_replace("\n", "<br />", $_String);
 	}
 
-	function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html) {
+	function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL) {
 
-		# OPT1: ob_start();
+	  # Breadcrumbs for the new solstice theme.
+		if ($Breadcrumb == NULL || !is_object($Breadcrumb)) {
+			require_once('breadcrumbs.class.php');
+			$Breadcrumb = new Breadcrumb();
+		}
 
 		# All web page parameters passed for variable scope
 		if($theme == "") {

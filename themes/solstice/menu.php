@@ -89,10 +89,7 @@
 		<?php if (!$variables['theme_variables']['hide_breadcrumbs']) :?>
 			<section id="breadcrumb" class="<?php print $variables['theme_variables']['breadcrumbs_classes'];?>">
 			  <div class="container">
-					<ol class="breadcrumb">
-			      <li><a href="<?php print $variables['url']; ?>">Home</a></li>
-			      <li class="active"><?php print $variables['page']['title'];?></li>
-			    </ol>
+					<?php print $variables['breadcrumbs'];?>
 			    <?php print $variables['theme_variables']['breadcrumbs_html'];?>
 			    </div>
 		    </section>
