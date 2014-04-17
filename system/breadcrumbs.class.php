@@ -140,6 +140,14 @@ class Breadcrumb extends Menu {
   /**
    * Remove links from CrumbList
    *
+   * Usage example:
+   *
+   *   Remove more than one link with an array.
+   *     $Breadcrumb->removeCrumb(array(0,3));
+   *
+   *   Remove only one link.
+   *     $Breadcrumb->removeCrumb(1);
+   *
    * @param int|array $_Key
    */
 	function removeCrumb($_Key = NULL) {
