@@ -144,21 +144,21 @@ class Breadcrumb extends Menu {
    */
 	function removeCrumb($_Key = NULL) {
 
-		if ($_Key == NULL) {
+    if ($_Key == NULL) {
       return;
-		}
+    }
 
 		if (is_array($_Key)) {
       foreach ($_Key as $k) {
-      	$this->_removeCrumb($k);
+        $this->_removeCrumb($k);
       }
 		}
 		else {
-			$this->_removeCrumb($_Key);
+      $this->_removeCrumb($_Key);
 		}
 
-		// 'reindex' the CrumbList array.
-		$this->CrumbList = array_values($this->CrumbList);
+   // 'reindex' the CrumbList array.
+   $this->CrumbList = array_values($this->CrumbList);
 
 	}
 
