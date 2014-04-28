@@ -50,6 +50,7 @@ function solstice_variables(&$variables) {
 
 	$theme = $variables['page']['theme'];
 	$variables['theme_variables'] = $App->getThemeVariables();
+
 	if (!empty($variables['theme_variables']['breadcrumbs_html'])) {
 		$variables['theme_variables']['breadcrumbs_classes'] = 'large-breadcrumbs hidden-print';
 	} else {
@@ -226,6 +227,9 @@ function solstice_variables(&$variables) {
 
 	// Nav menu
 	if ($Nav != NULL) {
+		// add faux class to #novaContent
+		$variables['theme_variables']['main_container_classes'] .= " background-image-none";
+
 	  $variables['menu']['nav']['link_count'] = $Nav->getLinkCount();
 	  $variables['menu']['nav']['img_separator'] = '<img src="' . $variables['theme_url'] . 'public/images/template/separator.png"/>';
 
