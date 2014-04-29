@@ -18,13 +18,40 @@ class Breadcrumb extends Menu {
 	# static list of first-level URIs with corresponding display-friendly names
 	# everything outside of this is considered to be in project space
 	private $FirstLevel = array(
-			"committers"	=> "Committers",
-			"downloads"		=> "Downloads",
-			"membership"	=> "Membership",
-			"newsgroups"	=> "Forums",
-			"org" 			=> "About Us",
-			"projects"		=> "Projects",
-			"users"			=> "Users"
+	  "10years"	=> "10 years of Eclipse",
+	  "articles" => "Articles",
+	  "artwork" => "Artwork",
+		"committers" => "Committers",
+		"contribute" => "Contribute",
+		"corporate_sponsors" => "Corporate Sponsors",
+		"donate" => "Donate",
+		"downloads"	=> "Downloads",
+		"eclipse4" => "Eclipse SDK 4.x",
+		"errors" => "Errors",
+		"europa" => "Europa",
+		"friends" => "Friends of Eclipse",
+		"galileo" => "Galileo",
+		"ganymede" => "Ganymede",
+		"go" => "Go",
+		"home" => "Home",
+		"images" => "Images",
+		"indigo" => "Indigo",
+		"juno" => "Juno",
+		"kepler" => "Kepler",
+		"legal" => "Legal",
+		"licenses" => "Licenses",
+    "luna" => "Luna",
+    "mail" => "Mailing Lists",
+		"membership" => "Membership",
+		"mobile" => "Mobile",
+		"newsgroups" => "Forums",
+		"org" => "About Us",
+		"phoenix-test" => "Test",
+		"projects" => "Projects",
+		"resources" => "Resources",
+		"screenshots" => "Screenshots",
+		"users"	=> "Users",
+
 	);
 
 	function getCrumbList() {
