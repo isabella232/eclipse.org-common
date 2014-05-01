@@ -50,7 +50,7 @@
 	    				</div>
 				    </div>
 				  </div>
-				  <div id="header-right" class=" col-sm-8 col-md-6 hidden-print  hidden-xs">
+				  <div id="header-right" class=" col-sm-8 col-md-6 hidden-print hidden-xs">
 
 				  	<a  href="https://www.surveymonkey.com/s/eclipsedesign" class="btn btn-danger btn-sm hidden-xs" target="_blank">
 	            Submit feedback
