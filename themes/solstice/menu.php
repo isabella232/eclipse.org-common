@@ -13,14 +13,63 @@
 ?>
 		<header role="banner">
 		  <div class="container">
-			  <div class="row hidden-xs" id="row-logo-search">
-				  <div id="logo" class="col-sm-16">
-	          <?php print $variables['promotion'];?>
+			  <div class="row" id="row-logo-search">
+				  <div id="header-left" class="col-sm-16 col-md-18">
+	          <div class="hidden-xs">
+	            <?php print $variables['promotion'];?>
+	          </div>
+					   <div id="main-menu" class="navbar yamm row">
+			        <div id="navbar-collapse-1" class="navbar-collapse collapse">
+			          <ul class="nav navbar-nav">
+			            <?php print $variables['menu']['main_menu']; ?>
+			            <?php print $variables['menu']['mobile_more'];?>
+			            <!-- More -->
+			            <li class="dropdown hidden-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">More<b class="caret"></b></a>
+			              <ul class="dropdown-menu">
+			                <li>
+			                  <!-- Content container to add padding -->
+			                  <div class="yamm-content">
+			                    <div class="row">
+			                      <?php print $variables['menu']['desktop_more'];?>
+				                  </div>
+			                  </div>
+			                </li>
+			              </ul>
+			            </li>
+			          </ul>
+			        </div>
+			        <div class="navbar-header">
+					      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+					        <span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					      </button>
+					      <?php print $variables['logo_mobile']; ?>
+	    				</div>
+				    </div>
 				  </div>
-				  <div id="search" class="col-sm-8 hidden-print">
-		        <a target="_blank" class="btn btn-sm btn-info call-for-action hidden-xs" href="https://www.surveymonkey.com/s/eclipsedesign">
+				  <div id="header-right" class=" col-sm-8 col-md-6 hidden-print  hidden-xs">
+
+				  	<a  href="https://www.surveymonkey.com/s/eclipsedesign" class="btn btn-danger btn-sm hidden-xs" target="_blank">
 	            Submit feedback
 	          </a>
+				    <!-- Split button -->
+						<div class="btn-group">
+						  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info btn-sm "><i class="fa fa-user fa-fw"></i> Sign in</a>
+						  <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu">
+						    <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Create account</a></li>
+						    <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Forgot my password</a></li>
+						    <li class="divider"></li>
+						    <li><a href="<?php print $variables['url']; ?>donate/">Friends of Eclipse</a></li>
+						  </ul>
+						</div>
+
 					  <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="form-inline">
 						  <fieldset class="form-group">
 							  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
@@ -29,61 +78,15 @@
 						  </fieldset>
 					  </form>
 					  <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>
-				  </div>
-	      </div>
-	      <div class="row hidden-print" id="row-nav-links">
-		      <!-- Demo navbar -->
-			    <div id="main-menu" class="navbar yamm col-sm-16 col-md-18 col-lg-17">
-		        <div id="navbar-collapse-1" class="navbar-collapse collapse">
-		          <ul class="nav navbar-nav">
-		            <?php print $variables['menu']['main_menu']; ?>
-		            <?php print $variables['menu']['mobile_more'];?>
-		            <!-- More -->
-		            <li class="dropdown hidden-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">More<b class="caret"></b></a>
-		              <ul class="dropdown-menu">
-		                <li>
-		                  <!-- Content container to add padding -->
-		                  <div class="yamm-content">
-		                    <div class="row">
-		                      <?php print $variables['menu']['desktop_more'];?>
-			                  </div>
-		                  </div>
-		                </li>
-		              </ul>
-		            </li>
-		          </ul>
+
+				    <div class="action-links hidden-xs">
+              <a href="<?php print $variables['url']; ?>downloads/" class="btn btn-huge btn-warning"><i class="fa fa-download"></i> Download</a>
 		        </div>
-		        <div class="navbar-header">
-				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-				        <span class="sr-only">Toggle navigation</span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				      </button>
-				      <?php print $variables['logo_mobile']; ?>
-    				</div>
-			    </div>
-		      <div class="action-links hidden-xs col-sm-8 col-md-6 col-lg-7">
-		        <div id="button-container">
-			        <!-- Split button -->
-							<div class="btn-group">
-							  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info"><i class="fa fa-user fa-fw"></i> Sign in</a>
-							  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-							    <span class="caret"></span>
-							    <span class="sr-only">Toggle Dropdown</span>
-							  </button>
-							  <ul class="dropdown-menu" role="menu">
-							    <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Create account</a></li>
-							    <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Forgot my password</a></li>
-							    <li class="divider"></li>
-							    <li><a href="<?php print $variables['url']; ?>donate/">Friends of Eclipse</a></li>
-							  </ul>
-							</div>
-						  <a href="<?php print $variables['url']; ?>downloads/" class="btn btn-warning">Download</a>
-					  </div>
-		      </div>
-		    </div>
+
+				  </div>
+
+	      </div>
+
 		  </div>
 		</header>
 		<?php if (!$variables['theme_variables']['hide_breadcrumbs']) :?>
