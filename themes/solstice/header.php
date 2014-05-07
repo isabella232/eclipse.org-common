@@ -10,7 +10,7 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
-include_once 'app/app.php';
+include_once 'app.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

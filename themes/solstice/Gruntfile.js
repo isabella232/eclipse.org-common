@@ -19,6 +19,13 @@ module.exports = function(grunt) {
                     dest: 'public/fonts/',
                     filter: 'isFile'
                 },
+                {
+                    expand: true,
+                    cwd: 'bower_components/solstice-assets/images/',
+                    src: ['**'],
+                    dest: 'public/images/',
+                    filter: 'isFile'
+                },
                 ]
             }
         },
@@ -31,7 +38,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // compiling styles.less into styles.css
-                    "./public/stylesheets/styles.min.css": "./app/stylesheets/styles.less",
+                    "./public/stylesheets/styles.min.css": "./src/stylesheets/styles.less",
                 }
             }
         },
@@ -40,7 +47,7 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             js_frontend: {
-                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './app/javascript/main.js'],
+                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './src/javascript/main.js'],
                 dest: './public/javascript/main.min.js',
             },
         },
@@ -60,12 +67,12 @@ module.exports = function(grunt) {
             js_frontend: {
                 files: [
                 // watched files
-                './bower_components/jquery/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './app/javascript/main.js'],
+                './bower_components/jquery/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './src/javascript/main.js'],
                 // tasks to run
                 tasks: ['concat:js_frontend', 'uglify:frontend'],
             },
             less: {
-                files: ['./app/stylesheets/*.less', './app/stylesheets/**/*.less'],
+                files: ['./src/stylesheets/*.less', './src/stylesheets/**/*.less'],
                 // watched files
                 tasks: ['less'],
                 // tasks to run
