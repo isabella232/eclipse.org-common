@@ -96,12 +96,16 @@ class App {
 	# Default constructor
 	function App() {
 		# Set value for WWW_PREFIX
-		if($_SERVER['SERVER_NAME'] != "www.eclipse.org") {
+		$valid_domains = array(
+			'www.eclipse.org',
+			'staging.eclipse.org',
+			'eclipse.local',
+			'www.eclipse.local'
+		);
+
+		if(!in_array($_SERVER['SERVER_NAME'], $valid_domains)) {
 			$this->WWW_PREFIX = "http://www.eclipse.org";
 		}
-
-    // DELETE THIS BEFORE GOING LIVE
-		$this->WWW_PREFIX = '//' . $_SERVER['HTTP_HOST'];
 
 		$this->databases = array();
 

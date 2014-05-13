@@ -56,7 +56,7 @@ function solstice_variables(&$variables) {
 	} else {
 		$variables['theme_variables']['breadcrumbs_classes'] = 'defaut-breadcrumbs hidden-print';
 	}
-	$variables['url'] = '//www.eclipse.org/';
+	$variables['url'] = $App->getWWWPrefix() . '/';
 
 	$classes = array();
 	$deprecated = "";
