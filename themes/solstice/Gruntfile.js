@@ -72,7 +72,7 @@ module.exports = function(grunt) {
                 tasks: ['concat:js_frontend', 'uglify:frontend'],
             },
             less: {
-                files: ['./src/stylesheets/*.less', './src/stylesheets/**/*.less', './bower_components/bootstrap/less/*.less', './bower_components/bootstrap/**/*.less'],
+                files: ['./src/stylesheets/*.less', './src/stylesheets/**/*.less', './bower_components/solstice-assets/less/*.less', './bower_components/solstice-assets/**/*.less'],
                 // watched files
                 tasks: ['less'],
                 // tasks to run
