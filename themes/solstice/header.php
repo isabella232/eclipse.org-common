@@ -21,7 +21,7 @@ include_once 'app.php';
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="<?php print $variables['page']['author']; ?>" />
     <meta name="keywords" content="<?php print $variables['page']['keywords']; ?>" />
-    <link href="//fonts.googleapis.com/css?family=Roboto:400,300,100,700|Lato:400,300" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,100" rel="stylesheet" type="text/css">
 		<link rel="shortcut icon" href="<?php print $variables['theme_url'];?>public/images/favicon.ico"/>
     <title><?php print $variables['page']['title']; ?></title>
     <?php print $variables['head']['og_title']?>
