@@ -14,7 +14,7 @@
 		</main> <!-- /#main-content-container-row -->
 
     <p id="back-to-top">
-      <a class="visible-xs" href="#top"></a>
+      <a class="visible-xs" href="#top">Back to the top</a>
     </p>
 		<footer role="contentinfo">
 
@@ -64,12 +64,13 @@
 					    <li><a href="<?php print $variables['url']; ?>org/workinggroups/">Working Groups</a></li>
 					  </ul>
 
-						<ul class="social-media list-inline">
-			        <li class="social-media-icon social-media-twitter"><a href="https://twitter.com/EclipseFdn"><span class="sr-only">Twitter</span></a></li>
-			        <li class="social-media-icon social-media-google"><a href="https://plus.google.com/+Eclipse"><span class="sr-only">Google+</span></a></li>
-			        <li class="social-media-icon social-media-facebook"><a href="https://www.facebook.com/eclipse.org"><span class="sr-only">Facebook</span></a></li>
-					    <li class="social-media-icon social-media-youtube"><a href="https://www.youtube.com/user/EclipseFdn"><span class="sr-only">Youtube</span></a></li>
+            <ul class="list-inline social-media">
+              <li><a href="https://twitter.com/EclipseFdn"><i class="fa fa-twitter-square"></i></a></li>
+			        <li><a href="https://plus.google.com/+Eclipse"><i class="fa fa-google-plus-square"></i></a></li>
+			        <li><a href="https://www.facebook.com/eclipse.org"><i class="fa fa-facebook-square"></i> </a></li>
+					    <li><a href="https://www.youtube.com/user/EclipseFdn"><i class="fa fa-youtube-square"></i></a></li>
 				    </ul>
+
 	        </section>
 	        <div id="copyright"  class="col-xs-offset-1  col-sm-14 col-md-24 col-md-offset-0">
 					  <div>
