@@ -11,12 +11,16 @@
  *******************************************************************************/
 
 ?>
+<a style="top:0; right:0; position: fixed; z-index:9999;" href="https://www.surveymonkey.com/s/RMVP3JP" target="_blank">
+  <img src="/eclipse.org-common/themes/solstice/public/images/components/feedback/btn-feedback.png"/>
+</a>
 		<header role="banner">
 		  <div class="container">
 			  <div class="row" id="row-logo-search">
-				  <div id="header-left" class="col-sm-16 col-md-18">
+				  <div id="header-left" class="col-sm-14 col-md-16">
 	          <div class="hidden-xs">
 	            <?php print $variables['promotion'];?>
+
 	          </div>
 					   <div id="main-menu" class="navbar yamm row">
 			        <div id="navbar-collapse-1" class="navbar-collapse collapse">
@@ -50,15 +54,13 @@
 	    				</div>
 				    </div>
 				  </div>
-				  <div id="header-right" class=" col-sm-8 col-md-6 hidden-print hidden-xs">
-
-				  	<a  href="https://www.surveymonkey.com/s/RMVP3JP" class="btn btn-danger btn-sm hidden-xs" target="_blank">
-	            Submit feedback
-	          </a>
+				  <div id="header-right" class="form-inlinecol-sm-10 col-md-8 hidden-print hidden-xs">
 				    <!-- Split button -->
-						<div class="btn-group">
-						  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info btn-sm "><i class="fa fa-user fa-fw"></i> Sign in</a>
-						  <button type="button" class="btn btn-info btn-sm  dropdown-toggle" data-toggle="dropdown">
+
+
+						<div class="btn-group" id="btn-sign-in">
+						  <a href="https://dev.eclipse.org/site_login/createaccount.php" class="btn btn-info "><i class="fa fa-user fa-fw"></i> Sign in</a>
+						  <button type="button" class="btn btn-info  dropdown-toggle" data-toggle="dropdown">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
 						  </button>
@@ -70,19 +72,20 @@
 						  </ul>
 						</div>
 
-					  <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="form-inline">
-						  <fieldset class="form-group">
-							  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
-							  <input id="search-box" type="text" name="q" size="25" class="form-control"/>
-							  <input id="search-button" type="submit" name="sa" value="Search" class="btn btn-default"/>
-						  </fieldset>
-					  </form>
+					 <div class="input-group custom-search-form">
+
+						  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
+						  <input id="search-box" placeholder="Search eclipse.org" type="text" name="q" size="25" class="form-control"/>
+              <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+                <i class="fa fa-search"></i>
+             </button>
+             </span>
+
+             </div><!-- /input-group -->
+
 					  <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>
-
-				    <div class="action-links hidden-xs">
-              <a href="<?php print $variables['url']; ?>downloads/" class="btn btn-huge btn-warning"><i class="fa fa-download"></i> Download</a>
-		        </div>
-
+            <a id="btn-call-for-action" href="<?php print $variables['url']; ?>downloads/" class="btn btn-huge btn-warning"><i class="fa fa-download"></i> Download</a>
 				  </div>
 
 	      </div>
