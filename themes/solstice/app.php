@@ -87,7 +87,7 @@ function solstice_variables(&$variables) {
 
 	// Logos
 	$variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-beta.png" alt="Eclipse.org logo" width="213" class="logo-eclipse-default"/>';
-	$variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39" class="logo-eclipse-white"/>';
+	$variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39" id="logo-eclipse-white"/>';
 	$variables['logo']['mobile'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-beta.png" alt="Eclipse.org logo" width="137" class="logo-eclipse-default"/>';
 
 	// Main-menu
