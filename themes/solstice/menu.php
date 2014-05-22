@@ -22,7 +22,7 @@
 		          <div class="hidden-xs">
 		            <?php print $variables['promotion'];?>
 		          </div>
-						   <div id="main-menu" class="navbar yamm">
+						   <div id="main-menu" class="navbar row yamm">
 				        <div id="navbar-collapse-1" class="navbar-collapse collapse">
 				          <ul class="nav navbar-nav">
 				            <?php print $variables['menu']['main_menu']; ?>
