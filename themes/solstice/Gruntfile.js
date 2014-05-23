@@ -52,8 +52,8 @@ module.exports = function(grunt) {
             },
             
             css: {
-                src: ['./public/stylesheets/styles.min.css"', './bower_components/bootstrapvalidator/dist/css/bootstrapValidator.min.css'],
-                dest: './public/stylesheets/styles.min.css"',
+                src: ['./public/stylesheets/styles.min.css', './bower_components/bootstrapvalidator/dist/css/bootstrapValidator.min.css'],
+                dest: './public/stylesheets/styles.min.css',
             },
         },
         uglify: {
