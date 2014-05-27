@@ -18,6 +18,19 @@ function solstice_variables(&$variables) {
 	$Menu =  $variables['page']['Menu'];
   $Breadcrumb = $variables['page']['Breadcrumb'];
 
+  $variables['session'] = array(
+  	'Friend' => NULL,
+  	'name' => '',
+  	'last_name' => ''
+  );
+
+	$Session = $App->useSession();
+	if ($Session->getBugzillaID() > 0) {
+	    $variables['session']['Friend'] = $Session->getFriend();
+	    $variables['session']['name'] = $Friend->getFirstName();
+	    $variables['session']['last_name'] = $Friend->getLastName();
+	}
+
 	// Breadcrumbs
 	$crumb_list = $Breadcrumb->getCrumbList();
 
@@ -272,4 +285,6 @@ $variables['page']['extra_headers'] = (isset($extraHtmlHeaders)) ? $extraHtmlHea
 
 solstice_variables($variables);
 
-//print_r($variables);
+if (isset($_GET['debug'])) {
+ print_r($variables['session']);
+}
