@@ -10,26 +10,30 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friendsContributionsList.class.php");
+
 function solstice_variables(&$variables) {
 
 	global $App;
-  $base_url = '//staging.eclipse.org/';
+  $base_url = '//staging.eclipse.org';
 	$Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
   $Breadcrumb = $variables['page']['Breadcrumb'];
+  $Friend = $variables['page']['Friend'];
 
   $variables['session'] = array(
   	'Friend' => NULL,
   	'name' => '',
   	'last_name' => '',
-  	'takemeback' => 'https://www.eclipse.org' . $_SERVER['REQUEST_URI'],
+  	'takemeback' => 'http' . (empty($_SERVER['HTTPS'])?'':'s') . ':' . $base_url . $_SERVER['REQUEST_URI'],
   );
 
 	$Session = $App->useSession();
-	if ($Session->getBugzillaID() > 0) {
 	    $variables['session']['Friend'] = $Session->getFriend();
 	    $variables['session']['name'] = $Friend->getFirstName();
 	    $variables['session']['last_name'] = $Friend->getLastName();
+	if ($Session->getBugzillaID() > 0) {
+
 	}
 
 	// Breadcrumbs
@@ -283,7 +287,7 @@ $variables['page']['Menu'] = $Menu;
 $variables['page']['html'] = $html;
 $variables['page']['Breadcrumb'] = $Breadcrumb;
 $variables['page']['extra_headers'] = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
-
+$variables['page']['Friend'] = new Friend();
 solstice_variables($variables);
 
 if (isset($_GET['debug'])) {
