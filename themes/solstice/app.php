@@ -21,7 +21,8 @@ function solstice_variables(&$variables) {
   $variables['session'] = array(
   	'Friend' => NULL,
   	'name' => '',
-  	'last_name' => ''
+  	'last_name' => '',
+  	'takemeback' => 'https://www.eclipse.org' . $_SERVER['REQUEST_URI'],
   );
 
 	$Session = $App->useSession();
