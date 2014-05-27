@@ -29,11 +29,11 @@ function solstice_variables(&$variables) {
   );
 
 	$Session = $App->useSession();
-	    $variables['session']['Friend'] = $Session->getFriend();
-	    $variables['session']['name'] = $Friend->getFirstName();
-	    $variables['session']['last_name'] = $Friend->getLastName();
-	if ($Session->getBugzillaID() > 0) {
 
+	if ($Session->getBugzillaID() > 0) {
+	  $variables['session']['Friend'] = $Session->getFriend();
+	  $variables['session']['name'] = $Friend->getFirstName();
+	  $variables['session']['last_name'] = $Friend->getLastName();
 	}
 
 	// Breadcrumbs
