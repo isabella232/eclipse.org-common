@@ -60,16 +60,13 @@
 
 
 						<div class="btn-group" id="btn-sign-in">
-						  <a href="https://dev.eclipse.org/site_login/?takemeback=<?php print $variables['session']['takemeback'];?>" class="btn btn-info "><i class="fa fa-user fa-fw"></i> Sign in</a>
+              <?php print $variables['session']['link'];?>
 						  <button type="button" class="btn btn-info  dropdown-toggle" data-toggle="dropdown">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Create account</a></li>
-						    <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Forgot my password</a></li>
-						    <li class="divider"></li>
-						    <li><a href="<?php print $variables['url']; ?>donate/">Friends of Eclipse</a></li>
+								<?php print $variables['session']['dropdown'];?>
 						  </ul>
 						</div>
 

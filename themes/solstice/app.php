@@ -18,18 +18,40 @@ function solstice_variables(&$variables) {
   $Breadcrumb = $variables['page']['Breadcrumb'];
   $Session = $App->useSession();
 
+
   $variables['session'] = array(
   	'Friend' => NULL,
   	'name' => '',
   	'last_name' => '',
-  	'takemeback' => 'http' . (empty($_SERVER['HTTPS'])?'':'s') . ':' . $base_url . $_SERVER['REQUEST_URI'],
+    'btn' => array(
+    		'url' => 'https://dev.eclipse.org/site_login/?takemeback=http' . (empty($_SERVER['HTTPS'])?'':'s') . ':' . $base_url . $_SERVER['REQUEST_URI'],
+    		'caption' => 'Sign in',
+    ),
+  	'dropdown' => '<li><a href="https://dev.eclipse.org/site_login/createaccount.php">Create account</a></li>
+  		             <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Forgot my password</a></li>',
   );
 
+  $variables['session']['Friend'] = $Session->getFriend();
+
 	if ($Session->getBugzillaID() > 0) {
-    $variables['session']['Friend'] = $Session->getFriend();
 	  $variables['session']['name'] = $variables['session']['Friend']->getFirstName();
 	  $variables['session']['last_name'] = $variables['session']['Friend']->getLastName();
+	  $variables['session']['btn'] = array(
+      'url' => 'https://dev.eclipse.org/site_login/',
+    	'caption' => 'My Account',
+    );
+	  $variables['session']['dropdown'] = '<li>Welcome, ' . $variables['session']['name'].  '</li>';
+
 	}
+  $variables['session']['dropdown'] .= '<li class="divider"></li>';
+  if ($variables['session']['Friend']->getIsBenefit()) {
+    $variables['session']['dropdown'] .= '<li><a href="/donate/">Friends of Eclipse</a></li>';
+	}
+	else {
+		$variables['session']['dropdown'] .= '<li><a href="/donate/">Become a Friend of Eclipse</a></li>';
+	}
+
+	$variables['session']['link'] = '<a href="' . $variables['session']['btn']['url'] . '" class="btn btn-info "><i class="fa fa-user fa-fw"></i> '. $variables['session']['btn']['caption'] .'</a>';
 
 	// Breadcrumbs
 	$crumb_list = $Breadcrumb->getCrumbList();
@@ -271,6 +293,7 @@ function solstice_variables(&$variables) {
 	// Eclipse Copyright
 	$variables['footer']['copyright'] = 'Copyright &copy; ' . date("Y") . ' The Eclipse Foundation. All Rights Reserved.';
 }
+
 global $App;
 $variables = array();
 $variables['page']['author'] = $pageAuthor;
@@ -283,7 +306,3 @@ $variables['page']['html'] = $html;
 $variables['page']['Breadcrumb'] = $Breadcrumb;
 $variables['page']['extra_headers'] = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
 solstice_variables($variables);
-
-if (isset($_GET['debug'])) {
- print_r($variables['session']);
-}
