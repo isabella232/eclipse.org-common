@@ -10,16 +10,16 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friendsContributionsList.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
 
 function solstice_variables(&$variables) {
-
-	global $App;
+  $App = $variables['page']['App'];
   $base_url = '//staging.eclipse.org';
 	$Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
   $Breadcrumb = $variables['page']['Breadcrumb'];
   $Friend = $variables['page']['Friend'];
+  $Session = $variables['page']['Session'];
 
   $variables['session'] = array(
   	'Friend' => NULL,
@@ -28,10 +28,10 @@ function solstice_variables(&$variables) {
   	'takemeback' => 'http' . (empty($_SERVER['HTTPS'])?'':'s') . ':' . $base_url . $_SERVER['REQUEST_URI'],
   );
 
-	$Session = $App->useSession();
+
 
 	if ($Session->getBugzillaID() > 0) {
-	  $variables['session']['Friend'] = $Session->getFriend();
+    $variables['session']['Friend'] = $Session->getFriend();
 	  $variables['session']['name'] = $Friend->getFirstName();
 	  $variables['session']['last_name'] = $Friend->getLastName();
 	}
@@ -276,8 +276,9 @@ function solstice_variables(&$variables) {
 	// Eclipse Copyright
 	$variables['footer']['copyright'] = 'Copyright &copy; ' . date("Y") . ' The Eclipse Foundation. All Rights Reserved.';
 }
-
+global $App;
 $variables = array();
+$variables['page']['App'] = $App;
 $variables['page']['author'] = $pageAuthor;
 $variables['page']['keywords'] = $pageKeywords;
 $variables['page']['title'] = $pageTitle;
@@ -287,6 +288,7 @@ $variables['page']['Menu'] = $Menu;
 $variables['page']['html'] = $html;
 $variables['page']['Breadcrumb'] = $Breadcrumb;
 $variables['page']['extra_headers'] = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
+$variables['page']['Session'] = $App->useSession();
 $variables['page']['Friend'] = new Friend();
 solstice_variables($variables);
 
