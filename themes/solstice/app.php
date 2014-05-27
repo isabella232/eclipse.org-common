@@ -10,8 +10,6 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
-
 function solstice_variables(&$variables) {
   global $App;
   $base_url = '//staging.eclipse.org';
