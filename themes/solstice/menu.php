@@ -60,7 +60,7 @@
 
 
 						<div class="btn-group" id="btn-sign-in">
-						  <a href="https://dev.eclipse.org/site_login/createaccount.php?takemeback=<?php print $variables['session']['takemeback'];?>" class="btn btn-info "><i class="fa fa-user fa-fw"></i> Sign in</a>
+						  <a href="https://dev.eclipse.org/site_login/?takemeback=<?php print $variables['session']['takemeback'];?>" class="btn btn-info "><i class="fa fa-user fa-fw"></i> Sign in</a>
 						  <button type="button" class="btn btn-info  dropdown-toggle" data-toggle="dropdown">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
