@@ -30,14 +30,14 @@ function solstice_variables(&$variables) {
   );
 
   $variables['session']['Friend'] = $Session->getFriend();
-  $variables['session']['create_account_link'] = '<a href="" class="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create an Account</a>';
-  $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/" class=" "><i class="fa fa-sign-in fa-fw"></i> Sign in</a>';
+  $variables['session']['create_account_link'] = '<a href="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create an Account</a>';
+  $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/"><i class="fa fa-sign-in fa-fw"></i> Sign in</a>';
 
-	if ($Session->getBugzillaID() > 0) {
+	if ($Session->getGID() > 0) {
 	  $variables['session']['name'] = $variables['session']['Friend']->getFirstName();
 	  $variables['session']['last_name'] = $variables['session']['Friend']->getLastName();
 
-	  $variables['session']['create_account_link'] = 'Welecome, ' . $variables['session']['name'] . ' ' . $variables['session']['last_name'];
+	  $variables['session']['create_account_link'] = 'Welcome, ' . $variables['session']['name'] . ' ' . $variables['session']['last_name'];
 	  $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/myaccount.php" class=""><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
 
 	}
