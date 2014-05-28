@@ -27,31 +27,22 @@ function solstice_variables(&$variables) {
     		'url' => 'https://dev.eclipse.org/site_login/?takemeback=http' . (empty($_SERVER['HTTPS'])?'':'s') . ':' . $base_url . $_SERVER['REQUEST_URI'],
     		'caption' => 'Sign in',
     ),
-  	'dropdown' => '<li><a href="https://dev.eclipse.org/site_login/createaccount.php">Create account</a></li>
-  		             <li><a href="https://dev.eclipse.org/site_login/createaccount.php">Forgot my password</a></li>',
   );
 
   $variables['session']['Friend'] = $Session->getFriend();
+  $variables['session']['create_account_link'] = '<a href="" class="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create an Account</a>';
+  $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/" class=" "><i class="fa fa-sign-in fa-fw"></i> Sign in</a>';
 
 	if ($Session->getBugzillaID() > 0) {
 	  $variables['session']['name'] = $variables['session']['Friend']->getFirstName();
 	  $variables['session']['last_name'] = $variables['session']['Friend']->getLastName();
-	  $variables['session']['btn'] = array(
-      'url' => 'https://dev.eclipse.org/site_login/',
-    	'caption' => 'My Account',
-    );
-	  $variables['session']['dropdown'] = '<li>Welcome, ' . $variables['session']['name'].  '</li>';
+
+	  $variables['session']['create_account_link'] = 'Welecome, ' . $variables['session']['name'] . ' ' . $variables['session']['last_name'];
+	  $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/myaccount.php" class=""><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
 
 	}
-  $variables['session']['dropdown'] .= '<li class="divider"></li>';
-  if ($variables['session']['Friend']->getIsBenefit()) {
-    $variables['session']['dropdown'] .= '<li><a href="/donate/">Friends of Eclipse</a></li>';
-	}
-	else {
-		$variables['session']['dropdown'] .= '<li><a href="/donate/">Become a Friend of Eclipse</a></li>';
-	}
 
-	$variables['session']['link'] = '<a href="' . $variables['session']['btn']['url'] . '" class="btn btn-info "><i class="fa fa-user fa-fw"></i> '. $variables['session']['btn']['caption'] .'</a>';
+
 
 	// Breadcrumbs
 	$crumb_list = $Breadcrumb->getCrumbList();
@@ -135,18 +126,28 @@ function solstice_variables(&$variables) {
 	$variables['menu']['more'] = array();
 
 	$variables['menu']['more']['Community'][] = array(
-			'url' => 'http://events.eclipse.org',
-			'caption' => 'Events'
+    'url' => 'http://marketplace.eclipse.org',
+  	'caption' => 'Marketplace'
+  );
+
+	$variables['menu']['more']['Community'][] = array(
+		'url' => 'http://events.eclipse.org',
+		'caption' => 'Events'
 	);
 
 	$variables['menu']['more']['Community'][] = array(
-			'url' => $variables['url'] . 'forums/',
-			'caption' => 'Forums'
+		'url' => '//www.planeteclipse.org/',
+		'caption' => 'Planet Eclipse'
 	);
 
-	$variables['menu']['more']['Community'][] = array(
-			'url' => '//www.planeteclipse.org/',
-			'caption' => 'Planet Eclipse'
+  $variables['menu']['more']['Community'][] = array(
+	  'url' => $variables['url'] . 'community/eclipse_newsletter/',
+		'caption' => 'Newsletter'
+	);
+
+  $variables['menu']['more']['Community'][] = array(
+	  'url' => 'https://www.youtube.com/user/EclipseFdn',
+		'caption' => 'Videos'
 	);
 
   /*
@@ -165,10 +166,36 @@ function solstice_variables(&$variables) {
 		'caption' => 'Projects'
 	);
 */
-	$variables['menu']['more']['Community'][] = array(
-	  'url' => $variables['url'] . 'community/eclipse_newsletter/',
-		'caption' => 'Newsletter'
+
+  $variables['menu']['more']['Participate'][] = array(
+		'url' => 'https://bugs.eclipse.org/bugs/',
+		'caption' => 'Report a Bug'
 	);
+
+	$variables['menu']['more']['Participate'][] = array(
+		'url' => $variables['url'] . 'forums/',
+		'caption' => 'Forums'
+	);
+
+	$variables['menu']['more']['Participate'][] = array(
+		'url' => $variables['url'] . 'mail/',
+		'caption' => 'Mailing Lists'
+	);
+
+	$variables['menu']['more']['Participate'][] = array(
+  	'url' => 'https://wiki.eclipse.org/',
+  	'caption' => 'Wiki'
+  );
+
+  $variables['menu']['more']['Participate'][] = array(
+  	'url' => 'https://wiki.eclipse.org/IRC',
+  	'caption' => 'IRC'
+  );
+
+   $variables['menu']['more']['Participate'][] = array(
+  	'url' => $variables['url'] . 'contribute/',
+  	'caption' => 'How to Contribute'
+  );
 
 
   $variables['menu']['more']['Working Groups'][] = array(
@@ -196,22 +223,12 @@ function solstice_variables(&$variables) {
   		'caption' => 'PolarSys'
   );
 
-
-  $variables['menu']['more']['Explore'][] = array(
-  		'url' => 'http://marketplace.eclipse.org',
-  		'caption' => 'Marketplace'
-  );
-  $variables['menu']['more']['Explore'][] = array(
-  		'url' => 'https://bugs.eclipse.org/bugs/',
-  		'caption' => 'Bugzilla'
+   $variables['menu']['more']['Working Groups'][] = array(
+  		'url' => 'http://science.eclipse.org',
+  		'caption' => 'Science'
   );
 
-  $variables['menu']['more']['Explore'][] = array(
-  		'url' => '//wiki.eclipse.org/',
-  		'caption' => 'Wiki'
-  );
-
-
+/*
   $variables['menu']['more']['Legal'][] = array(
   		'url' => $variables['url'] . 'legal/epl-v10.html',
   		'caption' => 'Eclipse Public License'
@@ -234,12 +251,11 @@ function solstice_variables(&$variables) {
   		'caption' => 'Legal'
   );
 
-
-  /*
   $variables['menu']['more']['Legal'][] = array(
   		'url' => $variables['url'] . 'org/foundation/contact.php',
   		'caption' => 'Contact Us'
   );
+
   */
 
   $variables['menu']['mobile_more'] = "";
@@ -249,7 +265,7 @@ function solstice_variables(&$variables) {
   	foreach ($value as $link){
   		if ($first) {
   			$first = FALSE;
-  			$variables['menu']['desktop_more'] .= '<ul class="col-sm-6 list-unstyled"><li><p><strong>' . $key . '</strong></p></li>';
+  			$variables['menu']['desktop_more'] .= '<ul class="col-sm-8 list-unstyled"><li><p><strong>' . $key . '</strong></p></li>';
   			$variables['menu']['mobile_more'] .= '<li class="dropdown visible-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">' . $key . ' <b class="caret"></b></a><ul class="dropdown-menu">';
   		}
   		$l = '<li><a href="' . $link['url'] . '">' . $link['caption'] . '</a></li>';

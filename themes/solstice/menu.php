@@ -16,6 +16,14 @@
 </a>
 		<header role="banner">
 		  <div class="container">
+		    <div id="row-toolbar" class="text-right">
+		      <div class="col-md-24">
+		        <ul class="list-inline">
+		          <li><?php print $variables['session']['create_account_link'];?></li>
+		          <li><?php print $variables['session']['my_account_link'];?></li>
+		        </ul>
+		      </div>
+		    </div>
 			  <div id="row-logo-search">
 				  <div id="header-left" class="col-sm-14 col-md-16">
 				    <div class="row">
@@ -56,20 +64,6 @@
 				    </div>
 				  </div>
 				  <div id="header-right" class="form-inline col-sm-10 col-md-8 hidden-print hidden-xs">
-				    <!-- Split button -->
-
-
-						<div class="btn-group" id="btn-sign-in">
-              <?php print $variables['session']['link'];?>
-						  <button type="button" class="btn btn-info  dropdown-toggle" data-toggle="dropdown">
-						    <span class="caret"></span>
-						    <span class="sr-only">Toggle Dropdown</span>
-						  </button>
-						  <ul class="dropdown-menu" role="menu">
-								<?php print $variables['session']['dropdown'];?>
-						  </ul>
-						</div>
-
 					  <div class="input-group custom-search-form">
 						  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
 						  <input id="search-box" placeholder="Search eclipse.org" type="text" name="q" size="25" class="form-control"/>

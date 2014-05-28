@@ -21,6 +21,7 @@ class Breadcrumb extends Menu {
 	  "10years"	=> "10 years of Eclipse",
 	  "articles" => "Articles",
 	  "artwork" => "Artwork",
+	  'community' => 'Community',
 		"committers" => "Committers",
 		"contribute" => "Contribute",
 		"corporate_sponsors" => "Corporate Sponsors",
@@ -42,7 +43,7 @@ class Breadcrumb extends Menu {
 		"licenses" => "Licenses",
     "luna" => "Luna",
     "mail" => "Mailing Lists",
-		"membership" => "Membership",
+		"membership" => "Members",
 		"mobile" => "Mobile",
 		"newsgroups" => "Forums",
 		"org" => "About Us",
@@ -50,7 +51,7 @@ class Breadcrumb extends Menu {
 		"projects" => "Projects",
 		"resources" => "Resources",
 		"screenshots" => "Screenshots",
-		"users"	=> "Users",
+		"users"	=> "Getting started",
 
 	);
 

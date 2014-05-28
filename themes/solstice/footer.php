@@ -26,6 +26,7 @@
 				    <ul class="nav">
 				      <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
 				      <li><a href="<?php print $variables['url']; ?>org/foundation/contact.php">Contact Us</a></li>
+				      <li><a href="<?php print $variables['url']; ?>donate">Donate</a></li>
 				      <li><a href="<?php print $variables['url']; ?>org/documents/">Governance</a></li>
 				      <li><a href="<?php print $variables['url']; ?>artwork/">Logo and Artwork</a></li>
               <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
