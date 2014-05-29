@@ -10,4 +10,6 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
- include_once '../footer.php';
+
+  require_once('app.php');
+  require_once('../footer.php');

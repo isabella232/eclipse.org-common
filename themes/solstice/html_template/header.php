@@ -10,22 +10,6 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/breadcrumbs.class.php");
 
-	$App 	= new App();
-	$Nav	= new Nav();
-	$Menu 	= new Menu();
-	$Breadcrumb 	= new Breadcrumb();
-
-	# Begin: page-specific settings.  Change these.
-	$pageTitle 		= "HTML Template";
-	$pageKeywords	= "eclipse.org, Eclipse Foundation";
-	$pageAuthor		= "Christopher Guindon";
-	$theme        = "solstice";
-	$html         = "";
-
-  include_once '../header.php';
-  include_once '../menu.php';
+  require_once('../header.php');
+  require_once('../menu.php');

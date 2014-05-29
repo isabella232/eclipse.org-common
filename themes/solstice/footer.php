@@ -12,8 +12,7 @@
 ?>
 		  </div>
 		</main> <!-- /#main-content-container-row -->
-
-    <p id="back-to-top">
+    <p id="back-to-top">
       <a class="visible-xs" href="#top">Back to the top</a>
     </p>
 		<footer role="contentinfo">
