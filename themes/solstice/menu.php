@@ -12,7 +12,7 @@
 
 ?>
 <a style="top:0; right:0; position: fixed; z-index:9999;" class="hidden-xs" href="https://www.surveymonkey.com/s/RMVP3JP" target="_blank">
-  <img src="/eclipse.org-common/themes/solstice/public/images/components/feedback/btn-feedback.png"/>
+  <img src="/eclipse.org-common/themes/solstice/public/images/components/feedback/btn-feedback.png" alt="Submit feedback"/>
 </a>
 		<header role="banner">
 		  <div class="container">
