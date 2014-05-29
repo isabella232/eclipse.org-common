@@ -64,20 +64,22 @@
 				    </div>
 				  </div>
 				  <div id="header-right" class="form-inline col-sm-10 col-md-8 hidden-print hidden-xs">
-					  <div  id="custom-search-form">
-					    <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="input-group">
-							  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
-							  <input id="search-box" placeholder="Search eclipse.org" type="text" name="q" size="25" class="form-control"/>
-	              <span class="input-group-btn">
-		              <button class="btn btn-default" type="submit">
-		                <i class="fa fa-search"></i>
-		              </button>
-                </span>
-              </form>
-            </div><!-- /input-group -->
+					  <div id="header-right-container">
+						  <div id="custom-search-form">
+						    <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="input-group">
+								  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
+								  <input id="search-box" placeholder="Search eclipse.org" type="text" name="q" size="25" class="form-control"/>
+		              <span class="input-group-btn">
+			              <button class="btn btn-default" type="submit">
+			                <i class="fa fa-search"></i>
+			              </button>
+	                </span>
+	              </form>
+	            </div><!-- /input-group -->
 
-					  <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>
-            <a id="btn-call-for-action" href="<?php print $variables['url']; ?>downloads/" class="btn btn-huge btn-warning"><i class="fa fa-download"></i> Download</a>
+						  <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>
+	            <a id="btn-call-for-action" href="<?php print $variables['url']; ?>downloads/" class="btn btn-huge btn-warning"><i class="fa fa-download"></i> Download</a>
+				    </div>
 				  </div>
 
 	      </div>

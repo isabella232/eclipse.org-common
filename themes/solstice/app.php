@@ -26,7 +26,7 @@ function solstice_variables(&$variables) {
   );
 
   $variables['session']['Friend'] = $Session->getFriend();
-  $variables['session']['create_account_link'] = '<a href="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create an Account</a>';
+  $variables['session']['create_account_link'] = '<a href="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create account</a>';
   $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/?takemeback=http' . (empty($_SERVER['HTTPS'])?'':'s') . ':' . $base_url . $_SERVER['REQUEST_URI'] . '"><i class="fa fa-sign-in fa-fw"></i> Sign in</a>';
 
 	if ($Session->getGID() > 0) {
