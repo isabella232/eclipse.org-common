@@ -17,7 +17,7 @@
 		<header role="banner">
 		  <div class="container">
 		    <div id="row-toolbar" class="text-right hidden-print">
-		      <div class="col-md-24">
+		      <div id="row-toolbar-col" class="col-md-24">
 		        <ul class="list-inline">
 		          <li><?php print $variables['session']['create_account_link'];?></li>
 		          <li><?php print $variables['session']['my_account_link'];?></li>
