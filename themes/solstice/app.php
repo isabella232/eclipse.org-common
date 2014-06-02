@@ -47,10 +47,14 @@ function solstice_variables(&$variables) {
   $crumb_last_key = $Breadcrumb->getCrumbCount()-1;
 
   $variables['breadcrumbs'] = '<ol class="breadcrumb">';
+  $request_uri = explode('/', $_SERVER['REQUEST_URI']);
+
 	foreach ($crumb_list as $k => $v) {
 		// add .active class to the last item of the breadcrumbs
 		if($k == $crumb_last_key) {
-			$variables['breadcrumbs'] .= '<li class="active">' . $v->getText() . '</li>';
+			if (count($request_uri) >= 3 && ($request_uri[2] != "" && $request_uri[2] != "index.php")) {
+			  $variables['breadcrumbs'] .= '<li class="active">' . $v->getText() . '</li>';
+		  }
 		}
 		else {
 			$variables['breadcrumbs'] .= '<li><a href="' . $v->getURL() . '">' . $v->getText() . '</a></li>';
