@@ -36,7 +36,7 @@
 				            <?php print $variables['menu']['main_menu']; ?>
 				            <?php print $variables['menu']['mobile_more'];?>
 				            <!-- More -->
-				            <li class="dropdown hidden-xs"><a href="#" data-toggle="dropdown" class="dropdown-toggle">More<b class="caret"></b></a>
+				            <li class="dropdown hidden-xs"><a data-toggle="dropdown" class="dropdown-toggle">More<b class="caret"></b></a>
 				              <ul class="dropdown-menu">
 				                <li>
 				                  <!-- Content container to add padding -->
