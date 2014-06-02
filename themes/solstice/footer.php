@@ -60,7 +60,7 @@
 			      <h2 class="section-title">Other</h2>
 			      <ul class="nav">
 			       	<li><a href="<?php print $variables['url']; ?>ide/">IDE and Tools</a></li>
-				    	<li><a href="//projects.eclipse.org/">Community of Projects</a></li>
+				    	<li><a href="<?php print $variables['url']; ?>projects">Community of Projects</a></li>
 					    <li><a href="<?php print $variables['url']; ?>org/workinggroups/">Working Groups</a></li>
 					  </ul>
 
