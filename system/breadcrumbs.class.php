@@ -80,7 +80,7 @@ class Breadcrumb extends Menu {
 		$this->addCrumb("Home", $www_prefix . "/", "_self");
 
 		if(isset($_SERVER['REQUEST_URI'])) {
-			http://www.eclipse.org/newsgroups/test.php
+			# http://www.eclipse.org/newsgroups/test.php
 			# Array ( [0] => [1] => newsgroups [2] => test.php )
 			$items = explode("/", $_SERVER['REQUEST_URI']);
 
