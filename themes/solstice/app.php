@@ -275,7 +275,7 @@ function solstice_variables(&$variables) {
   	$variables['menu']['mobile_more'] .= '</ul></li>';
   	$variables['menu']['desktop_more'] .= '</ul>';
   }
-    	$variables['menu']['mobile_more'] .= '<li><a href="' . $variables['url'] . 'downloads/' . '">Downloads</a></li>';
+  $variables['menu']['mobile_more'] .= '<li><a href="' . $variables['url'] . 'downloads/' . '">Downloads</a></li>';
 
 	// Nav menu
 	if ($Nav != NULL) {
