@@ -30,10 +30,6 @@
 					  <a class="nolink" href="#"><?php print $link->getText() ?></a>
 					</li>
 				<?php endif; ?>
-			<?php elseif (stripos($link->getURL(), 'project_summary.php') !== FALSE) :?>
-			  <li class="about">
-			    <a href="<?php print $link->getURL() ?>"><?=$link->getText();?></a>
-				</li>
 			<?php else: // if $link->getURL() is not empty. ?>
 
 			  <?php if($link->getTarget() == "__SEPARATOR") :?>
