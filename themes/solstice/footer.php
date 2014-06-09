@@ -86,5 +86,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<?php print $variables['theme_url'];?>public/javascript/main.min.js"></script>
     <?php print $variables['page']['extra_js_footer'];?>
+    <?php print $google_javascript;?>
   </body>
 </html>
