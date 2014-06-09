@@ -12,8 +12,10 @@
 
 function solstice_variables(&$variables) {
   global $App;
-  $base_url = '//staging.eclipse.org';
-	$Nav =  $variables['page']['Nav'];
+  
+  $base_url= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://'; 
+  $base_url .= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST') . '/'; 
+  $Nav =  $variables['page']['Nav'];
 	$Menu =  $variables['page']['Menu'];
   $Breadcrumb = $variables['page']['Breadcrumb'];
   $Session = $App->useSession();
@@ -82,7 +84,7 @@ function solstice_variables(&$variables) {
 	} else {
 		$variables['theme_variables']['breadcrumbs_classes'] = 'defaut-breadcrumbs hidden-print';
 	}
-	$variables['url'] = $App->getWWWPrefix() . '/';
+	$variables['url'] = $base_url;
 
 	$classes = array();
 	$deprecated = "";
