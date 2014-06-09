@@ -442,15 +442,11 @@ class App {
 			$Breadcrumb = new Breadcrumb();
 		}
 
-		# All web page parameters passed for variable scope
-		if($theme == "") {
-			$theme = "Phoenix";
-		}
-
-		// DELETE THIS BEFORE GOING LIVE
-		if (!isset($_GET['nova'])){
+		# Only Nova and solstice is accepted.
+		if($theme != "Nova") {
 			$theme = "solstice";
 		}
+
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
 		}
@@ -514,7 +510,10 @@ EOHTML;
 EOHTML;
 		}
 
-		echo $this->googleJavaScript;
+    if ($theme != "solstice")  {
+		  echo $this->googleJavaScript;
+    }
+    $google_javascript = $this->googleJavaScript;
 		include($this->getFooterPath($theme));
 
 		# OPT1:$starttime = microtime();
@@ -544,7 +543,7 @@ EOHTML;
 
 	function getThemeURL($_theme) {
 		if($_theme == "") {
-			$theme = "Phoenix";
+			$theme = "solstice";
 		}
 
 		return "/eclipse.org-common/themes/" . $_theme;
