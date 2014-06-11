@@ -223,6 +223,10 @@ class Session {
 				$this->setUpdatedAt($myrow['updated_at']);
 				$this->data = $myrow['data'];
 				$this->setIsPersistent($myrow['is_persistent']);
+				
+				# touch this session
+				$sql = "UPDATE sessions SET updated_at = NOW() WHERE gid = '" . $App->sqlSanitize($_gid, null) . "'";
+				$App->eclipse_sql($sql);
 			}
 		}		
 		return $rValue;
@@ -233,7 +237,6 @@ class Session {
 			
 		$sql = "DELETE FROM sessions
 				WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND is_persistent = 0) 
-				OR (subnet = '" . $this->getClientSubnet() . "' AND gid <> '" . $App->sqlSanitize($this->getGID(), null) . "')
 				OR updated_at < DATE_SUB(NOW(), INTERVAL 1 YEAR)"; 
 
 		$App->eclipse_sql($sql);
