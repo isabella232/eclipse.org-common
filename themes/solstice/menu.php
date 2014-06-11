@@ -22,7 +22,7 @@
 		      </div>
 		    </div>
 			  <div id="row-logo-search">
-				  <div id="header-left" class="col-sm-14 col-md-16">
+				  <div id="header-left" class="col-sm-14 col-md-16 col-lg-19">
 				    <div class="row">
 		          <div class="hidden-xs">
 		            <?php print $variables['promotion'];?>
@@ -60,7 +60,7 @@
 					    </div>
 				    </div>
 				  </div>
-				  <div id="header-right" class="form-inline col-sm-10 col-md-8 hidden-print hidden-xs">
+				  <div id="header-right" class="form-inline col-sm-10 col-md-8 col-lg-5 hidden-print hidden-xs">
 					  <div id="header-right-container">
 						  <div id="custom-search-form">
 						    <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="input-group">
