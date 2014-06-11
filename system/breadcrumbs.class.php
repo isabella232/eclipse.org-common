@@ -52,6 +52,7 @@ class Breadcrumb extends Menu {
 		"projects" => "Projects",
 		"resources" => "Resources",
 		"screenshots" => "Screenshots",
+		"site_login" => "My Account",
 		"users"	=> "Getting started",
 	);
 
