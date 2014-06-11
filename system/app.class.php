@@ -448,16 +448,10 @@ class App {
 			$Breadcrumb = new Breadcrumb();
 		}
 
-	  # All web page parameters passed for variable scope
-		if($theme == "") {
-			$theme = "Phoenix";
-		}
-
-		/* TURN ON JUNE 11TH, 2014
-		Only Nova and solstice is accepted.
+		# Only Nova and solstice is accepted.
 		if($theme != "Nova") {
 			$theme = "solstice";
-		}*/
+		}
 
 		if($pageTitle == "") {
 			$pageTitle = "eclipse.org page";
@@ -555,9 +549,7 @@ EOHTML;
 
 	function getThemeURL($_theme) {
 		if($_theme == "") {
-			$theme = "Phoenix";
-			// Update June 11, 2014
-			//$theme = "solstice";
+			$theme = "solstice";
 		}
 
 		return "/eclipse.org-common/themes/" . $_theme;

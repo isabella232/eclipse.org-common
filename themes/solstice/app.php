@@ -249,6 +249,9 @@ function solstice_variables(&$variables) {
 	}
 
 	$variables['promotion'] = ob_get_clean();
+
+	// Always show the eclipse logo for release day
+	$variables['promotion'] = '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
 	$variables['logo_mobile'] =  '<a href="' . $variables['url'] . '" class="navbar-brand visible-xs">' . $variables['logo']['mobile'] . '</a>';
 
 	$variables['uri'] = parse_url($_SERVER['REQUEST_URI']);
