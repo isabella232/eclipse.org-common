@@ -72,40 +72,45 @@ class FeedParser {
 			return FALSE;
 		}
 
-		$feed = simplexml_load_file($this->url);
+
+		if (file_exists($this->url)) {
+		  $feed = simplexml_load_file($this->url);
+		}
+
 		$feed_array = array();
 		$count = 0;
+    if(isset($feed) && $feed != FALSE) {
+			foreach($feed->channel->item as $item){
 
-		foreach($feed->channel->item as $item){
+				if ($count >= $this->count) {
+					break;
+				}
 
-			if ($count >= $this->count) {
-				break;
+				if ($this->press_release && $item->pressrelease != 1) {
+	        continue;
+				}
+
+				$date = strtotime((string) $item->pubDate);
+				$date = date($this->date_format, $date);
+
+				$description = (string) $item->description;
+				if (strlen($description) > $this->limit) {
+					$description = substr(strip_tags($description), 0, $this->limit);
+					$description = strip_tags($description, "<a>");
+					$description .= "...";
+				}
+
+				$item_array = array (
+				  'title' => (string) $item->title,
+					'description' => $description,
+					'link' => (string) $item->link,
+					'date' => $date,
+				);
+
+				array_push($feed_array, $item_array);
+				$count++;
 			}
-
-			if ($this->press_release && $item->pressrelease != 1) {
-        continue;
-			}
-
-			$date = strtotime((string) $item->pubDate);
-			$date = date($this->date_format, $date);
-
-			$description = (string) $item->description;
-			if (strlen($description) > $this->limit) {
-				$description = substr(strip_tags($description), 0, $this->limit);
-				$description = strip_tags($description, "<a>");
-				$description .= "...";
-			}
-
-			$item_array = array (
-			  'title' => (string) $item->title,
-				'description' => $description,
-				'link' => (string) $item->link,
-				'date' => $date,
-			);
-
-			array_push($feed_array, $item_array);
-			$count++;
-		}
+    }
 		$this->items = $feed_array;
 	}
 
@@ -127,6 +132,9 @@ class FeedParser {
 			if (!empty($this->more) || !empty($this->rssLink)) {
 				$output .= '<div class="news_view_all">' . $this->more . $this->rssLink . '</div>';
 			}
+		}
+		else {
+			$output = '<p>This news feed is currently empty. Please try again later.</p>';
 		}
 		print $output;
 	}
