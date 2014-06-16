@@ -25,6 +25,8 @@ function solstice_variables(&$variables) {
 		'last_name' => '',
 	);
 
+	$variables['url'] = $base_url;
+
 	$variables['session']['Friend'] = $Session->getFriend();
 	$variables['session']['create_account_link'] = '<a href="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create account</a>';
 	$variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/?takemeback=' . $App->getWWWPrefix() . $_SERVER['REQUEST_URI'] . '"><i class="fa fa-sign-in fa-fw"></i> Sign in</a>';
@@ -64,9 +66,9 @@ function solstice_variables(&$variables) {
 	if ($NewMenu->getMenuArray() == $main_menu) {
 		$Menu = new $Menu();
 		$Menu->setMenuItemList(array());
-		$Menu->addMenuItem("Getting Started ", "/users/", "_self");
-		$Menu->addMenuItem("Members", "/membership/", "_self");
-		$Menu->addMenuItem("Projects", "/projects/", "_self");
+		$Menu->addMenuItem("Getting Started ", $variables['url'] . "users/", "_self");
+		$Menu->addMenuItem("Members", $variables['url'] . "membership/", "_self");
+		$Menu->addMenuItem("Projects", $variables['url'] . "projects/", "_self");
 		$main_menu = $Menu->getMenuArray();
 	}
 
@@ -78,7 +80,6 @@ function solstice_variables(&$variables) {
 	} else {
 		$variables['theme_variables']['breadcrumbs_classes'] = 'defaut-breadcrumbs hidden-print';
 	}
-	$variables['url'] = $base_url;
 
 	$classes = array();
 	$deprecated = "";
