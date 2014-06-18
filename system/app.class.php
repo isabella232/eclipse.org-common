@@ -108,7 +108,7 @@ class App {
 		// Force http://www.eclipse.org if the serve_name is not whitelisted.
 		if (in_array($_SERVER['SERVER_NAME'], $valid_domains)) {
 			$this->WWW_PREFIX = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
-			$this->WWW_PREFIX .= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST') . '/';
+			$this->WWW_PREFIX .= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
 		}
 		else {
 			$this->WWW_PREFIX = "http://www.eclipse.org";
