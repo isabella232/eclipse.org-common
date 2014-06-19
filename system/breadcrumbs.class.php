@@ -16,6 +16,10 @@ class Breadcrumb extends Menu {
 
 	private $CrumbList = array();
 
+	private $protocol = "http://";
+
+	private $www_prefix = "";
+
 	# static list of first-level URIs with corresponding display-friendly names
 	# everything outside of this is considered to be in project space
 	private $FirstLevel = array(
@@ -60,6 +64,34 @@ class Breadcrumb extends Menu {
 		return $this->CrumbList;
 	}
 
+	function getProtocol(){
+		return $this->protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
+	}
+
+	function getWWW_prefix() {
+		global $App;
+
+		if (!isset($App)) {
+			$App = new App();
+		}
+
+		$this->www_prefix = $App->getWWWPrefix();
+		$this->getProtocol();
+		$http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
+
+		# List of domains where we can't use the value of $App->getWWWPrefix().
+		$allowed_domain_override = array(
+			'dev.eclipse.org',
+			'dev.eclipse.local'
+		);
+
+		if (in_array($http_host, $allowed_domain_override)) {
+			$this->www_prefix = $this->protocol . $http_host;
+		}
+
+		return $this->www_prefix;
+	}
+
 	function setCrumbList($_List) {
 		$this->CrumbList = $_List;
 	}
@@ -67,17 +99,10 @@ class Breadcrumb extends Menu {
 	# Main constructor
 	function Breadcrumb() {
 
-		$www_prefix = "";
-
-		global $App;
-
-		if (!isset($App)) {
-			$App = new App();
-		}
-		$www_prefix = $App->getWWWPrefix();
+		$this->getWWW_prefix();
 
 		# Default: Home
-		$this->addCrumb("Home", $www_prefix . "/", "_self");
+		$this->addCrumb("Home", $this->protocol . "www.eclipse.org/", "_self");
 
 		if(isset($_SERVER['REQUEST_URI'])) {
 			# http://www.eclipse.org/newsgroups/test.php
@@ -87,13 +112,13 @@ class Breadcrumb extends Menu {
 
 			# Examine Item 1 (first level URL)
 			if(isset($this->FirstLevel[$items[1]])) {
-				$this->addCrumb($this->FirstLevel[$items[1]], $www_prefix . "/" . $items[1], "_self");
+				$this->addCrumb($this->FirstLevel[$items[1]], $this->www_prefix . "/" . $items[1], "_self");
 			}
 			else {
 				# Not pre-defined Foundation page, must be a project page
 				# /xtext/file.php => Home > Projects > xtext > $pageTitle
-				$this->addCrumb("Project", $www_prefix . "/projects/", "_self");
-				$this->addCrumb($items[1], $www_prefix . "/" . $items[1], "_self");
+				$this->addCrumb("Project", $this->www_prefix . "/projects/", "_self");
+				$this->addCrumb($items[1], $this->www_prefix . "/" . $items[1], "_self");
 			}
 
 			# Add current page
