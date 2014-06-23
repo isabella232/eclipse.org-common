@@ -11,8 +11,15 @@
  *******************************************************************************/
 
 define('MAX_LOG_DAYS', 365);
+$dblog = "/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php";
 
-require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
+if(is_readable($dblog)) {
+	require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
+	define('LOG_TO_DB', TRUE);
+}
+else {
+	define('LOG_TO_DB', FALSE);
+}
 
 class EvtLog {
 
@@ -86,12 +93,14 @@ class EvtLog {
 
 	function insertModLog ($_uid) {
 		$uid = $_uid;
-		if($this->getLogTable() != "" && $this->getPK1() != "" && $this->getLogAction() != "" && $uid != "") {
-			$App = new App();
-			$dbc = new DBConnectionRW();
-			$dbh = $dbc->connect();
+		if(LOG_TO_DB) {
+			if($this->getLogTable() != "" && $this->getPK1() != "" && $this->getLogAction() != "" && $uid != "") {
+		
+				$App = new App();
+				$dbc = new DBConnectionRW();
+				$dbh = $dbc->connect();
 			
-			$sql = "INSERT INTO SYS_EvtLog (
+				$sql = "INSERT INTO SYS_EvtLog (
 						LogID,
 						LogTable,
 						PK1,
@@ -109,23 +118,27 @@ class EvtLog {
 						NOW()
 					)";
 					
-			mysql_query($sql, $dbh);
-			if(mysql_error() != "") {
-				echo "An unknown database error has occurred while logging information.  Please contact the System Administrator.";
-				echo mysql_error();
-				exit;
+				mysql_query($sql, $dbh);
+				if(mysql_error() != "") {
+					echo "An unknown database error has occurred while logging information.  Please contact the System Administrator.";
+					echo mysql_error();
+					exit;
+				}
+			
+				$dbc->disconnect();
+			
+				# 1% of each hits will perform clean up	
+				if(rand(0, 100) < 1) {
+					$this->cleanup();
+				}
 			}
-			
-			$dbc->disconnect();
-			
-			# 1% of each hits will perform clean up	
-			if(rand(0, 100) < 1) {
-				$this->cleanup();
+			else {
+				echo "An unknown system error has occurred while logging information.  Please contact the System Administrator.";
+				exit;
 			}
 		}
 		else {
-			echo "An unknown system error has occurred while logging information.  Please contact the System Administrator.";
-			exit;
+			# TODO: local logging
 		}
 	}
 	
