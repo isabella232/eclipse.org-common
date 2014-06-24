@@ -86,6 +86,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<?php print $variables['theme_url'];?>public/javascript/main.min.js"></script>
     <?php print $variables['page']['extra_js_footer'];?>
+    <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>
     <?php print $google_javascript;?>
+
   </body>
 </html>

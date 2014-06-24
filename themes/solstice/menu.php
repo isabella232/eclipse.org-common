@@ -73,8 +73,6 @@
 	                </span>
 	              </form>
 	            </div><!-- /input-group -->
-
-						  <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&amp;lang=en"></script>
 	            <a id="btn-call-for-action" href="<?php print $variables['url']; ?>downloads/" class="btn btn-huge btn-warning"><i class="fa fa-download"></i> Download</a>
 				    </div>
 				  </div>
