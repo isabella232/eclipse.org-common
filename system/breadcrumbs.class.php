@@ -40,6 +40,7 @@ class Breadcrumb extends Menu {
 		"ganymede" => "Ganymede",
 		"go" => "Go",
 		"home" => "Home",
+		"ide" => "IDE",
 		"images" => "Images",
 		"indigo" => "Indigo",
 		"juno" => "Juno",
@@ -117,7 +118,7 @@ class Breadcrumb extends Menu {
 			else {
 				# Not pre-defined Foundation page, must be a project page
 				# /xtext/file.php => Home > Projects > xtext > $pageTitle
-				$this->addCrumb("Project", $this->www_prefix . "/projects/", "_self");
+				$this->addCrumb("Projects", $this->www_prefix . "/projects/", "_self");
 				$this->addCrumb($items[1], $this->www_prefix . "/" . $items[1], "_self");
 			}
 
