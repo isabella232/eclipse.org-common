@@ -1027,6 +1027,7 @@ EOHTML;
 			$v['hide_breadcrumbs'] = FALSE;
 			$v['breadcrumbs_html'] = "";
 			$v['body_classes'] = '';
+			$v['main_container_html'] = '';
 			$v['main_container_classes'] = 'container';
 			$this->theme_variables = $v;
 		}
