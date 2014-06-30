@@ -13,10 +13,21 @@
 	require_once('../app.php');
 	require_once('../../header.php');
 ?>
+<div class="thin-header">
 		<header role="banner">
 		  <div class="container">
+		  <?php if (!isset($_GET['site_login'])) :?>
+		  <div id="row-toolbar" class="text-right hidden-print">
+		      <div id="row-toolbar-col" class="col-md-24">
+		        <ul class="list-inline">
+		          <li><?php print $variables['session']['create_account_link'];?></li>
+		          <li><?php print $variables['session']['my_account_link'];?></li>
+		        </ul>
+		      </div>
+		    </div>
+		    <?php endif;?>
 			  <div id="row-logo-search">
-				  <div id="header-left" class="thin-header">
+				  <div id="header-left">
 				    <div class="row">
 		          <div class="hidden-xs col-sm-6">
 		            <?php print $variables['promotion'];?>
@@ -66,6 +77,7 @@
 			    </div>
 		    </section>
 	    <?php endif; ?>
+	  </div>
 		<main role="main">
 		  <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
 	        <?php print $variables['deprecated'];?>
