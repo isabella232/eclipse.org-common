@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2007-2011 Eclipse Foundation and others.
+ * Copyright (c) 2007-2014 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -279,6 +279,16 @@ class Session {
 	function redirectToLogin() {
 		header("Location: " . LOGINPAGE);
 		exit;
+	}
+	
+	/**
+	 * Determine if this session is logged in.
+	 * @author droy
+	 * @since 2014-07-03
+	 * @return boolean
+	 */
+	function isLoggedIn() {
+		return $this->getGID() != "";
 	}
 }
 ?>
