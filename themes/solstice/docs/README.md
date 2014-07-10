@@ -3,7 +3,6 @@
 ## General steps to get going
 
 * Clone the repo: `git clone git://git.eclipse.org/gitroot/www.eclipse.org/eclipse.org-common.git`.
-* Fetch dependencies with [composer](http://www.getcomposer.org): `composer install`.
 * Set up your Eclipse environment. This includes git, PHP and apache.
 
 
@@ -16,7 +15,7 @@ Have a bug or a feature request? [Please open a new issue](https://bugs.eclipse.
 On a page using the eclipse.org-common $App Class:
 
 ```php
-$App->generatePage($theme = 'bootnova', $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+$App->generatePage('solstice', $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
 ```
 
 
