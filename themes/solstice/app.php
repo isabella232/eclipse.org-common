@@ -132,7 +132,7 @@ function solstice_variables(&$variables) {
 	);
 
 	$variables['menu']['more']['Community'][] = array(
-		'url' => '//www.planeteclipse.org/',
+		'url' => 'http://www.planeteclipse.org/',
 		'caption' => 'Planet Eclipse'
 	);
 
