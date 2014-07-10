@@ -13,6 +13,7 @@ and powerful front-end framework for faster and easier web development.</p>
 <ul>
   <li><a href="http://getbootstrap.com/">Bootstrap</a> v3.1.1</li>
   <li><a href="http://bootstrapvalidator.com/">BootstrapValidator</a> v0.4.5</li>
+  <li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> <span class="red">*Glyphicons is not included with Solstice.</span></li>
   <li><a href="http://jquery.com/">jQuery</a> v2.1.1</li>
   <li><a href="https://github.com/chrisguindon/solstice-assets">Solstice Assets</a> (Less files &amp; images)</li>
   <li><a href="http://geedmo.github.io/yamm3/">Yamm3</a> (Yet another megamenu for Bootstrap 3)</li>
