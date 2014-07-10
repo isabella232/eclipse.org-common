@@ -20,7 +20,7 @@
 	$Menu 	= new Menu();
 
 	# Begin: page-specific settings.  Change these.
-	$pageTitle 		= " How to use the eclipse.org Solstice theme";
+	$pageTitle 		= " How to use the Eclipse Solstice theme";
 	$pageKeywords	= "eclipse solstice";
 	$pageAuthor		= "Christopher Guindon";
 
