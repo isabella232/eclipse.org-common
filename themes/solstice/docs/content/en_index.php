@@ -46,8 +46,8 @@ $App->generatePage('solstice', $Menu, NULL , $pageAuthor, $pageKeywords, $pageTi
 
 <h2>CSS</h2>
 <p><a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/classes.less">classes.less</a>
-and <a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/fonts.less">fonts.less</a> include usefull CSS classes. They include classes
-for colors, font-weight &amp; font size and offsets to remove the margin after the breadcrumbs or before the footer.</p>
+and <a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/fonts.less">fonts.less</a> include usefull CSS classes for
+colors, font-weight &amp; font size and offsets to remove the margin after the breadcrumbs or before the footer.</p>
 
 <h2>Custom Components</h2>
 <ol class="">
