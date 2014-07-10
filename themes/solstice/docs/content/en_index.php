@@ -1,7 +1,7 @@
 
 <style>
-.editor{
-  margin-bottom:7em;
+hr{
+  margin-bottom:3em;
 }
 </style>
 <h1><?php print $pageTitle;?></h1>
@@ -65,14 +65,14 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
   <li><a href="#section-toolbarmenu">Toolbar Menu</a></li>
 </ol>
 
-<?php include('components/block-box.php');?>
-<?php include('components/breadcrumbs.php');?>
-<?php include('components/discover-search.php');?>
-<?php include('components/dragdrop.php');?>
-<?php include('components/headerrow.php');?>
-<?php include('components/hightlight.php');?>
-<?php include('components/landing-well.php');?>
-<?php include('components/news-list.php');?>
-<?php include('components/step-by-step.php');?>
-<?php include('components/timeline.php');?>
-<?php include('components/toolbar-menu.php');?>
+<?php include('components/block-box.php');?><hr/>
+<?php include('components/breadcrumbs.php');?><hr/>
+<?php include('components/discover-search.php');?><hr/>
+<?php include('components/dragdrop.php');?><hr/>
+<?php include('components/headerrow.php');?><hr/>
+<?php include('components/hightlight.php');?><hr/>
+<?php include('components/landing-well.php');?><hr/>
+<?php include('components/news-list.php');?><hr/>
+<?php include('components/step-by-step.php');?><hr/>
+<?php include('components/timeline.php');?><hr/>
+<?php include('components/toolbar-menu.php');?><hr/>
