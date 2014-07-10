@@ -6,7 +6,7 @@
   </a>
 </div><?php $html = ob_get_clean();?>
 
-<h3 id="section-discover-search">Marketplace Drag & Drop install</h3>
+<h3 id="section-dragdrop">Marketplace Drag & Drop install</h3>
 <p>Please take a look at the External Install Button tab over on <a href="http://marketplace.eclipse.org/">Eclipse Marketplace</a> for the mpc_install id. </p>
 <?php print $html; ?>
 

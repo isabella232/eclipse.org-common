@@ -51,7 +51,7 @@
 </section>
 <?php $html = ob_get_clean();?>
 
-<h3 id="section-highlight">Hightlight</h3>
+<h3 id="section-highlight">Highlight</h3>
 </div>
 <?php print $html; ?>
 <div class="container">

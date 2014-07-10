@@ -55,9 +55,9 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
   <li><a href="#section-block-box">Block-box</a></li>
   <li><a href="#section-breadcrumbs">Breadcrumbs</a></li>
   <li><a href="#section-discover-search">Discover Search</a></li>
-  <li><a href="#section-drapdrop">Marketplace Drag and Drop install</a></li>
+  <li><a href="#section-dragdrop">Marketplace Drag and Drop install</a></li>
   <li><a href="#section-headerrow">Header row</a></li>
-  <li><a href="#section-hightlight">Hightlight</a></li>
+  <li><a href="#section-highlight">Highlight</a></li>
   <li><a href="#section-landing-well">Landing well</a></li>
   <li><a href="#section-news-list">News list</a></li>
   <li><a href="#section-stepbystep">Step by Step</a></li>

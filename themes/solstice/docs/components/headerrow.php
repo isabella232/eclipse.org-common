@@ -10,7 +10,7 @@
   </div>
 </div><?php $html = ob_get_clean();?>
 
-<h3 id="section-discover-headerrow">Header row</h3>
+<h3 id="section-headerrow">Header row</h3>
 <p>@TODO</p>
 <?php print $html; ?>
 
