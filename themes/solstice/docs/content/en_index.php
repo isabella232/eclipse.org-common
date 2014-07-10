@@ -26,6 +26,7 @@ and powerful front-end framework for faster and easier web development.</p>
 </ul>
 
 <h2>Using Solstice</h2>
+<p>On a page using the eclipse.org-common $App Class:</p>
 <pre>
 &lt?php
 $App->generatePage('solstice', $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $html);
@@ -34,6 +35,15 @@ $App->generatePage('solstice', $Menu, NULL , $pageAuthor, $pageKeywords, $pageTi
 //$App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $html);
 
 </pre>
+
+<h2>Barebones static HTML template</h2>
+<p>A barebone HTML header & footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists & events.eclipse.org.</p>
+<ul>
+<li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Header</a></li>
+<li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Footer</a></li>
+<li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/">Full page</a></li>
+</ul>
+
 <h2>CSS</h2>
 <p><a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/classes.less">classes.less</a>
 and <a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/fonts.less">fonts.less</a> include usefull CSS classes. They include classes
