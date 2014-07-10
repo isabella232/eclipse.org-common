@@ -6,7 +6,7 @@
 </style>
 <h1><?php print $pageTitle;?></h1>
 
-<p>This is the new Solstice theme for eclipse.org.  We designed it to be cleaner and lighter. We took a less is more approach. It was created on top of Bootstrap which is a sleek, intuitive,
+<p>We designed the Solstice to be cleaner and lighter. We took a less is more approach. It was created on top of Bootstrap which is a sleek, intuitive,
 and powerful front-end framework for faster and easier web development.</p>
 <p>We support most UI components from <a href="https://wiki.eclipse.org/Nova">Nova</a>. We’re hoping that the transition won’t be too hard for most use-case.</p>
 <h2>What's included with Solstice?</h2>
