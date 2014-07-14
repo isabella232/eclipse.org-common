@@ -46,20 +46,23 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
   // Initialize $variables.
   $variables = array();
 
+  // Add classes to &lt;body&gt;. (String)
+  $variables['body_classes'] = '';
+
+  // Insert custom HTML in the breadcrumb region. (String)
+  $variables['breadcrumbs_html'] = "";
+
   // Hide the breadcrumbs. (Bool)
   $variables['hide_breadcrumbs'] = TRUE;
+
+  // Insert HTML before the left nav. (String)
+  $variables['leftnav_html'] = '';
 
   // Update the main container class, this is usefull if you want to use the full width of the page. (String)
   // Eclipse.org homepage is a good example: https://www.eclipse.org/home/index.php
   $variables['main_container_classes'] = 'container-full';
 
-  // Insert custom HTML in the breadcrumb region. (String)
-  $variables['breadcrumbs_html'] = "";
-
-  // Add classes to &lt;body&gt;. (String)
-  $variables['body_classes'] = '';
-
-  // Insert custom HTML after opening the main content container, before the left sidebar. (String)
+  // Insert HTML after opening the main content container, before the left sidebar. (String)
   $variables['main_container_html'] = '';
 
   // Set Solstice theme variables (Array)
