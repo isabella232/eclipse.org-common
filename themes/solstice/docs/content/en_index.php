@@ -19,7 +19,6 @@ and powerful front-end framework for faster and easier web development.</p>
   <li><a href="http://geedmo.github.io/yamm3/">Yamm3</a> (Yet another megamenu for Bootstrap 3)</li>
 </ul>
 
-
 <h2>Getting Started</h2>
 <ul>
   <li><a href="https://www.youtube.com/watch?v=AbSC3506sz0&feature=youtu.be">Committer and Contributor Hangout Series -- Eclipse Website Refresh</a></li>
@@ -40,11 +39,19 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
 
 <h2>Barebones static HTML template</h2>
 <p>A barebone HTML header &amp; footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists &amp; events.eclipse.org.</p>
+
+<h3>Default template</h3>
 <ul>
-<li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Header</a></li>
-<li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Footer</a></li>
-<li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/">Full page</a></li>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Header</a></li>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Footer</a></li>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/">Full page</a></li>
 </ul>
+<h3>Thin template <small>(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=437384">Bug #437384</a>)</small></h3>
+<ul>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/thin/thin-header.php">Thin header</a></li>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/thin/">Full page</a></li>
+</ul>
+<br/>
 
 <h2>CSS</h2>
 <p><a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/classes.less">classes.less</a>
@@ -52,7 +59,7 @@ and <a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesh
 colors, font-weight &amp; font size and offsets to remove the margin after the breadcrumbs or before the footer.</p>
 
 <h2>Custom Components</h2>
-<ol class="">
+<ol>
   <li><a href="#section-block-box">Block-box</a></li>
   <li><a href="#section-breadcrumbs">Breadcrumbs</a></li>
   <li><a href="#section-discover-search">Discover Search</a></li>

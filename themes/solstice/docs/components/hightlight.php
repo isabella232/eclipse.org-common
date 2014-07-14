@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<section class="row highlight background-grey">
+<section class="highlight background-grey">
     <div class="container">
       <div>
         <div class="triangle triangle-black visible-lg"></div>
