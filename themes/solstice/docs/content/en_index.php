@@ -37,6 +37,35 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
 
 </div>
 
+<h2>Solstice theme variables</h2>
+<p>It's now possible to alter the Solstice theme using <code>$App->setThemeVariables($variables);</code>.</p>
+
+<div class="editor" data-editor-lang="html" data-editor-no-focus="true">
+&lt;?php
+
+  // Initialize $variables.
+  $variables = array();
+
+  // Hide the breadcrumbs. (Bool)
+  $variables['hide_breadcrumbs'] = TRUE;
+
+  // Update the main container class, this is usefull if you want to use the full width of the page. (String)
+  // Eclipse.org homepage is a good example: https://www.eclipse.org/home/index.php
+  $variables['main_container_classes'] = 'container-full';
+
+  // Insert custom HTML in the breadcrumb region. (String)
+  $variables['breadcrumbs_html'] = "";
+
+  // Add classes to &lt;body&gt;. (String)
+  $variables['body_classes'] = '';
+
+  // Insert custom HTML after opening the main content container, before the left sidebar. (String)
+  $variables['main_container_html'] = '';
+
+  // Set Solstice theme variables (Array)
+  $App->setThemeVariables($variables);
+</div>
+
 <h2>Barebones static HTML template</h2>
 <p>A barebone HTML header &amp; footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists &amp; events.eclipse.org.</p>
 
