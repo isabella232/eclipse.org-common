@@ -22,23 +22,24 @@ and powerful front-end framework for faster and easier web development.</p>
 
 <h2>Getting Started</h2>
 <ul>
-  <li>Read the documentation for <a href="http://getbootstrap.com/css/">Bootstrap</a>, <a href="http://bootstrapvalidator.com/">BootstrapValidator</a> & <a href="http://jquery.com/">jQuery</a></li>
+  <li><a href="https://www.youtube.com/watch?v=AbSC3506sz0&feature=youtu.be">Committer and Contributor Hangout Series -- Eclipse Website Refresh</a></li>
+  <li>Read the documentation for <a href="http://getbootstrap.com/css/">Bootstrap</a>, <a href="http://bootstrapvalidator.com/">BootstrapValidator</a> &amp; <a href="http://jquery.com/">jQuery</a></li>
   <li><a href="http://wiki.eclipse.org/Using_Phoenix">How to use Phonix</a></li>
 </ul>
 
 <h2>Using Solstice</h2>
 <p>On a page using the eclipse.org-common $App Class:</p>
-<pre>
-&lt?php
-$App->generatePage('solstice', $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $html);
+<div class="editor" data-editor-lang="html" data-editor-no-focus="true">
+&lt;?php
+$App->generatePage(&apos;solstice&apos;, $Menu, NULL, $pageAuthor, $pageKeywords, $pageTitle, $html);
 
 // To make sure your page is always using the default theme:
-//$App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $html);
+$App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $html);
 
-</pre>
+</div>
 
 <h2>Barebones static HTML template</h2>
-<p>A barebone HTML header & footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists & events.eclipse.org.</p>
+<p>A barebone HTML header &amp; footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists &amp; events.eclipse.org.</p>
 <ul>
 <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Header</a></li>
 <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Footer</a></li>
