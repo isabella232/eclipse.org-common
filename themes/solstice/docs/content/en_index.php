@@ -37,7 +37,7 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
 
 </div>
 
-<h2>Solstice theme variables</h2>
+<h2>Theme variables</h2>
 <p>It's now possible to alter the Solstice theme using <code>$App->setThemeVariables($variables);</code>.</p>
 
 <div class="editor" data-editor-lang="html" data-editor-no-focus="true">
