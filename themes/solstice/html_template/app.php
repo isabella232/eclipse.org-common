@@ -43,4 +43,4 @@ EOHTML;
 	$theme        = "solstice";
 	$html         = "";
 
-  require_once('../app.php');
+  require_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/themes/solstice/app.php');

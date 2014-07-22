@@ -38,7 +38,8 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // compiling styles.less into styles.css
-                    "./public/stylesheets/styles.min.css": "./src/stylesheets/styles.less",
+                    './public/stylesheets/styles.min.css': './src/stylesheets/styles.less',
+                    './public/stylesheets/barebone.min.css': './html_template/barebone/styles.less'
                 }
             }
         },
@@ -49,6 +50,11 @@ module.exports = function(grunt) {
             js_frontend: {
                 src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/main.js'],
                 dest: './public/javascript/main.min.js',
+            },
+            js_barebone: {
+                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/main.js'],
+
+                dest: './public/javascript/barebone.min.js',
             },
             css: {
                 src: ['./public/stylesheets/styles.min.css', './bower_components/bootstrapvalidator/dist/css/bootstrapValidator.min.css'],
@@ -71,12 +77,19 @@ module.exports = function(grunt) {
             js_frontend: {
                 files: [
                 // watched files
-                './bower_components/jquery/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/main.js'],
+                './bower_components/jquery/jquery.js', 
+                './bower_components/bootstrap/dist/js/bootstrap.js', 
+                './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', 
+                './src/javascript/main.js'],
                 // tasks to run
-                tasks: ['concat:js_frontend', 'uglify:frontend'],
+                tasks: ['concat:js_barebone', 'concat:js_frontend', 'uglify:frontend'],
             },
             less: {
-                files: ['./src/stylesheets/*.less', './src/stylesheets/**/*.less', './bower_components/solstice-assets/less/*.less', './bower_components/solstice-assets/**/*.less'],
+                files: ['./src/stylesheets/*.less', 
+                        './src/stylesheets/**/*.less', 
+                        './bower_components/solstice-assets/less/*.less', 
+                        './bower_components/solstice-assets/**/*.less',
+                        './html_template/barebone/styles.less'],
                 // watched files
                 tasks: ['less', 'concat:css'],
                 // tasks to run

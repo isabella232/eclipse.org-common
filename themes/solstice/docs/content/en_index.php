@@ -80,8 +80,12 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
 </ul>
 <h3>Thin template <small>(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=437384">Bug #437384</a>)</small></h3>
 <ul>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/thin/thin-header.php">Thin header</a></li>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/thin/header.php">Thin header</a></li>
   <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/thin/">Full page</a></li>
+</ul>
+<h3 id="tpl-barebone">Barebone template</h3>
+<ul>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/barebone/header.php">Thin header</a></li>
 </ul>
 <br/>
 

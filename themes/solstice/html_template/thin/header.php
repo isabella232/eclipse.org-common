@@ -16,7 +16,7 @@
 <div class="thin-header">
 		<header role="banner">
 		  <div class="container">
-		  <?php if (!isset($_GET['site_login'])) :?>
+		  <?php if (isset($_GET['site_login'])) :?>
 		  <div id="row-toolbar" class="text-right hidden-print">
 		      <div id="row-toolbar-col" class="col-md-24">
 		        <ul class="list-inline">
