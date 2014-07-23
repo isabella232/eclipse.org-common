@@ -25,7 +25,7 @@
   $pageKeywords = "Add maximal 20 keywords and seperate them from each other by a comma en a space.";
   $pageAuthor = "Christopher Guindon";
 
-   // Initialize custom solstice $variables.
+  // Initialize custom solstice $variables.
   $variables = array();
 
   # Add classes to <body>. (String)
