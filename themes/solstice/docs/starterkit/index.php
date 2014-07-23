@@ -10,22 +10,22 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/nav.class.php");
+  require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php");
 
-	$App 	= new App();
-	$Nav	= new Nav();
-	$Menu 	= new Menu();
+  $App   = new App();
+  $Nav  = new Nav();
+  $Menu   = new Menu();
 
-	require_once('_projectCommon.php');
+  require_once('_projectCommon.php');
 
-	# Begin: page-specific settings.  Change these.
-	$pageTitle = "Starterkit Template";
-	$pageKeywords = "Add maximal 20 keywords and seperate them from each other by a comma en a space.";
-	$pageAuthor = "Christopher Guindon";
+  # Begin: page-specific settings.  Change these.
+  $pageTitle = "Starterkit Template";
+  $pageKeywords = "Add maximal 20 keywords and seperate them from each other by a comma en a space.";
+  $pageAuthor = "Christopher Guindon";
 
-	 // Initialize custom solstice $variables.
+   // Initialize custom solstice $variables.
   $variables = array();
 
   # Add classes to <body>. (String)
@@ -49,18 +49,18 @@
   # Set Solstice theme variables. (Array)
   $App->setThemeVariables($variables);
 
-	# Place your html content in a file called content/en_pagename.php
-	ob_start();
-	include("content/en_" . $App->getScriptName());
-	$html = ob_get_clean();
+  # Place your html content in a file called content/en_pagename.php
+  ob_start();
+  include("content/en_" . $App->getScriptName());
+  $html = ob_get_clean();
 
-	# Generate the web page
-	$App->Promotion = TRUE;
+  # Generate the web page
+  $App->Promotion = TRUE;
 
-	# Insert extra html before closing </head> tag.
-	//$App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="style.css" media="screen" />');
+  # Insert extra html before closing </head> tag.
+  //$App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="style.css" media="screen" />');
 
-	# Insert script/html before closing </body> tag.
-	//$App->AddExtraJSFooter('<script type="text/javascript" src="script.min.js"></script>');
+  # Insert script/html before closing </body> tag.
+  //$App->AddExtraJSFooter('<script type="text/javascript" src="script.min.js"></script>');
 
-	$App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
+  $App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
