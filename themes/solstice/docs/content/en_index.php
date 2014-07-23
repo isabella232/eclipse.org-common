@@ -37,9 +37,13 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
 
 </div>
 
+<h2 id="starterkit">Starterkit</h2>
+<p>The <a href="/eclipse.org-common/themes/solstice/docs/starterkit/">starterkit</a> includes all the files required to create a page with Solstice. The source code is available <a href="http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/tree/themes/solstice/docs/starterkit/">here</a>.</p>
+<p> <p><a href="/eclipse.org-common/themes/solstice/docs/starterkit/solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p></p>
+<br/>
+
 <h2>Theme variables</h2>
 <p>It's now possible to alter the Solstice theme using <code>$App->setThemeVariables($variables);</code>.</p>
-
 <div class="editor" data-editor-lang="html" data-editor-no-focus="true">
 &lt;?php
 
