@@ -16,7 +16,7 @@
 			$("#midcolumn").attr("class", "no-left-nav");
 		}
 	});
-
+	
 	// scroll button.
 	$(window).on("load resize scroll", function(){
 		if ($(window).width() < 1270){
