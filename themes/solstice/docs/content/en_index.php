@@ -11,7 +11,7 @@ and powerful front-end framework for faster and easier web development.</p>
 <p>We support most UI components from <a href="https://wiki.eclipse.org/Nova">Nova</a>. We’re hoping that the transition won’t be too hard for most pages.</p>
 <h2>What's included with Solstice?</h2>
 <ul>
-  <li><a href="http://getbootstrap.com/">Bootstrap</a> v3.1.1</li>
+  <li><a href="http://getbootstrap.com/">Bootstrap</a> v3.2.0</li>
   <li><a href="http://bootstrapvalidator.com/">BootstrapValidator</a> v0.4.5</li>
   <li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> v4.1.0 <span class="red">*Glyphicons is not included with Solstice.</span></li>
   <li><a href="http://jquery.com/">jQuery</a> v2.1.1</li>
@@ -97,6 +97,8 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
 <p><a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/classes.less">classes.less</a>
 and <a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/fonts.less">fonts.less</a> include usefull CSS classes for
 colors, font-weight &amp; font size and offsets to remove the margin after the breadcrumbs or before the footer.</p>
+
+<p><a href="typo.php">Typography</a> examples with solstice.</p>
 
 <h2>Custom Components</h2>
 <ol>
