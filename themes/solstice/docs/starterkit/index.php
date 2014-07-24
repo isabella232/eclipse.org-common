@@ -18,6 +18,7 @@
   $Nav  = new Nav();
   $Menu   = new Menu();
 
+  # Shared variables/configs for all pages of your website.
   require_once('_projectCommon.php');
 
   # Begin: page-specific settings.  Change these.
@@ -25,7 +26,7 @@
   $pageKeywords = "Add maximal 20 keywords and seperate them from each other by a comma en a space.";
   $pageAuthor = "Christopher Guindon";
 
-  // Initialize custom solstice $variables.
+  # Initialize custom solstice $variables.
   $variables = array();
 
   # Add classes to <body>. (String)
@@ -54,13 +55,11 @@
   include("content/en_" . $App->getScriptName());
   $html = ob_get_clean();
 
-  # Generate the web page
-  $App->Promotion = TRUE;
-
   # Insert extra html before closing </head> tag.
   //$App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="style.css" media="screen" />');
 
   # Insert script/html before closing </body> tag.
   //$App->AddExtraJSFooter('<script type="text/javascript" src="script.min.js"></script>');
 
+  # Generate the web page
   $App->generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html);
