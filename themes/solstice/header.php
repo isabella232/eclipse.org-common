@@ -36,5 +36,5 @@ include_once 'app.php';
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="<?php print $variables['theme_variables']['body_classes'];?>" id="<?php print $variables['body']['id'];?>">
+  <body class="<?php print $variables['body']['classes'];?>" id="<?php print $variables['body']['id'];?>">
 	  <a class="sr-only" href="#content">Skip to main content</a>

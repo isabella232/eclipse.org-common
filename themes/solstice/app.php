@@ -97,14 +97,18 @@ function solstice_variables(&$variables) {
 	// Deprecated message
 	if ($App->getOutDated()) {
 		$classes[] =  "deprecated";
-		$deprecated = '<div class="message-box-container">';
-		$deprecated .= '<div class="message-box error">This page is deprecated and may contain some information that is no longer relevant or accurate.</div>';
-		$deprecated .= '</div>';
+		$deprecated = '<div class="col-md-24" style="padding-left:0;"><div class="alert alert-danger" role="alert">';
+		$deprecated .= 'This page is deprecated and may contain some information that is no longer relevant or accurate.';
+		$deprecated .= '</div></div>';
 	}
 	$variables['deprecated'] =  $deprecated;
 
 	// Body
 	$variables['body']['classes'] = implode($classes, ' ');
+	if (!empty($variables['theme_variables']['body_classes'])) {
+		$variables['body']['classes'] .= ' ' . $variables['theme_variables']['body_classes'];
+	}
+
 	$variables['body']['id'] = 'body_solstice';
 
 	// Logos
