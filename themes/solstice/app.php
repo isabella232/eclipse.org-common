@@ -115,6 +115,8 @@ function solstice_variables(&$variables) {
   $variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" class="logo-eclipse-default"/>';
   $variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39" id="logo-eclipse-white"/>';
   $variables['logo']['mobile'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" width="174" class="logo-eclipse-default"/>';
+  $variables['logo']['default_link'] = '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
+  $variables['logo']['mobile_link'] =  '<a href="' . $variables['url'] . '" class="navbar-brand visible-xs">' . $variables['logo']['mobile'] . '</a>';
 
   // Main-menu
   foreach ($main_menu as $item) {
@@ -242,22 +244,35 @@ function solstice_variables(&$variables) {
   }
 
   // Ads and promotions
+  $variables['promotion']['desktop'] = "";
+  $variables['promotion']['mobile'] = "";
   ob_start();
-  if ($App->Promotion == FALSE) {
-    print '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
-  } else {
+  if ($App->Promotion == TRUE) {
     if ($App->CustomPromotionPath != "") {
       include($App->CustomPromotionPath);
     } else {
       include($App->getPromotionPath($theme));
     }
   }
+  $promo = trim(ob_get_clean());
+	$variables['theme_variables']['breadcrumbs_wrapper_classes'] = "col-xs-24";
+  if (!empty($promo)) {
+    $variables['promotion']['desktop'] = '<div class="promo-link col-md-13 hidden-xs hidden-sm text-right"> '  . $promo . '</div>';
+    $promo_breadcrumbs_classes = " visible-xs visible-sm";
+    if ($variables['theme_variables']['hide_breadcrumbs']) {
+      $promo_breadcrumbs_classes = "";
+    }
 
-  $variables['promotion'] = ob_get_clean();
+    $container_classes = explode(" ", $variables['theme_variables']['main_container_classes']);
 
-  // Always show the eclipse logo for release day
-  $variables['promotion'] = '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
-  $variables['logo_mobile'] =  '<a href="' . $variables['url'] . '" class="navbar-brand visible-xs">' . $variables['logo']['mobile'] . '</a>';
+    if (!in_array('container', $container_classes)) {
+      $promo_breadcrumbs_classes .= " padding-top-25";
+    }
+
+    $variables['promotion']['mobile'] = '<div class="promo-link-mobile padding-bottom-25 col-xs-24 text-center ' . $promo_breadcrumbs_classes . '"> '  . $promo . ' </div>';
+    $variables['theme_variables']['breadcrumbs_classes'] .= ' promo-included';
+    $variables['theme_variables']['breadcrumbs_wrapper_classes'] = "col-md-11";
+  }
 
   $variables['uri'] = parse_url($_SERVER['REQUEST_URI']);
 

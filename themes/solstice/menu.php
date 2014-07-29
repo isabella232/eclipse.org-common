@@ -25,7 +25,7 @@
 				  <div id="header-left" class="col-sm-14 col-md-16 col-lg-19">
 				    <div class="row">
 		          <div class="hidden-xs">
-		            <?php print $variables['promotion'];?>
+		            <?php print $variables['logo']['default_link'];?>
 		          </div>
 						   <div id="main-menu" class="navbar row yamm">
 				        <div id="navbar-collapse-1" class="navbar-collapse collapse">
@@ -55,7 +55,7 @@
 						        <span class="icon-bar"></span>
 						        <span class="icon-bar"></span>
 						      </button>
-						      <?php print $variables['logo_mobile']; ?>
+						      <?php print $variables['logo']['mobile_link'];?>
 		    				</div>
 					    </div>
 				    </div>
@@ -84,12 +84,17 @@
 		<?php if (!$variables['theme_variables']['hide_breadcrumbs']) :?>
 			<section id="breadcrumb" class="<?php print $variables['theme_variables']['breadcrumbs_classes'];?>">
 			  <div class="container">
-					<?php print $variables['breadcrumbs'];?>
+			    <div class="<?php print $variables['theme_variables']['breadcrumbs_wrapper_classes'];?>">
+						<?php print $variables['breadcrumbs'];?>
+					</div>
+					<?php print $variables['promotion']['desktop'];?>
 			    <?php print $variables['theme_variables']['breadcrumbs_html'];?>
+
 			    </div>
 		    </section>
 	    <?php endif; ?>
 		<main role="main">
 		  <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
 	        <?php print $variables['deprecated'];?>
+	        <?php print $variables['promotion']['mobile'];?>
 	        <?php print $variables['theme_variables']['main_container_html'];?>
