@@ -30,7 +30,7 @@
           <div id="header-left">
             <div class="row">
               <div class="hidden-xs col-sm-6">
-                <?php print $variables['promotion'];?>
+                <?php print $variables['logo']['default_link'];?>
               </div>
                <div id="main-menu" class="navbar col-sm-18 yamm">
                 <div id="navbar-collapse-1" class="navbar-collapse collapse">
@@ -60,7 +60,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <?php print $variables['logo_mobile']; ?>
+                  <?php print $variables['logo']['mobile_link'];?>
                 </div>
               </div>
             </div>
@@ -78,6 +78,7 @@
         </section>
       <?php endif; ?>
     </div>
+    <?php print $variables['promotion']['desktop'];?>
     <main role="main">
       <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
           <?php print $variables['deprecated'];?>

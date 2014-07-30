@@ -37,8 +37,8 @@ require_once ('../app.php');
         <div id="header-left">
           <div class="row">
             <div class="hidden-xs col-sm-6 reset">
-                <?php print $variables['promotion'];?>
-              </div>
+                <?php print $variables['logo']['default_link'];?>
+            </div>
             <div id="main-menu" class="navbar col-sm-18 yamm reset">
               <div id="navbar-collapse-1" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -66,8 +66,8 @@ require_once ('../app.php');
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span> <span class="icon-bar"></span>
                 </button>
-                  <?php print $variables['logo_mobile']; ?>
-                </div>
+                <?php print $variables['logo']['mobile_link'];?>
+              </div>
             </div>
           </div>
         </div>
