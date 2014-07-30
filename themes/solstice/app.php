@@ -109,6 +109,7 @@ function solstice_variables(&$variables) {
     $variables['body']['classes'] .= ' ' . $variables['theme_variables']['body_classes'];
   }
 
+
   $variables['body']['id'] = 'body_solstice';
 
   // Logos
@@ -262,10 +263,13 @@ function solstice_variables(&$variables) {
     if (!$variables['theme_variables']['hide_breadcrumbs']) {
       $promo_breadcrumbs_classes .= " padding-top-15";
     }
+    else{
+      $variables['body']['classes'] .= 'no-breadcrumbs-with-promo';
+    }
     $variables['promotion']['desktop'] = '<div class="container"><div class="promo-link col-md-24 text-center ' . $promo_breadcrumbs_classes . '"> '  . $promo . '</div></div>';
   }
   else{
-    $variables['main_classes'] = 'no-promo';
+    $variables['main_classes'] .= ' no-promo';
   }
 
   $variables['uri'] = parse_url($_SERVER['REQUEST_URI']);
