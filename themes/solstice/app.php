@@ -245,7 +245,7 @@ function solstice_variables(&$variables) {
 
   // Ads and promotions
   $variables['promotion']['desktop'] = "";
-  $variables['promotion']['mobile'] = "";
+  $variables['main_classes'] = "";
   ob_start();
   if ($App->Promotion == TRUE) {
     if ($App->CustomPromotionPath != "") {
@@ -255,23 +255,17 @@ function solstice_variables(&$variables) {
     }
   }
   $promo = trim(ob_get_clean());
-	$variables['theme_variables']['breadcrumbs_wrapper_classes'] = "col-xs-24";
+  $variables['theme_variables']['breadcrumbs_wrapper_classes'] = "col-xs-24";
+
   if (!empty($promo)) {
-    $variables['promotion']['desktop'] = '<div class="promo-link col-md-13 hidden-xs hidden-sm text-right"> '  . $promo . '</div>';
-    $promo_breadcrumbs_classes = " visible-xs visible-sm";
-    if ($variables['theme_variables']['hide_breadcrumbs']) {
-      $promo_breadcrumbs_classes = "";
+    $promo_breadcrumbs_classes = "padding-bottom-15";
+    if (!$variables['theme_variables']['hide_breadcrumbs']) {
+      $promo_breadcrumbs_classes .= " padding-top-15";
     }
-
-    $container_classes = explode(" ", $variables['theme_variables']['main_container_classes']);
-
-    if (!in_array('container', $container_classes)) {
-      $promo_breadcrumbs_classes .= " padding-top-25";
-    }
-
-    $variables['promotion']['mobile'] = '<div class="promo-link-mobile padding-bottom-25 col-xs-24 text-center ' . $promo_breadcrumbs_classes . '"> '  . $promo . ' </div>';
-    $variables['theme_variables']['breadcrumbs_classes'] .= ' promo-included';
-    $variables['theme_variables']['breadcrumbs_wrapper_classes'] = "col-md-11";
+    $variables['promotion']['desktop'] = '<div class="container"><div class="promo-link col-md-24 text-center ' . $promo_breadcrumbs_classes . '"> '  . $promo . '</div></div>';
+  }
+  else{
+    $variables['main_classes'] = 'no-promo';
   }
 
   $variables['uri'] = parse_url($_SERVER['REQUEST_URI']);

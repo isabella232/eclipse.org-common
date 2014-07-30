@@ -87,14 +87,12 @@
 			    <div class="<?php print $variables['theme_variables']['breadcrumbs_wrapper_classes'];?>">
 						<?php print $variables['breadcrumbs'];?>
 					</div>
-					<?php print $variables['promotion']['desktop'];?>
 			    <?php print $variables['theme_variables']['breadcrumbs_html'];?>
-
 			    </div>
 		    </section>
 	    <?php endif; ?>
-		<main role="main">
+	  <?php print $variables['promotion']['desktop'];?>
+		<main role="main" class="<?php print $variables['main_classes'];?>">
 		  <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
 	        <?php print $variables['deprecated'];?>
-	        <?php print $variables['promotion']['mobile'];?>
 	        <?php print $variables['theme_variables']['main_container_html'];?>
