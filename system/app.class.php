@@ -116,7 +116,7 @@ class App {
 		}
 
 		$this->databases = array();
-		$this->devmode = true;
+
 		# Figure out if we're in devmode by whether the classes are installed or not
 		if(!file_exists($this->DB_CLASS_PATH)) {
 			$this->devmode = true;
