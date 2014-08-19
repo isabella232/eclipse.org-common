@@ -51,6 +51,6 @@
 	<?php } ?>
 	<?php if ($App->OutDated == TRUE) {?>
 		<div class="message-box-container">
-			<div class="message-box error">This page is deprecated and may contain some information that is no longer relevant or accurate.</div>
+			<div class="message-box error"><?php print $this->getOutDatedMessage();?></div>
 		</div>
 	<?php } ?>

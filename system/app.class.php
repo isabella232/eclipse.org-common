@@ -82,6 +82,9 @@ class App {
 	# Flag to determine whether the "deprecated" theme should be loaded.
 	private $OutDated			= false;
 
+	# Deprecated theme message.
+	private $OutDatedMsg	= "";
+
 	# Flag to determine whether this is development mode or not (for databases)
 	public $devmode 			= false;
 
@@ -1071,12 +1074,26 @@ EOHTML;
 	 *
 	 * @return boolean
 	 */
-	function setOutDated($when = 'now') {
+	function setOutDated($when = 'now', $msg = "") {
+		if (is_string($msg)) {
+			$this->OutDatedMsg = $msg;
+		}
+
 		if (strtolower($when) == 'now' || ($this->validateDateFormat($when) && time() >= strtotime($when))) {
 			$this->OutDated = TRUE;
 			return TRUE;
 		}
 		return FALSE;
+	}
+
+	/**
+	 * Return value of the private property OutDatedMsg.
+	 */
+	function getOutDatedMessage() {
+		if (empty($this->OutDatedMsg)) {
+			$this->OutDatedMsg = "This page is deprecated and may contain some information that is no longer relevant or accurate.";
+		}
+		return $this->OutDatedMsg;
 	}
 
 	/**

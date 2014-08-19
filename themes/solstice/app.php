@@ -98,7 +98,7 @@ function solstice_variables(&$variables) {
   if ($App->getOutDated()) {
     $classes[] =  "deprecated";
     $deprecated = '<div class="col-md-24" style="padding-left:0;"><div class="alert alert-danger" role="alert">';
-    $deprecated .= 'This page is deprecated and may contain some information that is no longer relevant or accurate.';
+    $deprecated .= $App->getOutDatedMessage();
     $deprecated .= '</div></div>';
   }
   $variables['deprecated'] =  $deprecated;
