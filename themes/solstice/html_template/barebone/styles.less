@@ -4,103 +4,105 @@
 // author: Christopher Guindon <chris.guindon@eclipse.org>
 // -------------------------------------------------------
 
-@import './bower_components/solstice-assets/stylesheets/_mixins.less';
+@import "./bower_components/solstice-assets/stylesheets/_mixins.less";
 // Override core variables
 @import "./bower_components/solstice-assets/stylesheets/variables.less";
 
 // Core variables and mixins
 @import "./bower_components/bootstrap/less/mixins.less";
 
-// Reset
-//@import "./bower_components/bootstrap/less/normalize.less";
-//@import "./bower_components/bootstrap/less/print.less";
-
 // Core CSS
-@import "./bower_components/bootstrap/less/scaffolding.less";
-@import "./bower_components/bootstrap/less/type.less";
-//@import "./bower_components/bootstrap/less/code.less";
+
+// Scaffolding
+// --------------------------------------------------
+
+
+// Reset the box-sizing
+//
+// Heads up! This reset may cause conflicts with some third-party widgets.
+// For recommendations on resolving such conflicts, see
+// http://getbootstrap.com/getting-started/#third-box-sizing
+* {
+  .box-sizing(border-box);
+}
+*:before,
+*:after {
+  .box-sizing(border-box);
+}
+
+// Only display content to screen readers
+//
+// See: http://a11yproject.com/posts/how-to-hide-content/
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+// Use in conjunction with .sr-only to only display content when it's focused.
+// Useful for "Skip to main content" links; see http://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
+// Credit: HTML5 Boilerplate
+
+.sr-only-focusable {
+  &:active,
+  &:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+  }
+}
+
+
 @import "./bower_components/bootstrap/less/grid.less";
-//@import "./bower_components/bootstrap/less/tables.less";
 @import "./bower_components/bootstrap/less/forms.less";
-//@import "./bower_components/bootstrap/less/buttons.less";
 
 // Components
 @import "./bower_components/bootstrap/less/component-animations.less";
-//@import "./bower_components/bootstrap/less/glyphicons.less";
 @import "./bower_components/bootstrap/less/dropdowns.less";
-//@import "./bower_components/bootstrap/less/button-groups.less";
-//@import "./bower_components/bootstrap/less/input-groups.less";
 @import "./bower_components/bootstrap/less/navs.less";
 @import "./bower_components/bootstrap/less/navbar.less";
-@import "./bower_components/bootstrap/less/breadcrumbs.less";
-//@import "./bower_components/bootstrap/less/pagination.less";
-//@import "./bower_components/bootstrap/less/pager.less";
-//@import "./bower_components/bootstrap/less/labels.less";
-//@import "./bower_components/bootstrap/less/badges.less";
-//@import "./bower_components/bootstrap/less/jumbotron.less";
-//@import "./bower_components/bootstrap/less/thumbnails.less";
-//@import "./bower_components/bootstrap/less/alerts.less";
-//@import "./bower_components/bootstrap/less/progress-bars.less";
-//@import "./bower_components/bootstrap/less/media.less";
-//@import "./bower_components/bootstrap/less/list-group.less";
-//@import "./bower_components/bootstrap/less/panels.less";
-//@import "./bower_components/bootstrap/less/wells.less";
-@import "./bower_components/bootstrap/less/close.less";
+//@import "./bower_components/bootstrap/less/close.less";
 
-// Components w/ JavaScript
-//@import "./bower_components/bootstrap/less/modals.less";
-//@import "./bower_components/bootstrap/less/tooltip.less";
-//@import "./bower_components/bootstrap/less/popovers.less";
-//@import "./bower_components/bootstrap/less/carousel.less";
 
 // Utility classes
 @import "./bower_components/bootstrap/less/utilities.less";
 @import "./bower_components/bootstrap/less/responsive-utilities.less";
 
-//@import './bower_components/solstice-assets/stylesheets/fonts.less';
-@import './bower_components/solstice-assets/stylesheets/classes.less';
+@import "./bower_components/solstice-assets/stylesheets/classes.less";
 
-// Font-awesome
-//@import './bower_components/fontawesome/less/font-awesome.less';
-
-// Components
-//@import './bower_components/solstice-assets/stylesheets/components/back-to-top.less';
-//@import './bower_components/solstice-assets/stylesheets/components/block-box.less';
-@import './bower_components/solstice-assets/stylesheets/components/breadcrumb.less';
-//@import './bower_components/solstice-assets/stylesheets/components/discover-search.less';
-//@import './bower_components/solstice-assets/stylesheets/components/drag-drop.less';
-//@import './bower_components/solstice-assets/stylesheets/components/header-row.less';
-//@import './bower_components/solstice-assets/stylesheets/components/hightlight.less';
-//@import './bower_components/solstice-assets/stylesheets/components/landing-well.less';
-//@import './bower_components/solstice-assets/stylesheets/components/news-list.less';
-//@import './bower_components/solstice-assets/stylesheets/components/shapes.less';
-//@import './bower_components/solstice-assets/stylesheets/components/step-by-step.less';
-//@import './bower_components/solstice-assets/stylesheets/components/timeline.less';
-//@import './bower_components/solstice-assets/stylesheets/components/toolbar-menu.less';
-
-// Boostrap Fixes & Overrides
-@import './bower_components/solstice-assets/stylesheets/components/bootstrap/buttons.less';
-//@import './bower_components/solstice-assets/stylesheets/components/bootstrap/media.less';
-//@import './bower_components/solstice-assets/stylesheets/components/bootstrap/tabs.less';
 
 // Navigation
-@import './bower_components/yamm3/yamm/yamm.less';
+@import "./bower_components/yamm3/yamm/yamm.less";
 
 // Main template styles
-@import './bower_components/solstice-assets/stylesheets/template/header.less';
-@import './bower_components/solstice-assets/stylesheets/template/menu.less';
-//@import './bower_components/solstice-assets/stylesheets/template/main.less';
-//@import './bower_components/solstice-assets/stylesheets/template/footer.less';
-//@import './bower_components/solstice-assets/stylesheets/legacy.less';
-//@import './bower_components/solstice-assets/stylesheets/print.less';
-//@import './bower_components/solstice-assets/stylesheets/form.less';
-
+@import "./bower_components/solstice-assets/stylesheets/template/header.less";
+@import "./bower_components/solstice-assets/stylesheets/template/menu.less";
 
 // CUSTOM CSS
 // Fix for bugzilla
-#header .nav{
-  a{
-    text-decoration:none;
+
+.list-unstyled{
+	list-style: none;
+}
+
+#header {
+  color: #333;
+  font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857;
+  .nav{
+    a{
+      text-decoration:none;
+    }
   }	
 }
 
