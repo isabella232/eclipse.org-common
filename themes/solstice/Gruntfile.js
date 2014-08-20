@@ -39,7 +39,8 @@ module.exports = function(grunt) {
                 files: {
                     // compiling styles.less into styles.css
                     './public/stylesheets/styles.min.css': './src/stylesheets/styles.less',
-                    './public/stylesheets/barebone.min.css': './html_template/barebone/styles.less'
+                    './public/stylesheets/barebone.min.css': './html_template/barebone/styles.less',
+                    './public/stylesheets/forums.min.css': './src/stylesheets/forums.less'
                 }
             }
         },
