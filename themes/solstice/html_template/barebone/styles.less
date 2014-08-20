@@ -63,12 +63,14 @@ body{
   }
 }
 
+@import './bower_components/solstice-assets/stylesheets/components/breadcrumb.less';
 
 @import "./bower_components/bootstrap/less/grid.less";
 @import "./bower_components/bootstrap/less/forms.less";
 
 // Components
 @import "./bower_components/bootstrap/less/component-animations.less";
+@import "./bower_components/bootstrap/less/breadcrumbs.less";
 @import "./bower_components/bootstrap/less/dropdowns.less";
 @import "./bower_components/bootstrap/less/navs.less";
 @import "./bower_components/bootstrap/less/navbar.less";
@@ -96,7 +98,7 @@ body{
 	list-style: none;
 }
 
-#header {
+.thin-header {
   color: #333;
   font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
@@ -105,12 +107,12 @@ body{
     a{
       text-decoration:none;
     }
-  }	
-}
-
-.navbar-toggle{
-  cursor:pointer;
-  &.collapsed{
-    display:block;
+  }
+  .navbar-toggle{
+    cursor:pointer;
+    &.collapsed{
+      display:block;
+    }
   }
 }
+

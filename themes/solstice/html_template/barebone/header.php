@@ -15,10 +15,10 @@ require_once ('../app.php');
 <!--  START OF SOLSTICE HEADER -->
 <style type="text/css">
 @import
-  url('//eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/barebone.min.css');
+  url('/eclipse.org-common/themes/solstice/public/stylesheets/barebone.min.css');
 </style>
 <script
-  src="//eclipse.org/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js"></script>
+  src="/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js"></script>
 
 <div class="thin-header">
   <header role="banner">
@@ -75,7 +75,7 @@ require_once ('../app.php');
     </div>
   </header>
   <?php if (isset($_GET['breadcrumbs'])) :?>
-  <section id="breadcrumb"
+  <section id="breadcrumb" class="default-breadcrumbs"
     class="<?php print $variables['theme_variables']['breadcrumbs_classes'];?>">
     <div class="container-fluid">
       <?php print $variables['breadcrumbs'];?>
