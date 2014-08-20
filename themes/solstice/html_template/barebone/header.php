@@ -15,10 +15,10 @@ require_once ('../app.php');
 <!--  START OF SOLSTICE HEADER -->
 <style type="text/css">
 @import
-  url('/eclipse.org-common/themes/solstice/public/stylesheets/barebone.min.css');
+  url('//eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/barebone.min.css');
 </style>
 <script
-  src="/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js"></script>
+  src="//eclipse.org/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js"></script>
 
 <div class="thin-header">
   <header role="banner">
