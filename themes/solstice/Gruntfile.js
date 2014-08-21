@@ -38,7 +38,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // compiling styles.less into styles.css
-                    './public/stylesheets/styles.min.css': './src/stylesheets/styles.less',
+                    './public/stylesheets/styles.css': './src/stylesheets/styles.less',
                     './public/stylesheets/barebone.min.css': './html_template/barebone/styles.less',
                     './public/stylesheets/forums.min.css': './src/stylesheets/forums.less'
                 }
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
                 dest: './public/javascript/barebone.min.js',
             },
             css: {
-                src: ['./public/stylesheets/styles.min.css', './bower_components/bootstrapvalidator/dist/css/bootstrapValidator.min.css'],
+                src: ['./public/stylesheets/styles.css', './bower_components/bootstrapvalidator/dist/css/bootstrapValidator.min.css'],
                 dest: './public/stylesheets/styles.min.css',
             },
         },
