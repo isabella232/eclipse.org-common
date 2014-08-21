@@ -33,12 +33,8 @@ text, .GenText {
 }
 
 .ForumBackground {
-  background: #fff;
-  border: 1px solid #aebdc4;
-  padding: 5px;
-  -moz-border-radius: 0.75em;
-  -webkit-border-radius: 0.75em;
-  border-radius: 0.75em;
+border:0;
+
 }
 
 a.CatLink {
@@ -593,14 +589,9 @@ img.r {
 
 /* Header with rounded corners. */
 .header {
-  color:#fff; 
-  background:@brand-primary;
-  padding: 3px; margin: 3px;
-  -moz-border-radius: 0.75em;
-  -webkit-border-radius: 0.75em;
-  border-radius: 0.75em;
+  a {text-decoration:none;}
 }
-.header a {color:#fff; text-decoration:none;}
+
 .headtitle {padding: 10px; font-size:xx-large; font-weight:bold; text-decoration:none;}
 .headdescr {padding: 20px; color:#eee; font-size:small;}
 .headsearch {font-size: small; font-weight:bold; float:right; white-space: nowrap; vertical-align: top;}
@@ -684,7 +675,8 @@ input.button:hover, input.button:hover {
 	    border-collapse: collapse;
     border-spacing: 0;
 }
-.ForumBackground > table{
+.ForumBackground > table,
+.DialogTable{
   width: 100%;
   max-width: 100%;
   margin-bottom: @line-height-computed;
@@ -698,18 +690,18 @@ input.button:hover, input.button:hover {
         padding: @table-cell-padding;
         line-height: @line-height-base;
         vertical-align: top;
-        border-top: 1px solid @table-border-color;
+        border-top: 1px solid #fff;
       }
     }
   }
   // Bottom align for column headings
   > thead > tr > th {
     vertical-align: bottom;
-    border-bottom: 2px solid @table-border-color;
+    border-bottom: 2px solid #fff
   }
   th{
     text-align: center;
-    background:@brand-warning;
+    background:#e2d4c3;
     &.wa{
       text-align:left;
     }
@@ -727,7 +719,7 @@ input.button:hover, input.button:hover {
   }
   // Account for multiple tbody instances
   > tbody + tbody {
-    border-top: 2px solid @table-border-color;
+    border-top: 2px solid #fff;
   }
 
   // Nesting
