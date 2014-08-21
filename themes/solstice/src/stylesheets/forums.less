@@ -679,7 +679,6 @@ input.button:hover, input.button:hover {
 .MsgTable{
   width: 100%;
   max-width: 100%;
-  margin-bottom: @line-height-computed;
   // Cells
   > thead,
   > tbody,
@@ -690,7 +689,7 @@ input.button:hover, input.button:hover {
         padding: @table-cell-padding;
         line-height: @line-height-base;
         vertical-align: top;
-        border-top: 1px solid @table-border-color;;
+        border-top: 1px solid #fff;
       }
     }
   }
@@ -729,7 +728,8 @@ input.button:hover, input.button:hover {
 }
 
 td.al,
-td.GenText{
+td.GenText,
+td.vt{
 	border:none;
 }
 }
