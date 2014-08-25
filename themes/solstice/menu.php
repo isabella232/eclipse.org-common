@@ -18,6 +18,7 @@
 		        <ul class="list-inline">
 		          <li><?php print $variables['session']['create_account_link'];?></li>
 		          <li><?php print $variables['session']['my_account_link'];?></li>
+		          <?php print $variables['session']['logout'];?>
 		        </ul>
 		      </div>
 		    </div>
