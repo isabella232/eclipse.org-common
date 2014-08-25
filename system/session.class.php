@@ -123,7 +123,12 @@ class Session {
   function destroy() {
     $App = new App();
     $sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), null) . "' LIMIT 1";
-        $App->eclipse_sql($sql);
+    $App->eclipse_sql($sql);
+
+    # Remove the TAKEMEBACK cookie
+    # Should these also be in session() ?
+    setcookie("TAKEMEBACK", "", 0, "/", ".eclipse.org");
+    setcookie("fud_session_1247685629", "", 0, "/", ".eclipse.org");
     setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org", 1, TRUE);
     setcookie(ECLIPSE_ENV,      "", time() - 3600, "/", ".eclipse.org", 0, TRUE);
     if(!$App->devmode) {
