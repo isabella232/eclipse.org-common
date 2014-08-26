@@ -38,7 +38,7 @@ function solstice_variables(&$variables) {
     $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/myaccount.php" class=""><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
     // Adding <li> with logout because we only display
     // two options if the user is not logged in.
-    $variables['session']['logout'] = '<li><a href="https://dev.eclipse.org/site_login/?submit=Logout"><i class="fa fa-power-off fa-fw"></i> Log out</a></li>';
+    $variables['session']['logout'] = '<li><a href="https://dev.eclipse.org/site_login/logout.php"><i class="fa fa-power-off fa-fw"></i> Log out</a></li>';
   }
 
   // Breadcrumbs
