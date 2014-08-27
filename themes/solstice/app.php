@@ -70,9 +70,9 @@ function solstice_variables(&$variables) {
   if ($NewMenu->getMenuArray() == $main_menu) {
     $Menu = new $Menu();
     $Menu->setMenuItemList(array());
+    $Menu->addMenuItem("Download", $variables['url'] . "downloads/", "_self");
     $Menu->addMenuItem("Getting Started ", $variables['url'] . "users/", "_self");
     $Menu->addMenuItem("Members", $variables['url'] . "membership/", "_self");
-    $Menu->addMenuItem("Download", $variables['url'] . "downloads/", "_self");
     $Menu->addMenuItem("Projects", $variables['url'] . "projects/", "_self");
     $main_menu = $Menu->getMenuArray();
     $default_menu_flag = TRUE;
