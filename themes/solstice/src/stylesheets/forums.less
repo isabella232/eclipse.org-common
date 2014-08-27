@@ -4,32 +4,109 @@
 // author: Christopher Guindon <chris.guindon@eclipse.org>
 // -------------------------------------------------------
 
-@import "./bower_components/solstice-assets/stylesheets/styles.less";
+@import './bower_components/solstice-assets/stylesheets/_mixins.less';
+@import './bower_components/solstice-assets/stylesheets/base.less';
+@import './bower_components/solstice-assets/stylesheets/fonts.less';
+
+// Font-awesome
+@import './bower_components/fontawesome/less/font-awesome.less';
+
+// Components
+@import './bower_components/solstice-assets/stylesheets/components/back-to-top.less';
+@import './bower_components/solstice-assets/stylesheets/components/block-box.less';
+@import './bower_components/solstice-assets/stylesheets/components/breadcrumb.less';
+//@import './bower_components/solstice-assets/stylesheets/components/header-row.less';
+//@import './bower_components/solstice-assets/stylesheets/components/toolbar-menu.less';
+
+// Boostrap Fixes & Overrides
+@import './bower_components/solstice-assets/stylesheets/components/bootstrap/buttons.less';
+@import './bower_components/solstice-assets/stylesheets/components/bootstrap/media.less';
+@import './bower_components/solstice-assets/stylesheets/components/bootstrap/tabs.less';
+
+// Navigation
+@import './bower_components/yamm3/yamm/yamm.less';
+
+// Main template styles
+@import './bower_components/solstice-assets/stylesheets/template/header.less';
+@import './bower_components/solstice-assets/stylesheets/template/menu.less';
+@import './bower_components/solstice-assets/stylesheets/template/main.less';
+@import './bower_components/solstice-assets/stylesheets/template/footer.less';
+@import './bower_components/solstice-assets/stylesheets/legacy.less';
+@import './bower_components/solstice-assets/stylesheets/print.less';
+@import './bower_components/solstice-assets/stylesheets/form.less';
+
+@import './bower_components/solstice-assets/stylesheets/classes.less';
+
+main{
+  padding-top:0;
+}
 
 #novaContent {
-    color: #000;
-    font-size: 11pt;
+  .reset-box-sizing();
+  color: #000;
+  font-size: 11pt;
+  
+  img {
+    vertical-align: initial;
+  }
+  table{
+    width: 100%;
+    max-width: 100%;
+    // Cells
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          padding: @table-cell-padding;
+          line-height: @line-height-base;
+          vertical-align: top;
+        }
+      }
+    }
+    // Bottom align for column headings
+    > thead > tr > th {
+      vertical-align: bottom;
+      border-bottom: 2px solid #fff;
+    }
+    th{
+      text-align: center;
+      background:#e2d4c3;
+      &.wa{
+        text-align:left;
+      }
+    }
+    // Remove top border from thead by default
+    > caption + thead,
+    > colgroup + thead,
+    > thead:first-child {
+      > tr:first-child {
+        > th,
+        > td {
+          border-top: 0;
+        }
+      }
+    }
+    // Account for multiple tbody instances
+    > tbody + tbody {
+      border-top: 2px solid #fff;
+    }
+  
+    // Nesting
+    .table {
+      background-color: @body-bg;
+    }
+  }
+  
+  td.al,
+  td.GenText,
+  td.vt{
+    border:none;
+  }
   
   .clearer{
     clear:both;
-  }
-  
-  text, .ForumBackground, a:link, a:visited, a:active, a.CatLink, .CatDesc, a.UserControlPanel, .CatLockedName, .GenText,
-    .GenTextRed, .ErrorText, .SmallText, .DateText, .TopBy, th, a.thLnk:link, a.thLnk:active, a.thLnk:visited,
-    a.thLnk:active, .RowStyleA, .RowStyleB, .RowStyleC, .MsgToolBar, .PollTable, .MsgIg, td.miniMH,
-    .ContentTable, .MsgTable, .DialogTable, .PreviewTable, .AnnonTable, .AnnText, td.NoAvatar, td.Av1, td.Av2, td.tabA,
-    .AnnSubjText, a.PagerLink, .LevelText, .MsgSubText, .MsgBodyText, th.SelTS, th.SelFS, legend, td.tabH, div.tabT,
-    .FormattingToolsBG, .FormattingToolsCLR, .MiniTable, .quote, .dashed, .adminColor, .modsColor, td.tabI, td.tabA:hover,
-    .brdrNormal, .brdrSelected, input.button, form, img, .StClr, .AnClr, td.msgot, td.msgud, div.ctags, td.mvTc, td.pmNav,
-    .ModOpt, .MsgR1, .MsgR2, .MsgR3, .mnavMsg, .mnavWarnTbl, .mnavNoRes, font.lg, td.tt, table.tt, tr.tab, table.tab,
-    a.big:link, a.big:active, a.big:visited, .small, a.small:link, a.small:active, a.small:visited, .curtime,
-    font.anon, font.reg, td.permYES, td.permNO, td.repI, div.UserControlPanel, font.selmsgInd, fieldset
-  {
-    font-size: 10pt;
-  }
-  
-  text, .GenText {
-    color: #000;
   }
   
   .ForumBackground {
@@ -37,6 +114,10 @@
     #midcolumn{
       padding-left:0;
     }
+  }
+  
+  td.header{
+    padding:0;
   }
   
   a.CatLink {
@@ -60,6 +141,7 @@
   div.UserControlPanel {
     margin-bottom: 5px;
     text-align: right;
+    float:right;
   }
   
   .CatLockedName {
@@ -94,10 +176,9 @@
     background: #eee;
   }
   
-  .RowStyleB, .curtime, fieldset {
+  .RowStyleB {
     background: #dee2e6;
   }
-  
   .RowStyleC {
     background: #c2cdd6;
   }
@@ -111,16 +192,14 @@
   .MsgSpacer {
     padding-bottom: 2px;
     padding-top: 2px;
+    padding-left:0;
+    padding-right:0;
   }
   
   
   font.ptp { /* space between poll title & number of votes */
     font-size: smaller;
     padding-left: 10px;
-  }
-  
-  .ContentTable, .AnnonTable, .MsgTable, table.pad {
-    width : 100%;
   }
   
   .DialogTable {
@@ -371,25 +450,25 @@
     width: 100%;
   }
   
-  legend {
-    font-size: 11pt;
-    font-weight: bold;
-    background-color: #fff;
-    border: 1px solid #aebdc4;
-  }
-  
-  fieldset {
-    border: 1px solid #aebdc4;
-  }
+
   
   th.SelTS, th.SelFS {
-    padding: 2px;
+    padding:6px 8px;
     color: #fff;
+    background:#1a0626;
+    text-align:left;
+    a:link, a:visited{
+      color:@eclipse-orange;
+    }
+    a:hover{
+      color:#fff;
+    }
   }
   
   th.SelFS {
      border-bottom: 1px solid #fff;
      color: #fff;
+
   }
   
   td.NoAvatar {
@@ -436,12 +515,6 @@
   
   table.tab {
     border-bottom: 1px solid #000;
-  }
-  
-  .curtime {
-    border: 1px solid #aebdc4;
-    vertical-align: middle;
-    padding: 1px 3px 1px 3px;
   }
   
   td.pmSn {
@@ -576,14 +649,23 @@
   }
   
   /* Header with rounded corners. */
-  .header {
-    a {text-decoration:none;}
+  td.header {
+    .headtitle { 
+      .h1;
+    }
   }
   
-  .headtitle {padding: 10px; font-size:xx-large; font-weight:bold; text-decoration:none;}
-  .headdescr {padding: 20px; color:#eee; font-size:small;}
-  .headsearch {font-size: small; font-weight:bold; float:right; white-space: nowrap; vertical-align: top;}
-  .headbutton {color:#000;}
+  #headsearch{
+    float: right;
+    font-size: small;
+    font-weight: bold;
+    vertical-align: top;
+  }
+  
+  .headbutton {
+    .btn;
+    .btn-primary;
+  }
   /* Textarea editor. */
   .resizable-textarea .grippie {
     height: 9px;
@@ -645,80 +727,12 @@
   
   /* Butttons. */
   input.button:link, input.button:visited, input.button {
-    background:#ddd url(../images/forums/button.png) repeat-x scroll left top;
-    border-color:#ccc #b4b2b4 #ccc #b4b2b4;
-    position: relative;
-    cursor: pointer;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
-    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  }
-  input.button:hover, input.button:hover {
-    background:#e2e2e2 url(../images/forums/button.png) repeat-x scroll left -115px;
-    color:#000;
-  }
-  .small.button, .small.button:visited   { font-size: 11px; }
-  .ContentTable{
-        border-collapse: collapse;
-      border-spacing: 0;
-  }
-  .ForumBackground > table,
-  .DialogTable,
-  .MsgTable{
-    width: 100%;
-    max-width: 100%;
-    // Cells
-    > thead,
-    > tbody,
-    > tfoot {
-      > tr {
-        > th,
-        > td {
-          padding: @table-cell-padding;
-          line-height: @line-height-base;
-          vertical-align: top;
-          border-top: 1px solid #fff;
-        }
-      }
-    }
-    // Bottom align for column headings
-    > thead > tr > th {
-      vertical-align: bottom;
-      border-bottom: 2px solid #fff;
-    }
-    th{
-      text-align: center;
-      background:#e2d4c3;
-      &.wa{
-        text-align:left;
-      }
-    }
-    // Remove top border from thead by default
-    > caption + thead,
-    > colgroup + thead,
-    > thead:first-child {
-      > tr:first-child {
-        > th,
-        > td {
-          border-top: 0;
-        }
-      }
-    }
-    // Account for multiple tbody instances
-    > tbody + tbody {
-      border-top: 2px solid #fff;
-    }
-  
-    // Nesting
-    .table {
-      background-color: @body-bg;
-    }
+    .btn;
+    .btn-primary;
   }
   
-  td.al,
-  td.GenText,
-  td.vt{
-    border:none;
+  .small.button{ 
+    .btn-sm;
   }
+  
 }
