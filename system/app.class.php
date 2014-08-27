@@ -308,8 +308,20 @@ class App {
     return $rValue;
   }
 
-
+  /**
+   *  Sets the headers to prevent caching for the different browsers.
+   *
+   *  *** Deprecated function ***
+   *  Please use preventCaching() instead.
+   */
   function runStdWebAppCacheable() {
+    $this->preventCaching();
+  }
+
+  /**
+   *  Sets the headers to prevent caching for the different browsers.
+   */
+  function preventCaching() {
      session_start();
 
      header("Cache-control: private");
