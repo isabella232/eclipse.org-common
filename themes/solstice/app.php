@@ -66,13 +66,16 @@ function solstice_variables(&$variables) {
   // If the main menu is custom, do not change it
   $NewMenu = new $Menu();
   $main_menu = $Menu->getMenuArray();
+  $default_menu_flag = FALSE;
   if ($NewMenu->getMenuArray() == $main_menu) {
     $Menu = new $Menu();
     $Menu->setMenuItemList(array());
     $Menu->addMenuItem("Getting Started ", $variables['url'] . "users/", "_self");
     $Menu->addMenuItem("Members", $variables['url'] . "membership/", "_self");
+    $Menu->addMenuItem("Download", $variables['url'] . "downloads/", "_self");
     $Menu->addMenuItem("Projects", $variables['url'] . "projects/", "_self");
     $main_menu = $Menu->getMenuArray();
+    $default_menu_flag = TRUE;
   }
 
   $theme = $variables['page']['theme'];
@@ -124,7 +127,12 @@ function solstice_variables(&$variables) {
 
   // Main-menu
   foreach ($main_menu as $item) {
-    $items[] = '<li><a href="' . $item->getURL() .'" target="' . $item->getTarget() .'">' . $item->getText() . '</a></li>';
+    $menu_li_classes = "";
+    $caption = $item->getText();
+    if ($default_menu_flag && $caption == 'Download') {
+      $menu_li_classes = ' class="visible-thin"';
+    }
+    $items[] = '<li' . $menu_li_classes . '><a href="' . $item->getURL() .'" target="' . $item->getTarget() .'">' . $caption . '</a></li>';
   }
 
   $variables['menu']['main_menu'] = implode($items, '');
