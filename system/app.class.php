@@ -493,66 +493,34 @@ class App {
 
     echo $html;
 
-    #first lets insert the sitewide Analytics
-    $this->googleJavaScript  = <<<EOHTML
-    <script type="text/javascript">
+    $gaCode = $this->projectGoogleAnalyticsCode;
+    if (!is_null($gaCode)) {
+      $gaCode = ($gaCode == "") ? 'UA-910670-2' : $gaCode;
+      #first lets insert the sitewide Analytics
+      $this->googleJavaScript  = <<<EOHTML
+      <script type="text/javascript">
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-910670-2']);
-      _gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '$gaCode']);
+        _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
 
-    </script>
+      </script>
 EOHTML;
 
-    #Now let Check to see if the project is also providing a GA code and include that if they are.
-    if ($this->projectGoogleAnalyticsCode != "")
-    {
-      $gaCode = $this->projectGoogleAnalyticsCode;
-      $this->googleJavaScript .= <<<EOHTML
-
-    <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', '$gaCode']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-
-    </script>
-EOHTML;
     }
 
     if ($theme != "solstice")  {
       echo $this->googleJavaScript;
     }
+
     $google_javascript = $this->googleJavaScript;
     include($this->getFooterPath($theme));
-
-    # OPT1:$starttime = microtime();
-    # OPT1:$html = ob_get_contents();
-    # OPT1:ob_end_clean();
-
-    # OPT1:$stripped_html = $html;
-    # OPT1:$stripped_html = preg_replace("/^\s*/", "", $stripped_html);
-    # OPT1:$stripped_html = preg_replace("/\s{2,}/", " ", $stripped_html);
-    # OPT1:$stripped_html = preg_replace("/^\t*/", "", $stripped_html);
-    # OPT1:$stripped_html = preg_replace("/\n/", "", $stripped_html);
-    # OPT1:$stripped_html = preg_replace("/>\s</", "><", $stripped_html);
-    # $stripped_html = preg_replace("/<!--.*-->/", "", $stripped_html);
-    # OPT1:$endtime = microtime();
-
-    # OPT1:echo "<!-- unstripped: " . strlen($html) . " bytes/ stripped: " . strlen($stripped_html) . "bytes - " . sprintf("%.2f", strlen($stripped_html) / strlen($html)) . " Bytes saved: " . (strlen($html) - strlen($stripped_html)) . " Time: " . ($endtime - $starttime) . " -->";
-    # echo $stripped_html;
   }
 
   function AddExtraHtmlHeader( $string ) {
@@ -1191,6 +1159,14 @@ EOHTML;
     return $strn;
   }
 
+  /**
+   * Set Google Analytics Tracking code
+   *
+   * @param string OR Null $gaUniqueID
+   *
+   * Setting $gaUniqueID to NULL will remove Google Analytics
+   * from the page.
+   */
   function setGoogleAnalyticsTrackingCode($gaUniqueID) {
     $this->projectGoogleAnalyticsCode = $gaUniqueID;
   }
