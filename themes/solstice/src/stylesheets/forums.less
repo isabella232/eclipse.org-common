@@ -140,7 +140,8 @@ main{
     padding-left:5px !important;
   }
   
-  a.UserControlPanel, a.UserControlPanel:visited {
+  a.UserControlPanel, 
+  a.UserControlPanel:visited {
     text-decoration: none;
   }
   
@@ -160,7 +161,9 @@ main{
     padding-left: 20px;
   }
   
-  .GenText, .MsgIg, td.repI {
+  .GenText, 
+  .MsgIg, 
+  td.repI {
     color: #000;
   }
   
@@ -173,13 +176,18 @@ main{
     font-weight: bold;
   }
   
-  .SmallText, .DateText, .TopBy, td.permYES, td.permNO, .SmallText a {
+  .SmallText, 
+  .DateText, 
+  .TopBy,
+   td.permYES, 
+   td.permNO, 
+   .SmallText a {
     color: #202020;
     font-size: 8pt;
   }
   
-  
-  .RowStyleA, td.tt {
+  .RowStyleA, 
+  td.tt {
     background: #eee;
   }
   
@@ -274,6 +282,7 @@ main{
     overflow: hidden;
     padding: 5px;
   }
+  
   blockquote:first-letter {
     margin: .2em .2em .1em 0;
     font-family: "Monotype Corsiva", "Apple Chancery", fantasy;
@@ -425,12 +434,17 @@ main{
     border: 1px solid #000;
   }
   
-  a.big:link, a.big:active, a.big:visited {
+  a.big:link, 
+  a.big:active, 
+  a.big:visited {
   
     font-size: 11pt;
   }
   
-  .small, a.small:link, a.small:active, a.small:visited {
+  .small, 
+  a.small:link,
+  a.small:active, 
+  a.small:visited {
     font-size: 9pt;
     font-weight: normal;
   }
@@ -457,25 +471,24 @@ main{
     width: 100%;
   }
   
-
   
   th.SelTS, th.SelFS {
     padding:6px 8px;
     color: #fff;
-    background:#1a0626;
-    text-align:left;
-    a:link, a:visited{
+    .background-charcoal;
+    a, a:link, a:visited {
       color:@eclipse-orange;
     }
-    a:hover{
+    a:hover, a:active{
       color:#fff;
     }
+    text-align:left;
+
   }
   
   th.SelFS {
      border-bottom: 1px solid #fff;
      color: #fff;
-
   }
   
   td.NoAvatar {
@@ -494,13 +507,19 @@ main{
     background: #fefefe;
   }
   
-  td.tabI, td.tabA, td.tabI:hover, td.tabOVER, td.tabON {
+  td.tabI, 
+  td.tabA, 
+  td.tabI:hover, 
+  td.tabOVER, 
+  td.tabON {
     border: 1px solid black;
     background: #dee7f7;
           padding: 2px;
   }
   
-  td.tabOVER, td.tabI:hover, td.tabI:active {
+  td.tabOVER, 
+  td.tabI:hover, 
+  td.tabI:active {
     background: #fff;
   }
   
@@ -508,7 +527,10 @@ main{
     background: #5279bd;
   }
   
-  a.tabON:link, a.tabON:active, a.tabON:visited, a.tabON:hover {
+  a.tabON:link, 
+  a.tabON:active, 
+  a.tabON:visited, 
+  a.tabON:hover {
     color: #fff;
     font-weight: bold;
     text-decoration: none;
@@ -568,11 +590,13 @@ main{
     border: 1px dashed #f00;
   }
   
-  font.anon, font.reg {
+  font.anon,
+  font.reg {
     color: #0a0;
   }
   
-  td.permYES, td.permNO {
+  td.permYES, 
+  td.permNO {
     text-align: center;
     color: red;
     white-space: nowrap;
@@ -708,8 +732,15 @@ main{
   
   div.sr { float: left; padding: 5px; }
   
-  div.ctb {text-align: center;}
-  div.ctb table {margin: 0 auto; text-align: left;}
+  div.ctb {
+    th{
+      border:1px solid #ccc;
+    }
+    .RowStyleC{
+      display:none
+    }
+  }
+  
   div.foot { padding: 3px; margin: 3px; }
   div.ip { overflow: auto; margin: 0; padding: 2px; width: 600px; height: 400px; }
   span.vt { padding-left: 20px; }
