@@ -39,9 +39,10 @@ module.exports = function(grunt) {
                 files: {
                     // compiling styles.less into styles.css
                     './public/stylesheets/styles.css': './src/stylesheets/styles.less',
-                    './public/stylesheets/barebone.min.css': './html_template/barebone/styles.less',
+                    './public/stylesheets/barebone.min.css': './html_template/barebone/stylesheets/styles.less',
                     './public/stylesheets/forums.min.css': './src/stylesheets/forums.less',
-                    './public/stylesheets/table.min.css': './src/stylesheets/table.less'
+                    './public/stylesheets/table.min.css': './src/stylesheets/table.less',
+                    './public/stylesheets/barebone-footer.min.css': './html_template/barebone/stylesheets/footer.less'
                 }
             }
         },
@@ -91,7 +92,7 @@ module.exports = function(grunt) {
                         './src/stylesheets/**/*.less', 
                         './bower_components/solstice-assets/less/*.less', 
                         './bower_components/solstice-assets/**/*.less',
-                        './html_template/barebone/styles.less'],
+                        './html_template/barebone/stylesheets/*.less'],
                 // watched files
                 tasks: ['less', 'concat:css'],
                 // tasks to run

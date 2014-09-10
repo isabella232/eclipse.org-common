@@ -1,0 +1,36 @@
+//
+// Barebone with footer
+//
+// author: Christopher Guindon <chris.guindon@eclipse.org>
+// -------------------------------------------------------
+
+@import "styles.less";
+
+// Font-awesome
+@import './bower_components/fontawesome/less/font-awesome.less';
+
+footer,
+footer#footer,
+.thin-header {
+  // Reset the box-sizing
+  //
+  // Heads up! This reset may cause conflicts with some third-party widgets.
+  // For recommendations on resolving such conflicts, see
+  // http://getbootstrap.com/getting-started/#third-box-sizing
+  
+  * {
+    .box-sizing(border-box);
+  }
+  *:before,
+  *:after {
+   .box-sizing(border-box);
+  }
+}
+
+@import "./bower_components/bootstrap/less/type.less";
+@import './bower_components/solstice-assets/stylesheets/fonts.less';
+
+// Components
+@import './bower_components/solstice-assets/stylesheets/components/back-to-top.less';
+@import './bower_components/solstice-assets/stylesheets/template/footer.less';
+
