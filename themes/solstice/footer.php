@@ -15,7 +15,7 @@
     <p id="back-to-top">
       <a class="visible-xs" href="#top">Back to the top</a>
     </p>
-		<footer role="contentinfo">
+		<footer role="contentinfo" id="solstice-footer">
 
 		  <div class="container">
 
