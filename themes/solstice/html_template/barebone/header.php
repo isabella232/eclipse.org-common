@@ -15,7 +15,7 @@ require_once ('../app.php');
 <!--  START OF SOLSTICE HEADER -->
 <style type="text/css">
 @import
-  url('//eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/barebone.min.css');
+  url('//eclipse.local/eclipse.org-common/themes/solstice/public/stylesheets/barebone<?php if (isset($_GET['mobile'])) : print '-toolbar';endif;?>.min.css');
 </style>
 <script
   src="//eclipse.org/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js"></script>
@@ -24,27 +24,30 @@ require_once ('../app.php');
   <header role="banner">
     <div class="container-fluid">
       <?php if (isset($_GET['site_login'])) :?>
-      <div id="row-toolbar" class="text-right hidden-print">
-        <div id="row-toolbar-col" class="col-md-24">
-          <ul class="list-inline">
-            <li><?php print $variables['session']['create_account_link'];?></li>
-            <li><?php print $variables['session']['my_account_link'];?></li>
-          </ul>
+        <div id="row-toolbar" class="text-right hidden-print">
+          <div id="row-toolbar-col" class="col-md-24">
+            <ul class="list-inline">
+              <li><?php print $variables['session']['create_account_link'];?></li>
+              <li><?php print $variables['session']['my_account_link'];?></li>
+            </ul>
+          </div>
         </div>
-      </div>
-        <?php endif;?>
+      <?php endif;?>
         <div id="row-logo-search">
         <div id="header-left">
           <div class="row">
+            <?php if (!isset($_GET['mobile'])) :?>
             <div class="hidden-xs col-sm-6 reset">
                 <?php print $variables['logo']['default_link'];?>
             </div>
+            <?php endif;?>
             <div id="main-menu" class="navbar col-sm-18 yamm reset">
               <div id="navbar-collapse-1" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <?php print $variables['menu']['main_menu']; ?>
                     <?php print $variables['menu']['mobile_more'];?>
-                    <!-- More -->
+                  <?php if (!isset($_GET['mobile'])) :?>
+                  <!-- More -->
                   <li class="dropdown hidden-xs"><a data-toggle="dropdown"
                     class="dropdown-toggle">More<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -57,6 +60,7 @@ require_once ('../app.php');
                         </div>
                       </li>
                     </ul></li>
+                  <?php endif;?>
                 </ul>
               </div>
               <div class="navbar-header">
@@ -66,7 +70,11 @@ require_once ('../app.php');
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span> <span class="icon-bar"></span>
                 </button>
-                <?php print $variables['logo']['mobile_link'];?>
+                <?php if (isset($_GET['mobile'])) :?>
+                  <?php print $variables['logo']['mobile_link_always_show'];?>
+                <?php else :?>
+                  <?php print $variables['logo']['mobile_link'];?>
+                <?php endif;?>
               </div>
             </div>
           </div>

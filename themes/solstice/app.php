@@ -124,6 +124,7 @@ function solstice_variables(&$variables) {
   $variables['logo']['mobile'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" width="174" class="logo-eclipse-default"/>';
   $variables['logo']['default_link'] = '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
   $variables['logo']['mobile_link'] =  '<a href="' . $variables['url'] . '" class="navbar-brand visible-xs">' . $variables['logo']['mobile'] . '</a>';
+  $variables['logo']['mobile_link_always_show'] =  '<a href="' . $variables['url'] . '" class="navbar-brand">' . $variables['logo']['mobile'] . '</a>';
 
   // Main-menu
   foreach ($main_menu as $item) {
