@@ -15,7 +15,7 @@ require_once ('../app.php');
 <!--  START OF SOLSTICE HEADER -->
 <style type="text/css">
 @import
-  url('//eclipse.local/eclipse.org-common/themes/solstice/public/stylesheets/barebone<?php if (isset($_GET['mobile'])) : print '-toolbar';endif;?>.min.css');
+  url('//eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/barebone<?php if (isset($_GET['mobile'])) : print '-toolbar';endif;?>.min.css');
 </style>
 <script
   src="//eclipse.org/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js"></script>
