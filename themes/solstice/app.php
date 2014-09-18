@@ -29,7 +29,7 @@ function solstice_variables(&$variables) {
 
   $variables['session']['Friend'] = $Session->getFriend();
   $variables['session']['create_account_link'] = '<a href="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create account</a>';
-  $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/?takemeback=' . $App->getWWWPrefix() . $_SERVER['REQUEST_URI'] . '"><i class="fa fa-sign-in fa-fw"></i> Sign in</a>';
+  $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/?takemeback=' . $App->getWWWPrefix() . $_SERVER['REQUEST_URI'] . '"><i class="fa fa-sign-in fa-fw"></i> Log in</a>';
   $variables['session']['logout'] = '';
   if ($Session->isLoggedIn()) {
     $variables['session']['name'] = $variables['session']['Friend']->getFirstName();
