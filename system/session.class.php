@@ -128,7 +128,7 @@ class Session {
     # Remove the TAKEMEBACK cookie
     # Should these also be in session() ?
     setcookie("TAKEMEBACK", "", 0, "/", ".eclipse.org");
-    setcookie("fud_session_1247685629", "", 0, "/", ".eclipse.org");
+    setcookie("fud_session_2015", "", 0, "/forums/", ".eclipse.org");
     setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org", 1, TRUE);
     setcookie(ECLIPSE_ENV,      "", time() - 3600, "/", ".eclipse.org", 0, TRUE);
     if(!$App->devmode) {
