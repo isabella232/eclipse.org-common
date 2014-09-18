@@ -79,6 +79,22 @@ class Paypal {
     return $this->transaction;
   }
 
+  public function get_first_name() {
+    return $this->firstname;
+  }
+
+  public function set_first_name($name) {
+    $this->firstname = $name;
+  }
+
+  public function get_last_name() {
+    return $this->lastname;
+  }
+
+  public function set_last_name($name) {
+    $this->lastname = $name;
+  }
+
   public function get_anonymous_string() {
     if (!$this->anonymous) {
       return 'Public';
@@ -356,7 +372,7 @@ class Paypal {
     //curl_setopt($ch, CURLOPT_CAINFO, $cert);
     $res = curl_exec($ch);
     if (curl_errno($ch) != 0) { // cURL error
-      $this->log(date('[Y-m-d H:i e] ') . "Can't connect to PayPal to validate IPN message: " . curl_error($ch) . PHP_EOL);
+      //$this->log(date('[Y-m-d H:i e] ') . "Can't connect to PayPal to validate IPN message: " . curl_error($ch) . PHP_EOL);
       curl_close($ch);
       return FALSE;
     } else {
