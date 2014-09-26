@@ -37,7 +37,7 @@ class Paypal {
   // Set this to 0 once you go live or don't require logging.
   private $debug = FALSE;
   private $use_sandbox = FALSE;
-  private $log_file = "./ipn.log";
+  private $log_file = "/tmp/ipn.log";
   //private $database_logging = TRUE;
   private $database_logging = FALSE;
   private $show_all = FALSE;
