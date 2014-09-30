@@ -133,7 +133,13 @@ class Breadcrumb extends Menu {
 					$title = substr($title, 0, 35) . "...";
 				}
 
-				$this->addCrumb($pageTitle, NULL, NULL);
+				# Bug 442449 - Distinguish between page title and breadcrumbs menu
+				# Remove project name from $title	
+				if($this->getCrumbCount() > 1) {
+					$pattern = '/^' . $this->getCrumbAt($this->getCrumbCount() -1)->getText() . " /i";
+					$title = preg_replace($pattern, '', $title);
+				}
+				$this->addCrumb($title, NULL, NULL);
 			}
 			else {
 				# Add final generic crumb
