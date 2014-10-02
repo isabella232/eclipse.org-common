@@ -1,0 +1,21 @@
+/* This file will hold styles that are loaded using the same media query as the normal grid. */
+/* If you are using the default media queries provided by Omega, these styles will also
+ *  apply to the widescreen layout unless they are overridden by the widescreen styles. */
+
+#block-polar-custom-cblocks-homepage-news .home_box {
+	margin-left: 0;
+	margin-right: 0;
+	min-height: 350px;
+	display: block;
+	float: left;
+	position: relative;
+	width: 33%;
+	clear: none;
+}
+
+#block-polar-custom-cblocks-homepage-news .home_box.side-border {
+	border-bottom: 0;
+	border-top: 0;
+	border-left: 1px solid #ebeef1;
+	border-right: 1px solid #ebeef1;
+}

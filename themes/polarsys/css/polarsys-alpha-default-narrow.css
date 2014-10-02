@@ -1,0 +1,104 @@
+/* This file will hold styles for all layouts using the alpha grid (i.e. not the mobile layout). */
+
+#zone-user-wrapper ul.menu {
+	display: none;
+}
+
+.section_header {
+	display: block;
+}
+
+.view-display-id-page .views-field-field-website-url .align-right {
+	bottom: 0;
+	position: absolute;
+	right: 0;
+	text-align: right;
+}
+
+#homepage_slideshow ul.menu {
+	display: block;
+}
+
+#homepage_slideshow > .content {
+	float: left;
+	width: 60%;
+}
+
+.block-superfish ul {
+	overflow: visible;
+}
+
+.block-superfish ul li a:link,
+.block-superfish ul li a:visited,
+.block-superfish ul li a:active {
+	float: left;
+	border-right: 1px solid #424d69;
+}
+
+.block-superfish ul li {
+	float: left;
+	display: block;
+	clear: none;
+	position: relative;
+}
+
+.block-superfish li.last {
+	float: right;
+}
+
+.block-superfish li.last a:link,
+.block-superfish li.last a:visited,
+.block-superfish li.last a:active {
+	border-left: 1px solid #424d69;
+	border-right: none;
+}
+
+.block-superfish li li a:link,
+.block-superfish li li a:visited,
+.block-superfish li li a:active,
+.block-superfish li li.last a:link,
+.block-superfish li li.last a:visited,
+.block-superfish li li.last a:active {
+	float: none;
+	border: none;
+	border-right: 0;
+	border-left: 0;
+}
+
+.block-superfish ul ul,
+.block-superfish ul ul ul {
+	padding: 0.5em;
+	background: #fdd700;
+}
+
+.block-superfish ul li.last ul {
+	right: 0;
+}
+
+.block-superfish ul ul {
+	position: absolute;
+	z-index: 9999;
+	top: 32px;
+}
+
+.block-superfish ul ul ul {
+	top: 0;
+}
+
+.block-superfish ul li.sfHover ul li a:hover {
+	background: #0f1d41;
+	color: #fdd700;
+}
+
+.logo-img {
+	background: none;
+	margin: 0;
+}
+
+.logo-img img {
+	visibility: visible;
+}
+
+.page-frontpage .breadcrumb {
+	display: none;
+}
