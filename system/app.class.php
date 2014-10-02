@@ -12,22 +12,6 @@
  *    Christopher Guindon (Eclipse Foundation)
  *******************************************************************************/
 class App {
-
-  #*****************************************************************************
-  #
-  # app.class.php
-  #
-  # Author:     Denis Roy
-  # Date:      2004-08-05
-  #
-  # Description: Functions and modules related to the application
-  #
-  # HISTORY:
-  #    2007-03-13: added WWW_PREFIX functionality, and default class constructor
-  #    2008-09-15:  Added database connectivity and handle management
-  #
-  #*****************************************************************************
-
   private $APPVERSION   = "1.0";
   private $APPNAME    = "Eclipse.org";
 
@@ -50,7 +34,7 @@ class App {
   public  $PageRSSTitle    = "";
   public  $Promotion      = FALSE;
   public  $CustomPromotionPath = "";
-  private $THEME_LIST     =  array("", "Phoenix", "Miasma", "Lazarus", "Nova", "solstice");
+  private $THEME_LIST     =  array("", "Nova", "solstice", "polarsys");
 
   #Open Graph Protocol Variables
   private $OGTitle            = "";
@@ -464,8 +448,7 @@ class App {
       $Breadcrumb = new Breadcrumb();
     }
 
-    # Only Nova and solstice is accepted.
-    if($theme != "Nova") {
+    if($theme == "") {
       $theme = "solstice";
     }
 
