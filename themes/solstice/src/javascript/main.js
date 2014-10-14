@@ -1,20 +1,23 @@
 // main.js
 (function($, document) {
-	var href_hash = window.location.hash;
-	// Add a class if right column is non-existant.
-	if ($("#rightcolumn").length == 0) {
-		$("#midcolumn").attr("class", "no-right-sidebar");
-		if (href_hash) {
-			href_hash = href_hash;
+	
+	$(document).ready(function() {
+		var href_hash = window.location.hash;
+		// Add a class if right column is non-existant.
+		if ($("#rightcolumn").length == 0) {
+			$("#midcolumn").attr("class", "no-right-sidebar");
+			if (href_hash) {
+				window.location.hash = href_hash;
+			}
 		}
-	}
-	// add a class if left column is non-existant.
-	if ($("#leftcol").length == 0) {
-		$("#midcolumn").attr("class", "no-left-nav");
-		if (href_hash) {
-			href_hash = href_hash;
-		}
-	}
+		// add a class if left column is non-existant.
+		if ($("#leftcol").length == 0) {
+			$("#midcolumn").attr("class", "no-left-nav");
+			if (href_hash) {
+				window.location.hash = href_hash;
+			}
+		}	
+	});
 	
 	// This code will prevent unexpected menu close when
 	// using some components (like accordion, forms, etc).
