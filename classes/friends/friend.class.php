@@ -241,7 +241,7 @@ class Friend {
 		return $retVal;
 	}
 	
-	function getBugzillaIDFromEmail($_email) {
+	function getBugzillaIDFromEmail($_email, $use_master=false) {
 		$result = 0;
 
 		if($_email != "") {
@@ -249,9 +249,15 @@ class Friend {
 
 			$_email 		= $App->sqlSanitize($_email, $dbh);
 			
-			$sql = "SELECT userid
-					FROM profiles
-					WHERE login_name = " . $App->returnQuotedString($_email);
+            if ($use_master) {
+			    $sql = "SELECT /* USE MASTER */ userid
+					    FROM profiles
+					    WHERE login_name = " . $App->returnQuotedString($_email);
+            } else {
+			    $sql = "SELECT userid
+					    FROM profiles
+					    WHERE login_name = " . $App->returnQuotedString($_email);
+            }
 
 			$result = $App->bugzilla_sql($sql);
 			$myrow = mysql_fetch_array($result);
