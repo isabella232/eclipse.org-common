@@ -7,7 +7,7 @@
 </div><?php $html = ob_get_clean();?>
 
 <h3 id="section-block-box">Block-box</h3>
-<p>Content block mainly used in the right sidebar area. The <code>.block-box-classic</code> class is optional.
+<p>Content block mainly used in the right sidebar area. The <code>.block-box-classic</code> class is optional.</p>
 <?php print $html;?>
 
 <h4>Code</h4>

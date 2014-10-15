@@ -11,8 +11,11 @@
  *******************************************************************************/
 class Solstice {
 
-	private $variables;
+  private $variables = array();
 
+  /**
+   * Constructor
+   */
   function __construct($App, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers) {
 
     $variables['page']['App'] = $App;
@@ -299,7 +302,12 @@ class Solstice {
     $this->variables = $variables;
   }
 
-  function getVariables(){
+  /**
+   * Return $variables
+   *
+   * @return array
+   */
+  public function getVariables(){
     return $this->variables;
   }
 }
@@ -308,3 +316,7 @@ global $App;
 $extra_headers = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
 $Solstice = new Solstice($App, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers);
 $variables = $Solstice->getVariables();
+
+require_once('classes/SolsticeHeaderNav.class.php');
+
+$SolsticeHeaderNav = New SolsticeHeaderNav($variables['theme_variables']['header_nav']);

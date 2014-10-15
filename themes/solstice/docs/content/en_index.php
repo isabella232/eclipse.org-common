@@ -106,7 +106,8 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
   <li><a href="#section-breadcrumbs">Breadcrumbs</a></li>
   <li><a href="#section-discover-search">Discover Search</a></li>
   <li><a href="#section-dragdrop">Marketplace Drag and Drop install</a></li>
-  <li><a href="#section-headerrow">Header row</a></li>
+  <li><a href="#section-headernav">Header Nav</a></li>
+  <li><a href="#section-headerrow">Header Row</a></li>
   <li><a href="#section-highlight">Highlight</a></li>
   <li><a href="#section-landing-well">Landing well</a></li>
   <li><a href="#section-news-list">News list</a></li>
@@ -119,6 +120,7 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
 <?php include('components/breadcrumbs.php');?><hr/>
 <?php include('components/discover-search.php');?><hr/>
 <?php include('components/dragdrop.php');?><hr/>
+<?php include('components/header-nav.php');?><hr/>
 <?php include('components/headerrow.php');?><hr/>
 <?php include('components/hightlight.php');?><hr/>
 <?php include('components/landing-well.php');?><hr/>

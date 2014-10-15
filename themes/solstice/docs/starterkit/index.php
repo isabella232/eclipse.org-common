@@ -47,6 +47,51 @@
   # Insert HTML after opening the main content container, before the left sidebar. (String)
   $variables['main_container_html'] = '';
 
+  # Insert header navigation for project websites.
+  # Bug 436108 - https://bugs.eclipse.org/bugs/show_bug.cgi?id=436108
+  $links = array();
+  $links[] = array(
+    'icon' => 'fa-download', // Required
+    'url' => '/downloads/', // Required
+    'title' => 'Download', // Required
+    //'target' => '_blank', // Optional
+    'text' => 'Eclipse Distribution, Update Site, Dropins' // Optional
+  );
+
+  $links[] = array(
+    'icon' => 'fa-users', // Required
+    'url' => '/users/', // Required
+    'title' => 'Geting Involved', // Required
+    //'target' => '_blank', // Optional
+    'text' => 'CVS, Workspace Setup, Wiki, Committers' // Optional
+  );
+
+  $links[] = array(
+    'icon' => 'fa-book', // Required
+    'url' => 'http://help.eclipse.org/luna/index.jsp', // Required
+    'title' => 'Documentation', // Required
+    //'target' => '_blank', // Optional
+    'text' => 'Tutorials, Examples, Videos, Online Reference' // Optional
+  );
+
+  $links[] = array(
+    'icon' => 'fa-support', // Required
+    'url' => '/forums/', // Required
+    'title' => 'Support', // Required
+    //'target' => '_blank', // Optional
+    'text' => 'Bug Tracker, Newsgroup Professional Support' // Optional
+  );
+
+  $variables['header_nav'] = array(
+    'links' =>  $links, // Required
+    'logo' => array( // Required
+      'src' => '/eclipse.org-common/themes/solstice/public/images/logo/eclipse-800x188.png', // Required
+      'alt' => 'The Eclipse Foundation', // Optional
+      'url' => 'http://www.eclipse.org', // Optional
+      //'target' => '_blank' // Optional
+     ),
+  );
+
   # Set Solstice theme variables. (Array)
   $App->setThemeVariables($variables);
 

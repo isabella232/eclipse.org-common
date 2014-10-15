@@ -996,6 +996,7 @@ EOHTML;
       $v['leftnav_html'] = '';
       $v['main_container_classes'] = 'container';
       $v['main_container_html'] = '';
+      $v['header_nav'] = array();
       $this->theme_variables = $v;
     }
 

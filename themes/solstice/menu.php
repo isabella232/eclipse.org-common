@@ -97,3 +97,4 @@
 		  <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
 	        <?php print $variables['deprecated'];?>
 	        <?php print $variables['theme_variables']['main_container_html'];?>
+	        <?php print $SolsticeHeaderNav->build();?>
