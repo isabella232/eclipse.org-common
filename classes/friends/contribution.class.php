@@ -71,7 +71,7 @@ class Contribution {
 			if ($this->date_expired == NULL)
 				$default_date_expired = "DATE_ADD(NOW(), INTERVAL 1 YEAR)";
 			else
-				$default_date_expired = $App->returnQuotedString($App->sqlSerialze($this->date_expired));
+				$default_date_expired = $App->returnQuotedString($App->sqlSanitize($this->date_expired));
 			# insert
 			$sql = "INSERT INTO friends_contributions (
 					friend_id,
@@ -92,6 +92,25 @@ class Contribution {
 
 		return $result;
 	}
+
+    function updateContribution() {
+		$result = 0;
+		$App = new App();
+		if ($this->selectContributionExists($this->getTransactionID())){
+			$default_date_expired = $App->returnQuotedString($App->sqlSanitize($this->date_expired));
+			$sql = "UPDATE friends_contributions SET 
+					friend_id = " . $App->returnQuotedString($App->sqlSanitize($this->getFriendID())) . ",
+					date_expired = " . $default_date_expired . ",
+					amount = " . $App->returnQuotedString($App->sqlSanitize($this->getAmount())) . ",
+					message = " . $App->returnQuotedString($App->sqlSanitize($this->getMessage())) . ",
+					transaction_id = " . $App->returnQuotedString($App->sqlSanitize($this->getTransactionID())) . "
+					WHERE contribution_id = " . $App->returnQuotedString($App->sqlSanitize($this->getContributionID()));
+			$App->eclipse_sql($sql);
+		} else {
+			$result = -1;
+		}
+        return $result;
+    }
 	
 	function selectContributionExists($_transaction_id){
 		$retVal = FALSE;
