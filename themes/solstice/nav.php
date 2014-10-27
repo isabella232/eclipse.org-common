@@ -16,40 +16,40 @@
 <aside id="leftcol" class="col-md-4">
   <?php print $variables['theme_variables']['leftnav_html'];?>
   <ul id="leftnav" class="ul-left-nav fa-ul hidden-print">
-	  <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
+    <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
 
-			<?php if ($link->getURL() == "") :?>
-				<?php if ($link->getTarget() == "__SEPARATOR") : ?>
-				  <li class="separator">
-				    <a class="separator">
-						  <?php print $link->getText() ?>
-						</a>
-					</li>
-				<?php else: ?>
-					<li>
-					  <i class="fa fa-angle-double-right orange fa-fw"></i>
-					  <a class="nolink" href="#"><?php print $link->getText() ?></a>
-					</li>
-				<?php endif; ?>
-			<?php else: // if $link->getURL() is not empty. ?>
+      <?php if ($link->getURL() == "") :?>
+        <?php if ($link->getTarget() == "__SEPARATOR") : ?>
+          <li class="separator">
+            <a class="separator">
+              <?php print $link->getText() ?>
+            </a>
+          </li>
+        <?php else: ?>
+          <li>
+            <i class="fa fa-angle-double-right orange fa-fw"></i>
+            <a class="nolink" href="#"><?php print $link->getText() ?></a>
+          </li>
+        <?php endif; ?>
+      <?php else: // if $link->getURL() is not empty. ?>
 
-			  <?php if($link->getTarget() == "__SEPARATOR") :?>
-				  <li class="separator">
-				    <a class="separator" href="<?php print $link->getURL() ?>">
-					    <?php print $link->getText() ?>
-						</a>
-					</li>
-			  <?php else:?>
-				  <li>
-				    <i class="fa fa-angle-double-right orange fa-fw"></i>
-				    <a href="<?php print $link->getURL() ?>" target="<?php print ($link->getTarget() == "_blank") ? "_blank" : "_self" ?>">
-					    <?php print $link->getText() ?>
-					  </a>
-			    </li>
-				<?php endif;?>
+        <?php if($link->getTarget() == "__SEPARATOR") :?>
+          <li class="separator">
+            <a class="separator" href="<?php print $link->getURL() ?>">
+              <?php print $link->getText() ?>
+            </a>
+          </li>
+        <?php else:?>
+          <li>
+            <i class="fa fa-angle-double-right orange fa-fw"></i>
+            <a href="<?php print $link->getURL() ?>" target="<?php print ($link->getTarget() == "_blank") ? "_blank" : "_self" ?>">
+              <?php print $link->getText() ?>
+            </a>
+          </li>
+        <?php endif;?>
 
-			<?php endif;?>
-		<?php endforeach; ?>
-	</ul>
+      <?php endif;?>
+    <?php endforeach; ?>
+  </ul>
   <?php print $Nav->getHTMLBlock(); ?>
 </aside>
