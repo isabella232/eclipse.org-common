@@ -89,7 +89,16 @@
       'alt' => 'The Eclipse Foundation', // Optional
       'url' => 'http://www.eclipse.org', // Optional
       //'target' => '_blank' // Optional
-     ),
+    ),
+  );
+
+  // CFA Link - Big orange button in header
+  $variables['btn_cfa'] = array(
+    'hide' => FALSE, // Optional - Hide the CFA button.
+    'html' => '', // Optional - Replace CFA html and insert custom HTML.
+    'class' => 'btn btn-huge btn-warning', // Optional - Replace class on CFA link.
+    'href' => '//www.eclipse.org/downloads/', // Optional - Replace href on CFA link.
+    'text' => '<i class="fa fa-download"></i> Download' // Optional - Replace text of CFA link.
   );
 
   # Set Solstice theme variables. (Array)

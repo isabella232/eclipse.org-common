@@ -9,6 +9,9 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
+require_once('classes/SolsticeHeaderNav.class.php');
+require_once('classes/SolsticeBtnCfa.class.php');
+
 class Solstice {
 
   private $variables = array();
@@ -317,6 +320,5 @@ $extra_headers = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
 $Solstice = new Solstice($App, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers);
 $variables = $Solstice->getVariables();
 
-require_once('classes/SolsticeHeaderNav.class.php');
-
 $SolsticeHeaderNav = New SolsticeHeaderNav($variables['theme_variables']['header_nav']);
+$SolsticeBtnCfa = New SolsticeBtnCfa($variables['theme_variables']['btn_cfa']);

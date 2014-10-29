@@ -9,7 +9,9 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
-class SolsticeHeaderNav {
+require_once('SolsticeBase.class.php');
+
+class SolsticeHeaderNav extends SolsticeBase {
 
   private $header_nav = array();
 
@@ -33,7 +35,7 @@ class SolsticeHeaderNav {
   private function _header_nav_default_links($l) {
 
     foreach ($l as &$link) {
-      $link = $this->_is_string($link);
+      $link = $this->is_var($link);
     }
 
     if (empty($l['url']) || empty($l['title']) || empty($l['icon'])) {
@@ -57,20 +59,6 @@ class SolsticeHeaderNav {
     return array_merge($default, $l);
   }
 
-  /**
-   * Validate String Variable
-   *
-   * Return an empty string if argument is not a string.
-   *
-   * @param string $var
-   * @return string
-   */
-  private function _is_string($var = "") {
-    if (!empty($var) && is_string($var)) {
-      return $var;
-    }
-    return "";
-  }
 
   /**
    * Add default values for the logo
@@ -98,7 +86,7 @@ class SolsticeHeaderNav {
     );
 
     foreach ($h['logo'] as &$logo) {
-      $logo = $this->_is_string($logo);
+      $logo = $this->is_var($logo);
     }
 
     $h['logo'] = array_merge($default['logo'], $h['logo']);

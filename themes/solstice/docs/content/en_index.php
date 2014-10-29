@@ -104,6 +104,7 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
 <ol>
   <li><a href="#section-block-box">Block-box</a></li>
   <li><a href="#section-breadcrumbs">Breadcrumbs</a></li>
+  <li><a href="#section-btncfa">Call For Action Button link</a></li>
   <li><a href="#section-discover-search">Discover Search</a></li>
   <li><a href="#section-dragdrop">Marketplace Drag and Drop install</a></li>
   <li><a href="#section-headernav">Header Nav</a></li>
@@ -118,6 +119,7 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
 
 <?php include('components/block-box.php');?><hr/>
 <?php include('components/breadcrumbs.php');?><hr/>
+<?php include('components/btn-cfa.php');?><hr/>
 <?php include('components/discover-search.php');?><hr/>
 <?php include('components/dragdrop.php');?><hr/>
 <?php include('components/header-nav.php');?><hr/>

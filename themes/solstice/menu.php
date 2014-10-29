@@ -74,7 +74,7 @@
                   </span>
                 </form>
               </div><!-- /input-group -->
-              <a id="btn-call-for-action" href="<?php print $variables['url']; ?>downloads/" class="btn btn-huge btn-warning"><i class="fa fa-download"></i> Download</a>
+              <?php print $SolsticeBtnCfa->build();?>
             </div>
           </div>
         </div>
