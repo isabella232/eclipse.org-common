@@ -1160,6 +1160,18 @@ EOHTML;
     $this->CustomPromotionPath = $_SERVER['DOCUMENT_ROOT'] . $_path;
   }
 
+  /**
+   * Use reCAPTCHA service
+   *
+   * @param bool $ssl
+   *
+   * @return Captcha
+   */
+  public function useCaptcha($ssl = true) {
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/classes/captcha/captcha.class.php');
+    return new Captcha($ssl);
+  }
+
   # Record a database record
   public function setDatabase( $key, $host, $user, $pwd, $db ) {
     $rec = array() ;
