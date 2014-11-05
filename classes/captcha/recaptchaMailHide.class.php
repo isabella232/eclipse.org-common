@@ -10,7 +10,7 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
-require_once("/home/data/httpd/eclipse-php-classes/system/recaptcha-authcode.php");
+require_once("/home/data/httpd/eclipse-php-classes/system/captchacode.php");
 
 class ReCaptchaMailHide {
 
