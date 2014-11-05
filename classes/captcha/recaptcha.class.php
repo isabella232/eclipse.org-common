@@ -40,7 +40,15 @@ class ReCaptcha extends ReCaptchaMailHide {
     parent::__construct();
     $this->pubkey = RECAPTCHA_PUBKEY;
     $this->privkey = RECAPTCHA_PRIVKEY;
-    $this->remoteip = $_SERVER["REMOTE_ADDR"];
+
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+    else {
+      $ip = $_SERVER['REMOTE_ADDR'];
+    }
+
+    $this->remoteip = $ip;
     $this->_use_ssl($ssl);
   }
 
