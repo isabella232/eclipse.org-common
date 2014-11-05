@@ -162,6 +162,7 @@ class ReCaptcha extends ReCaptchaMailHide {
     curl_setopt($cu, CURLOPT_POSTFIELDS, $data);
     curl_setopt($cu, CURLOPT_HEADER, TRUE);
     curl_setopt($cu, CURLOPT_HTTPHEADER, $add_headers);
+    curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, 30);
 
     // Need to use eclipse.org proxy
     curl_setopt($cu, CURLOPT_HTTPPROXYTUNNEL, TRUE);
