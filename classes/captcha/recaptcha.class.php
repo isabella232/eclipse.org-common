@@ -144,16 +144,15 @@ class ReCaptcha extends ReCaptchaMailHide {
    * @param string $host
    * @param string $path
    * @param array $data
-   * @param int port
    *
    * @return array response
    */
-  private function _http_post($host, $path, $data, $port = 80) {
+  private function _http_post($host, $path, $data) {
     $add_headers = array(
       "Host: $host",
     );
 
-    $cu = curl_init('http://' . $host . ':' . $port . $path);
+    $cu = curl_init('https://' . $host . $path);
     curl_setopt($cu, CURLOPT_POST, TRUE);
     curl_setopt($cu, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, 10);
@@ -163,6 +162,9 @@ class ReCaptcha extends ReCaptchaMailHide {
     curl_setopt($cu, CURLOPT_HEADER, TRUE);
     curl_setopt($cu, CURLOPT_HTTPHEADER, $add_headers);
     curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, 30);
+
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 
     // Need to use eclipse.org proxy
     curl_setopt($cu, CURLOPT_HTTPPROXYTUNNEL, TRUE);
