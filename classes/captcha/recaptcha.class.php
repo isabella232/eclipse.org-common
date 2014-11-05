@@ -132,7 +132,7 @@ class ReCaptcha extends ReCaptchaMailHide {
 
     $response = $this->_http_post(RECAPTCHA_VERIFY_SERVER, "/recaptcha/api/verify", $path);
 
-    $answers = explode("\n", $response[1]);
+    $answers = explode("\n", $response[0]);
 
     if (trim($answers[0]) == 'true') {
       $this->is_valid = TRUE;
@@ -167,7 +167,7 @@ class ReCaptcha extends ReCaptchaMailHide {
     curl_setopt($cu, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
     curl_setopt($cu, CURLOPT_USERAGENT, 'reCAPTCHA/PHP');
     curl_setopt($cu, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($cu, CURLOPT_HEADER, TRUE);
+    curl_setopt($cu, CURLOPT_HEADER, FALSE);
     curl_setopt($cu, CURLOPT_HTTPHEADER, $add_headers);
     curl_setopt($cu, CURLOPT_CONNECTTIMEOUT, 30);
 
