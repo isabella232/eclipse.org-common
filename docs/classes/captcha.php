@@ -38,7 +38,6 @@ It does this while letting your valid users pass through with ease.</p>
   if ($Captcha->validate()) {
     echo "You got it!";
   }
-  echo $Captcha->get_error();
   echo $Captcha->get_html();
 </pre>
 
