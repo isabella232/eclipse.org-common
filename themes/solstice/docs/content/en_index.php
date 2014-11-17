@@ -79,7 +79,7 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
 <h3>Default template</h3>
 <ul>
   <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Header</a></li>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Footer</a></li>
+  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/footer.php">Footer</a></li>
   <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/">Full page</a></li>
 </ul>
 <h3>Thin template <small>(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=437384">Bug #437384</a>)</small></h3>
