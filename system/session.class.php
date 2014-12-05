@@ -21,15 +21,20 @@ if (!class_exists("EvtLog")) {
   require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 }
 
-
 class Session {
 
   private $gid    = "";
+
   private $bugzilla_id= 0;
+
   private $subnet    = "";
+
   private $updated_at  = "";
+
   private $is_persistent  = 0;
+
   private $Friend    = null;
+
   private $data    = "";
 
   /**
@@ -42,34 +47,41 @@ class Session {
     $this->setIsPersistent($persistent);
   }
 
-
   function getGID() {
     return $this->gid;
   }
+
   function getBugzillaID() {
     return $this->bugzilla_id;
   }
+
   function getSubnet() {
     return $this->subnet;
   }
+
   function getUpdatedAt() {
     return $this->updated_at;
   }
+
   function getFriend() {
     if($this->Friend == null) {
       $this->Friend = new Friend();
     }
     return $this->Friend;
   }
+
   function getData() {
     return unserialize($this->data);
   }
+
   function getIsPersistent() {
     return $this->is_persistent == null ? 0 : $this->is_persistent;
   }
+
   function getLoginPageURL() {
     return LOGINPAGE;
   }
+
   function getIsLoggedIn() {
     return $this->getGID() !== "";
   }
@@ -77,25 +89,30 @@ class Session {
   function setGID($_gid) {
     $this->gid = $_gid;
   }
+
   function setBugzillaID($_bugzilla_id) {
     $this->bugzilla_id = $_bugzilla_id;
   }
+
   function setSubnet($_subnet) {
     $this->subnet = $_subnet;
   }
+
   function setUpdatedAt($_updated_at) {
     $this->updated_at = $_updated_at;
   }
+
   function setFriend($_friend) {
     $this->Friend = $_friend;
   }
+
   function setData($_data) {
     $this->data = serialize($_data);
   }
+
   function setIsPersistent($_is_persistent) {
     $this->is_persistent = $_is_persistent;
   }
-
 
   /**
    * Validate session based on browser cookie
@@ -105,19 +122,19 @@ class Session {
   function validate() {
     $cookie = (isset($_COOKIE[ECLIPSE_SESSION]) ? $_COOKIE[ECLIPSE_SESSION] : "");
     $rValue = false;
-    if ( (!$this->load($cookie))) {
-          # Failed - no such session, or session no match.  Need to relogin
-          # Bug 257675
-          # setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
-          $rValue = false;
-        }
-        else {
+    if ((!$this->load($cookie))) {
+      # Failed - no such session, or session no match.  Need to relogin
+      # Bug 257675
+      # setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
+      $rValue = false;
+    }
+    else {
       # TODO: update session?
       $rValue = true;
-          $this->maintenance();
-          $this->setFriend($this->getData());
-        }
-        return $rValue;
+      $this->maintenance();
+      $this->setFriend($this->getData());
+    }
+    return $rValue;
   }
 
   function destroy() {
@@ -131,7 +148,7 @@ class Session {
     setcookie("fud_session_2015", "", 0, "/forums/", ".eclipse.org");
     setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org", 1, TRUE);
     setcookie(ECLIPSE_ENV,      "", time() - 3600, "/", ".eclipse.org", 0, TRUE);
-    if(!$App->devmode) {
+    if (!$App->devmode) {
       # Log this event
       $EvtLog = new EvtLog();
       $EvtLog->setLogTable("sessions");
@@ -148,7 +165,7 @@ class Session {
     $this->setData($Friend);
 
     # need to have a bugzilla ID to log in
-    if($Friend->getBugzillaID() > 0) {
+    if ($Friend->getBugzillaID() > 0) {
       $App = new App();
       $this->setGID(md5(uniqid(rand(),true)));
       $this->setSubnet($this->getClientSubnet());
@@ -172,7 +189,7 @@ class Session {
 
       $App->eclipse_sql($sql);
 
-      if(!$App->devmode) {
+      if (!$App->devmode) {
         # Log this event
         $EvtLog = new EvtLog();
         $EvtLog->setLogTable("sessions");
@@ -192,7 +209,7 @@ class Session {
       }
 
       $cookie_time = 0;
-      if($this->getIsPersistent()) {
+      if ($this->getIsPersistent()) {
         $cookie_time = time()+3600*24*365;
       }
 
@@ -219,7 +236,7 @@ class Session {
             # " AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
 
       $result = $App->eclipse_sql($sql);
-      if($result && mysql_num_rows($result) > 0) {
+      if ($result && mysql_num_rows($result) > 0) {
         $rValue = true;
         $myrow = mysql_fetch_assoc($result);
         $this->setGID($_gid);
@@ -296,4 +313,3 @@ class Session {
     return $this->getGID() != "";
   }
 }
-?>
