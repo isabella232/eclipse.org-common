@@ -11,9 +11,9 @@ and powerful front-end framework for faster and easier web development.</p>
 <p>We support most UI components from <a href="https://wiki.eclipse.org/Nova">Nova</a>. We’re hoping that the transition won’t be too hard for most pages.</p>
 <h2>What's included with Solstice?</h2>
 <ul>
-  <li><a href="http://getbootstrap.com/">Bootstrap</a> v3.2.0</li>
+  <li><a href="http://getbootstrap.com/">Bootstrap</a> v3.3.1</li>
   <li><a href="http://bootstrapvalidator.com/">BootstrapValidator</a> v0.4.5</li>
-  <li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> v4.1.0 </li>
+  <li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> v4.2.0 </li>
   <li><a href="http://jquery.com/">jQuery</a> v2.1.1</li>
   <li><a href="https://github.com/chrisguindon/solstice-assets">Solstice Assets</a> (Less files &amp; images)</li>
   <li><a href="http://geedmo.github.io/yamm3/">Yamm3</a> (Yet another megamenu for Bootstrap 3)</li>
