@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Chris Guindon (Eclipse Foundation)- initial API and implementation
+ *    Edouard Poitars (Eclipse Foundation)- Heavy modifications for new donatin process
  *******************************************************************************/
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
@@ -38,8 +39,7 @@ class Paypal {
   private $debug = FALSE;
   private $use_sandbox = FALSE;
   private $log_file = "/tmp/ipn.log";
-  //private $database_logging = TRUE;
-  private $database_logging = FALSE;
+  private $database_logging = TRUE;
   private $show_all = FALSE;
   private $paypal_url = PAYPAL_URL;
   private $paypal_donation_email = PAYPAL_DONATION_EMAIL;
@@ -192,7 +192,7 @@ class Paypal {
   }
 
   public function set_logging_mode($database_logging = TRUE) {
-    $this->$database_logging = $database_logging;
+    $this->database_logging = $database_logging;
   }
 
   private function log($message) {
@@ -207,79 +207,30 @@ class Paypal {
     if ($this->database_logging) {
       $EvtLog = new EvtLog();
       $EvtLog->setLogTable("__paypal.class");
-      $EvtLog->setPK1($this->bugzilla_email);
+      $EvtLog->setPK1("$this->transaction_id,$this->itemname,$this->amount");
       $ip = $_SERVER['REMOTE_ADDR'];
-      $EvtLog->setPK2("$ip,$this->itemname,$this->amount");
+      $EvtLog->setPK2($ip);
       $EvtLog->setLogAction($action);
-      $EvtLog->insertModLog($this->transaction_id);
-    }
-  }
-
-  public function validate_transaction() {
-    $this->log(date('[Y-m-d H:i e] ') . 'Starting transaction validation process' . PHP_EOL);
-    // Read POST data
-    // reading posted data directly from $_POST causes serialization
-    // issues with array data in POST. Reading raw POST data from input stream instead.
-    $this->log(date('[Y-m-d H:i e] ') . 'Parsing raw post data' . PHP_EOL);
-    $raw_post_data = file_get_contents('php://input');
-    $raw_post_array = explode('&', $raw_post_data);
-    $myPost = array();
-    foreach ($raw_post_array as $keyval) {
-      $keyval = explode ('=', $keyval);
-      if (count($keyval) == 2) $myPost[$keyval[0]] = urldecode($keyval[1]);
-    }
-    // read the post from PayPal system and add 'cmd'
-    $req = 'cmd=_notify-validate';
-    if(function_exists('get_magic_quotes_gpc')) {
-      $get_magic_quotes_exists = true;
-    }
-    foreach ($myPost as $key => $value) {
-      if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) {
-        $value = urlencode(stripslashes($value));
-      } else {
-        $value = urlencode($value);
-      }
-      $req .= "&$key=$value";
-    }
-    // Post IPN data back to PayPal to validate the IPN data is genuine
-    // Without this step anyone can fake IPN data
-    $this->log(date('[Y-m-d H:i e] ') . 'Posting IPN data back to Paypal to validate' . PHP_EOL);
-    $res = curl_request($this->paypal_url, $req);
-    if ($res == FALSE) { exit('CURL Error'); }
-    $this->ipn_validate($res);
-
-  function ipn_validation($res) {
-      // Inspect IPN validation result and act accordingly
-      if (strcmp ($res, "VERIFIED") == 0) {
-        $this->log(date('[Y-m-d H:i e] '). "Verified IPN: $req ". PHP_EOL);
-        $this->_set_status_message(ECLIPSE_PAYPAL_MSG_IPN_VALID);
-        //set a cookie for 279-days to block the donation page if the user made a donation
-        setcookie ("thankyou_page[donation]", TRUE, time() + (3600 * 24 * 279), '/', '.eclipse.org');
-        $this->_parse_meta_data($_POST);
-        $this->_process_donation();
-      } else if (strcmp ($res, "INVALID") == 0) {
-        // log for manual investigation
-        // Add business logic here which deals with invalid IPN messages
-        $this->_set_status_message(ECLIPSE_PAYPAL_MSG_IPN_INVALID);
-        $this->log(date('[Y-m-d H:i e] '). "Invalid IPN: $req" . PHP_EOL);
-      }
+      $EvtLog->insertModLog($this->bugzilla_email);
     }
   }
 
   private function _parse_meta_data($data) {
-    $this->itemname = $data['item_name'];
-    $this->firstname = $data['first_name'];
-    $this->lastname = $data['last_name'];
-    $this->amount = $data['mc_gross'];
+    $this->itemname = filter_var($data['item_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->firstname = filter_var($data['first_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->lastname = filter_var($data['last_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->amount = filter_var($data['mc_gross'], FILTER_SANITIZE_NUMBER_FLOAT);
     if (strpos($this->amount, ".") == 0) {
       $this->amount = $this->amount . ".00";
     }
-    $this->transaction_id = $data['txn_id'];
-    $this->payment_status = $data['payment_status'];
+    $this->transaction_id = filter_var($data['txn_id'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->payment_status = filter_var($data['payment_status'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    // Got to love PHP - $this->amount is a string but this still works flawlessly
     $this->benefit = ($this->amount >= 35) ? TRUE : FALSE;
   }
 
   public function confirm_donation() {
+    $this->log_database('CONFIRMING_DONATION');
     return $this->request_transaction_information();
   }
 
@@ -298,48 +249,13 @@ class Paypal {
       }
       $this->_parse_meta_data($data);
       $this->_set_transaction();
+      $this->log_database('DONATION_CONFIRMED');
       return TRUE;
     } else {
+      $this->log_database('DONATION_INVALID');
       $this->payment_status = 'Error';
     }
     return FALSE;
-  }
-
-  private function _process_donation(){
-    $this->log(date('[Y-m-d H:i e] '). "Processing donation" . PHP_EOL);
-    $this->_set_transaction();
-    if (in_array($this->payment_status, $this->status_check)) {
-      // Check to see if this transaction has already been processed.
-      $checkContribution = new Contribution();
-      $check_trans = $checkContribution->selectContributionExists($this->transaction_id);
-      if ($check_trans == FALSE) {
-        //Check to see if user already exists in friends
-        $checkFriends = new Friend();
-        $bugzilla_id = $checkFriends->getBugzillaIDFromEmail($this->bugzilla_email);
-        $friend_id = $checkFriends->selectFriendID("bugzilla_id", $bugzilla_id);
-        // Lets Update the Friend Information
-        $Friend = new Friend();
-        $Friend->setFirstName($this->firstname);
-        $Friend->setLastName($this->lastname);
-        $Friend->setBugzillaID($bugzilla_id);
-        $Friend->setIsAnonymous($this->anonymous);
-        $Friend->setIsBenefit($this->benefit);
-        $Friend->setFriendID($friend_id);
-        $friend_id = $Friend->insertUpdateFriend();
-        $Contribution = new Contribution();
-        if ($friend_id != 0) {
-          $Contribution->setFriendID($friend_id);
-        }
-        $Contribution->setAmount($this->amount);
-        $Contribution->setMessage($this->comment);
-        $Contribution->setTransactionID($this->transaction_id);
-        $Contribution->insertContribution();
-        $this->log_database('DONATION_SUCCESSFUL');
-        $this->log(date('[Y-m-d H:i e] '). "Contribution processed" . PHP_EOL);
-      }
-    } else { // Transaction not processed yet
-      $this->log(date('[Y-m-d H:i e] '). "Transaction not processed by Paypal yet" . PHP_EOL);
-    }
   }
 
   private function curl_request($url, $req) {
