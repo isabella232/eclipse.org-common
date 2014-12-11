@@ -14,24 +14,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/authcode.php");
-
-define('ECLIPSE_PAYPAL_MSG_SUCCESSFUL_UPDATE', 0);
-define('ECLIPSE_PAYPAL_MSG_ERROR_UPDATE', 1);
-define('ECLIPSE_PAYPAL_MSG_WARNING_DEBUG', 2);
-define('ECLIPSE_PAYPAL_MSG_WARNING_SANDBOX', 3);
-define('ECLIPSE_PAYPAL_MSG_SHOW_ALL_MODE', 4);
-define('ECLIPSE_PAYPAL_MSG_IPN_VALID', 5);
-define('ECLIPSE_PAYPAL_MSG_IPN_INVALID', 6);
-define('PROXY', 'proxy.eclipse.org:9899');
-define('PAYPAL_URL', 'https://www.paypal.com/cgi-bin/webscr');
-define('PAYPAL_SANDBOX_URL', 'https://www.sandbox.paypal.com/cgi-bin/webscr');
-define('PAYPAL_AUTH_TOKEN', $auth_token);
-define('PAYPAL_SANDBOX_AUTH_TOKEN', 'T-vs7NBkZlK-c10lW4aP9TGLOuhInTv2ZoGXGqBHp3CSZ6uEHiIN8lyaeq0');
-define('PAYPAL_DONATION_EMAIL', 'donate@eclipse.org');
-define('PAYPAL_SANDBOX_DONATION_EMAIL', 'business@eclipse.org');
-define('PAYPAL_PURCHASE_CMD', '_xclick');
-//define('PAYPAL_PURCHASE_CMD', '_donations');
-// https://developer.paypal.com/webapps/developer/docs/classic/paypal-payments-standard/integration-guide/Appx_websitestandard_htmlvariables/
+require('paypal.class.inc.php');
 
 class Paypal {
   // CONFIG: Enable $this->debug mode. This means we'll log requests into 'ipn.log' in the same directory.
