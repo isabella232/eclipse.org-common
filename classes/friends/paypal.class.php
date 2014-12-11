@@ -219,7 +219,8 @@ class Paypal {
     $this->itemname = filter_var($data['item_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $this->firstname = filter_var($data['first_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $this->lastname = filter_var($data['last_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $this->amount = filter_var($data['mc_gross'], FILTER_SANITIZE_NUMBER_FLOAT);
+    //$this->amount = filter_var($data['mc_gross'], FILTER_SANITIZE_NUMBER_FLOAT);
+    $this->amount = $data['mc_gross'];
     if (strpos($this->amount, ".") == 0) {
       $this->amount = $this->amount . ".00";
     }
