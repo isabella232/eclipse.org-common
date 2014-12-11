@@ -14,6 +14,7 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/authcode.php");
+define('PAYPAL_AUTH_TOKEN', $auth_token);
 require('paypal.class.inc.php');
 
 class Paypal {

@@ -20,7 +20,6 @@ define('ECLIPSE_PAYPAL_MSG_IPN_INVALID', 6);
 define('PROXY', 'proxy.eclipse.org:9899');
 define('PAYPAL_URL', 'https://www.paypal.com/cgi-bin/webscr');
 define('PAYPAL_SANDBOX_URL', 'https://www.sandbox.paypal.com/cgi-bin/webscr');
-define('PAYPAL_AUTH_TOKEN', $auth_token);
 define('PAYPAL_SANDBOX_AUTH_TOKEN', 'T-vs7NBkZlK-c10lW4aP9TGLOuhInTv2ZoGXGqBHp3CSZ6uEHiIN8lyaeq0');
 define('PAYPAL_DONATION_EMAIL', 'donate@eclipse.org');
 define('PAYPAL_SANDBOX_DONATION_EMAIL', 'business@eclipse.org');
