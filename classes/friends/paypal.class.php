@@ -11,6 +11,7 @@
  *    Edouard Poitars (Eclipse Foundation)- Heavy modifications for new donatin process
  *******************************************************************************/
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/authcode.php");
 
@@ -39,7 +40,7 @@ class Paypal {
   private $debug = FALSE;
   private $use_sandbox = FALSE;
   private $log_file = "/tmp/ipn.log";
-  private $database_logging = FALSE;
+  private $database_logging = TRUE;
   private $show_all = FALSE;
   private $paypal_url = PAYPAL_URL;
   private $paypal_donation_email = PAYPAL_DONATION_EMAIL;
@@ -207,11 +208,14 @@ class Paypal {
     if ($this->database_logging) {
       $EvtLog = new EvtLog();
       $EvtLog->setLogTable("__paypal.class");
-      $EvtLog->setPK1("$this->transaction_id,$this->itemname,$this->amount");
+      if ($this->transaction) $EvtLog->setPK1("$this->transaction_id,$this->amount,$this->payment_status");
+      else $EvtLog->setPK1("Unknown");
       $ip = $_SERVER['REMOTE_ADDR'];
       $EvtLog->setPK2($ip);
       $EvtLog->setLogAction($action);
-      $EvtLog->insertModLog($this->bugzilla_email);
+      if ($this->bugzilla_email) $EvtLog->insertModLog($this->bugzilla_email);
+      else if ($this->transaction) $EvtLog->insertModLog($this->firstname . " " . $this->lastname);
+      else $EvtLog->insertModLog("Unknown");
     }
   }
 
