@@ -39,7 +39,7 @@ class Paypal {
   private $debug = FALSE;
   private $use_sandbox = FALSE;
   private $log_file = "/tmp/ipn.log";
-  private $database_logging = TRUE;
+  private $database_logging = FALSE;
   private $show_all = FALSE;
   private $paypal_url = PAYPAL_URL;
   private $paypal_donation_email = PAYPAL_DONATION_EMAIL;
