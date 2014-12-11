@@ -20,6 +20,6 @@
     "yamm3": "git://github.com/chrisguindon/yamm3#69ba4a32b3b7228421920d6300011745be374029",
     "fontawesome": "4.2.0",
     "solstice-assets": "git@github.com:chrisguindon/solstice-assets.git",
-    "bootstrapValidator": "~0.4.5"
+    "bootstrapValidator": "~0.5.3"
   }
 }
