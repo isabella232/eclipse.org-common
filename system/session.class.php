@@ -147,7 +147,7 @@ class Session {
     setcookie("TAKEMEBACK", "", 0, "/", ".eclipse.org");
     setcookie("fud_session_2015", "", 0, "/forums/", ".eclipse.org");
     setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org", 1, TRUE);
-    setcookie(ECLIPSE_ENV,      "", time() - 3600, "/", ".eclipse.org", 0, TRUE);
+    setcookie(ECLIPSE_ENV, "", time() - 3600, "/", ".eclipse.org", 0, TRUE);
     if (!$App->devmode) {
       # Log this event
       $EvtLog = new EvtLog();
@@ -167,7 +167,7 @@ class Session {
     # need to have a bugzilla ID to log in
     if ($Friend->getBugzillaID() > 0) {
       $App = new App();
-      $this->setGID(md5(uniqid(rand(),TRUE)));
+      $this->setGID(md5(uniqid(rand(), TRUE)));
       $this->setSubnet($this->getClientSubnet());
       $this->setUpdatedAt($App->getCURDATE());
       $this->setBugzillaID($Friend->getBugzillaID());
