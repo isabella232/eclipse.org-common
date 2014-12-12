@@ -228,7 +228,7 @@ class Friend {
 				$this->setDateJoined	($myrow["date_joined"]);
 				$this->setIsAnonymous	($myrow["is_anonymous"]);
 				$this->setIsBenefit		($myrow["is_benefit"]);
-				$this->setUID           ($myrow["uid"]);
+				$this->setLDAPUID           ($myrow["uid"]);
 				$this->setBenefitExpires($myrow["date_expired"]);
 			}
 		}
