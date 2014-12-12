@@ -29,7 +29,7 @@ class Session {
 
   private $subnet = "";
 
-  private $updated_at  = "";
+  private $updated_at = "";
 
   private $is_persistent = 0;
 
