@@ -104,7 +104,7 @@ class Friend {
 	function setIsBenefit($_is_benefit) {
 		$this->is_benefit = $_is_benefit;
 	}
-	function setUID($_uid) {
+	function setLDAPUID($_uid) {
 		$this->uid = $_uid;
 	}
 	function setEmail($_email) {
