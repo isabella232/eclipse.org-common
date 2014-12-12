@@ -218,7 +218,6 @@ class Paypal {
   }
 
   public function confirm_donation() {
-    $this->log_database('CONFIRMING_DONATION');
     return $this->request_transaction_information();
   }
 
