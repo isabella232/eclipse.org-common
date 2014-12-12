@@ -217,7 +217,7 @@ class Session {
 
       # 422767 Session broken between http and https
       # Set to "S" for Secure.  We could eventually append more environment data, separated by semicolons and such
-      setcookie(ECLIPSE_ENV,      "S",       $cookie_time, "/", ".eclipse.org", 0, TRUE);
+      setcookie(ECLIPSE_ENV, "S", $cookie_time, "/", ".eclipse.org", 0, TRUE);
 
       # uncomment for local dev
       # setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/");
@@ -257,8 +257,8 @@ class Session {
     $App = new App();
 
     $sql = "DELETE FROM sessions
-        WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND is_persistent = 0)
-        OR updated_at < DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+      WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND is_persistent = 0)
+      OR updated_at < DATE_SUB(NOW(), INTERVAL 1 YEAR)";
 
     $App->eclipse_sql($sql);
 
@@ -274,9 +274,9 @@ class Session {
     if (!$App->devmode) {
 
       $sql = "SELECT gid
-          FROM sessions AS S
-            INNER JOIN friends AS F ON F.bugzilla_id = S.bugzilla_id
-          WHERE F.is_benefit = 1";
+        FROM sessions AS S
+        INNER JOIN friends AS F ON F.bugzilla_id = S.bugzilla_id
+        WHERE F.is_benefit = 1";
 
       $result = $App->eclipse_sql($sql);
       $new_file = "";
