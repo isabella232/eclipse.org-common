@@ -8,17 +8,14 @@
  *
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
+ *    Christopher Guindon (Eclipse Foundation) - Bug 440590 - Improve the flexibility of session.class.php
  *******************************************************************************/
 
-define('ECLIPSE_SESSION', 'ECLIPSESESSION');
-define('ECLIPSE_ENV', 'ECLIPSE_ENV');
-define('HTACCESS', '/home/data/httpd/friends.eclipse.org/html/.htaccess');
-define('LOGINPAGE', 'https://dev.eclipse.org/site_login/');
+require_once(dirname(__FILE__) . "/../classes/friends/friend.class.php");
+require_once(dirname(__FILE__) . "/app.class.php");
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 if (!class_exists("EvtLog")) {
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
+  require_once(dirname(__FILE__) . "/evt_log.class.php");
 }
 
 class Session {
@@ -37,12 +34,38 @@ class Session {
 
   private $data = "";
 
+  private $session_name = "";
+
+  private $domain = "";
+
+  private $env = "";
+
+  private $htaccess = "";
+
+  private $login_page = "";
+
   /**
    * Default constructor
    *
    * @return NULL
    */
-  function Session($persistent=0) {
+  public function __construct($persistent=0, $configs = array()) {
+    $default = array(
+      'domain' => '.eclipse.org',
+      'session_name' => 'ECLIPSESESSION',
+      'env' => 'ECLIPSE_ENV',
+      'htaccess' => '/home/data/httpd/friends.eclipse.org/html/.htaccess',
+      'login_page' => 'https://dev.eclipse.org/site_login/',
+    );
+
+    # Set default config values.
+    foreach ($default as $key => $value) {
+      $this->{$key} = $value;
+      if (!empty($configs[$key]) && is_string($configs[$key])) {
+        $this->{$key} = $configs[$key];
+      }
+    }
+
     $this->validate();
     $this->setIsPersistent($persistent);
   }
@@ -79,7 +102,7 @@ class Session {
   }
 
   function getLoginPageURL() {
-    return LOGINPAGE;
+    return $this->login_page;
   }
 
   function getIsLoggedIn() {
@@ -120,12 +143,12 @@ class Session {
    * @return boolean
    */
   function validate() {
-    $cookie = (isset($_COOKIE[ECLIPSE_SESSION]) ? $_COOKIE[ECLIPSE_SESSION] : "");
+    $cookie = (isset($_COOKIE[$this->session_name]) ? $_COOKIE[$this->session_name] : "");
     $rValue = FALSE;
     if ((!$this->load($cookie))) {
       # Failed - no such session, or session no match.  Need to relogin
       # Bug 257675
-      # setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
+      # setcookie($this->session_name, "", time() - 3600, "/", $this->domain);
       $rValue = FALSE;
     }
     else {
@@ -146,13 +169,14 @@ class Session {
     # Should these also be in session() ?
     setcookie("TAKEMEBACK", "", 0, "/", ".eclipse.org");
     setcookie("fud_session_2015", "", 0, "/forums/", ".eclipse.org");
-    setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org", 1, TRUE);
-    setcookie(ECLIPSE_ENV, "", time() - 3600, "/", ".eclipse.org", 0, TRUE);
+    setcookie($this->session_name, "", time() - 3600, "/", $this->domain, 1, TRUE);
+    setcookie($this->env, "", time() - 3600, "/", $this->domain, 0, TRUE);
+    $Friend = $this->getFriend();
     if (!$App->devmode) {
       # Log this event
       $EvtLog = new EvtLog();
       $EvtLog->setLogTable("sessions");
-      $EvtLog->setPK1($this->getBugzillaID());
+      $EvtLog->setPK1($Friend->getBugzillaID());
       $EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
       $EvtLog->setLogAction("DELETE");
       $EvtLog->insertModLog("apache");
@@ -193,7 +217,7 @@ class Session {
         # Log this event
         $EvtLog = new EvtLog();
         $EvtLog->setLogTable("sessions");
-        $EvtLog->setPK1($this->getBugzillaID());
+        $EvtLog->setPK1($Friend->getBugzillaID());
         $EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
         $EvtLog->setLogAction("INSERT");
         $EvtLog->insertModLog("apache");
@@ -201,7 +225,7 @@ class Session {
         # add session to the .htaccess file
         # TODO: implement a smart locking
         if ($Friend->getIsBenefit()) {
-          $fh = fopen(HTACCESS, 'a') or die("can't open file");
+          $fh = fopen($this->htaccess, 'a') or die("can't open file");
           $new_line = "SetEnvIf Cookie \"" . $this->getGID() . "\" eclipsefriend=1\n";
           fwrite($fh, $new_line);
           fclose($fh);
@@ -213,14 +237,12 @@ class Session {
         $cookie_time = time()+3600*24*365;
       }
 
-      setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/", ".eclipse.org", 1, TRUE);
+      setcookie($this->session_name, $this->getGID(), $cookie_time, "/", $this->domain, 1, TRUE);
 
       # 422767 Session broken between http and https
       # Set to "S" for Secure.  We could eventually append more environment data, separated by semicolons and such
-      setcookie(ECLIPSE_ENV, "S", $cookie_time, "/", ".eclipse.org", 0, TRUE);
+      setcookie($this->env, "S", $cookie_time, "/", $this->domain, 0, TRUE);
 
-      # uncomment for local dev
-      # setcookie(ECLIPSE_SESSION, $this->getGID(), $cookie_time, "/");
     }
   }
 
@@ -285,7 +307,7 @@ class Session {
       }
 
       if ($new_file != "") {
-        $fh = fopen(HTACCESS, 'w') or die("can't open file");
+        $fh = fopen($this->htaccess, 'w') or die("can't open file");
         fwrite($fh, $new_file);
         fclose($fh);
       }
@@ -298,7 +320,7 @@ class Session {
   }
 
   function redirectToLogin() {
-    header("Location: " . LOGINPAGE);
+    header("Location: " . $this->login_page);
     exit;
   }
 
