@@ -45,6 +45,7 @@ class FriendsContributionsList {
 	    		F.bugzilla_id,
 	    		F.is_anonymous,
 	    		F.is_benefit,
+	    		F.uid,
 	    		F.date_joined,
 				FC.friend_id,
 	    		IF(FC.date_expired > DATE_ADD(NOW(), INTERVAL 1 YEAR), DATE_SUB(FC.date_expired, INTERVAL 1 MONTH), FC.date_expired) AS date_expired,
@@ -78,6 +79,7 @@ class FriendsContributionsList {
 			$Friend->setLastName			($myrow['last_name']);
 			$Friend->setIsAnonymous			($myrow['is_anonymous']);
 			$Friend->setIsBenefit			($myrow['is_benefit']);
+			$Friend->setLDAPUID             ($myrow['uid']);
 	    	
 			$Contribution = new Contribution();
 			$Contribution->setFriendID($myrow['friend_id']);

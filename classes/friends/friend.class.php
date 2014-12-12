@@ -20,6 +20,7 @@ class Friend {
 	private $benefit_expires= NULL;
 	private $is_anonymous	= 0;
 	private $is_benefit		= 0;
+	private $uid            = NULL;
 	private $email			= "";
 	private $roles			= ""; 	## FORMAT: ::XX::  where XX is a Foundation role (CM, PL, PM, etc)
 									## Concatenate for multiples: ::CM::::PL::::PM::
@@ -46,6 +47,9 @@ class Friend {
 	}
 	function getIsBenefit() {
 		return $this->is_benefit;
+	}	
+	function getLDAPUID() {
+		return $this->uid;
 	}	
 	function getEmail() {
 		return $this->email;
@@ -100,6 +104,9 @@ class Friend {
 	function setIsBenefit($_is_benefit) {
 		$this->is_benefit = $_is_benefit;
 	}
+	function setUID($_uid) {
+		$this->uid = $_uid;
+	}
 	function setEmail($_email) {
 		$this->email = $_email;
 	}
@@ -112,6 +119,8 @@ class Friend {
 	function setDn($_dn) {
 		$this->dn = $_dn;
 	}
+    // Kept for legacy reasons
+    // @see getLDAPUID()
 	function getUID() {
 		if($this->dn != "") {
 			if(preg_match('/uid=(.*),ou=/', $this->dn, $matches)) {
@@ -157,7 +166,8 @@ class Friend {
 						last_name = " . $App->returnQuotedString($App->sqlSanitize($this->getLastName(), $dbh)) . ",
 						date_joined = " . $default_date_joined . ",
 						is_anonymous = " . $App->returnQuotedString($App->sqlSanitize($this->getIsAnonymous(), $dbh)) . ",
-						is_benefit = " . $App->returnQuotedString($App->sqlSanitize($this->getIsBenefit(), $dbh)) . "
+						is_benefit = " . $App->returnQuotedString($App->sqlSanitize($this->getIsBenefit(), $dbh)) . ",
+						uid = " . $App->returnQuotedString($App->sqlSanitize($this->getLDAPUID(), $dbh)) . "
 					WHERE
 						friend_id = " . $App->sqlSanitize($this->getFriendID(), $dbh);
 
@@ -176,14 +186,16 @@ class Friend {
 						last_name,
 						date_joined,
 						is_anonymous,
-						is_benefit)
+						is_benefit,
+                        uid)
 					VALUES (
 						" . $App->returnQuotedString($this->getBugzillaID()) . ",
 						" . $App->returnQuotedString($this->getFirstName()) . ",
 						" . $App->returnQuotedString($this->getLastName()) . ",
 						" . $default_date_joined . ",
 						" . $App->returnQuotedString($this->getIsAnonymous()) . ",
-						" . $App->returnQuotedString($this->getIsBenefit()) . ")";
+						" . $App->returnQuotedString($this->getIsBenefit()) . ",
+						" . $App->returnQuotedString($this->getLDAPUID()) . ")";
 			$App->eclipse_sql($sql);
 			$retVal = mysql_insert_id();
 			#$ModLog->setLogAction("INSERT");
@@ -199,7 +211,8 @@ class Friend {
 			$App = new App();
 			$_friend_id = $App->sqlSanitize($_friend_id);
 			
-			$sql = "SELECT /* USE MASTER */ f.friend_id, f.bugzilla_id, f.first_name, f.last_name, f.date_joined, f.is_anonymous, f.is_benefit,
+			$sql = "SELECT /* USE MASTER */ f.friend_id, f.bugzilla_id, f.first_name,
+                    f.last_name, f.date_joined, f.is_anonymous, f.is_benefit, f.uid,
 					fc_temp.date_expired 
 					FROM friends as f 
 					LEFT JOIN (SELECT friend_id, MAX(date_expired) AS date_expired FROM friends_contributions GROUP BY friend_id) fc_temp 
@@ -215,6 +228,7 @@ class Friend {
 				$this->setDateJoined	($myrow["date_joined"]);
 				$this->setIsAnonymous	($myrow["is_anonymous"]);
 				$this->setIsBenefit		($myrow["is_benefit"]);
+				$this->setUID           ($myrow["uid"]);
 				$this->setBenefitExpires($myrow["date_expired"]);
 			}
 		}
