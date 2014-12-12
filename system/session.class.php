@@ -23,19 +23,19 @@ if (!class_exists("EvtLog")) {
 
 class Session {
 
-  private $gid    = "";
+  private $gid  = "";
 
-  private $bugzilla_id= 0;
+  private $bugzilla_id = 0;
 
-  private $subnet    = "";
+  private $subnet = "";
 
   private $updated_at  = "";
 
-  private $is_persistent  = 0;
+  private $is_persistent = 0;
 
-  private $Friend    = null;
+  private $Friend = null;
 
-  private $data    = "";
+  private $data = "";
 
   /**
    * Default constructor
@@ -228,7 +228,7 @@ class Session {
     # need to have a bugzilla ID to log in
 
     $rValue = false;
-    if($_gid != "") {
+    if ($_gid != "") {
       $App = new App();
       $sql = "SELECT /* USE MASTER */ gid, bugzilla_id, subnet, updated_at, data,  is_persistent
           FROM sessions
@@ -264,7 +264,7 @@ class Session {
     $App->eclipse_sql($sql);
 
     # 1/500 of each maintenance calls will perform htaccess cleanup
-    if(rand(0, 500) < 1) {
+    if (rand(0, 500) < 1) {
       $this->regenrate_htaccess();
     }
   }
@@ -272,7 +272,7 @@ class Session {
   private function regenrate_htaccess() {
     $App = new App();
 
-    if(!$App->devmode) {
+    if (!$App->devmode) {
 
       $sql = "SELECT gid
           FROM sessions AS S
@@ -281,11 +281,11 @@ class Session {
 
       $result = $App->eclipse_sql($sql);
       $new_file = "";
-      while($myrow = mysql_fetch_assoc($result)) {
+      while ($myrow = mysql_fetch_assoc($result)) {
         $new_file .= "SetEnvIf Cookie \"" . $myrow['gid'] . "\" eclipsefriend=1\n";
       }
 
-      if($new_file != "") {
+      if ($new_file != "") {
         $fh = fopen(HTACCESS, 'w') or die("can't open file");
         fwrite($fh, $new_file);
         fclose($fh);
@@ -312,4 +312,5 @@ class Session {
   function isLoggedIn() {
     return $this->getGID() != "";
   }
+
 }
