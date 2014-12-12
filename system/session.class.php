@@ -200,7 +200,7 @@ class Session {
 
         # add session to the .htaccess file
         # TODO: implement a smart locking
-        if($Friend->getIsBenefit()) {
+        if ($Friend->getIsBenefit()) {
           $fh = fopen(HTACCESS, 'a') or die("can't open file");
           $new_line = "SetEnvIf Cookie \"" . $this->getGID() . "\" eclipsefriend=1\n";
           fwrite($fh, $new_line);
@@ -226,7 +226,6 @@ class Session {
 
   function load($_gid) {
     # need to have a bugzilla ID to log in
-
     $rValue = FALSE;
     if ($_gid != "") {
       $App = new App();
