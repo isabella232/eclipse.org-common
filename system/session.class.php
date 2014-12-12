@@ -40,7 +40,7 @@ class Session {
   /**
    * Default constructor
    *
-   * @return null
+   * @return NULL
    */
   function Session($persistent=0) {
     $this->validate();
@@ -230,9 +230,9 @@ class Session {
     if ($_gid != "") {
       $App = new App();
       $sql = "SELECT /* USE MASTER */ gid, bugzilla_id, subnet, updated_at, data,  is_persistent
-          FROM sessions
-          WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid, null));
-            # " AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
+        FROM sessions
+        WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid, NULL));
+        # " AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
 
       $result = $App->eclipse_sql($sql);
       if ($result && mysql_num_rows($result) > 0) {
@@ -246,7 +246,7 @@ class Session {
         $this->setIsPersistent($myrow['is_persistent']);
 
         # touch this session
-        $sql = "UPDATE sessions SET updated_at = NOW() WHERE gid = '" . $App->sqlSanitize($_gid, null) . "'";
+        $sql = "UPDATE sessions SET updated_at = NOW() WHERE gid = '" . $App->sqlSanitize($_gid, NULL) . "'";
         $App->eclipse_sql($sql);
       }
     }
