@@ -181,11 +181,11 @@ class Session {
             is_persistent)
             VALUES (
               " . $App->returnQuotedString($this->getGID()) . ",
-              " . $App->sqlSanitize($Friend->getBugzillaID(), null) . ",
+              " . $App->sqlSanitize($Friend->getBugzillaID(), NULL) . ",
               " . $App->returnQuotedString($this->getSubnet()) . ",
               NOW(),
               '" . $App->sqlSanitize($this->data) . "',
-              '" . $App->sqlSanitize($this->getIsPersistent(), null) . "')";
+              '" . $App->sqlSanitize($this->getIsPersistent(), NULL) . "')";
 
       $App->eclipse_sql($sql);
 
