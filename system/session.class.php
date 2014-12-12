@@ -23,7 +23,7 @@ if (!class_exists("EvtLog")) {
 
 class Session {
 
-  private $gid  = "";
+  private $gid = "";
 
   private $bugzilla_id = 0;
 
@@ -33,7 +33,7 @@ class Session {
 
   private $is_persistent = 0;
 
-  private $Friend = null;
+  private $Friend = NULL;
 
   private $data = "";
 
@@ -64,7 +64,7 @@ class Session {
   }
 
   function getFriend() {
-    if($this->Friend == null) {
+    if($this->Friend == NULL) {
       $this->Friend = new Friend();
     }
     return $this->Friend;
@@ -75,7 +75,7 @@ class Session {
   }
 
   function getIsPersistent() {
-    return $this->is_persistent == null ? 0 : $this->is_persistent;
+    return $this->is_persistent == NULL ? 0 : $this->is_persistent;
   }
 
   function getLoginPageURL() {
@@ -121,16 +121,16 @@ class Session {
    */
   function validate() {
     $cookie = (isset($_COOKIE[ECLIPSE_SESSION]) ? $_COOKIE[ECLIPSE_SESSION] : "");
-    $rValue = false;
+    $rValue = FALSE;
     if ((!$this->load($cookie))) {
       # Failed - no such session, or session no match.  Need to relogin
       # Bug 257675
       # setcookie(ECLIPSE_SESSION, "", time() - 3600, "/", ".eclipse.org");
-      $rValue = false;
+      $rValue = FALSE;
     }
     else {
       # TODO: update session?
-      $rValue = true;
+      $rValue = TRUE;
       $this->maintenance();
       $this->setFriend($this->getData());
     }
@@ -139,7 +139,7 @@ class Session {
 
   function destroy() {
     $App = new App();
-    $sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), null) . "' LIMIT 1";
+    $sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), NULL) . "' LIMIT 1";
     $App->eclipse_sql($sql);
 
     # Remove the TAKEMEBACK cookie
@@ -167,7 +167,7 @@ class Session {
     # need to have a bugzilla ID to log in
     if ($Friend->getBugzillaID() > 0) {
       $App = new App();
-      $this->setGID(md5(uniqid(rand(),true)));
+      $this->setGID(md5(uniqid(rand(),TRUE)));
       $this->setSubnet($this->getClientSubnet());
       $this->setUpdatedAt($App->getCURDATE());
       $this->setBugzillaID($Friend->getBugzillaID());
@@ -227,7 +227,7 @@ class Session {
   function load($_gid) {
     # need to have a bugzilla ID to log in
 
-    $rValue = false;
+    $rValue = FALSE;
     if ($_gid != "") {
       $App = new App();
       $sql = "SELECT /* USE MASTER */ gid, bugzilla_id, subnet, updated_at, data,  is_persistent
@@ -237,7 +237,7 @@ class Session {
 
       $result = $App->eclipse_sql($sql);
       if ($result && mysql_num_rows($result) > 0) {
-        $rValue = true;
+        $rValue = TRUE;
         $myrow = mysql_fetch_assoc($result);
         $this->setGID($_gid);
         $this->setBugzillaID($myrow['bugzilla_id']);
