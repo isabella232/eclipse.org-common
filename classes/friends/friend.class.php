@@ -10,6 +10,9 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once("/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php");
+
 class Friend {
 
 	private $friend_id 		= 0;
@@ -279,6 +282,19 @@ class Friend {
 			$result = $myrow['userid'];
 		}
 		return $result;
+	}
+
+	function getLDAPUIDFromEmail($_email) {
+		if($_email != "") {
+			$App = new App();
+			$LDAPConnection = new LDAPConnection();
+			$_email = $App->sqlSanitize($_email);
+            $uid = $LDAPConnection->getUIDFromMail($_email);
+            if ($uid !== FALSE) {
+              return $uid;
+            } else return NULL;
+		}
+        return NULL;
 	}
 
 	/**
