@@ -257,41 +257,19 @@ class Friend {
 	
 	function getBugzillaIDFromEmail($_email, $use_master=false) {
 		$result = 0;
-
 		if($_email != "") {
 			$App = new App();
-
-			$_email 		= $App->sqlSanitize($_email, $dbh);
-			
-            if ($use_master) {
-			    $sql = "SELECT /* USE MASTER */ userid
-					    FROM profiles
-					    WHERE login_name = " . $App->returnQuotedString($_email);
-            } else {
-			    $sql = "SELECT userid
-					    FROM profiles
-					    WHERE login_name = " . $App->returnQuotedString($_email);
-            }
-
+			$_email = $App->sqlSanitize($_email, $dbh);
+            		if ($use_master) {
+			    $sql = "SELECT /* USE MASTER */ userid FROM profiles WHERE login_name = " . $App->returnQuotedString($_email);
+            		} else {
+			    $sql = "SELECT userid FROM profiles WHERE login_name = " . $App->returnQuotedString($_email);
+            		}
 			$result = $App->bugzilla_sql($sql);
 			$myrow = mysql_fetch_array($result);
-
 			$result = $myrow['userid'];
 		}
 		return $result;
-	}
-
-	function getLDAPUIDFromEmail($_email) {
-		if($_email != "") {
-			$App = new App();
-			$LDAPConnection = new LDAPConnection();
-			$_email = $App->sqlSanitize($_email);
-            $uid = $LDAPConnection->getUIDFromMail($_email);
-            if ($uid !== FALSE) {
-              return $uid;
-            } else return NULL;
-		}
-        return NULL;
 	}
 
 	/**

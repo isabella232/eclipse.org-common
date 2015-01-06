@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Edouard Poitars (Eclipse Foundation) - Initial Implementation
+ *    Edouard Poitars (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
 define('ECLIPSE_PAYPAL_MSG_SUCCESSFUL_UPDATE', 0);

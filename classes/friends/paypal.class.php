@@ -13,7 +13,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/authcode.php");
-require('paypal.class.inc.php');
+include('paypal.class.inc.php');
 define('PAYPAL_AUTH_TOKEN', $auth_token);
 
 class Paypal {
@@ -31,6 +31,7 @@ class Paypal {
   private $anonymous = 'Private';
   private $comment = "";
   private $itemname = "";
+  private $email = "";
   private $firstname = "";
   private $lastname = "";
   private $amount = 0;
