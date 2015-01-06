@@ -279,6 +279,7 @@ class Solstice {
     // Ads and promotions
     $variables['promotion']['desktop'] = "";
     $variables['main_classes'] = "";
+    print $App->CustomPromotionPath;
     ob_start();
     if ($App->Promotion == TRUE) {
       if ($App->CustomPromotionPath != "") {
@@ -298,11 +299,11 @@ class Solstice {
       else{
         $variables['body']['classes'] .= 'no-breadcrumbs-with-promo';
       }
-      $variables['promotion']['desktop'] = '<div class="container"><div class="promo-link col-md-24 text-center ' . $promo_breadcrumbs_classes . '"> '  . $promo . '</div></div>';
+      //$deprecated_ad = '<div class="container"><div class="promo-link col-md-24 text-center ' . $promo_breadcrumbs_classes . '"> '  . $promo . '</div></div>';
+      $variables['promotion']['desktop'] = '<div class="container"><div class="col-md-24">' . $promo . '</div></div>';
     }
-    else{
-      $variables['main_classes'] .= ' no-promo';
-    }
+
+    $variables['main_classes'] .= ' no-promo';
 
     $variables['uri'] = parse_url($_SERVER['REQUEST_URI']);
 
