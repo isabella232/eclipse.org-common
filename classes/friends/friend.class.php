@@ -257,25 +257,16 @@ class Friend {
 	
 	function getBugzillaIDFromEmail($_email, $use_master=false) {
 		$result = 0;
-
 		if($_email != "") {
 			$App = new App();
-
-			$_email 		= $App->sqlSanitize($_email, $dbh);
-			
-            if ($use_master) {
-			    $sql = "SELECT /* USE MASTER */ userid
-					    FROM profiles
-					    WHERE login_name = " . $App->returnQuotedString($_email);
-            } else {
-			    $sql = "SELECT userid
-					    FROM profiles
-					    WHERE login_name = " . $App->returnQuotedString($_email);
-            }
-
+			$_email = $App->sqlSanitize($_email, $dbh);
+            		if ($use_master) {
+			    $sql = "SELECT /* USE MASTER */ userid FROM profiles WHERE login_name = " . $App->returnQuotedString($_email);
+            		} else {
+			    $sql = "SELECT userid FROM profiles WHERE login_name = " . $App->returnQuotedString($_email);
+            		}
 			$result = $App->bugzilla_sql($sql);
 			$myrow = mysql_fetch_array($result);
-
 			$result = $myrow['userid'];
 		}
 		return $result;

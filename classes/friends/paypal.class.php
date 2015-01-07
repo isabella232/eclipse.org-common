@@ -11,11 +11,10 @@
  *    Edouard Poitars (Eclipse Foundation)- Heavy modifications for new donatin process
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/authcode.php");
+include('paypal.class.inc.php');
 define('PAYPAL_AUTH_TOKEN', $auth_token);
-require('paypal.class.inc.php');
 
 class Paypal {
   // CONFIG: Enable $this->debug mode. This means we'll log requests into 'ipn.log' in the same directory.
@@ -29,10 +28,10 @@ class Paypal {
   private $paypal_url = PAYPAL_URL;
   private $paypal_donation_email = PAYPAL_DONATION_EMAIL;
   private $auth_token = PAYPAL_AUTH_TOKEN;
-  private $bugzilla_email = "";
   private $anonymous = 'Private';
   private $comment = "";
   private $itemname = "";
+  private $email = "";
   private $firstname = "";
   private $lastname = "";
   private $amount = 0;
@@ -43,8 +42,8 @@ class Paypal {
   private $status_check = array('Completed', 'Pending');
   private $status_message = "";
 
-  public function get_bugzilla_email() {
-    return $this->bugzilla_email;
+  public function get_email() {
+    return $this->email;
   }
 
   public function get_comment() {
@@ -95,8 +94,8 @@ class Paypal {
     return $this->paypal_donation_email;
   }
 
-  public function set_bugzilla_email($bemail) {
-    $this->bugzilla_email = $bemail;
+  public function set_email($_email) {
+    $this->email = $_email;
   }
 
   public function set_comment($comment) {
@@ -109,7 +108,7 @@ class Paypal {
 
   private function _set_transaction(){
     $this->transaction = array(
-      'bugzilla_email' => $this->bugzilla_email,
+      'email' => $this->email,
       'anonymous' => $this->anonymous,
       'comment' => $this->comment,
       'itemname' => $this->itemname,
@@ -197,8 +196,7 @@ class Paypal {
       $ip = $_SERVER['REMOTE_ADDR'];
       $EvtLog->setPK2($ip);
       $EvtLog->setLogAction($action);
-      if ($this->bugzilla_email) $EvtLog->insertModLog($this->bugzilla_email);
-      else if ($this->transaction) $EvtLog->insertModLog($this->firstname . " " . $this->lastname);
+      if ($this->email) $EvtLog->insertModLog($this->email);
       else $EvtLog->insertModLog("Unknown");
     }
   }
@@ -207,6 +205,7 @@ class Paypal {
     $this->itemname = filter_var($data['item_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $this->firstname = filter_var($data['first_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $this->lastname = filter_var($data['last_name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->email = filter_var($data['payer_email'], FILTER_SANITIZE_EMAIL);
     $this->amount = filter_var($data['mc_gross'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
     if (strpos($this->amount, ".") == 0) {
       $this->amount = $this->amount . ".00";
