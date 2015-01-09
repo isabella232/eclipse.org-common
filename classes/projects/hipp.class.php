@@ -68,15 +68,15 @@ class Hipp {
     # Examine Service status to determine control knobs to place
     if ($state == "running") {
       # Add STOP button
-      $str .= '<a href="#ct" data-action="stop" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-stop"></i></a> ';
+      $str .= '<a title="stop" href="#ct" data-action="stop" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-stop"></i></a> ';
 
       # Add RESTART button
-      $str .= '<a href="#ct" data-action="restart" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-refresh"></i></a>';
+      $str .= '<a title="restart" href="#ct" data-action="restart" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-refresh"></i></a>';
     }
 
     if ($state == "stopped") {
       # Add START button
-      $str .= '<a href="#ct" data-action="start" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-play"></i></a>';
+      $str .= '<a title="start"  href="#ct" data-action="start" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-play"></i></a>';
     }
 
     return $str . "</span>";
