@@ -127,6 +127,9 @@ class Sitelogin {
       case 'save':
         $this->_processSave();
         break;
+      case 'save-account':
+        $this->_processSave(FALSE);
+        break;
       case 'save-profile':
         $this->_processSaveProfile();
         break;
@@ -197,19 +200,19 @@ class Sitelogin {
     $this->_get_default_profile_fields();
     # Bug 428032 - Multiple XSS on site_login
     $username = filter_var($this->username, FILTER_SANITIZE_EMAIL);
-    $fname = filter_var($this->fname, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $lname = filter_var($this->lname, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $fname = filter_var($this->fname, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $lname = filter_var($this->lname, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $takemeback = filter_var($this->takemeback, FILTER_SANITIZE_ENCODED);
     $remember = filter_var($this->remember, FILTER_SANITIZE_NUMBER_INT);
     $agree = filter_var($this->agree, FILTER_SANITIZE_NUMBER_INT);
     $githubid = filter_var($this->Ldapconn->getGithubIDFromMail($this->Friend->getEmail()), FILTER_SANITIZE_STRING);
-    $organization = filter_var($this->organization, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $jobtitle = filter_var($this->jobtitle, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $organization = filter_var($this->organization, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $jobtitle = filter_var($this->jobtitle, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $website = filter_var($this->website, FILTER_SANITIZE_URL);
-    $bio = filter_var($this->bio, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $interests = filter_var($this->interests, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $token = filter_var($this->t, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $twitter_handle = filter_var($this->twitter_handle, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $bio = filter_var($this->bio, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $interests = filter_var($this->interests, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $token = filter_var($this->t, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $twitter_handle = filter_var($this->twitter_handle, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
 
     switch ($type) {
       case 'login':
@@ -513,7 +516,11 @@ class Sitelogin {
 
   private function _get_default_profile_fields(){
     if (empty($this->messages['profile']['danger'])) {
-      $sql = "SELECT /* USE MASTER */  user_org as organization, user_jobtitle as jobtitle, user_bio as bio,  user_interests as interests, user_website as website, user_twitter_handle as twitter_handle  FROM users_profiles WHERE  user_uid = " . $this->App->returnQuotedString($this->user_uid) . " ORDER BY user_update DESC LIMIT 1";
+      $sql = "SELECT /* USE MASTER */
+      user_org as organization, user_jobtitle as jobtitle, user_bio as bio,  user_interests as interests, user_website as website, user_twitter_handle as twitter_handle
+      FROM users_profiles
+      WHERE  user_uid = " . $this->App->returnQuotedString($this->user_uid) . "
+      ORDER BY user_update DESC LIMIT 1";
       $rs = $this->App->eclipse_sql($sql);
       $profile = mysql_fetch_assoc($rs);
 
@@ -522,7 +529,7 @@ class Sitelogin {
           if (is_null($value)) {
             $value = "";
           }
-          $this->$key = $value;
+          $this->{$key} = $value;
         }
       }
     }
@@ -574,7 +581,7 @@ class Sitelogin {
     foreach ($fields as $key => $value) {
       if (!empty($value)) {
         $columns[] = $key;
-        $values[] = $this->App->returnQuotedString($this->App->sqlSanitize($value));
+        $values[] = '"' . $this->App->sqlSanitize($value) . '"';
       }
       else if(in_array($key, $possible_null_field)) {
         $columns[] = $key;
@@ -636,6 +643,7 @@ class Sitelogin {
           }
           else {
             $this->Ldapconn->setGithubID($dn, $this->password, $this->githubid);
+            $this->messages['myaccount']['success'][] = "Your github id was saved successfully.";
           }
         }
 
@@ -651,6 +659,7 @@ class Sitelogin {
 	            $sql = "UPDATE profiles SET cryptpassword='" . $this->App->sqlSanitize($bzpass) . "' WHERE login_name = " .  $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . " LIMIT 1";
 	            $this->App->bugzilla_sql($sql);
 	            $this->App->ipzilla_sql($sql);
+	            $this->messages['myaccount']['success'][] = "Your password was updated successfully.";
 	          }
 	        }
         }
@@ -676,7 +685,7 @@ class Sitelogin {
             }
             else {
               # Toss in a request to change the email address
-              $mailmsg = " Please check your Inbox for a confirmation email with instructions to complete the email address change.  Your email address will not be updated until the process is complete.";
+              $this->messages['myaccount']['success'][] = " Please check your Inbox for a confirmation email with instructions to complete the email address change.  Your email address will not be updated until the process is complete.";
               $this->t = $this->t = $this->App->getAlphaCode(64);
               $sql = "INSERT INTO account_requests VALUES (" . $this->App->returnQuotedString($oldmail) . ",
               " . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
@@ -703,11 +712,6 @@ class Sitelogin {
 
         if (empty($this->messages['myaccount']['danger'])) {
           $this->messages['myaccount']['success'][] = "Your account details have been updated successfully." . $mailmsg . "";
-          # Update was successful.  Regenetate session info since the Friend object is stored within.
-          # If we don't regen Session, user could come back to myaccount.php only to see old info
-          $this->Session->destroy();
-          $this->Session->setFriend($this->Friend);
-          $this->Session->create();
         }
       }
       else {
@@ -1012,7 +1016,7 @@ class Sitelogin {
       if ($myrow = mysql_fetch_assoc($rs)) {
 
         $uid = $this->Ldapconn->getUIDFromMail($this->username);
-        $this->Friend->selectFriend($Friend->selectFriendID("uid", $uid));
+        $this->Friend->selectFriend($this->Friend->selectFriendID("uid", $uid));
         $this->Friend->setBugzillaID($myrow['userid']);
 
       }
@@ -1041,7 +1045,7 @@ class Sitelogin {
         $rs = $this->App->bugzilla_sql($sql);
         if ($myrow = mysql_fetch_assoc($rs)) {
           $uid = $this->Ldapconn->getUIDFromMail($this->username);
-          $this->Friend->selectFriend($Friend->selectFriendID("uid", $uid));
+          $this->Friend->selectFriend($this->Friend->selectFriendID("uid", $uid));
           $this->Friend->setBugzillaID($myrow['userid']);
         }
         else {
@@ -1073,7 +1077,7 @@ class Sitelogin {
       $sql = "UPDATE profiles SET cryptpassword='" . $this->App->sqlSanitize($bzpass) . "', realname='" . $this->App->sqlSanitize($realname) . "' WHERE login_name = " .  $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . " LIMIT 1";
 
       # Debug
-      $this->App->bugzilla_sql($sql);
+     // $this->App->bugzilla_sql($sql);
 
       # Begin: Bug 432830 - Remove the continue button in site_login
       if ($this->takemeback != "") {
