@@ -680,7 +680,7 @@ class Sitelogin {
             $sql .= "OR email = " . $this->App->returnQuotedString($oldmail);
             $rs = $this->App->eclipse_sql($sql);
             $myrow = mysql_fetch_assoc($rs);
-            if ($myrow['RecordCount'] > 0) {
+            if ($myrow['RecordCount'] > 3) {
               $this->messages['myaccount']['danger'][] = "<b>You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request.</b>";
             }
             else {
@@ -701,7 +701,7 @@ class Sitelogin {
               $mail = "You (or someone pretending to be you) has changed their Eclipse.org account email address to this one (" . $this->App->sqlSanitize($this->username) . ") from this IP address:\n";
               $mail .= "    " . $_SERVER['REMOTE_ADDR'] . "\n\n";
               $mail .= "To confirm this email change, please click the link below:\n";
-              $mail .= "    https://dev.eclipse.org/site_login/token.php?t=$this->t\n\n";
+              $mail .= "    https://dev.eclipse.org/site_login/token.php?stage=confirm&t=$this->t\n\n";
               $mail .= "If you have not issued this request, you can safely ignore it.\n\n";
               $mail .= " -- Eclipse webmaster\n";
               $headers = 'From: Eclipse Webmaster (automated) <webmaster@eclipse.org>';
