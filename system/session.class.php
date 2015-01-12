@@ -160,9 +160,16 @@ class Session {
     return $rValue;
   }
 
-  function destroy() {
+  function destroy($flush_all_sessions = FALSE) {
     $App = new App();
-    $sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), NULL) . "' LIMIT 1";
+    $Friend = $this->getFriend();
+
+    if ($flush_all_sessions && $Friend->getBugzillaID() > 0) {
+      $sql = "DELETE FROM sessions WHERE bugzilla_id = '" . $App->sqlSanitize($Friend->getBugzillaID(), 0) . "'";
+    }
+    else {
+      $sql = "DELETE FROM sessions WHERE gid = '" . $App->sqlSanitize($this->getGID(), NULL) . "' LIMIT 1";
+    }
     $App->eclipse_sql($sql);
 
     # Remove the TAKEMEBACK cookie
@@ -171,7 +178,7 @@ class Session {
     setcookie("fud_session_2015", "", 0, "/forums/", ".eclipse.org");
     setcookie($this->session_name, "", time() - 3600, "/", $this->domain, 1, TRUE);
     setcookie($this->env, "", time() - 3600, "/", $this->domain, 0, TRUE);
-    $Friend = $this->getFriend();
+
     if (!$App->devmode) {
       # Log this event
       $EvtLog = new EvtLog();
