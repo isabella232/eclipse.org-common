@@ -35,6 +35,8 @@ class Sitelogin {
 
   private $fname = "";
 
+  private $exipred_pass_token = FALSE;
+
   private $interests = "";
 
   private $jobtitle = "";
@@ -297,9 +299,37 @@ class Sitelogin {
       $this->takemeback = 'myaccount.php';
     }
     if ($this->Session->getGID() != "") {
-      header("Location: " . $this->takemeback);
+      header("Location: " . $this->takemeback, 302);
       exit;
     }
+  }
+
+  /**
+   * Validate takemeback Url
+   *
+   * Bug 421097
+   * @return boolean
+   */
+  public function validateTakemebackUrl($takemeback = "") {
+    if ($takemeback == "") {
+      $takemeback = $this->takemeback;
+    }
+
+    $domains = array(
+      'eclipse.org',
+      'planeteclipse.org',
+      'locationtech.org',
+      'polarsys.org',
+    );
+
+    foreach ($domains as $d) {
+      if (preg_match('#^https?://' . $d . '/#', $takemeback)
+          || preg_match('#^https?://[\w+0-9-]{0,}\.' . $d . '/#', $takemeback)) {
+        return TRUE;
+        break;
+      }
+    }
+    return FALSE;
   }
 
   private function _confirmAccount() {
@@ -784,6 +814,8 @@ class Sitelogin {
       $rs = $this->App->eclipse_sql($sql);
       $myrow = mysql_fetch_assoc($rs);
       if($myrow['RecordCount'] <= 0) {
+        $this->exipred_pass_token = TRUE;
+        $this->_setStage('reset');
         $this->messages['reset2']['danger'][] = "<b>The supplied reset token is invalid; perhaps it has expired?  Please wait 5 minutes and try to <a href='password_recovery.php'>reset your password again</a>.  If the problem persits, please contact webmaster@eclipse.org.</b> (8129rs)";
         # If we can't find a record, insert a record preventing this dude from bombing us
         $this->t = $this->App->getAlphaCode(64);
@@ -867,6 +899,11 @@ class Sitelogin {
         }
       }
     }
+    else {
+      $this->_setStage('reset2');
+      $this->messages['reset3']['danger'][] = "Please enter a new password.";
+      return FALSE;
+    }
   }
 
   private function _sanitizeVariables() {
@@ -945,24 +982,13 @@ class Sitelogin {
       $this->takemeback = "https://www.eclipse.org/forums/index.php/l/";
     }
 
-    if ($this->takemeback == "") {
-      $this->takemeback = $this->referer;
-    }
-
     # Since we use a secure cookie, anything http should be sent back https.
     if (preg_match("#^http://(.*)#", $this->takemeback, $matches)) {
       $this->takemeback = "https://" . $matches[1];
     }
 
-    # Bug 421097
-    # bringback: remove .local domain
-    if ((!preg_match('#^https?://[\w+\.0-9-]{0,}eclipse.org/#', $this->takemeback) &&
-      !preg_match('#^https?://[\w+\.0-9-]{0,}planeteclipse.org/#', $this->takemeback) &&
-      !preg_match('#^https?://[\w+\.0-9-]{0,}marketplace.eclipse.local/#', $this->takemeback) &&
-      !preg_match('#^https?://[\w+\.0-9-]{0,}locationtech.org/#', $this->takemeback) &&
-      !preg_match('#^https?://[\w+\.0-9-]{0,}polarsys.org/#', $this->takemeback))
-      || (preg_match('#^https?://[\w+\.0-9-]{0,}dev.eclipse.org/site_login/#', $this->takemeback))) {
-        $this->takemeback = "";
+    if (preg_match('#^https?://dev.eclipse.org/#', $this->takemeback) || !$this->validateTakemebackUrl()) {
+      $this->takemeback = "";
     }
   }
 
@@ -980,13 +1006,16 @@ class Sitelogin {
     if ($this->t != "" && $stage == "confirm") {
       $this->stage = 'confirm';
     }
+    elseif ($this->exipred_pass_token) {
+       $this->stage = "reset";
+    }
     elseif ($this->t == "" && $this->p == "" && $stage == 'password-recovery' && !empty($this->username)) {
       $this->stage = "reset";
     }
     elseif ($this->t != "" && $this->p == "p" && $stage == 'password-recovery') {
       $this->stage = "reset2";
     }
-    elseif ($this->t != "" && $this->password1 != ""  && $stage == 'password-recovery') {
+    elseif ($this->t != "" && $stage == 'password-recovery') {
       $this->stage = "reset3";
     }
     elseif (in_array($stage, $possible_values)){
