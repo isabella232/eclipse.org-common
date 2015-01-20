@@ -1105,8 +1105,7 @@ class Sitelogin {
       $this->App->bugzilla_sql("SET NAMES 'utf8'");
       $sql = "UPDATE profiles SET cryptpassword='" . $this->App->sqlSanitize($bzpass) . "', realname='" . $this->App->sqlSanitize($realname) . "' WHERE login_name = " .  $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . " LIMIT 1";
 
-      # Debug
-     // $this->App->bugzilla_sql($sql);
+      $this->App->bugzilla_sql($sql);
 
       # Begin: Bug 432830 - Remove the continue button in site_login
       if ($this->takemeback != "") {
