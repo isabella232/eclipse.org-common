@@ -1109,10 +1109,10 @@ class Sitelogin {
 
       # Begin: Bug 432830 - Remove the continue button in site_login
       if ($this->takemeback != "") {
-        header("Location: " . $this->takemeback);
+        header("Location: " . $this->takemeback, 302);
       }
       else {
-       header("Location: myaccount.php");
+       header("Location: myaccount.php", 302);
       }
       exit();
       # END: Bug 432830 - Remove the continue button in site_login
