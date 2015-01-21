@@ -231,7 +231,7 @@ class Session {
 
         # add session to the .htaccess file
         # TODO: implement a smart locking
-        if ($Friend->getIsBenefit()) {
+        if ($Friend->getIsBenefit() && is_writable($this->htaccess)) {
           $fh = fopen($this->htaccess, 'a') or die("can't open file");
           $new_line = "SetEnvIf Cookie \"" . $this->getGID() . "\" eclipsefriend=1\n";
           fwrite($fh, $new_line);
