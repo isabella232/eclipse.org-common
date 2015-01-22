@@ -400,8 +400,16 @@ class Sitelogin {
         $this->messages['create']['danger'][] = "You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request. (8723s)";
       }
       else {
-        # Check LDAP
-        if(!$this->Ldapconn->checkEmailAvailable($this->username)) {
+        // Verify if the user already submitted a request with this e-mail address.
+        $sql = "SELECT /* USE MASTER */ COUNT(1) AS RecordCount FROM account_requests WHERE
+        email = " . $this->App->returnQuotedString($this->App->sqlSanitize(trim($this->username)));
+        $result = $this->App->eclipse_sql($sql);
+        $row = mysql_fetch_assoc($result);
+        if ($row['RecordCount'] != 0) {
+          $this->messages['create']['danger'][] = "You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request. (8724s)";
+        }
+        elseif (!$this->Ldapconn->checkEmailAvailable($this->username)) {
+          # Check LDAP
           $this->messages['create']['danger'][] = "That account already exists.  If you cannot remember your password, please use the password reset option below.  (8725s)";
           # Jot this down to avoid repetitively polling ldap
           $this->App->eclipse_sql("INSERT INTO account_requests VALUES (" . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
