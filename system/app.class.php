@@ -448,7 +448,7 @@ class App {
       $Breadcrumb = new Breadcrumb();
     }
 
-    if($theme == "") {
+    if ($theme != "solstice" || $theme != "Nova" || $theme != "polarsys" ) {
       $theme = "solstice";
     }
 
@@ -515,7 +515,7 @@ EOHTML;
   }
 
   function getThemeURL($_theme) {
-    if($_theme == "") {
+  	if ($_theme != "solstice" || $_theme != "Nova" || $_theme != "polarsys" ) {
       $theme = "solstice";
     }
 
