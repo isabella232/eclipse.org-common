@@ -125,6 +125,7 @@ class Breadcrumb extends Menu {
       # Add current page
       # AT this point, $pageTitle should be set as we are running in header()
       global $pageTitle;
+      $pageTitle = strip_tags($pageTitle);
       if (isset($pageTitle)) {
         $title = $pageTitle;
 
@@ -149,6 +150,7 @@ class Breadcrumb extends Menu {
   }
 
   function addCrumb($_Text, $_URL, $_Target) {
+    $_Text = strip_tags($_Text);
     # Menu Items must be added at position 1
     $Crumb = new Link($_Text, $_URL, $_Target, 0);
 

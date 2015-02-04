@@ -441,6 +441,8 @@ class App {
   }
 
   function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL) {
+    # Strip html tags from the page title.
+    $pageTitle = strip_tags($pageTitle);
 
     # Breadcrumbs for the new solstice theme.
     if ($Breadcrumb == NULL || !is_object($Breadcrumb)) {
