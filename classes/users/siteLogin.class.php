@@ -59,6 +59,8 @@ class Sitelogin {
 
   private $password2 = "";
 
+  private $path_public_key = "";
+
   private $referer = "";
 
   private $remember = "";
@@ -94,6 +96,8 @@ class Sitelogin {
       '/<style[^>]*?>.*?<\/style>/siU',
       '/<![\s\S]*?–[ \t\n\r]*>/'
     );
+
+    $this->path_public_key = "/home/data/httpd/dev.eclipse.org/html/public_key.pem";
 
     global $App;
     $this->App = $App;
@@ -340,7 +344,7 @@ class Sitelogin {
       $this->messages['confirm']['danger'][] = "<b>You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request.</b>  (8728s)";
     }
     else {
-      if($this->t != "") {
+      if ($this->t != "") {
         $sql = "SELECT /* USE MASTER */ email, COUNT(1) AS RecordCount FROM account_requests WHERE token = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->t));
         $rs = $this->App->eclipse_sql($sql);
         $myrow = mysql_fetch_assoc($rs);
@@ -400,16 +404,8 @@ class Sitelogin {
         $this->messages['create']['danger'][] = "You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request. (8723s)";
       }
       else {
-        // Verify if the user already submitted a request with this e-mail address.
-        $sql = "SELECT /* USE MASTER */ COUNT(1) AS RecordCount FROM account_requests WHERE
-        email = " . $this->App->returnQuotedString($this->App->sqlSanitize(trim($this->username)));
-        $result = $this->App->eclipse_sql($sql);
-        $row = mysql_fetch_assoc($result);
-        if ($row['RecordCount'] != 0) {
-          $this->messages['create']['danger'][] = "You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request. (8724s)";
-        }
-        elseif (!$this->Ldapconn->checkEmailAvailable($this->username)) {
-          # Check LDAP
+        # Check LDAP
+        if(!$this->Ldapconn->checkEmailAvailable($this->username)) {
           $this->messages['create']['danger'][] = "That account already exists.  If you cannot remember your password, please use the password reset option below.  (8725s)";
           # Jot this down to avoid repetitively polling ldap
           $this->App->eclipse_sql("INSERT INTO account_requests VALUES (" . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
@@ -444,6 +440,10 @@ class Sitelogin {
             $this->messages['create']['danger'][] = "- Your password does not meet the complexity requirements.  It must be at least 6 characters long, and contain one number or one symbol.<br />";
           }
 
+          if (!$cryptopass = $this->_generateCryptotext($this->App->sqlSanitize($this->password1))) {
+            $this->messages['create']['danger'][] = "- An error occurred while processing your request. (8730s)";
+          }
+
           if (empty($this->messages['create']['danger'])) {
             # Add request to database
             $this->t = $this->App->getAlphaCode(64);
@@ -452,7 +452,7 @@ class Sitelogin {
             '',
             " . $this->App->returnQuotedString($this->App->sqlSanitize(trim($this->fname))) . ",
             " . $this->App->returnQuotedString($this->App->sqlSanitize(trim($this->lname))) . ",
-            '" . $this->App->sqlSanitize($this->password1) . "',
+            '" . $cryptopass . "',
             " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
             NOW(),
             " . $this->App->returnQuotedString($this->t) . ")");
@@ -481,6 +481,9 @@ class Sitelogin {
             you have provided.  In that email there are instructions you must follow in order to activate your account.</p>
             <p>If you have not received the email within a few hours, and you've made sure it's not in your Junk, Spam or trash folders, please contact webmaster@eclipse.org</p>";
           }
+          else {
+            $this->messages['create']['danger'][] = "An error occurred while processing your request.  Please ensure that all the required fields are entered correctly and try again.  (5496s)";
+          }
         }
       }
     }
@@ -498,6 +501,23 @@ class Sitelogin {
       $cp = str_replace("=", "", $salt . base64_encode(hash("sha256", $_password . $salt, true))) . $hash;
     }
     return $cp;
+  }
+
+  private function _generateCryptotext($plaintext) {
+    if (empty($plaintext) || !is_readable($this->path_public_key)) {
+      return FALSE;
+    }
+
+    #load public key
+    $fp = fopen($this->path_public_key, "r");
+    $pub_key = fread($fp, 8192);
+    fclose($fp);
+
+    $key = openssl_pkey_get_public($pub_key);
+    openssl_public_encrypt($plaintext, $cryptotext, $key, OPENSSL_PKCS1_OAEP_PADDING);
+
+    #encode the output
+    return base64_encode($cryptotext);
   }
 
   private function _generatePassword($_num_chars) {
@@ -771,14 +791,14 @@ class Sitelogin {
     if ($myrow['RecordCount'] >= 13) {
       $this->messages['reset']['danger'][] = "<b>We were unable to determine your identity after several attempts. Subsequent inquiries will be ignored for our protection.  Please try later, or contact webmaster@eclipse.org for support.</b>  (8727s)";
     }
-    else {
+    elseif ($cryptopass = $this->_generateCryptotext($this->App->sqlSanitize($this->password1))) {
       # Check to see if we're trying to reset the password of a valid account.
       $this->t = $this->App->getAlphaCode(64);
       $this->App->eclipse_sql("INSERT IGNORE INTO account_requests VALUES (" . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
       '',
       " . $this->App->returnQuotedString("RESET") . ",
       " . $this->App->returnQuotedString("RESET") . ",
-      '" . $this->App->sqlSanitize($this->password1) . "',
+      '" . $cryptopass . "',
       " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
       NOW(),
       " . $this->App->returnQuotedString($this->t) . ")");
@@ -812,6 +832,9 @@ class Sitelogin {
         $EventLog->setLogAction("PASSWD_RESET_REQ");
         $EventLog->insertModLog($this->username);
       }
+    }
+    else {
+      $this->messages['create']['danger'][] = "An error occurred while processing your request.  Please ensure that all the required fields are entered correctly and try again.  (3547s)";
     }
   }
 
@@ -885,9 +908,9 @@ class Sitelogin {
           $this->messages['reset3']['danger'][] = "- Your password does not meet the complexity requirements<br />";
           $this->_setStage('reset2');
         }
-        else {
+        elseif ($cryptopass = $this->_generateCryptotext($this->App->sqlSanitize($this->password1))) {
           # Update this row, change IP address to reflect that of the person who successfully confirmed this password to avoid bombing
-          $sql = "UPDATE account_requests SET token = 'PASSWORD_SUCCESS', password='" . $this->App->sqlSanitize($this->password1) . "', ip = " . $this->App->returnQuotedString($this->App->sqlSanitize($_SERVER['REMOTE_ADDR']))
+          $sql = "UPDATE account_requests SET token = 'PASSWORD_SUCCESS', password='" . $cryptopass . "', ip = " . $this->App->returnQuotedString($this->App->sqlSanitize($_SERVER['REMOTE_ADDR']))
           . " WHERE token = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->t));
           $rs = $this->App->eclipse_sql($sql);
 
@@ -904,6 +927,9 @@ class Sitelogin {
           $EventLog->setPK2($_SERVER['REMOTE_ADDR']);
           $EventLog->setLogAction("PASSWD_RESET_SUCCESS");
           $EventLog->insertModLog($myrow['email']);
+        }
+        else {
+          $this->messages['create']['danger'][] = "An error occurred while processing your request.  Please ensure that all the required fields are entered correctly and try again.  (3543s)";
         }
       }
     }
