@@ -144,7 +144,33 @@ class Friend {
 		}
 		return $rValue;
 	}
-	
+
+    /**
+     * Returns a list of Friend objects that have donated more than $100
+     * @param $offset int The result list offset
+     * @param $num int The number of results to retrieve
+     * @param $get_anonymous boolean Whether or not to return anonymous friends
+     */
+    function getBestFriends($offset=0, $num=99999, $get_anonymous=TRUE) {
+        $bestFriends = array();
+        $App = new App();
+        $count = $offset + $num;
+        $sql = "SELECT f.friend_id, f.is_anonymous FROM friends as f
+                    LEFT JOIN (SELECT friend_id, MAX(date_expired) AS date_expired, amount
+                    FROM friends_contributions GROUP BY friend_id) fc_temp
+                ON fc_temp.friend_id = f.friend_id
+                WHERE fc_temp.amount >= 100 ";
+        if (!$get_anonymous) $sql .= "AND f.is_anonymous = 0 ";
+        $sql .= "LIMIT $offset,$count";
+        $result = $App->eclipse_sql($sql);
+        while ($myrow = mysql_fetch_assoc($result)) {
+            $newFriend = new Friend();
+            $newFriend->selectFriend($myrow['friend_id']);
+            $bestFriends[] = $newFriend;
+        }
+        return $bestFriends;
+    }
+
 	function insertUpdateFriend() {
 		$retVal = 0;
 
