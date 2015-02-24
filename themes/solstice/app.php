@@ -11,6 +11,7 @@
  *******************************************************************************/
 require_once('classes/SolsticeHeaderNav.class.php');
 require_once('classes/SolsticeBtnCfa.class.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php");
 
 class Solstice {
 
@@ -323,6 +324,9 @@ class Solstice {
 
 global $App;
 $extra_headers = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
+if (!($Menu instanceof Menu)) {
+  $Menu = new Menu();
+}
 $Solstice = new Solstice($App, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers);
 $variables = $Solstice->getVariables();
 
