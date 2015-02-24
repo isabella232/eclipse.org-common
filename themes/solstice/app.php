@@ -80,7 +80,7 @@ class Solstice {
     $variables['breadcrumbs'] .= "</ol>";
 
     // If the main menu is custom, do not change it
-    $NewMenu = new $Menu();
+    $NewMenu = new Menu();
     $main_menu = $Menu->getMenuArray();
     $default_menu_flag = FALSE;
     if ($NewMenu->getMenuArray() == $main_menu) {
