@@ -84,7 +84,7 @@ class Solstice {
     $main_menu = $Menu->getMenuArray();
     $default_menu_flag = FALSE;
     if ($NewMenu->getMenuArray() == $main_menu) {
-      $Menu = new $Menu();
+      $Menu = new Menu();
       $Menu->setMenuItemList(array());
       $Menu->addMenuItem("Download", $variables['url'] . "downloads/", "_self");
       $Menu->addMenuItem("Getting Started ", $variables['url'] . "users/", "_self");
