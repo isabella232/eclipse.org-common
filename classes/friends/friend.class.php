@@ -155,11 +155,10 @@ class Friend {
         $bestFriends = array();
         $App = new App();
         $count = $offset + $num;
-        $sql = "SELECT f.friend_id, f.is_anonymous FROM friends as f
-                    LEFT JOIN (SELECT friend_id, MAX(date_expired) AS date_expired, amount
-                    FROM friends_contributions GROUP BY friend_id) fc_temp
-                ON fc_temp.friend_id = f.friend_id
-                WHERE fc_temp.amount >= 100 ";
+        $sql = "SELECT f.friend_id, f.is_anonymous, fc.amount
+                FROM friends as f
+                INNER JOIN friends_contributions fc
+                ON (fc.friend_id = f.friend_id AND date_expired > DATE_SUB(NOW(), INTERVAL 1 YEAR) AND fc.amount >= 100) ";
         if (!$get_anonymous) $sql .= "AND f.is_anonymous = 0 ";
         $sql .= "LIMIT $offset,$count";
         $result = $App->eclipse_sql($sql);
