@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2014 Eclipse Foundation and others.
+ * Copyright (c) 2014-2015 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,11 +26,10 @@ class Hipp {
   # HISTORY:
   #
   # mysql> select * from ProjectServices;
-  # +----+------------------+-------------+------------+------------+----------+-----------+---------+
-  # | ID | ProjectID        | ServiceType | ServerHost | ServerPort | XvncBase | OtherData | State   |
-  # +----+------------------+-------------+------------+------------+----------+-----------+---------+
-  # |  1 | technology.babel | hipp        | hipp3      |       8215 |      360 | NULL      | running |
-  # +----+------------------+-------------+------------+------------+----------+-----------+---------+
+  # +-----+-------------------+-------------+----------------+------------------------+--------------------+------------+----------+-----------+---------+
+  # | ID  | ProjectID         | ServiceType | ServiceVersion | ServicePreviousVersion | ServerHost         | ServerPort | XvncBase | OtherData | State   |
+  # +-----+-------------------+-------------+----------------+------------------------+--------------------+------------+----------+-----------+---------+
+  # |   1 | technology.babel  | hipp        | 3.2.2          | 3.0.1-b2               | hipp6.eclipse.org  |       8215 |      360 | NULL      | running |
   #
   #*****************************************************************************
 
@@ -39,6 +38,12 @@ class Hipp {
   var $ProjectID = "";
 
   var $ServiceType  = "";
+
+  var $ServiceVersion = "";
+
+  var $ServicePreviousVersion = "";
+
+  var $ServiceLatestVersion = "";
 
   var $ServerHost = "";
 
@@ -49,6 +54,11 @@ class Hipp {
   var $OtherData = "";
 
   var $State = "";
+
+  # Path to HIPP images
+  private $HIPPImagePath = "/opt/public/hipp/homes/hudson-wars";
+
+  private $VersionRegexp = '/[^\w\.-]/';
 
   /**
    * Create HTML for hipp control panel link
@@ -63,12 +73,12 @@ class Hipp {
    */
   public function getControlLink($id, $shortname){
     $state = $this->getState();
-    $str = "<span id='" . $shortname . "_state' class='" . $state . "'>" . $state . "</span> &#160; <span id='" . $shortname . "_instance'>";
+    $str = "<span id='" . $shortname . "_state' class='" . $state . "'>" . ucfirst($state) . " (" . $this->getServiceVersion() . ")</span> &#160; <span id='" . $shortname . "_instance'>";
 
     # Examine Service status to determine control knobs to place
     if ($state == "running") {
       # Add STOP button
-      $str .= '<a title="stop" href="#ct" data-action="stop" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-stop"></i></a> ';
+      $str .= '<a title="stop" href="#ct" data-action="stop" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-power-off"></i></a> &#160; ';
 
       # Add RESTART button
       $str .= '<a title="restart" href="#ct" data-action="restart" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-refresh"></i></a>';
@@ -76,7 +86,17 @@ class Hipp {
 
     if ($state == "stopped") {
       # Add START button
-      $str .= '<a title="start"  href="#ct" data-action="start" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-play"></i></a>';
+      $str .= '<a title="start"  href="#ct" data-action="start" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-power-off"></i></a>';
+    }
+
+    # Upgrade available?
+    if($this->getServiceLatestVersion("hipp") != $this->getServiceVersion() && $this->getServiceLatestVersion("hipp") != "" && $this->getServiceVersion() != "") {
+
+      $str .= '<br /><a title="upgrade"  href="#ct" data-action="upgrade" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-download"></i> Upgrade to ' . $this->getServiceLatestVersion("hipp") . '</a>';
+      $readme = $this->getReadmeContents("hipp", $this->getServiceLatestVersion("hipp"));
+      if($readme != "") {
+        $str .= "<br /><span id='" . $shortname . "_readme'><a title='readme'  href='#ct' data-action='readme' data-projectid='" . $id . "' data-shortname='" . $shortname . "' class='hipp-control-action-link'><i class='fa fa-file-o'></i> README for " . $this->getServiceLatestVersion("hipp") . '</a></span>';
+      }
     }
 
     return $str . "</span>";
@@ -94,6 +114,17 @@ class Hipp {
     return $this->ServiceType;
   }
 
+  function getServiceVersion() {
+    return $this->ServiceVersion;
+  }
+
+  function getServicePreviousVersion() {
+    return $this->ServicePreviousVersion;
+  }
+
+  function getServiceLatestVersion() {
+    return $this->ServiceLatestVersion;
+  }
   function getServerHost() {
     return $this->ServerHost;
   }
@@ -124,6 +155,19 @@ class Hipp {
 
   function setServiceType($_ServiceType) {
     $this->ServiceType = $_ServiceType;
+  }
+
+  function setServiceVersion($_ServiceVersion) {
+    $this->ServiceVersion = $_ServiceVersion;
+  }
+
+  function setServicePreviousVersion($_ServicePreviousVersion) {
+    $this->ServicePreviousVersion = $_ServicePreviousVersion;
+  }
+
+  function setServiceLatestVersion($_ServiceLatestVersion) {
+    # this regexp also in admintools.git:create_hipp
+    $this->ServiceLatestVersion = preg_replace($this->VersionRegexp, '', $_ServiceLatestVersion);
   }
 
   function setServerHost($_ServerHost) {
@@ -157,6 +201,8 @@ class Hipp {
           SRV.ID,
           SRV.ProjectID,
           SRV.ServiceType,
+          SRV.ServiceVersion,
+          SRV.ServicePreviousVersion,
           SRV.ServerHost,
           SRV.ServerPort,
           SRV.XvncBase,
@@ -172,6 +218,8 @@ class Hipp {
         $this->setID($myrow["ID"]);
         $this->setProjectID($myrow["ProjectID"]);
         $this->setServiceType($myrow["ServiceType"]);
+        $this->setServiceVersion($myrow["ServiceVersion"]);
+        $this->setServicePreviousVersion($myrow["ServicePreviousVersion"]);
         $this->setServerHost($myrow["ServerHost"]);
         $this->setServerPort($myrow["ServerPort"]);
         $this->setXvncBase($myrow["XvncBase"]);
@@ -180,6 +228,40 @@ class Hipp {
       }
       $result = NULL;
       $myrow = NULL;
+
+      $this->getLatestVersionFromFile("hipp");
     }
+  }
+
+  /**
+   * getLatestVersionFromFile - read latest version from file
+   * @param string - Servicetype (HIPP)
+   * @return none
+   * @since 2015-02-26
+   * @author droy
+   */
+  function getLatestVersionFromFile($_ServiceType="hipp") {
+    if(is_readable($this->HIPPImagePath . "/latest")) {
+      $this->setServiceLatestVersion(file_get_contents($this->HIPPImagePath. "/latest"));
+    }
+  }
+
+  /**
+   * getReadmeContents - Fetch README contents for a version
+   * @param string - Servicetype (HIPP), string Version (3.2.2)
+   * @return String
+   * @since 2015-02-26
+   * @author droy
+   */
+  function getReadmeContents($_ServiceType="hipp", $_version) {
+    $rValue = "";
+    if($_version != "") {
+      $_version = preg_replace($this->VersionRegexp, '', $_version);
+      $filename = $this->HIPPImagePath . "/hudson-" . $_version . ".README";
+      if(is_readable($filename)) {
+        $rValue = file_get_contents($filename);
+      }
+    }
+    return $rValue;
   }
 }
