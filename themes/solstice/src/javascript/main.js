@@ -16,7 +16,16 @@
 			if (href_hash) {
 				window.location.hash = href_hash;
 			}
-		}	
+		}
+
+		$('#showalltabs').click(function(){
+			$('.tabs li').each(function(i,t){
+				$(this).removeClass('active');
+			});
+			$('.tab-pane').each(function(i,t){
+				$(this).addClass('active');
+			});
+		});
 	});
 	
 	// This code will prevent unexpected menu close when
@@ -42,6 +51,19 @@
 	$('.scrollup').click(function(){
 		$("html, body").animate({ scrollTop: 0 }, 600);
 		return false;
+	});
+	
+	var hash = window.location.hash;
+	hash && $('ul.nav a[href="' + hash + '"]').tab('show') && $('html,body').scrollTop(0);
+	$('.nav-tabs a').click(function (e) {
+		$(this).tab('show');
+		window.location.hash = this.hash;
+		$('.alert').remove();
+	});
+	
+	$("a[data-tab-destination]").on('click', function() {
+	    var tab = $(this).attr('data-tab-destination');
+	    $("#"+tab).click();
 	});
 
 })(jQuery, document);
