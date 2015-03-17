@@ -97,7 +97,7 @@ class SolsticeHeaderNav extends SolsticeBase {
 
     foreach ($h['links'] as $l) {
       $link = $this->_header_nav_default_links($l);
-      if ($link && $count <= 4){
+      if ($link && $count <= 6){
         $count++;
         $links[] = $link;
       }
