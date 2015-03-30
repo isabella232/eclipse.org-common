@@ -79,6 +79,8 @@ class Membership {
 
   /**
    * Fetch membership profile(s).
+   * 
+   * If $this->id is set, it will return the profile for a specific member.
    *
    * @return Ambigous <multitype:, multitype:string , boolean, multitype:unknown , multitype:multitype:string NULL  >|boolean|multitype:
    */
