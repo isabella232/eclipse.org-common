@@ -79,7 +79,7 @@ class Membership {
 
   /**
    * Fetch membership profile(s).
-   * 
+   *
    * If $this->id is set, it will return the profile for a specific member.
    *
    * @return Ambigous <multitype:, multitype:string , boolean, multitype:unknown , multitype:multitype:string NULL  >|boolean|multitype:
@@ -93,6 +93,7 @@ class Membership {
       ORGI.long_description as full_text,
       ORG.member_type as type,
       ORGI.company_url IS NULL AS COMPLETE,
+      ORGI.company_url  AS website,
       ORGI.small_logo as small_logo,
       ORGI.large_logo as large_logo
     FROM OrganizationInformation as ORGI
@@ -112,9 +113,12 @@ class Membership {
       $row['title_link'] = "";
       $row['small_logo_link'] = "";
       $row['large_logo_link'] = "";
-
+      $row['large_logo_website_link'] = "";
       if (!empty($row['id'])) {
         $row['small_logo_link'] = $row['large_logo_link'] = $row['title_link'] .= '<a href="/membership/showMember.php?member_id=' . $row['id'] .'" title="' . $row['name'] . '">';
+      }
+      if (filter_var($row['website'], FILTER_VALIDATE_URL)) {
+        $row['large_logo_website_link'] = '<a href="' . $row['website'] .'" title="' . $row['name'] . '" target="_blank">';
       }
 
       $row['title_link'] .= $row['name'];
@@ -126,6 +130,10 @@ class Membership {
       $large_logo_src = '/membership/images/eclipse-mp-member-144x69.png';
       if (!empty($row['large_logo'])) {
         $large_logo_src = 'data:image/jpeg;base64,' . base64_encode($row['large_logo']);
+        $row['large_logo_website_link'] .= '<img src="' . $large_logo_src . '"  title="' . $row['name'] . '" class="img-responsive padding-bottom-25"/>';
+      }
+      else{
+        $row['large_logo_website_link'] = '<h1>' . $row['name']. '</h1>';
       }
 
       $row['small_logo_link'] .= '<img src="' . $small_logo_src . '"  title="' . $row['name'] . '" class="img-responsive"/>';
@@ -136,6 +144,11 @@ class Membership {
         $row['small_logo_link'] .= '</a>';
         $row['large_logo_link'] .= '</a>';
       }
+
+      if (filter_var($row['website'], FILTER_VALIDATE_URL)) {
+        $row['large_logo_website_link']  .= '</a>';
+      }
+
 
       switch($row['member_type']) {
         case 'AP':
