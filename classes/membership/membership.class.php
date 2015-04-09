@@ -117,6 +117,11 @@ class Membership {
       if (!empty($row['id'])) {
         $row['small_logo_link'] = $row['large_logo_link'] = $row['title_link'] .= '<a href="/membership/showMember.php?member_id=' . $row['id'] .'" title="' . $row['name'] . '">';
       }
+
+      if (strpos($row['website'], 'http') === FALSE) {
+        $row['website'] = 'http://'.$row['website'];
+      }
+
       if (filter_var($row['website'], FILTER_VALIDATE_URL)) {
         $row['large_logo_website_link'] = '<a href="' . $row['website'] .'" title="' . $row['name'] . '" target="_blank">';
       }
