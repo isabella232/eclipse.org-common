@@ -450,7 +450,7 @@ class App {
       $Breadcrumb = new Breadcrumb();
     }
 
-    if ($theme != "solstice" || $theme != "Nova" || $theme != "polarsys" ) {
+    if ($theme != "solstice" && $theme != "Nova" && $theme != "polarsys" ) {
       $theme = "solstice";
     }
 
