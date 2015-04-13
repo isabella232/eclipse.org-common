@@ -7,69 +7,35 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *     Eclipse Foundation - initial API and implementation
+ *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
-$www_prefix = "";
-global $App;
-if (isset ( $App )) {
-  $www_prefix = $App->getWWWPrefix ();
-}
-$theme = "polarsys";
+
+include_once 'app.php';
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
-<html lang="en" dir="ltr" version="HTML+RDFa 1.1"
-  xmlns:content="http://purl.org/rss/1.0/modules/content/"
-  xmlns:dc="http://purl.org/dc/terms/"
-  xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#"
-  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-  xmlns:sioc="http://rdfs.org/sioc/ns#"
-  xmlns:sioct="http://rdfs.org/sioc/types#"
-  xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
-<head profile="http://www.w3.org/1999/xhtml/vocab">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-<title><?php print $pageTitle ?></title>
-<meta name="author" content="<?php print $pageAuthor ?>" />
-<meta name="keywords" content="<?php print $pageKeywords ?>" />
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/bootstrap.css"
-  media="all" />
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/global.css"
-  media="all" />
-<!--[if (lt IE 9)&(!IEMobile)]>
-<link rel="stylesheet" type="text/css" href="/eclipse.org-common/themes/<?php print $theme ?>/css/a.css" media="all"/>
-<![endif]-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="<?php print $variables['page']['author']; ?>" />
+    <meta name="keywords" content="<?php print $variables['page']['keywords']; ?>" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,100" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="<?php print $variables['theme_url'];?>public/images/favicon.ico"/>
+    <title><?php print $variables['page']['title']; ?></title>
+    <?php print $variables['head']['og_title']?>
+    <?php print $variables['head']['og_description'];?>
+    <?php print $variables['head']['og_image'];?>
 
-<!--[if gte IE 9]><!-->
-<style type="text/css"
-  media="all and (min-width: 740px) and (min-device-width: 740px), (max-device-width: 800px) and (min-width: 740px) and (orientation:landscape)"></style>
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/b.css" media="all" />
-<!--<![endif]-->
+    <link rel="stylesheet" href="<?php print $variables['theme_url'];?>public/stylesheets/polarsys.min.css">
 
-<!--[if gte IE 9]><!-->
-<style type="text/css"
-  media="all and (min-width: 980px) and (min-device-width: 980px), all and (max-device-width: 1024px) and (min-width: 1024px) and (orientation:landscape)"></style>
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/c.css" media="all" />
-<!--<![endif]-->
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/polarsys-alpha-default.css"
-  media="all" />
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/polarsys-alpha-default-normal.css"
-  media="all" />
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/polarsys-alpha-default-wide.css"
-  media="all" />
-<link rel="stylesheet" type="text/css"
-  href="/eclipse.org-common/themes/<?php print $theme ?>/css/polarsys-alpha-default-narrow.css"
-  media="all" />
-
-  <?php if( isset($extraHtmlHeaders) ) echo $extraHtmlHeaders; ?>
-</head>
-<body class="html front not-logged-in">
+    <?php print $variables['page']['extra_headers'];?>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="<?php print $variables['body']['classes'];?>" id="<?php print $variables['body']['id'];?>">
+    <a class="sr-only" href="#content">Skip to main content</a>
+    <div class="thin-header">

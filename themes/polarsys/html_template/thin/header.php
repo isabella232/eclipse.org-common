@@ -10,8 +10,10 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 
+  require_once('../app.php');
+  require_once('../../header.php');
 ?>
-
+  <?php if (isset($_GET['site_login'])) :?>
     <div id="toolbar-container-wrapper" class="clearfix">
       <div class="container">
         <div id="row-toolbar" class="text-right hidden-print">
@@ -25,6 +27,7 @@
         </div>
       </div>
     </div>
+  <?php endif;?>
     <header role="banner" id="page-header-logo">
       <div class="container">
         <div id="row-logo-search" class="clearfix">
@@ -59,16 +62,13 @@
     <?php if (!$variables['theme_variables']['hide_breadcrumbs']) :?>
       <section id="breadcrumb" class="<?php print $variables['theme_variables']['breadcrumbs_classes'];?>">
         <div class="container">
-          <div class="<?php print $variables['theme_variables']['breadcrumbs_wrapper_classes'];?>">
-            <?php print $variables['breadcrumbs'];?>
-          </div>
+          <?php print $variables['breadcrumbs'];?>
           <?php print $variables['theme_variables']['breadcrumbs_html'];?>
           </div>
         </section>
       <?php endif; ?>
     <?php print $variables['promotion']['desktop'];?>
-    <main role="main" class="<?php print $variables['main_classes'];?>">
+    <main role="main">
       <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
           <?php print $variables['deprecated'];?>
-          <?php print $variables['theme_variables']['main_container_html'];?>
-          <?php print $SolsticeHeaderNav->build();?>
+

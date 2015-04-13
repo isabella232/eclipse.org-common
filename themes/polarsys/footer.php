@@ -7,117 +7,86 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eclipse Foundation - initial API and implementation
+ *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 ?>
-<!--  footer.php -->
 </div>
-</div>
-</div>
-</div>
-</section>
-</div>
-<footer id="section-footer" class="section section-footer">
-  <div id="zone-footer-wrapper"
-    class="zone-wrapper zone-footer-wrapper clearfix">
-    <div id="zone-footer" class="zone zone-footer clearfix container-12">
-      <div class="grid-12 region region-footer-first"
-        id="region-footer-first">
-        <div class="region-inner region-footer-first-inner">
-          <section
-            class="block block-polar-custom block-cblocks-footer-links block-polar-custom-cblocks-footer-links odd"
-            id="block-polar-custom-cblocks-footer-links">
-            <div class="block-inner clearfix">
-              <h2 class="block-title">
-                <strong>PolarSys</strong> – Open Source tools for the
-                development of embedded systems
-              </h2>
-
-              <div class="content clearfix">
-                <div class="grid-2" id="footer_menu_1">
-                  <ul class="menu">
-                    <li class="first leaf"><a href="/eclipse_sites/org_home">Home</a></li>
-                    <li class="leaf"><a href="/eclipse_sites/privacy">Privacy
-                        Policy</a></li>
-                    <li class="leaf"><a href="/eclipse_sites/terms">Terms of Use</a></li>
-                    <li class="leaf"><a href="/eclipse_sites/copyright">Copyright
-                        Agent</a></li>
-                    <li class="leaf"><a href="/eclipse_sites/legal">Legal</a></li>
-                    <li class="last leaf"><a href="/eclipse_sites/contact">Contact
-                        Us</a></li>
-                  </ul>
-                </div>
-                <div class="grid-2" id="footer_menu_2">
-                  <ul class="menu">
-                    <li class="first last expanded"><a href="/about-us">About</a>
-                    <ul class="menu">
-                        <li class="first leaf"><a href="/about-us" title="">About Us</a></li>
-                        <li class="leaf"><a href="/polarsys-presentations">Presentations</a></li>
-                        <li class="leaf"><a href="/videos">Videos</a></li>
-                        <li class="leaf"><a href="/members" title="Members">Members</a></li>
-                        <li class="leaf"><a href="/governance">Governance</a></li>
-                        <li class="leaf"><a href="/faq"
-                          title="Frequently Asked Questions">FAQ</a></li>
-                        <li class="last leaf"><a href="/polarsys-logo">PolarSys logo</a></li>
-                      </ul></li>
-                  </ul>
-                </div>
-                <div class="grid-2" id="footer_menu_3"></div>
-                <div class="grid-2" id="footer_menu_4">
-                  <ul class="menu">
-                    <li class="first last expanded"><a href="/news-and-events"
-                      title="">News</a>
-                    <ul class="menu">
-                        <li class="first leaf"><a href="/news-and-events/events"
-                          title="Events">Events</a></li>
-                        <li class="leaf"><a href="/news-and-events/news-releases"
-                          title="News">News</a></li>
-                        <li class="leaf"><a href="http://polarsys.blogspot.com/"
-                          title="">Blog</a></li>
-                        <li class="last leaf"><a href="/polarsys-newsletter">Newsletter</a></li>
-                      </ul></li>
-                  </ul>
-                </div>
-                <div class="grid-2" id="footer_menu_5">
-                  <ul class="menu">
-                    <li class="first last collapsed"><a href="/roadmap">Technologies</a></li>
-                  </ul>
-                </div>
-                <div class="grid-2" id="footer_menu_6"></div>
-                <div class="grid-2" id="footer_menu_7"></div>
-                <div class="grid-2" id="footer_menu_8">
-                  <ul class="menu">
-                    <li class="first last leaf footer_twitter footer_social_links"><a
-                      href="http://twitter.com/polarsys" title="Twitter">Twitter</a></li>
-                  </ul>
-                </div>
-              </div>
+</main> <!-- /#main-content-container-row -->
+<p id="back-to-top">
+  <a class="visible-xs" href="#top">Back to the top</a>
+</p>
+<footer id="solstice-footer" role="contentinfo">
+  <div class="container no-border">
+    <div class="row">
+      <section class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-4 col-md-offset-0 hidden-print" id="footer-eclipse-foundation">
+        <div class="region region-footer-1">
+          <section class="block block-menu clearfix" id="block-menu-menu-about">
+            <h2 class="block-title">PolarSys</h2>
+            <div class="block-content">
+              <ul class="menu nav">
+                <li class="first leaf"><a href="https://www.polarsys.org/about-us">About us</a></li>
+                <li class="leaf"><a href="https://www.polarsys.org/contact-us">Contact us</a></li>
+                <li class="leaf"><a href="https://www.polarsys.org/governance">Governance</a></li>
+                <li class="leaf"><a href="https://www.polarsys.org/members%20">Members</a></li>
+                <li class="last leaf"><a href="https://www.polarsys.org/polarsys-logo"> Logo</a></li>
+              </ul>
             </div>
           </section>
+          <!-- /.block -->
         </div>
-      </div>
-      <div class="grid-12 region region-footer-second"
-        id="region-footer-second">
-        <div class="region-inner region-footer-second-inner">
-          <div
-            class="block block-block block-2 block-block-2 odd block-without-title"
-            id="block-block-2">
-            <div class="block-inner clearfix">
-
-              <div class="content clearfix">
-                <p>
-                  <a href="http://www.eclipse.org"><img alt="Eclipse Foundation"
-                    src="//www.polarsys.org/sites/default/files/logo/eclipse/eclipse_pos_logo_fc_xsm.gif"
-                    style="float: left; padding-right: 15px;" /></a>PolarSys is an
-                  Industry Working Group of The Eclipse Foundation.<br />
-  Copyright &copy; <?php print date("Y", time());?> The Eclipse Foundation. All Rights Reserved.</p>
-              </div>
+      </section>
+      <section class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-4 col-md-offset-0 hidden-print" id="footer-legal">
+        <h2 class="section-title">Legal</h2>
+        <ul class="nav">
+          <li class="link_privacy first"><a href="//www.eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+          <li class="link_terms"><a href="//www.eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+          <li class="link_copyright"><a href="//www.eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+          <li class="link_epl"><a href="//www.eclipse.org/org/documents/epl-v10.php">Eclipse Public License</a></li>
+          <li class="link_legal last"><a href="//www.eclipse.org/legal/">Legal Resources</a></li>
+        </ul>
+      </section>
+      <section class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-4 col-md-offset-0 hidden-print" id="footer-useful-links">
+        <div class="region region-footer-3">
+          <section class="block block-menu clearfix" id="block-menu-menu-usefull-links">
+            <h2 class="block-title">Useful Links</h2>
+            <div class="block-content">
+              <ul class="menu nav">
+                <li class="first leaf"><a href="https://www.polarsys.org/blog">Blog</a></li>
+                <li class="leaf"><a href="https://www.polarsys.org/community">Mailing list</a></li>
+                <li class="leaf"><a href="https://www.polarsys.org/news">News and Events</a></li>
+                <li class="last leaf"><a href="https://www.polarsys.org/polarsys-newsletter">Newsletter</a></li>
+              </ul>
             </div>
-          </div>
+          </section>
+          <!-- /.block -->
         </div>
-      </div>
+      </section>
+      <section class="col-xs-24 col-md-11 footer-other-working-groups col-md-offset-1 hidden-print" id="footer-other">
+        <div class="col-sm-10 col-xs-offset-1 col-md-11 col-md-offset-1 footer-working-group-col" id="footer-working-group-left">
+          <a title="Home" href="/"><img alt="Home" src="<?php print $variables['theme_url'];?>public/images/logo/polarsys.png" class="logo-eclipse-default img-responsive"></a><br><img alt="PolarSys sectors" src="<?php print $variables['theme_url'];?>public/images/template/polarsys/header-bg-icons.png" class="img-responsive">
+          <h2 class="section-title sr-only">Other</h2>
+          <ul class="list-inline social-media">
+            <li class="link_twitter first"><a href="//twitter.com/EclipseFdn"><i class="fa fa-twitter-square"></i></a></li>
+            <li class="link_google"><a href="//plus.google.com/+Eclipse"><i class="fa fa-google-plus-square"></i></a></li>
+            <li class="link_facebook"><a href="//www.facebook.com/eclipse.org"><i class="fa fa-facebook-square"></i></a></li>
+            <li class="link_youtube last"><a href="//www.youtube.com/user/EclipseFdn"><i class="fa fa-youtube-square"></i></a></li>
+          </ul>
+        </div>
+        <div class="col-sm-10 col-xs-offset-1 col-sm-offset-3 col-md-11 col-md-offset-1 footer-working-group-col" id="footer-working-group-right">
+          <a title="Eclipse Foundation" href="https://www.eclipse.org/"><img alt="Eclipse Foundation homepage" src="<?php print $variables['theme_url'];?>public/images/logo/eclipse-800x188.png" class="logo-eclipse-default img-responsive"></a>
+          <p class="padding-top-15">PolarSys is a Working Group of The Eclipse Foundation.</p>
+          <p>Copyright &copy; 2015 The Eclipse Foundation. All Rights Reserved.</p>
+        </div>
+      </section>
+      <a class="scrollup" href="#" style="display: none;">Back to the top</a>
     </div>
   </div>
 </footer>
+</div>
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="<?php print $variables['theme_url'];?>public/javascript/main.min.js"></script>
+<?php print $variables['page']['extra_js_footer'];?>
+<?php print $google_javascript;?>
 </body>
 </html>

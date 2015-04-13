@@ -43,7 +43,8 @@ module.exports = function(grunt) {
                     './public/stylesheets/barebone-toolbar.min.css': './html_template/barebone/stylesheets/styles-toolbar.less',
                     './public/stylesheets/barebone-footer.min.css': './html_template/barebone/stylesheets/footer.less',
                     './public/stylesheets/forums.min.css': './src/stylesheets/forums.less',
-                    './public/stylesheets/table.min.css': './src/stylesheets/table.less'
+                    './public/stylesheets/table.min.css': './src/stylesheets/table.less',
+                    './public/stylesheets/polarsys.min.css': './src/stylesheets/polarsys.less'
                 }
             }
         },
