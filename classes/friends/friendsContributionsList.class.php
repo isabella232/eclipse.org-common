@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2007 Eclipse Foundation and others.
+ * Copyright (c) 2007-2015 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
+ *    Denis Roy (Eclipse Foundation)
  *******************************************************************************/
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friendsContributions.class.php");
@@ -18,7 +19,7 @@ class FriendsContributionsList {
 	var $list = array();
 	function getList() {
 		return $this->list;
-	} 
+	}
 	function setList($_list) {
 		$this->list = $_list;
 	}
@@ -33,13 +34,12 @@ class FriendsContributionsList {
             if($_pos < $this->getCount()) {
                     return $this->list[$_pos];
             }
-    }    
-    
+    }
+
 	function selectFriendsContributionsList($_start = -1, $_numrows = -1, $_where=NULL) {
-		
 		$App = new App();
 		# the IF() for date_expired is a bad hack to accommodate the donor list, should we decide to extend all our friends by one month 
-	    $sql = "SELECT 
+	    $sql = "SELECT /* selectFriendsContributionsList */
 	    		F.first_name,
 	    		F.last_name,
 	    		F.bugzilla_id,
@@ -52,9 +52,11 @@ class FriendsContributionsList {
 	    		FC.contribution_id,
 	    		FC.transaction_id,
 	    		FC.amount,
-	    		FC.message
+	    		FC.message,
+	    		UP.user_mail
 	    		FROM friends_contributions as FC
-	    		LEFT JOIN friends as F on FC.friend_id = F.friend_id";
+	    		LEFT JOIN friends as F on FC.friend_id = F.friend_id
+	    		LEFT JOIN users_profiles as UP on (F.uid = UP.user_uid AND F.uid != '')";
 	    if ($_where != NULL) {
 	    	$sql .= " " . $_where;
 	    }
@@ -65,10 +67,10 @@ class FriendsContributionsList {
 			if ($_numrows > 0)
 				$sql .= ", $_numrows";
 	    }
-	    
+
 	    $App->sqlSanitize($sql);
 	    $result = $App->eclipse_sql($sql);
-		
+
 	    while($myrow = mysql_fetch_array($result))
 	    {
 			$Friend = new Friend();
@@ -80,7 +82,8 @@ class FriendsContributionsList {
 			$Friend->setIsAnonymous			($myrow['is_anonymous']);
 			$Friend->setIsBenefit			($myrow['is_benefit']);
 			$Friend->setLDAPUID             ($myrow['uid']);
-	    	
+			$Friend->setEmail				($myrow['user_mail']);
+
 			$Contribution = new Contribution();
 			$Contribution->setFriendID($myrow['friend_id']);
 			$Contribution->setContributionID($myrow['contribution_id']);
@@ -88,7 +91,7 @@ class FriendsContributionsList {
 			$Contribution->setMessage($myrow['message']);
 			$Contribution->setAmount($myrow['amount']);
 			$Contribution->setTransactionID($myrow['transaction_id']);			
-				
+
 			$FriendsContributions = new FriendsContributions();
 			$FriendsContributions->setFriendID($myrow['friend_id']);
 			$FriendsContributions->setContributionID($myrow['contribution_id']);
@@ -97,10 +100,8 @@ class FriendsContributionsList {
 			
             $this->add($FriendsContributions);
 	    }
-	    	
+
 	    $result = null;
 	    $myrow	= null;
 	}
-
-    
 }
