@@ -54,7 +54,14 @@
 	});
 	
 	var hash = window.location.hash;
-	hash && $('ul.nav a[href="' + hash + '"]').tab('show') && $('html,body').scrollTop(0);
+	// Check if the selector exist before scrolling back to the top of the page.
+	// Also make sure the selector is a tab menu.
+	// [Bug 465298] Link to bookmark not working
+	if (hash && $('ul.nav.tabs a[href="' + hash + '"]')[0]) {
+		$('ul.nav a[href="' + hash + '"]').tab('show');
+		$('html,body').scrollTop(0);
+	}
+	
 	$('.nav.tabs a').click(function (e) {
 		$(this).tab('show');
 		window.location.hash = this.hash;
