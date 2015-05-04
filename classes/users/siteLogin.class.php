@@ -477,7 +477,7 @@ class Sitelogin {
             # Debug
             //print $mail;
 
-            $this->messages['create']['success'][] =  "<p>Welcome to the Eclipse.org community!  Your account has been created successfully, and we've sent a confirmation to the email address
+            $this->messages['create']['success'][] =  "<p>Welcome to the Eclipse.org community!  We've sent a confirmation to the email address
             you have provided.  In that email there are instructions you must follow in order to activate your account.</p>
             <p>If you have not received the email within a few hours, and you've made sure it's not in your Junk, Spam or trash folders, please contact webmaster@eclipse.org</p>";
           }
@@ -791,14 +791,14 @@ class Sitelogin {
     if ($myrow['RecordCount'] >= 13) {
       $this->messages['reset']['danger'][] = "<b>We were unable to determine your identity after several attempts. Subsequent inquiries will be ignored for our protection.  Please try later, or contact webmaster@eclipse.org for support.</b>  (8727s)";
     }
-    elseif ($cryptopass = $this->_generateCryptotext($this->App->sqlSanitize($this->password1))) {
+    else {
       # Check to see if we're trying to reset the password of a valid account.
       $this->t = $this->App->getAlphaCode(64);
       $this->App->eclipse_sql("INSERT IGNORE INTO account_requests VALUES (" . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
       '',
       " . $this->App->returnQuotedString("RESET") . ",
       " . $this->App->returnQuotedString("RESET") . ",
-      '" . $cryptopass . "',
+      '',
       " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
       NOW(),
       " . $this->App->returnQuotedString($this->t) . ")");
@@ -832,9 +832,6 @@ class Sitelogin {
         $EventLog->setLogAction("PASSWD_RESET_REQ");
         $EventLog->insertModLog($this->username);
       }
-    }
-    else {
-      $this->messages['create']['danger'][] = "An error occurred while processing your request.  Please ensure that all the required fields are entered correctly and try again.  (3547s)";
     }
   }
 
