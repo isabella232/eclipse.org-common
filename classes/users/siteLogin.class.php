@@ -59,6 +59,8 @@ class Sitelogin {
 
   private $password2 = "";
 
+  private $password_update = 0;
+
   private $path_public_key = "";
 
   private $referer = "";
@@ -192,6 +194,7 @@ class Sitelogin {
       'referer' => "",
       'password1' => "",
       'password2' => "",
+      'password_update' => "",
       'fname' => "",
       'lname' => "",
       'githubid' => "",
@@ -211,6 +214,7 @@ class Sitelogin {
     $takemeback = filter_var($this->takemeback, FILTER_SANITIZE_ENCODED);
     $remember = filter_var($this->remember, FILTER_SANITIZE_NUMBER_INT);
     $agree = filter_var($this->agree, FILTER_SANITIZE_NUMBER_INT);
+    $password_update = filter_var($this->password_update, FILTER_SANITIZE_NUMBER_INT);
     $githubid = filter_var($this->Ldapconn->getGithubIDFromMail($this->Friend->getEmail()), FILTER_SANITIZE_STRING);
     $organization = filter_var($this->organization, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $jobtitle = filter_var($this->jobtitle, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
@@ -261,13 +265,17 @@ class Sitelogin {
 
       case 'reset':
           $return['token'] = $token;
-
         break;
+
+      case 'logout':
+          $return['password_update'] = $password_update;
+        break;
+
     }
     return $return;
   }
 
-  public function logout(){
+  public function logout() {
     $referer = "";
     if (isset($_SERVER['HTTP_REFERER'])) {
       $referer = $_SERVER['HTTP_REFERER'];
@@ -284,6 +292,7 @@ class Sitelogin {
     );
 
     $redirect = 'https://www.eclipse.org/';
+
     foreach ($eclipse_domains as $key => $value) {
       if (strpos($referer, $key)){
         $redirect = $value;
@@ -292,9 +301,22 @@ class Sitelogin {
     }
 
     // Destroy the session for the user.
-    $this->Session->destroy();
-    $this->messages['logout']['info'][] = 'You have been logged out.';
+    // Bug 443883 - [site_login] Password change should invalidate all active sessions
+    if ($this->Session->isLoggedIn()) {
+      $this->Session->destroy(TRUE);
+      $this->messages['logout']['info'][] = 'You have been logged out.';
+    }
+    else{
+      $this->messages['logout']['danger'][] = 'You are currently not logged in.';
+      $redirect = 'https://dev.eclipse.org/site_login/';
+    }
+
     return $redirect;
+  }
+
+  public function password_update() {
+    $this->messages['logout']['success'][] = "Your account details have been updated successfully.";
+    $this->messages['logout']['warning'][] = 'Please login to confirm your new password.';
   }
 
   function verifyUserStatus() {
@@ -660,7 +682,7 @@ class Sitelogin {
   }
 
   private function _processSave() {
-
+    $user_is_changing_password = FALSE;
     if ($this->username != "" && $this->fname != "" && $this->lname != "" && $this->password != "") {
       # update account.
       # we must first bind to ldap to be able to change attributes
@@ -712,6 +734,7 @@ class Sitelogin {
 	        }
 	        else {
 	          if ($this->password != $this->password1) {
+	            $user_is_changing_password = TRUE;
 	            $this->Ldapconn->changePassword($dn, $this->password, $this->password1);
 	            $bzpass = &$this->_generateBugzillaSHA256Password($this->password1);
 	            $sql = "UPDATE profiles SET cryptpassword='" . $this->App->sqlSanitize($bzpass) . "' WHERE login_name = " .  $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . " LIMIT 1";
@@ -770,6 +793,9 @@ class Sitelogin {
 
         if (empty($this->messages['myaccount']['danger'])) {
           $this->messages['myaccount']['success'][] = "Your account details have been updated successfully." . $mailmsg . "";
+          if ($user_is_changing_password) {
+             header("Location: https://dev.eclipse.org/site_login/logout.php?password_update=1", 302);
+          }
         }
       }
       else {
@@ -949,6 +975,7 @@ class Sitelogin {
       'password',
       'password1',
       'password2',
+      'password_update',
       'remember',
       'skill',
       'stage',
@@ -1056,7 +1083,7 @@ class Sitelogin {
 
   private function _userAuthentification() {
     if (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username) && $this->stage == "login") {
-      $this->messages['login']['error'][] = "Your email address does not appear to be valid.";
+      $this->messages['login']['danger'][] = "Your email address does not appear to be valid.";
     }
 
     $dn = $this->Ldapconn->authenticate($this->username, $this->password);
