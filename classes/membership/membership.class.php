@@ -95,7 +95,9 @@ class Membership {
       ORGI.company_url IS NULL AS COMPLETE,
       ORGI.company_url  AS website,
       ORGI.small_logo as small_logo,
-      ORGI.large_logo as large_logo
+      ORGI.large_logo as large_logo,
+      ORGI.small_mime as small_mime,
+      ORGI.large_mime as large_mime
     FROM OrganizationInformation as ORGI
     RIGHT JOIN organizations as ORG on ORGI.OrganizationID = ORG.organization_id
     WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')";
@@ -129,12 +131,12 @@ class Membership {
       $row['title_link'] .= $row['name'];
       $small_logo_src = '/membership/images/eclipse-mp-member-144x69.png';
       if (!empty($row['small_logo'])) {
-        $small_logo_src = 'data:image/jpeg;base64,' . base64_encode($row['small_logo']);
+        $small_logo_src = 'data:' . $row['small_mime'] . ';base64,' . base64_encode($row['small_logo']);
       }
 
       $large_logo_src = '/membership/images/eclipse-mp-member-144x69.png';
       if (!empty($row['large_logo'])) {
-        $large_logo_src = 'data:image/jpeg;base64,' . base64_encode($row['large_logo']);
+        $large_logo_src = 'data:' . $row['large_mime'] . ';base64,' . base64_encode($row['large_logo']);
         $row['large_logo_website_link'] .= '<img src="' . $large_logo_src . '"  title="' . $row['name'] . '" class="img-responsive padding-bottom-25"/>';
       }
       else{
