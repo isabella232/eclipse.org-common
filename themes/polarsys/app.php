@@ -9,8 +9,8 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/themes/Solstice/classes/SolsticeHeaderNav.class.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/themes/Solstice/classes/SolsticeBtnCfa.class.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/themes/solstice/classes/SolsticeHeaderNav.class.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/themes/solstice/classes/SolsticeBtnCfa.class.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menu.class.php");
 
 class Solstice {
