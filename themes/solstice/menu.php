@@ -83,6 +83,7 @@
     <?php if (!$variables['theme_variables']['hide_breadcrumbs']) :?>
       <section id="breadcrumb" class="<?php print $variables['theme_variables']['breadcrumbs_classes'];?>">
         <div class="container">
+        <h3 class="sr-only">Breadcrumbs</h3>
           <div class="<?php print $variables['theme_variables']['breadcrumbs_wrapper_classes'];?>">
             <?php print $variables['breadcrumbs'];?>
           </div>
