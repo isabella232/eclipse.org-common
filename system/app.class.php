@@ -1198,6 +1198,7 @@ EOHTML;
     $this->setDatabase( "polls",     "localhost", "dashboard", "draobhsad", "myfoundation_demo" );
     $this->setDatabase( "projectinfo",  "localhost", "dashboard", "draobhsad", "myfoundation_demo" );
     $this->setDatabase( "packaging",   "localhost", "dashboard", "draobhsad", "packaging_demo" );
+    $this->setDatabase( "infra",     "localhost", "dashboard", "draobhsad", "infra_demo" );
     $this->setDatabase( "ipzilla",     "localhost", "dashboard", "draobhsad", "ipzilla_demo" );
     $this->setDatabase( "ipzillatest",  "localhost", "dashboard", "draobhsad", "ipzilla_demo" );
     $this->setDatabase( "live",      "localhost", "dashboard", "draobhsad", "live_demo" );
@@ -1226,6 +1227,8 @@ EOHTML;
     $this->set("foundation_db_class_ro",   'DBConnectionFoundation');
     $this->set("gerrit_db_classfile_ro",  'dbconnection_gerrit_ro.class.php');
     $this->set("gerrit_db_class_ro",    'DBConnectionGerrit');
+    $this->set("infra_db_classfile",     'dbconnection_infra_ro.class.php');
+    $this->set("infra_db_class",        'DBConnectionInfraRO');
     $this->set("ipzilla_db_classfile_ro",  'dbconnection_ipzilla_ro.class.php');
     $this->set("ipzilla_db_class_ro",     'DBConnectionIPZillaRO');
     $this->set("ipzilla_db_classfile",     'dbconnection_ipzilla_rw.class.php');
@@ -1399,6 +1402,7 @@ EOHTML;
   function foundation_sql($statement) { return $this->sql ($statement, "foundation"); }    // Foundation internal database
   function gerrit_sql($statement)   { return $this->sql ($statement, "gerrit"); }      // Gerrit
   function ipzilla_sql ($statement)   { return $this->sql ($statement, "ipzilla"); }      // IPZilla
+  function infra_sql ($statement)   { return $this->sql ($statement, "infra"); }      // Infra
   function ipzillatest_sql ($statement) { return $this->sql ($statement, "ipzillatest"); }  // IPZilla test database
   function live_sql ($statement)     { return $this->sql ($statement, "live"); }        // Eclipse Live (read-only!)
   function polls_sql ($statement)   { return $this->sql ($statement, "polls"); }      // Polls
