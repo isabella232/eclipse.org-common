@@ -96,6 +96,7 @@ class Solstice {
     }
 
     $variables['theme_variables'] = $App->getThemeVariables();
+    $variables['theme_variables'] = $App->getThemeVariables();
 
     if (!empty($variables['theme_variables']['breadcrumbs_html'])) {
       $variables['theme_variables']['breadcrumbs_classes'] = 'large-breadcrumbs hidden-print';
@@ -104,6 +105,10 @@ class Solstice {
     }
 
     $classes = array();
+    if (!empty($variables['theme_variables']['btn_cfa']['hide']) && $variables['theme_variables']['btn_cfa']['hide'] === TRUE) {
+      $classes[] = 'hidden-cfa-button';
+    }
+
     $deprecated = "";
     $items = array();
 
