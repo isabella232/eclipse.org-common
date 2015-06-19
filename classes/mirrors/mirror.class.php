@@ -244,5 +244,220 @@ class Mirror {
     }
     return false;
   }
+
+  /**
+   * Run Stats query, return results as JSON
+   * @param string $filename
+   * @param string $view_date
+   * @param string $view
+   * @param string $group
+   * @param string $datefrom
+   * @param string $dateto
+   * @return string JSON string
+   * @since 2015-06-19
+   * @author droy
+   */
+  function getStatsJSON($filename=null, $view_date=null, $view=null, $group=null, $datefrom=null, $dateto=null) {
+    $App = new App();
+
+    $dateQuery = false;
+    if($view == "") {
+    	$view = "sum";
+    }
+
+    $WHERE 		= "";
+    $GROUPBY 	= "";
+    $FILESPEC  	= "IDX.file_name";
+
+    if($view_date == "today") {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " LEFT(DOW.download_date,10) = CURDATE()";
+      $dateQuery = true;
+    }
+
+    if($view_date == "yesterday") {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " LEFT(DOW.download_date,10) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)";
+      $dateQuery = true;
+    }
+
+    if($view_date == "L7") {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " DOW.download_date > DATE_SUB(CURDATE(), INTERVAL 8 day)";
+      $dateQuery = true;
+    }
+
+    if($view_date == "L30") {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " DOW.download_date > DATE_SUB(CURDATE(), INTERVAL 31 day)";
+      $dateQuery = true;
+    }
+
+    if($datefrom != "" && $dateto != "") {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " DOW.download_date BETWEEN \"$datefrom\" AND \"$dateto\"";
+      $dateQuery = true;
+    }
+
+    if($datefrom != "" && $dateto == "") {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " DOW.download_date >= \"$datefrom\"";
+      $dateQuery = true;
+    }
+
+    if($datefrom == "" && $dateto != "") {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= "DOW.download_date <= \"$dateto\"";
+      $dateQuery = true;
+    }
+
+    if($group != 1) {
+      $GROUPBY = " IDX.file_name";
+    }
+    else {
+      $FILESPEC =" \"File Group\" AS file_name";
+    }
+
+    if($view == "daily") {
+      if($GROUPBY != "") {
+        $GROUPBY .= ",";
+      }
+      $GROUPBY .= " LEFT(DOW.download_date,10)";
+    }
+    if($view == "ccode") {
+      if($GROUPBY != "") {
+        $GROUPBY .= ",";
+      }
+      $GROUPBY .= " DOW.ccode";
+    }
+
+
+
+    # Connect to database
+    $dbc = new DBConnection();
+    $now = $this->microtime_float();
+    $dbh = $dbc->connect();
+
+    # fetch oldest stat and total records
+    $sql_info = "SELECT LEFT(MIN(download_date),10) as OldestDate, MAX(download_date) AS NewestDate, COUNT(*) AS RecordCount FROM downloads";
+    $rs_info = mysql_query($sql_info, $dbh);
+   	$myrow_info = mysql_fetch_assoc($rs_info);
+   	$intTotalStats = number_format($myrow_info['RecordCount']);
+    $sinceDate = $myrow_info['OldestDate'];
+    $toDate = $myrow_info['NewestDate'];
+
+
+    # Fetch the ID's if it's a date-based query
+    $aFileID = array();
+    $file_id_csv = "";
+
+    if($filename != "") {
+      $fileCount = 0;
+
+      $sql = "SELECT IDX.file_id FROM download_file_index AS IDX WHERE IDX.file_name LIKE " . $App->returnQuotedString("%" . $filename . "%");
+      $rs = mysql_query($sql, $dbh);
+      while($myrow = mysql_fetch_assoc($rs)) {
+        array_push($aFileID, $myrow['file_id']);
+        $fileCount++;
+      }
+      $file_id_csv = implode(",", $aFileID);
+
+      if(($fileCount > 5000 && $dateQuery) || ($fileCount > 10000 && !$dateQuery)) {
+        die ("Your search includes too many files ($fileCount).  Please refine your search.");
+      }
+    }
+
+    if($filename != "" && !$dateQuery) {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " IDX.file_name LIKE " . $App->returnQuotedString("%" . $filename . "%");
+    }
+    if($dateQuery) {
+      $WHERE = $App->addAndIfNotNull($WHERE);
+      $WHERE .= " IDX.file_id IN ($file_id_csv)";
+    }
+
+    if($WHERE != "") {
+     $WHERE = " WHERE " . $WHERE;
+    }
+    if($GROUPBY != "") {
+      $GROUPBY = " GROUP BY " . $GROUPBY;
+    }
+
+	/*
+   	* End: Build query filter criteria
+   	*/
+
+  	/*
+   	* Choose the appropriate query, based on the view
+   	*
+   	*/
+
+    if($view == "sum") {
+      if(!$dateQuery) {
+        # simplified query based on the download_file_index only
+        if($group == 1) {
+          $sql = "SELECT $FILESPEC, SUM(download_count) AS file_count FROM download_file_index AS IDX " . $WHERE;
+        }
+        else {
+          $sql = "SELECT $FILESPEC, download_count AS file_count FROM download_file_index AS IDX " . $WHERE . $GROUPBY . " ORDER BY file_count DESC";
+        }
+      }
+      else {
+        $sql = "SELECT $FILESPEC, COUNT(DOW.file_id) AS file_count FROM	download_file_index AS IDX LEFT JOIN downloads AS DOW ON DOW.file_id = IDX.file_id" 
+          . $WHERE . $GROUPBY . " ORDER BY file_count DESC";
+      }
+    }
+    if($view == "daily" ) {
+      $sql = "SELECT $FILESPEC, LEFT(DOW.download_date,10) AS download_date, COUNT(DOW.file_id) AS file_count	FROM download_file_index AS IDX
+        LEFT JOIN downloads AS DOW ON DOW.file_id = IDX.file_id	" . $WHERE . $GROUPBY . "ORDER BY IDX.file_name, DOW.download_date DESC";
+      # $inc_file = "inc/en_stats_daily.php";
+	}
+
+
+	if($view == "ccode") {
+      $ORDERBY = " ORDER BY IDX.file_name, file_count DESC";
+      if($group == 1) {
+        $ORDERBY = " ORDER BY file_count DESC";
+      }
+
+      $sql = "SELECT $FILESPEC, DOW.ccode, COU.en_description AS CountryDescription, COUNT(DOW.file_id) AS file_count	FROM download_file_index AS IDX LEFT JOIN downloads AS DOW ON DOW.file_id = IDX.file_id
+    	LEFT JOIN SYS_countries AS COU ON COU.ccode = DOW.ccode	" . $WHERE . $GROUPBY . $ORDERBY;
+
+      # $inc_file = "inc/en_stats_ccode.php";
+    }
+
+    # Bypass query if no filename specified
+    if($filename == "") {
+      $sql = "SELECT 'Please specify a file' AS file_name, '' AS file_count";
+   	}
+
+    $rs = mysql_query($sql, $dbh);
+    $querytime = $this->microtime_float() - $now;
+
+    # build JSON payload
+    $rValue = new stdClass();
+    $rValue->totalStats = $intTotalStats;
+    $rValue->sinceDate = $sinceDate;
+    $rValue->toDate = $toDate;
+    $rValue->queryTime = $querytime;
+
+    $rows = array();
+    while($r = mysql_fetch_assoc($rs)) {
+      $rows[] = $r;
+    }
+    $rValue->rows = $rows;
+
+    # Free up some memory from the hoggers
+    unset($rows, $rs, $rs_info, $aFileID);
+    $dbc->disconnect();
+
+    return json_encode($rValue);
+  }
+  
+  function microtime_float() {
+    list($usec, $sec) = explode(" ", microtime());
+    return ((float)$usec + (float)$sec);
+  }
+
 }
 ?>
