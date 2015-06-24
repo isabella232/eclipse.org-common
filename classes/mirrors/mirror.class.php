@@ -31,7 +31,7 @@ class Mirror {
   var $internal_host_pattern = "";
   var $last_verified = "";
 
-  public $exclude_string = "*.nfs* apitools/ apidocs/ archive/ archives/ /athena builds/N* */doc/* */documentation/* drops*/I* drops*/N* drops/M* *.jpg *.gif callisto/* compilelogs/ eclipse.org-common/ eclipse/testUpdates* eclipse/updates/3.2milestones /eclipse/updates/3.6-I-builds/ dev/TPTP* /tools/cdt/builds modeling/gmf/downloads/drops/B* *drops*/*/N* *drops*/*/I* *javadoc/ *javadocs/ linuxtools/N* *nightly* *Nightly* *staging* /webtools/downloads/drops/*/M* performance/ /releases/staging /releases/europa testresults/ /rt/eclipselink/nightly* /technology/cosmos /technology/ohf /technology/tigerstripe testcompilelogs/ testResults/ /tools/downloads /tools/orbit/committers */N201* */I201* */I.I201* */I-* */N-* *integration*/ xref/ */M20* /rt/eclipselink/maven.repo* */scripts* */logs* *drops4/X* *drops4/Y* */eclipse/updates/*-X* */eclipse/updates/*-Y* *php*.*";
+  public $exclude_string = "*.nfs* apitools/ apidocs/ archive/ archives/ /athena builds/N* */doc/* */documentation/* drops*/I* drops*/N* drops/M* *.jpg *.gif callisto/* compilelogs/ eclipse.org-common/ eclipse/testUpdates* eclipse/updates/3.2milestones /eclipse/updates/3.6-I-builds/ dev/TPTP* /tools/cdt/builds modeling/gmf/downloads/drops/B* *drops*/*/N* *drops*/*/I* *javadoc/ *javadocs/ linuxtools/N* *nightly* *Nightly* *staging* /webtools/downloads/drops/*/M* performance/ /releases/staging /releases/europa testresults/ /rt/eclipselink/nightly* /technology/cosmos /technology/ohf /technology/tigerstripe testcompilelogs/ testResults/ /tools/downloads /tools/orbit/committers */N201* */I201* */I.I201* */I-* */N-* *integration*/ xref/ */M20* /rt/eclipselink/maven.repo* */scripts* */logs* *drops4/X* *drops4/Y* */eclipse/updates/*-X* */eclipse/updates/*-Y* *.php*.*";
 
 
   function getMirrorID() {
@@ -234,13 +234,16 @@ class Mirror {
   function isExcluded($filename) {
     $exclude_array   = explode(" ", $this->exclude_string);
     for($i = 0; $i < count($exclude_array); $i++) {
-       # replace leading and ending *
-       $exclude_array[$i] = preg_replace('(^\*|\*$)', "", $exclude_array[$i]);
-       $exclude_array[$i] = str_replace("*", ".*", $exclude_array[$i]);
-       if(preg_match("#" . $exclude_array[$i] . "#", $filename)) {
-         return true;
-         break;
-       }
+      # replace dot with \. since rsync considers it a dot
+      $exclude_array[$i] = str_replace(".", "\.", $exclude_array[$i]);
+
+      # replace leading and ending *
+      $exclude_array[$i] = preg_replace('(^\*|\*$)', "", $exclude_array[$i]);
+      $exclude_array[$i] = str_replace("*", ".*", $exclude_array[$i]);
+      if(preg_match("#" . $exclude_array[$i] . "#", $filename)) {
+        return true;
+        break;
+      }
     }
     return false;
   }
