@@ -240,6 +240,8 @@ class Paypal {
     } else {
       $this->log_database('DONATION_INVALID');
       $this->payment_status = 'Error';
+      // Sending the paypal response for debugging
+      mail('friends@eclipse.org', 'DONATION_INVALID', $res);
     }
     return FALSE;
   }
