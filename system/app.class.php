@@ -793,8 +793,19 @@ EOHTML;
         function usePolls() {
           require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
         }
-    function useJSON() {
+        function useJSON() {
           require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/json/JSON.php");
+        }
+
+        /**
+         * Returns a new REST client
+         * @return RestClient
+         * @since 2015-06-24
+         * @author droy
+         */
+        function RESTClient() {
+          require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/rest/restclient.class.php");
+          return new RestClient();
         }
 
         function useProjectInfo() {
