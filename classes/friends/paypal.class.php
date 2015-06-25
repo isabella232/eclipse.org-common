@@ -224,7 +224,8 @@ class Paypal {
     $this->log(date('[Y-m-d H:i e] '). "Requesting transaction information" . PHP_EOL);
     $tx_token = $_GET['tx'];
     if (!$tx_token) $tx_token = $_POST['txn_id'];
-    $req = 'cmd=_notify-synch&tx=' . urlencode($tx_token) . '&at=' . urlencode($this->auth_token);
+    $tx_token_encoded = urlencode(strtoupper($tx_token));
+    $req = 'cmd=_notify-synch&tx=' . $tx_token_encoded . '&at=' . urlencode($this->auth_token);
     $res = $this->curl_request($this->paypal_url, $req);
     if (strpos($res, "SUCCESS\n") !== FALSE) {
       $lines = explode("\n", $res);
@@ -241,7 +242,7 @@ class Paypal {
       $this->log_database('DONATION_INVALID');
       $this->payment_status = 'Error';
       // Sending the paypal response for debugging
-      mail('friends@eclipse.org', 'DONATION_INVALID', $res);
+      mail('friends@eclipse.org', 'DONATION_INVALID', $tx_token . ' ' . $res);
     }
     return FALSE;
   }
