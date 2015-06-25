@@ -11,6 +11,7 @@
  *    Edouard Poitars (Eclipse Foundation)- Heavy modifications for new donatin process
  *******************************************************************************/
 
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once("/home/data/httpd/eclipse-php-classes/system/authcode.php");
 include('paypal.class.inc.php');
@@ -20,6 +21,7 @@ class Paypal {
   // CONFIG: Enable $this->debug mode. This means we'll log requests into 'ipn.log' in the same directory.
   // Especially useful if you encounter network errors or other intermittent problems with IPN (validation).
   // Set this to 0 once you go live or don't require logging.
+  private $App = NULL;
   private $debug = FALSE;
   private $use_sandbox = FALSE;
   private $log_file = "/tmp/ipn.log";
@@ -41,6 +43,11 @@ class Paypal {
   private $transaction = array();
   private $status_check = array('Completed', 'Pending');
   private $status_message = "";
+
+  public function Paypal() {
+    global $App;
+    $this->App = $App;
+  }
 
   public function get_email() {
     return $this->email;
@@ -222,8 +229,8 @@ class Paypal {
 
   public function request_transaction_information() {
     $this->log(date('[Y-m-d H:i e] '). "Requesting transaction information" . PHP_EOL);
-    $tx_token = $_GET['tx'];
-    if (!$tx_token) $tx_token = $_POST['txn_id'];
+    $tx_token = $this->App->getHTTPParameter('tx');
+    if (!$tx_token) $tx_token = $this->App->getHTTPParameter('txn_id');
     $tx_token_encoded = urlencode(strtoupper($tx_token));
     $req = 'cmd=_notify-synch&tx=' . $tx_token_encoded . '&at=' . urlencode($this->auth_token);
     $res = $this->curl_request($this->paypal_url, $req);
