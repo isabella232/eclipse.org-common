@@ -38,7 +38,7 @@ class PromotedPlugin extends EclipseAds {
     $this->newAd($Ad);
 
     $Ad = new Ad();
-    $Ad->setTitle('Buildship Gradle Integration');
+    $Ad->setTitle('Gradle Integration from Buildship');
     $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2306961');
     $Ad->setBody('Eclipse plug-ins that provide support for building software using Gradle.');
     $Ad->setImage('/downloads/images/promoted_listings/Gradle-logo.png');
