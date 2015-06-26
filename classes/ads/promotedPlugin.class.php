@@ -33,7 +33,7 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setTitle('Java 9 Support (Beta)');
     $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2393593');
     $Ad->setBody('Early access to Java 9 support for Mars.');
-    $Ad->setImage('//marketplace.eclipse.org/sites/default/files/styles/ds_medium/public/default_images/default_2.png?itok=hA89-j9Y');
+    $Ad->setImage('/downloads/images/promoted_listings/default.png');
     $Ad->setCampaign('PP_JAVA9');
     $this->newAd($Ad);
 
@@ -41,7 +41,7 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setTitle('Buildship Gradle Integration');
     $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2306961');
     $Ad->setBody('Eclipse plug-ins that provide support for building software using Gradle.');
-    $Ad->setImage('//marketplace.eclipse.org/sites/default/files/styles/ds_medium/public/Gradle-Logo.png?itok=I76toUo1');
+    $Ad->setImage('/downloads/images/promoted_listings/Gradle-Logo.png');
     $Ad->setCampaign('PP_GRADLE');
     $this->newAd($Ad);
   }
