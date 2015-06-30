@@ -44,6 +44,14 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setImage('/downloads/images/promoted_listings/Gradle-logo.png');
     $Ad->setCampaign('PP_GRADLE');
     $this->newAd($Ad);
+
+    $Ad = new Ad();
+    $Ad->setTitle('MyEclipse');
+    $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=69');
+    $Ad->setBody('Power-up your Eclipse for Java EE development w/turn-key coding for JEE, Mobile & Web.');
+    $Ad->setImage('/downloads/images/promoted_listings/myeclipse-logo.png');
+    $Ad->setCampaign('PP_MYECLIPSE');
+    $this->newAd($Ad);
   }
 
   /**
