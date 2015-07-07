@@ -64,15 +64,19 @@
           <div id="header-right" class="form-inline col-sm-10 col-md-8 col-lg-5 hidden-print hidden-xs">
             <div id="header-right-container">
               <div id="custom-search-form">
-                <form action="//cse.google.com" id="form-eclipse-search" role="form" class="input-group">
-                  <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
-                  <input id="search-box" placeholder="Search eclipse.org" type="text" name="q" size="25" class="form-control"/>
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">
-                      <i class="fa fa-search"></i>
-                    </button>
-                  </span>
-                </form>
+                <script>
+                  (function() {
+                    var cx = '011805775785170369411:15ipmpflp-0';
+                    var gcse = document.createElement('script');
+                    gcse.type = 'text/javascript';
+                    gcse.async = true;
+                    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                        '//cse.google.com/cse.js?cx=' + cx;
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(gcse, s);
+                  })();
+                </script>
+                <gcse:searchbox-only></gcse:searchbox-only>
               </div><!-- /input-group -->
               <?php print $SolsticeBtnCfa->build();?>
             </div>
