@@ -64,7 +64,7 @@
           <div id="header-right" class="form-inline col-sm-10 col-md-8 col-lg-5 hidden-print hidden-xs">
             <div id="header-right-container">
               <div id="custom-search-form">
-                <form action="//www.google.com/cse" id="form-eclipse-search" role="form" class="input-group">
+                <form action="//cse.google.com" id="form-eclipse-search" role="form" class="input-group">
                   <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
                   <input id="search-box" placeholder="Search eclipse.org" type="text" name="q" size="25" class="form-control"/>
                   <span class="input-group-btn">
