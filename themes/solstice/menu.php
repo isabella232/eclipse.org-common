@@ -63,7 +63,7 @@
           </div>
           <div id="header-right" class="form-inline col-sm-10 col-md-8 col-lg-5 hidden-print hidden-xs">
             <div id="header-right-container">
-              <div id="custom-search-form">
+              <div id="custom-search-form" class="reset-box-sizing">
                 <script>
                   (function() {
                     var cx = '011805775785170369411:15ipmpflp-0';
