@@ -52,6 +52,12 @@ class EclipseAds{
   protected $remote_addr = "";
 
   /**
+   * The total weight of all ads
+   * @var int
+   */
+  protected $total_weight = 0;
+
+  /**
    * Constructor
    * @param string $source
    */
@@ -86,10 +92,36 @@ class EclipseAds{
    */
   protected function _choseAd() {
     if (!empty($this->ads)) {
-      $random = array_rand($this->ads, 1);
-      $this->ad = $this->ads[$random];
+      $this->_getTotalWeight();
+      switch ($this->total_weight) {
+        // split evenly
+        case 0:
+          $random = array_rand($this->ads, 1);
+          $this->ad = $this->ads[$random];
+          break;
+
+        // use weight to chose an ad.
+        default:
+          $draw = rand(1, $this->total_weight);
+          $current = 0;
+          foreach ($this->ads as $Ad) {
+            $current = $current + $Ad->getWeight();
+            if ($draw <= $current) {
+              $this->ad  = $Ad;
+              break;
+            }
+          }
+      }
     }
-    return FALSE;
+  }
+
+  private function _getTotalWeight() {
+    $this->total_weight = 0;
+    foreach ($this->ads as $ad) {
+      $this->total_weight = $ad->getWeight() + $this->total_weight;
+    }
+
+    return $this->total_weight;
   }
 
   /**
@@ -97,12 +129,14 @@ class EclipseAds{
    */
   public function output() {
     $this->_choseAd();
-    $campaign = $this->ad->getCampaign();
-    if (!empty($this->ad) && $campaign != "") {
-      $CampaignImpression = new CampaignImpression($campaign, $this->source, $this->remote_addr);
-      $CampaignImpression->recordImpression();
+    if (!empty($this->ad)) {
+      $campaign = $this->ad->getCampaign();
+      if (!empty($this->ad) && $campaign != "") {
+        $CampaignImpression = new CampaignImpression($campaign, $this->source, $this->remote_addr);
+        $CampaignImpression->recordImpression();
+      }
+      $this->_build();
     }
-    $this->_build();
     print $this->output;
   }
 }

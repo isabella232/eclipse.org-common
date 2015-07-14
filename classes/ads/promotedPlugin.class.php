@@ -35,6 +35,7 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setBody('Early access to Java 9 support for Mars.');
     $Ad->setImage('/downloads/images/promoted_listings/default.png');
     $Ad->setCampaign('PP_JAVA9');
+    $Ad->setWeight(20);
     $this->newAd($Ad);
 
     $Ad = new Ad();
@@ -43,6 +44,7 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setBody('Eclipse plug-ins that provide support for building software using Gradle.');
     $Ad->setImage('/downloads/images/promoted_listings/Gradle-logo.png');
     $Ad->setCampaign('PP_GRADLE');
+    $Ad->setWeight(20);
     $this->newAd($Ad);
 
     $Ad = new Ad();
@@ -51,6 +53,7 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setBody('Power-up your Eclipse for Java EE development w/turn-key coding for JEE, Mobile & Web.');
     $Ad->setImage('/downloads/images/promoted_listings/myeclipse-logo.png');
     $Ad->setCampaign('PP_MYECLIPSE');
+    $Ad->setWeight(60);
     $this->newAd($Ad);
   }
 
@@ -63,4 +66,5 @@ class PromotedPlugin extends EclipseAds {
    include("tpl/promotedPlugin.tpl.php");
    $this->output = ob_get_clean();
   }
+
 }

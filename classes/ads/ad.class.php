@@ -52,6 +52,13 @@ class Ad {
   private $campaign = "";
 
   /**
+   * Weight of an ad. If not set, the impressions will be split evenly.
+   * @var int
+   */
+  private $weight = 0;
+
+
+  /**
    * Setter for $url
    * @param string $url
    */
@@ -129,6 +136,26 @@ class Ad {
    */
   public function getCampaign() {
     return $this->campaign;
+  }
+
+  /**
+   * Setter for $weight
+   * @param string $weight
+   */
+  public function setWeight($value = 0) {
+    if (is_int($value)) {
+      $this->weight = $value;
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Getter for $weight
+   * @param int $weight
+   */
+  public function getWeight($value = 0) {
+    return $this->weight;
   }
 
   /**
