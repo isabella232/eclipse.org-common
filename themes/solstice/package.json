@@ -9,7 +9,8 @@
     "url": "https://bugs.eclipse.org/bugs/buglist.cgi?component=Website&list_id=8318814&product=Community&resolution=---"
   },
   "scripts": {
-    "grunt" : "node_modules/.bin/grunt"
+    "grunt" : "node_modules/.bin/grunt",
+    "bower" : "node_modules/.bin/bower"
   },
   "readmeFilename": "README.md",
   "devDependencies": {
