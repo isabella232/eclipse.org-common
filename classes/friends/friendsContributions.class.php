@@ -14,44 +14,51 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/co
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
 
 class FriendsContributions {
-	private $friend_id;
-	private $contribution_id;
-	private $friendObject;
-	private $contributionObject;
-	
-	
-	# default constructor
-	function FriendsContributions() {
-		$this->friend_id 		= "";
-		$this->contribution_id	= "";
-		$this->friendObject	= new Friend();
-		$this->contribitionObject	= new Contribution();
-	}
-	
-	function getFriendID() {
-		return $this->friend_id;
-	}
-	function getContribution() {
-		return $this->contribution_id;
-	}
-	function getFriendObject() {
-		return $this->friendObject;
-	}
-	function getContributionObject() {
-		return $this->contributionObject;
-	}
-	
-	function setFriendID($_friend_id){
-		$this->friend_id = $_friend_id;
-	}
-	function setContributionID($_contribution_id) {
-		$this->contribution_id = $_contribution_id;
-	}
-	function setFriendObject($_friendObject) {
-		$this->friendObject = $_friendObject;
-	}
-	function setContributionObject($_contributionObject){
-		$this->contributionObject = $_contributionObject;
-	}
-	
+  private $friend_id;
+
+  private $contribution_id;
+
+  private $friendObject;
+
+  private $contributionObject;
+
+  # default constructor
+  function FriendsContributions($testmode = FALSE) {
+    $this->friend_id     = "";
+    $this->contribution_id  = "";
+    $this->friendObject  = new Friend($testmode);
+    $this->contribitionObject  = new Contribution($testmode);
+  }
+
+  function getFriendID() {
+    return $this->friend_id;
+  }
+
+  function getContribution() {
+    return $this->contribution_id;
+  }
+
+  function getFriendObject() {
+    return $this->friendObject;
+  }
+
+  function getContributionObject() {
+    return $this->contributionObject;
+  }
+
+  function setFriendID($_friend_id){
+    $this->friend_id = $_friend_id;
+  }
+
+  function setContributionID($_contribution_id) {
+    $this->contribution_id = $_contribution_id;
+  }
+
+  function setFriendObject($_friendObject) {
+    $this->friendObject = $_friendObject;
+  }
+
+  function setContributionObject($_contributionObject){
+    $this->contributionObject = $_contributionObject;
+  }
 }
