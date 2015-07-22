@@ -156,6 +156,35 @@ class App {
     return $_SERVER["DOCUMENT_ROOT"] . "/home/promotions/promotion.php";
   }
 
+  /**
+   * Get eclipse.org cookie domain and prefix based off the current environment
+   *
+   * @return array
+   */
+  public function getEclipseDomain(){
+    $allowed_hosts = array('eclipse.local', 'www.eclipse.local', 'dev.eclipse.local');
+    if (isset($_SERVER['HTTP_HOST']) && in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
+      return array(
+        'cookie' => '.eclipse.local',
+        'domain' => 'www.eclipse.local',
+        'dev_domain' => 'dev.eclipse.local'
+      );
+    }
+    $allowed_hosts = array('staging.eclipse.org');
+    if (isset($_SERVER['HTTP_HOST']) && in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
+      return array(
+        'cookie' => '.eclipse.org',
+        'domain' => 'staging.eclipse.org',
+        // We currently dont have a staging server for dev.eclipse.org
+        'dev_domain' => 'dev.eclipse.org',
+      );
+    }
+    return array(
+      'cookie' => '.eclipse.org',
+      'domain' => 'www.eclipse.org',
+      'dev_domain' => 'dev.eclipse.org'
+    );
+  }
 
   function getAppName() {
     return $this->APPNAME;

@@ -20,6 +20,8 @@ if (!class_exists("EvtLog")) {
 
 class Session {
 
+  private $App = NULL;
+
   private $gid = "";
 
   private $bugzilla_id = 0;
@@ -50,12 +52,15 @@ class Session {
    * @return NULL
    */
   public function __construct($persistent=0, $configs = array()) {
+   $this->App = new App();
+   $domain = $this->App->getEclipseDomain();
+
     $default = array(
-      'domain' => '.eclipse.org',
+      'domain' => $domain['cookie'] ,
       'session_name' => 'ECLIPSESESSION',
       'env' => 'ECLIPSE_ENV',
       'htaccess' => '/home/data/httpd/friends.eclipse.org/html/.htaccess',
-      'login_page' => 'https://dev.eclipse.org/site_login/',
+      'login_page' => 'https://' . $domain['dev_domain'] . '/site_login/',
     );
 
     # Set default config values.
