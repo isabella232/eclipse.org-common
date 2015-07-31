@@ -47,11 +47,13 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setWeight(20);
     $this->newAd($Ad);
 
+
+    // Genuitec's Promoted Plugin
     $Ad = new Ad();
-    $Ad->setTitle('MyEclipse');
-    $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=69');
-    $Ad->setBody('Power-up your Eclipse for Java EE development w/turn-key coding for JEE, Mobile & Web.');
-    $Ad->setImage('/downloads/images/promoted_listings/myeclipse-logo.png');
+    $Ad->setTitle('Webclipse - New!');
+    $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2456312');
+    $Ad->setBody('Adding REST Inspect, Hot Reload, JavaScript Debug and more to your Eclipse, for free.');
+    $Ad->setImage('/downloads/images/promoted_listings/webclipse-logo.png');
     $Ad->setCampaign('PP_MYECLIPSE');
     $Ad->setWeight(60);
     $this->newAd($Ad);
