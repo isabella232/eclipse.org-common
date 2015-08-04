@@ -75,8 +75,9 @@ class CampaignImpression {
       $App->eclipse_sql($deleteSql);
     }
 
-    $sql = "INSERT DELAYED INTO CampaignImpressions VALUES (
-      " . $App->returnQuotedString('') . ",
+    $sql = "INSERT DELAYED INTO CampaignImpressions
+        (CampaignKey, Source, HostName, TimeImpressed)
+        VALUES (
       " . $App->returnQuotedString($App->sqlSanitize($this->campaign_key)) . ",
       " . $App->returnQuotedString($App->sqlSanitize($this->source)) . ",
       " . $App->returnQuotedString($App->sqlSanitize($this->remote_addr)) . ",
