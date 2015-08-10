@@ -12,7 +12,7 @@
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 ?>
 <div class="promoted-plugin">
-  <a href="<?php print $this->ad->getUrl();?>" class="drag">
+  <a href="<?php print $this->ad->getUrl2();?>">
     <span class="header clearfix">
       <h3><i class="fa fa-star">&nbsp;</i> Promoted Plugin</h3>
     </span>
@@ -25,6 +25,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
         <span class="pp-text"><?php print $this->ad->getBody();?></span>
       </span>
     </span>
+  </a>
+  <a href="<?php print $this->ad->getUrl();?>" class="drag">
     <span class="download clearfix drag_installbutton">
       <i class="fa fa-download pull-left"></i>
       <span class="padding-top-10" style="display:block">INSTALL NOW</span>

@@ -31,7 +31,7 @@ class PromotedPlugin extends EclipseAds {
 
     $Ad = new Ad();
     $Ad->setTitle('Java 9 Support (Beta)');
-    $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2393593');
+    $this->_setMarketplaceNodeId('2393593', $Ad);
     $Ad->setBody('Early access to Java 9 support for Mars.');
     $Ad->setImage('/downloads/images/promoted_listings/default.png');
     $Ad->setCampaign('PP_JAVA9');
@@ -40,7 +40,7 @@ class PromotedPlugin extends EclipseAds {
 
     $Ad = new Ad();
     $Ad->setTitle('Gradle Integration from Buildship');
-    $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2306961');
+    $this->_setMarketplaceNodeId('2306961', $Ad);
     $Ad->setBody('Eclipse plug-ins that provide support for building software using Gradle.');
     $Ad->setImage('/downloads/images/promoted_listings/Gradle-logo.png');
     $Ad->setCampaign('PP_GRADLE');
@@ -51,7 +51,7 @@ class PromotedPlugin extends EclipseAds {
     // Genuitec's Promoted Plugin
     $Ad = new Ad();
     $Ad->setTitle('Webclipse - New!');
-    $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2456312');
+    $this->_setMarketplaceNodeId('2456312', $Ad);
     $Ad->setBody('Adding REST Inspect, Hot Reload, JavaScript Debug and more to your Eclipse, for free.');
     $Ad->setImage('/downloads/images/promoted_listings/webclipse-logo.png');
     $Ad->setCampaign('PP_MYECLIPSE');
@@ -64,9 +64,19 @@ class PromotedPlugin extends EclipseAds {
    * @see EclipseAds::_build()
    */
   protected function _build() {
-   ob_start();
-   include("tpl/promotedPlugin.tpl.php");
-   $this->output = ob_get_clean();
+    ob_start();
+    include("tpl/promotedPlugin.tpl.php");
+    $this->output = ob_get_clean();
+  }
+
+  /**
+   * Set Links for a promoted plugin
+   * @param string $id
+   * @param unknown $Ad
+   */
+  protected function _setMarketplaceNodeId($id = '', &$Ad) {
+    $Ad->setUrl('http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=' . $id);
+    $Ad->setUrl2('http://marketplace.eclipse.org/node/' . $id);
   }
 
 }

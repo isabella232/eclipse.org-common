@@ -27,6 +27,15 @@ class Ad {
    */
   private $url = "";
 
+ /**
+   * The url of an ad
+   *
+   * Some ads might need two diffent urls.
+   *
+   * @var string
+   */
+  private $url2 = "";
+
   /**
    * The title for the ad
    * @var string
@@ -72,6 +81,22 @@ class Ad {
    */
   public function getUrl() {
     return $this->url;
+  }
+
+  /**
+   * Setter for $url2
+   * @param string $url2
+   */
+  public function setUrl2($url = '') {
+    $this->url2 = $url;
+  }
+
+  /**
+   * Getter for $url2
+   * @param string $url2
+   */
+  public function getUrl2() {
+    return $this->url2;
   }
 
   /**
