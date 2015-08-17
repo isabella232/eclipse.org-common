@@ -53,7 +53,7 @@ class BitPay extends PaymentGateway {
    if (!$this->_get_debug_mode()) {
      $this->_set_gateway_url('https://bitpay.com/checkout');
      $this->_set_gateway_email('donate@eclipse.org');
-     $this->_set_bitpay_data('0aFzNGoToD0/elGC/2XEk0tokqlR/1w4f7ld6jMcYQ+/rt4oezJ7XvP5BWx0WmbDfgzQ0TFoBXp9fJ08yGxe9dz9EehQbo8t/kQvbWzhGDS0NZ1HUUOMQQktbomnBeW1Kgp46LS5c2EidjP+pG0vtQwzGJBcJIwZlHHJ1Ep8g5O2NAJrp8Fc9af2Gbfja7PTTwkO+KFOK78RwJ7rowxxCruqbyzQYk70I8e/89PoDlUjzRsI0xXyDE3Ssma8JxAeKOVoRw9Q+cIaLsLFKqwbqzZazE2tKQAo5GDmpz0uUWVB0sSwVQrCmO90uhQTq8zYrn8LUzAAofVnrteoVz3yKbqwV4TWXic+z6SN7UVroijKsr6NTIWKCi9Sh+ONiKJB');
+     $this->_set_bitpay_data('0aFzNGoToD0/elGC/2XEk0tokqlR/1w4f7ld6jMcYQ+/rt4oezJ7XvP5BWx0WmbDfgzQ0TFoBXp9fJ08yGxe9dz9EehQbo8t/kQvbWzhGDS0NZ1HUUOMQQktbomnBeW1Kgp46LS5c2EidjP+pG0vtQwzGJBcJIwZlHHJ1Ep8g5O2NAJrp8Fc9af2Gbfja7PTTwkO+KFOK78RwJ7rowxxCruqbyzQYk70I8e/89PoDlUjzRsI0xXyDE3Ssma8JxAeKOVoRw9Q+cIaLsLFKqwbqzZazE2tKQAo5GDmpz0uUWVB0sSwVQrCmO90uhQTq8zYrn8LUzAAofVnrteoVz3yKbqwV4TWXic+z6SN7UVroijSuNm22eUJXqZfgx4d9+ALtxits48RMpiPi0hZwUGBpw==');
    }
 
    $this->Donation->set_donation_currency('BTC');
