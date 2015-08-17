@@ -300,7 +300,7 @@ class Payment {
    */
   protected function _set_proxy(){
     if ($this->_get_prefix_domain() === 'www.eclipse.org') {
-      $this->proxy  = 'proxy.eclipse.org:9899';
+      $this->proxy = 'proxy.eclipse.org:9899';
     }
   }
 
