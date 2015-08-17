@@ -185,7 +185,7 @@ class Payment {
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
     curl_setopt($curl, CURLOPT_TIMEOUT, 30);
     // CONFIG: Optional proxy configuration
-    curl_setopt($curl, CURLOPT_PROXY, $this->proxy);
+    curl_setopt($curl, CURLOPT_PROXY, $this->_get_proxy());
     curl_setopt($curl, CURLOPT_HTTPPROXYTUNNEL, 1);
     if ($this->_get_prefix_domain() === 'www.eclipse.local') {
       curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
