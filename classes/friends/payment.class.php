@@ -299,7 +299,7 @@ class Payment {
    * Set eclipse proxy for staging/production
    */
   protected function _set_proxy(){
-    if ($this->_get_prefix_domain() === 'www.eclipse.local') {
+    if ($this->_get_prefix_domain() === 'www.eclipse.org') {
       $this->proxy  = 'proxy.eclipse.org:9899';
     }
   }
