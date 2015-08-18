@@ -202,7 +202,7 @@ class Donation {
    */
   public function get_donation_amount() {
     $this->_set_donation_benefit_level();
-    return (float)abs($this->donation_amount);
+    return $this->donation_amount;
   }
 
   /**
@@ -346,7 +346,7 @@ class Donation {
     if ($donation_amount == "0" or is_nan($donation_amount)) {
       $donation_amount = 0.15;
       if ($this->donation_currency == 'USD') {
-        $donation_amount = 35;
+        $donation_amount = 35.00;
       }
     }
 
@@ -355,7 +355,7 @@ class Donation {
       $donation_amount = number_format($donation_amount, 2);
     }
 
-    $this->donation_amount = (float)$donation_amount;
+    $this->donation_amount = $donation_amount;
     $this->_set_donation_benefit_level();
   }
 
