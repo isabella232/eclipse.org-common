@@ -231,20 +231,20 @@ class Donation {
     $currency = $this->get_donation_currency();
 
     // Access to the Friends of Eclipse mirrors.
-    if (($currency === 'USD' && $amount >= 35) || ($currency === 'BTC' && $amount >= 0.15)) {
+    if ($amount >= 35) {
       $this->set_donation_benefit(1);
     }
 
     // Minimum donation of 250USD or 0.70 BTC
-    if (($currency === 'USD' && $amount >= 250) || ($currency === 'BTC' && $amount >= 0.70)) {
+    if ($amount >= 250) {
       $this->donation_benefit_group = 'webmaster_idol';
     }
     // Minumum donation of 100USD or 0.25 BTC
-    elseif (($currency === 'USD' && $amount >= 100) || ($currency === 'BTC' && $amount >= 0.25)) {
+    elseif ($amount >= 100) {
       $this->donation_benefit_group = 'best_friend';
     }
     // Minimum donation of 35USD or 0.15 BTC
-    elseif (($currency === 'USD' && $amount >= 35) || ($currency === 'BTC' && $amount >= 0.15)) {
+    elseif ($amount >= 35) {
       $this->donation_benefit_group = 'friend';
     }
     else{
@@ -344,16 +344,11 @@ class Donation {
 
     //Make sure the amount is a number and it's not 0
     if ($donation_amount == "0" or $donation_amount == "" or is_nan($donation_amount)) {
-      $donation_amount = 0.15;
-      if ($this->donation_currency == 'USD') {
-        $donation_amount = 35.00;
-      }
+      $donation_amount = 35.00;
     }
 
-    // Format the number for USD donations
-    if ($this->donation_currency == 'USD') {
-      $donation_amount = number_format($donation_amount, 2);
-    }
+    // Format the amount
+    $donation_amount = number_format($donation_amount, 2);
 
     $this->donation_amount = $donation_amount;
     $this->_set_donation_benefit_level();

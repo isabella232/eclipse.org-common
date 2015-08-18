@@ -12,7 +12,7 @@
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 
 $amount = $this->Donation->get_donation_amount();
-if (empty($this->Donation->Donor->donor_email) && $amount >= 0.15) {
+if (empty($this->Donation->Donor->donor_email) && $amount >= 35) {
   $message = '<strong>Please note:</strong> You have not entered your email address in the previous form.
     Please provide your email address before proceeding to bitpay if you would like to receive your
     <a href="/donate/benefits.php" target="_blank" title="Friend of Eclipse Benefits">
@@ -46,7 +46,7 @@ if (empty($this->Donation->Donor->donor_email) && $amount >= 0.15) {
 
   <div class="form-group  col-xs-12">
     <label>Donation Amount:</label><br/>
-    <?php print $this->Donation->donation_amount;?> BTC
+    $<?php print $this->Donation->donation_amount;?> USD
   </div>
 
   <div class="form-group col-xs-12">
@@ -65,7 +65,7 @@ if (empty($this->Donation->Donor->donor_email) && $amount >= 0.15) {
     <input type="hidden" name="action"  value="checkout">
     <input type="hidden" name="notificationType" value="json" />
     <input type="hidden" name="price" value="<?php print $this->Donation->get_donation_amount();?>"/>
-    <input type="hidden" name="currency" value="BTC"/>
+    <input type="hidden" name="currency" value="USD"/>
     <input type="hidden" name="posData" value="<?php print $this->Donation->get_donation_random_invoice_id();?>" />
     <input type="hidden" name="data" value="<?php print $this->_get_bitpay_data();?>">
     <button type="submit" name="submit" class="btn btn-warning">Donate with bitpay.com</button>

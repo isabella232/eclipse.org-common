@@ -115,8 +115,15 @@ class BitPay extends PaymentGateway {
           $this->Donation->Donor->set_donor_paypal_email($values['buyerFields']['buyerEmail']);
         }
 
-        if (!empty($values['btcPaid'])){
-          $this->Donation->set_donation_amount($values['btcPaid']);
+        if (!empty($values['price'])){
+          $this->Donation->set_donation_amount($values['price']);
+        }
+
+        // Make sure the donation currency is set to USD
+        // If not, someone modified the currency before submitting the form
+        // We wont apply any benefits for this type of scenario
+        if (!empty($values['currency']) && $values['currency'] != 'USD'){
+          $invalid == TRUE;
         }
 
         if (!empty($values['status'])){
@@ -132,9 +139,13 @@ class BitPay extends PaymentGateway {
         if ($update === FALSE) {
           $this->_set_gateway_redirect($this->_get_gateway_notify_url());
         }
-        $this->update_friends_process_table($update);
-        // Update the friends_process table.
-        $this->Donation->update_donation_from_ipn($update);
+
+        //Update donation if this is a valid transaction
+        if (!isset($invalid)) {
+          $this->update_friends_process_table($update);
+          // Update the friends_process table.
+          $this->Donation->update_donation_from_ipn($update);
+        }
       }
     }
     $this->_email_ipn_post();

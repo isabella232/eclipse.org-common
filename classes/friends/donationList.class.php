@@ -215,7 +215,7 @@ class DonationList {
                    '<td width="25">' . $benefit . '</td>' .
                    '<td width="59%"><b>' . $name . '</b><br/>' . $comment . '</td>' .
                    '<td>' . $date . '</td>' .
-                   '<td align="right">' . $amount . ' ' . $currency . '</td>' .
+                   '<td align="right">$' . $amount . '</td>' .
                    '</tr>';
           }
       }

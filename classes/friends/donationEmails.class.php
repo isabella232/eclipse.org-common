@@ -278,8 +278,8 @@ class DonationEmails {
   /**
    * Email for a donation of without any benefits
    *
-   * This is usually a donation for less than 35US
-   * or 0.15 BTC
+   * This is usually a donation for less than 35US,
+   *
    */
   private function _get_email_donor() {
     $this->email_content = $this->_get_email_greeting_string();
@@ -290,7 +290,7 @@ class DonationEmails {
   /**
    * Email for a friend of eclipse
    *
-   * This is for a donation between 35USD/0.15BTC and 99.99USD/0.24BTC
+   * This is for a donation between 35USD and 99.99USD
    */
   private function _get_email_friend() {
     $email = $this->_get_email_greeting_string();
@@ -306,7 +306,7 @@ class DonationEmails {
   /**
    * Email for a best friend of Eclipse
    *
-   * This is for a donation between 100USD/0.25BTC and 249.99USD/0.69BTC
+   * This is for a donation between 100USD and 249.99USD
    */
   private function _get_email_best_friend() {
     $email = $this->_get_email_greeting_string();
@@ -324,7 +324,7 @@ class DonationEmails {
   /**
    * Email for a webmaster idol
    *
-   * This is for a donation of 250USD/0.070BTC or more
+   * This is for a donation of 250USD or more
    */
   private function _get_email_webmaster_idol() {
     //@todo: Confirm with roxanne that best_friend email and webmaster e-mail is the same.
