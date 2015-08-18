@@ -343,7 +343,7 @@ class Donation {
   public function set_donation_amount($donation_amount = 0) {
 
     //Make sure the amount is a number and it's not 0
-    if ($donation_amount == "0" or is_nan($donation_amount)) {
+    if ($donation_amount == "0" or $donation_amount == "" or is_nan($donation_amount)) {
       $donation_amount = 0.15;
       if ($this->donation_currency == 'USD') {
         $donation_amount = 35.00;
