@@ -117,7 +117,7 @@ class Solstice {
       // If the user is not trying to override this button, let's change
       // it for all of our project websites.
       if (empty($variables['theme_variables']['btn_cfa']['text']) && empty($variables['theme_variables']['btn_cfa']['url'])) {
-        $variables['theme_variables']['btn_cfa']['text'] = 'Donate';
+        $variables['theme_variables']['btn_cfa']['text'] = '<i class="fa fa-star"></i> Donate';
         $variables['theme_variables']['btn_cfa']['href'] = 'https://www.eclipse.org/donate/';
         $variables['theme_variables']['btn_cfa']['class'] = 'btn btn-huge btn-info';
       }
