@@ -59,6 +59,7 @@ class Breadcrumb extends Menu {
     "screenshots" => "Screenshots",
     "site_login" => "My Account",
     "users"  => "Getting started",
+    "" => "", //Homepage
   );
 
   function getCrumbList() {
@@ -151,11 +152,15 @@ class Breadcrumb extends Menu {
 
   function addCrumb($_Text, $_URL, $_Target) {
     $_Text = strip_tags($_Text);
-    # Menu Items must be added at position 1
-    $Crumb = new Link($_Text, $_URL, $_Target, 0);
 
-    # Add incoming menuitem
-    $this->CrumbList[count($this->CrumbList)] = $Crumb;
+    // We don't need to add a crumb if there is no text for it.
+    if (!empty($_Text)) {
+      # Menu Items must be added at position 1
+      $Crumb = new Link($_Text, $_URL, $_Target, 0);
+
+      # Add incoming menuitem
+      $this->CrumbList[count($this->CrumbList)] = $Crumb;
+    }
   }
 
   function getCrumbCount() {
@@ -163,8 +168,13 @@ class Breadcrumb extends Menu {
   }
 
   function getCrumbAt($_Pos) {
-    if($_Pos < $this->getCrumbCount()) {
+    if ($_Pos < $this->getCrumbCount()) {
       return $this->CrumbList[$_Pos];
+    }
+    // If link does not exist, return an empty link object
+    else {
+      $Crumb = new Link('', '', '', 0);
+      return $Crumb;
     }
   }
 

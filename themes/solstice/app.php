@@ -104,9 +104,23 @@ class Solstice {
       $variables['theme_variables']['breadcrumbs_classes'] = 'defaut-breadcrumbs hidden-print';
     }
 
-    $classes = array();
+   $classes = array();
+   $crumb1 = $Breadcrumb->getCrumbAt(1)->getText();
+   $url_parts = explode('/', str_ireplace(array('http://', 'https://'), '', $_SERVER['REQUEST_URI']));
+   $directory = strtolower($url_parts[1]);
     if (!empty($variables['theme_variables']['btn_cfa']['hide']) && $variables['theme_variables']['btn_cfa']['hide'] === TRUE) {
       $classes[] = 'hidden-cfa-button';
+    }
+    // Make sure this is a project and not the project sub-directory on
+    // eclipse.org
+    elseif ($crumb1 === 'Projects' && $directory != 'projects') {
+      // If the user is not trying to override this button, let's change
+      // it for all of our project websites.
+      if (empty($variables['theme_variables']['btn_cfa']['text']) && empty($variables['theme_variables']['btn_cfa']['url'])) {
+        $variables['theme_variables']['btn_cfa']['text'] = 'Donate';
+        $variables['theme_variables']['btn_cfa']['href'] = 'https://www.eclipse.org/donate/';
+        $variables['theme_variables']['btn_cfa']['class'] = 'btn btn-huge btn-info';
+      }
     }
 
     $deprecated = "";
