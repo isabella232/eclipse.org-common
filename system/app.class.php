@@ -336,8 +336,9 @@ class App {
    */
   function preventCaching() {
      session_start();
-
-     header("Cache-control: private");
+     header("Cache-Control: no-store, no-cache, private, must-revalidate, max-age=0, max-stale=0");
+     header("Cache-Control: post-check=0, pre-check=0", FALSE);
+     header("Pragma: no-cache");
      header("Expires: 0");
   }
 

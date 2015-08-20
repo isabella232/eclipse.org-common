@@ -332,7 +332,8 @@ class Session {
   }
 
   function redirectToLogin() {
-    header("Location: " . $this->login_page, 302);
+    $this->App->preventCaching();
+    header("Location: " . $this->login_page, 303);
     exit;
   }
 
