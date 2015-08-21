@@ -9,9 +9,9 @@
  * Contributors:
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/contribution.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/smartconnection.class.php"));
+require_once("contribution.class.php");
+require_once("friend.class.php");
 
 class FriendsContributions {
   private $friend_id;

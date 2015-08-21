@@ -9,8 +9,7 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/paymentGateway.class.php");
+require_once(realpath(dirname(__FILE__) . "/../paymentGateway.class.php"));
 
 /**
  * Class for processing bitpay donations

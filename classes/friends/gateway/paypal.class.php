@@ -9,7 +9,7 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/paymentGateway.class.php");
+require_once(realpath(dirname(__FILE__) . "/../paymentGateway.class.php"));
 
 /**
  * Class for processing paypal donations
@@ -98,14 +98,36 @@ class Paypal extends PaymentGateway {
     $query['notify_url'] = $this->_get_gateway_notify_url();
     $query['business'] = $this->_get_gateway_email();
     $query['email'] = $this->Donation->Donor->get_donor_email();
-    $query['item_name'] = 'Donation';
-    $query['amount'] = $this->Donation->get_donation_amount();
+    if ($this->Donation->get_donation_subscription()) {
+      $query['item_name'] = 'Recurring Donation';
+      $period = $this->App->getHTTPParameter('subscription', 'POST');
+      $valid_period = array('M', 'Y', 'D', 'W');
+      if (empty($period) || !in_array($period, $valid_period)) {
+        $period = 'M';
+      }
+
+      $query['t3'] = strtoupper($period);
+      $query['p3'] = '1';
+      $query['src'] = '1';
+      $query['srt'] = '0';
+      $query['no_note'] = '1';
+      $query['a3'] = $this->Donation->get_donation_amount();
+      //$query['amount'] = $this->Donation->get_donation_amount();
+          $query['cmd'] = '_xclick-subscriptions';
+    }
+    else{
+      $query['item_name'] = 'Donation';
+      $query['amount'] = $this->Donation->get_donation_amount();
+      $query['cmd'] = ' _donations';
+    }
+
     $query['no_shipping'] = '1';
     $query['currency_code'] = $this->Donation->get_donation_currency();
     $query['lc'] = 'US';
     $query['custom'] = $this->Donation->get_donation_random_invoice_id();
     $query['return'] = $this->_get_gateway_return_url();
-    $query['cmd'] = ' _donations';
+
+
     // Prepare query string
     $query_string = http_build_query($query);
     $url = $this->_get_gateway_url() . '?' . $query_string;

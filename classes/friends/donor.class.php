@@ -9,7 +9,7 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/session.class.php"));
 require_once("/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php");
 require_once("friend.class.php");
 require_once("contribution.class.php");

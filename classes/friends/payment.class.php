@@ -9,25 +9,14 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-require_once("gateway/paypal.class.php");
-require_once("gateway/bitpay.class.php");
+require_once(realpath(dirname(__FILE__) . '/../../system/eclipseenv.class.php'));
 
 /**
  * Base class for PaymentGateway()
  *
  * @author chrisguindon
  */
-class Payment {
-
-  /**
-   * The Eclipse App() class.
-   * This is useful for making calls to our databases.
-   */
-  protected $App = NULL;
+class Payment extends EclipseEnv {
 
   /**
    * List of message to show to the end user
@@ -35,30 +24,6 @@ class Payment {
    * @var array
    */
   protected $client_message = '';
-
-  /**
-   * Debug mode state
-   *
-   * @var bool
-   */
-  protected $debug_mode = FALSE;
-
-  /**
-   * Cookie domain value
-   *
-   * @var string
-   */
-  protected $prefix_cookie = '';
-
-  /**
-   * Eclipse domain prefix
-   *
-   * This could be www.eclipse.org, staging.eclipse.org or
-   * www.eclipse.local
-   *
-   * @var string
-   */
-  protected $prefix_domain = '';
 
   /**
    * Proxy value for curl requests
@@ -71,11 +36,7 @@ class Payment {
    * Constructor
    */
   public function Payment() {
-    global $App;
-    $this->App = $App;
-    if ($this->_get_prefix_domain() != 'www.eclipse.org') {
-      $this->_set_debug_mode(TRUE);
-    }
+     parent::__construct();
   }
 
   /**
@@ -187,39 +148,10 @@ class Payment {
     // CONFIG: Optional proxy configuration
     curl_setopt($curl, CURLOPT_PROXY, $this->_get_proxy());
     curl_setopt($curl, CURLOPT_HTTPPROXYTUNNEL, 1);
-    if ($this->_get_prefix_domain() === 'www.eclipse.local') {
+    if ($this->getEnvShortName() === 'local') {
       curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
       curl_setopt($curl, CURLOPT_PROXY, '');
     }
-  }
-
-  /**
-   * Get debug mode value
-   *
-   * @return Ambigous <boolean, string>
-   */
-  public function _get_debug_mode() {
-    return $this->debug_mode;
-  }
-
-  /**
-   * Get domain prefix
-   */
-  protected function _get_prefix_domain() {
-    if (empty($this->prefix_domain)){
-      $this->_set_prefix();
-    }
-    return $this->prefix_domain;
-  }
-
-  /**
-   * Get cookie prefix
-   */
-  protected function _get_prefix_cookie() {
-    if (empty($this->prefix_cookie)){
-      $this->_set_prefix();
-    }
-    return $this->prefix_cookie;
   }
 
   /**
@@ -278,21 +210,12 @@ class Payment {
   /**
    * Enable/disable debug/sandbox mode
    */
-  private function _set_debug_mode($debug_mode = FALSE){
+  protected function _set_debug_mode($debug_mode = FALSE){
     $this->debug_mode = $debug_mode;
     if ($this->_get_debug_mode()) {
       $this->set_client_message('Debug, logging and Sandbox mode is enabled.', 'warning');
       $this->_extend_set_debug_mode();
     }
-  }
-
-  /**
-   * Set Eclipse domain and Eclipse cookie domain
-   */
-  protected function _set_prefix() {
-    $domain = $this->App->getEclipseDomain();
-    $this->prefix_domain = $domain['domain'];
-    $this->prefix_cookie = $domain['cookie'];
   }
 
   /**
@@ -340,5 +263,7 @@ class Payment {
     $sql = rtrim($sql, ',');
     return $sql;
   }
-
 }
+
+require_once("gateway/paypal.class.php");
+require_once("gateway/bitpay.class.php");

@@ -9,6 +9,9 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
+require_once("app.class.php");
+require_once("evt_log.class.php");
+require_once("smartconnection.class.php");
 
 /**
  * Base class
@@ -28,14 +31,14 @@ class EclipseEnv {
    *
    * @var bool
    */
-  private $debug_mode = FALSE;
+  protected $debug_mode = FALSE;
 
   /**
    * Cookie domain value
    *
    * @var string
    */
-  private $prefix_cookie = '';
+  protected $prefix_cookie = '';
 
   /**
    * Eclipse dev domain prefix
@@ -44,7 +47,7 @@ class EclipseEnv {
    *
    * @var string
    */
-  private $prefix_devdomain = '';
+  protected $prefix_devdomain = '';
 
   /**
    * Eclipse domain prefix
@@ -54,7 +57,7 @@ class EclipseEnv {
    *
    * @var string
    */
-  private $prefix_domain = '';
+  protected $prefix_domain = '';
 
   /**
    * Constructor
@@ -66,7 +69,7 @@ class EclipseEnv {
     }
     $this->App = $App;
     $this->_set_prefix();
-    if ($this->_get_prefix_domain() != 'www.eclipse.org') {
+    if ($this->getEnvShortName() != 'prod') {
       $this->_set_debug_mode(TRUE);
     }
   }
@@ -77,13 +80,13 @@ class EclipseEnv {
    * @return array
    */
   public function getEclipseEnv(){
-
+    $local_docker_port = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? '43' : '80';
     // @todo: allowed_hosts is deprecated
     $server['dev'] = array(
       'shortname' => 'local',
       'cookie' => '.eclipse.local',
-      'domain' => 'www.eclipse.local',
-      'dev_domain' => 'dev.eclipse.local',
+      'domain' => 'www.eclipse.local:502' . $local_docker_port,
+      'dev_domain' => 'dev.eclipse.local:51143',
       'allowed_hosts' => array(
         'eclipse.local',
         'www.eclipse.local',
@@ -113,11 +116,11 @@ class EclipseEnv {
       ),
     );
 
-    if (strpos($_SERVER['SERVER_NAME'], '.local')){
+    if (strpos($_SERVER['HTTP_HOST'], '.local') !== FALSE) {
       return $server['dev'];
     }
 
-    if (strpos($_SERVER['SERVER_NAME'], 'staging')) {
+    if (strpos($_SERVER['HTTP_HOST'], 'staging') !== FALSE) {
       return $server['staging'];
     }
 
@@ -137,7 +140,7 @@ class EclipseEnv {
    *
    * @return Ambigous <boolean, string>
    */
-  protected function _get_debug_mode() {
+  public function _get_debug_mode() {
     return $this->debug_mode;
   }
 
@@ -165,14 +168,14 @@ class EclipseEnv {
   /**
    * Enable/disable debug/sandbox mode
    */
-  private function _set_debug_mode($debug_mode = FALSE){
+  protected function _set_debug_mode($debug_mode = FALSE){
     $this->debug_mode = $debug_mode;
   }
 
   /**
    * Set Eclipse domain and Eclipse cookie domain
    */
-  private function _set_prefix() {
+  protected function _set_prefix() {
     $domain = $this->getEclipseEnv();
     $this->prefix_domain = $domain['domain'];
     $this->prefix_devdomain = $domain['dev_domain'];

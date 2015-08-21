@@ -470,7 +470,7 @@ class App {
    */
   public function getEclipseDomain(){
     if (!class_exists('EclipseEnv')) {
-      require('eclipseenv.class.php');
+      require_once('eclipseenv.class.php');
     }
     $EclipseEnv = new EclipseEnv($this);
     return $EclipseEnv->getEclipseEnv();

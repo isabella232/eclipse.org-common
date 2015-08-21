@@ -9,8 +9,8 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/session.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 require_once("donor.class.php");
 require_once("donationEmails.class.php");
 
@@ -240,7 +240,7 @@ class Donation {
       $this->donation_benefit_group = 'webmaster_idol';
     }
     // Minumum donation of 100USD or 0.25 BTC
-    elseif ($amount >= 100) {
+    elseif ($amount >= 50) {
       $this->donation_benefit_group = 'best_friend';
     }
     // Minimum donation of 35USD or 0.15 BTC
@@ -449,7 +449,7 @@ class Donation {
    */
   public function set_donation_subscription($donation_subscription = NULL) {
     $this->donation_subscription = 0;
-    if ($donation_subscription == '1') {
+    if ($donation_subscription) {
       $this->donation_subscription = 1;
     }
   }

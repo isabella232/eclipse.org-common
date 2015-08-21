@@ -9,8 +9,8 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/smartconnection.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friendsContributionsList.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/smartconnection.class.php"));
+require_once("friendsContributionsList.class.php");
 
 /**
  * Helper class to display donation information
