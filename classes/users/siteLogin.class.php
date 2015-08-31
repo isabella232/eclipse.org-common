@@ -16,6 +16,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.cla
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/users/accountCreator.class.php");
 require_once('/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/captcha/captcha.class.php");
+
 
 define('SITELOGIN_EMAIL_REGEXP', '/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
 
@@ -28,6 +30,8 @@ class Sitelogin {
   private $agree = "";
 
   private $bio = "";
+
+  private $Captcha = NULL;
 
   private $githubid = "";
 
@@ -63,13 +67,13 @@ class Sitelogin {
 
   private $path_public_key = "";
 
+  private $profile_default = array();
+
   private $referer = "";
 
   private $remember = "";
 
   private $Session = NULL;
-
-  private $skill = "";
 
   private $stage = "";
 
@@ -91,6 +95,10 @@ class Sitelogin {
 
   private $xss_patterns = array();
 
+  private $is_committer = "";
+
+  private $changed_employer = "";
+
   function Sitelogin($stage = NULL) {
     $this->xss_patterns = array(
       '/<script[^>]*?>.*?<\/script>/si',
@@ -103,6 +111,7 @@ class Sitelogin {
 
     global $App;
     $this->App = $App;
+    $this->Captcha = New Captcha();
     $this->Session = $this->App->useSession();
     $this->Friend = $this->Session->getFriend();
     $this->Ldapconn = new LDAPConnection();
@@ -110,6 +119,7 @@ class Sitelogin {
     $this->_sanitizeVariables();
     $this->user_uid = $this->Ldapconn->getUIDFromMail($this->Friend->getEmail());
     $this->user_mail = $this->Friend->getEmail();
+    $this->is_committer = $this->Friend->getIsCommitter();
 
     $this->_setStage($stage);
 
@@ -146,6 +156,10 @@ class Sitelogin {
 
   public function getStage(){
     return $this->stage;
+  }
+
+  public function getIsCommitter(){
+    return $this->is_committer;
   }
 
   public function getSystemMessage() {
@@ -455,8 +469,8 @@ class Sitelogin {
             $this->messages['create']['danger'][] = "- Your email address is not formatted correctly<br />";
           }
 
-          if ($this->skill != 16) {
-            $this->messages['create']['danger'][] = "- You haven't answered the mathematical question correctly<br />";
+          if (!$this->Captcha->validate()) {
+            $this->messages['create']['danger'][] = "- You haven't answered the captcha question correctly<br />";
           }
           if (!preg_match("/(?=^.{6,}$)(?=.*[\d|\W])(?=.*[A-Za-z]).*$/", $this->password1)) {
             $this->messages['create']['danger'][] = "- Your password does not meet the complexity requirements.  It must be at least 6 characters long, and contain one number or one symbol.<br />";
@@ -594,7 +608,7 @@ class Sitelogin {
     }
   }
 
-  private function _get_default_profile_fields(){
+  private function _get_default_profile_fields($get_default_values = FALSE){
     if (empty($this->messages['profile']['danger'])) {
       $sql = "SELECT /* USE MASTER */
       user_org as organization, user_jobtitle as jobtitle, user_bio as bio,  user_interests as interests, user_website as website, user_twitter_handle as twitter_handle
@@ -603,6 +617,11 @@ class Sitelogin {
       ORDER BY user_update DESC LIMIT 1";
       $rs = $this->App->eclipse_sql($sql);
       $profile = mysql_fetch_assoc($rs);
+
+      $this->profile_default = $profile;
+      if ($get_default_values) {
+        return TRUE;
+      }
 
       if (!empty($profile)) {
         foreach ($profile as $key => $value) {
@@ -615,9 +634,19 @@ class Sitelogin {
     }
   }
 
+  private function _getProfileDefaultValues(){
+    if (empty($this->profile_default)) {
+      $this->_get_default_profile_fields(TRUE);
+    }
+    return $this->profile_default;
+  }
+
   private function _processSaveProfile() {
     $fname = $this->_get_default_field_value('fname', $this->fname);
     $lname = $this->_get_default_field_value('lname', $this->lname);
+
+    $default_values = $this->_getProfileDefaultValues();
+    $default_org = $default_values['organization'];
 
     $fields = array(
       'user_uid' => $this->user_uid,
@@ -647,6 +676,29 @@ class Sitelogin {
 
     if (!empty($this->messages['profile']['danger'])) {
       return FALSE;
+    }
+
+    //if they are a committer and have changed employers toss all changes and throw a warning + send a message
+    if ($this->is_committer) {
+      if ($default_org !== $fields["user_org"]) {
+        if ($this->changed_employer === 'Yes') {
+          // Send mail to dest
+          $this->_sendNotice();
+          $this->messages['myaccount']['danger'][] = "You have indicated a change in employer.  As such any changes you made have not been saved.  A notice has been sent to you and EMO legal (emo-records@eclipse.org) so that they can advise what paperwork(if any) needs to be updated.";
+          //exit
+          return FALSE;
+        }
+        else if ($this->changed_employer !== "No")  {
+          $this->messages['myaccount']['danger'][] = "You must indicate if you have changed employers in order to save changes to your organization.";
+          return FALSE;
+        }
+      } else {
+        if ($this->changed_employer === 'Yes') {
+          // Send mail to dest
+          $this->_sendNotice();
+          $this->messages['myaccount']['danger'][] = "A notice has been sent to you and EMO legal (emo-records@eclipse.org) so that they can advise what paperwork (if any) needs to be updated due to your change in employers.";
+        }
+      }
     }
 
     foreach ($possible_null_field as $value) {
@@ -688,21 +740,50 @@ class Sitelogin {
       # we must first bind to ldap to be able to change attributes
       $dn = $this->Ldapconn->authenticate($this->Friend->getEmail(), $this->password);
       if ($dn) {
+        #work out what's changed
+        $fname_changed = ($this->Ldapconn->getLDAPAttribute($dn, "givenName") !== $this->fname) ? TRUE : FALSE ;
+        $lname_changed = ($this->Ldapconn->getLDAPAttribute($dn, "sn") !== $this->lname) ? TRUE : FALSE ;
+        $email_changed = ($this->Ldapconn->getLDAPAttribute($dn, "mail") !== $this->username) ? TRUE : FALSE ;
+
+        //if they are a committer and have changed employers toss all changes and throw a warning + send a message
+        if ($this->is_committer && $this->changed_employer === 'Yes') {
+          // Send mail to dest
+          $this->_sendNotice();
+          //notify the user
+          if ( !$lname_changed && !$email_changed) {
+            //I guess they just want us to know they've changed employers
+            $this->messages['myaccount']['danger'][] = "A notice has been sent to you and EMO legal (emo-records@eclipse.org) so that they can advise what paperwork(if any) needs to be updated due to your change in employers.";
+          } else {
+            //they've changed something
+            $this->messages['myaccount']['danger'][] = "You have indicated a change in employer.  As such any changes you made have not been saved.  A notice has been sent to you and EMO legal (emo-records@eclipse.org) so that they can advise what paperwork(if any) needs to be updated.";
+          }
+          //reset form data
+          $this->getVariables("welcomeback");
+          //return
+          return;
+        }
 
         $update_bz_name = FALSE;
-        if ($this->Ldapconn->getLDAPAttribute($dn, "givenName") != $this->fname) {
+        if ($fname_changed) {
           $this->Ldapconn->changeAttributeValue($dn, $this->password, "givenName", $this->fname);
           $this->Friend->setFirstName($this->fname);
           $update_bz_name = TRUE;
         }
 
-        if ($this->Ldapconn->getLDAPAttribute($dn, "sn") != $this->lname) {
-          $this->Ldapconn->changeAttributeValue($dn, $this->password, "sn", $this->lname);
-          $this->Friend->setLastName($this->lname);
-          $update_bz_name = TRUE;
-        }
+        if ($lname_changed) {
+          if ($this->changed_employer === 'No' || !$this->is_committer) {
+            $this->Ldapconn->changeAttributeValue($dn, $this->password, "sn", $this->lname);
+            $this->Friend->setLastName($this->lname);
+            $update_bz_name = TRUE;
+            $this->_sendNotice("surname", "to: " . $this->lname);
+          } else if($this->is_committer && empty($this->changed_employer)) {
+            $this->messages['myaccount']['danger'][] = "You must indicate if you have changed employers in order to save changes to your last name.";
+            return;
 
-        if ($this->Ldapconn->getLDAPAttribute($dn, "cn") != $this->fname . " " . $this->lname) {
+          }
+        }
+	//if either the first or last name has changed the cn should be updated.
+        if ($fname_changed || $lname_changed) {
           $this->Ldapconn->changeAttributeValue($dn, $this->password, "cn", $this->fname . " " . $this->lname);
           $update_bz_name = TRUE;
         }
@@ -748,48 +829,57 @@ class Sitelogin {
         # if email address has changed, we must update Bugzilla DB record too.
         $oldmail = $this->Ldapconn->getLDAPAttribute($dn, "mail");
         $mailmsg = "";
-        if($this->username != $oldmail) {
-          if (!$this->Ldapconn->checkEmailAvailable($this->username)) {
-            $this->messages['myaccount']['danger'][] = "- Unable to change your email address<br />";
-          }
-          elseif (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username)) {
-            $this->messages['myaccount']['danger'][] = "- Your email address is not formatted correctly<br />";
-          }
-          else {
-            # Check that someone isn't piling on a bunch of requests for mail changes just to piss everyone off
-            $sql = "SELECT /* USE MASTER */ COUNT(1) AS RecordCount FROM account_requests WHERE ip = " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']);
-            $sql .= "OR email = " . $this->App->returnQuotedString($oldmail);
-            $rs = $this->App->eclipse_sql($sql);
-            $myrow = mysql_fetch_assoc($rs);
-            if ($myrow['RecordCount'] > 3) {
-              $this->messages['myaccount']['danger'][] = "<b>You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request.</b>";
+        if($email_changed) {
+          #Not a committer or didn't change employers?
+          if (!$this->is_committer || $this->changed_employer === 'No') {
+            if (!$this->Ldapconn->checkEmailAvailable($this->username)) {
+              $this->messages['myaccount']['danger'][] = "- Unable to change your email address<br />";
+            }
+            elseif (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username)) {
+              $this->messages['myaccount']['danger'][] = "- Your email address is not formatted correctly<br />";
             }
             else {
-              # Toss in a request to change the email address
-              $this->messages['myaccount']['success'][] = " Please check your Inbox for a confirmation email with instructions to complete the email address change.  Your email address will not be updated until the process is complete.";
-              $this->t = $this->t = $this->App->getAlphaCode(64);
-              $sql = "INSERT INTO account_requests VALUES (" . $this->App->returnQuotedString($oldmail) . ",
-              " . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
-              " . $this->App->returnQuotedString("MAILCHANGE") . ",
-              " . $this->App->returnQuotedString("MAILCHANGE") . ",
-              '',
-              " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
-              NOW(),
-              " . $this->App->returnQuotedString($this->t) . ")";
-              $this->App->eclipse_sql($sql);
+              # Check that someone isn't piling on a bunch of requests for mail changes just to piss everyone off
+              $sql = "SELECT /* USE MASTER */ COUNT(1) AS RecordCount FROM account_requests WHERE ip = " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']);
+              $sql .= "OR email = " . $this->App->returnQuotedString($oldmail);
+              $rs = $this->App->eclipse_sql($sql);
+              $myrow = mysql_fetch_assoc($rs);
+              if ($myrow['RecordCount'] > 3) {
+                $this->messages['myaccount']['danger'][] = "<b>You have already submitted a request. Please check your email inbox and spam folders to respond to the previous request.</b>";
+              }
+              else {
+                # Toss in a request to change the email address
+                $this->messages['myaccount']['success'][] = " Please check your Inbox for a confirmation email with instructions to complete the email address change.  Your email address will not be updated until the process is complete.";
+                $this->t = $this->t = $this->App->getAlphaCode(64);
+                $sql = "INSERT INTO account_requests (email,new_email,fname,lname,password,ip,req_when,token)VALUES (" . $this->App->returnQuotedString($oldmail) . ",
+                " . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
+                " . $this->App->returnQuotedString("MAILCHANGE") . ",
+                " . $this->App->returnQuotedString("MAILCHANGE") . ",
+                '',
+                " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
+                NOW(),
+                " . $this->App->returnQuotedString($this->t) . ")";
+                $this->App->eclipse_sql($sql);
 
-              # Send mail to dest
-              $mail = "You (or someone pretending to be you) has changed their Eclipse.org account email address to this one (" . $this->App->sqlSanitize($this->username) . ") from this IP address:\n";
-              $mail .= "    " . $_SERVER['REMOTE_ADDR'] . "\n\n";
-              $mail .= "To confirm this email change, please click the link below:\n";
-              $mail .= "    https://dev.eclipse.org/site_login/token.php?stage=confirm&t=$this->t\n\n";
-              $mail .= "If you have not issued this request, you can safely ignore it.\n\n";
-              $mail .= " -- Eclipse webmaster\n";
-              $headers = 'From: Eclipse Webmaster (automated) <webmaster@eclipse.org>';
-              mail($this->username, "Eclipse Account Change", $mail, $headers);
+                # Send mail to dest
+                $mail = "You (or someone pretending to be you) has changed their Eclipse.org account email address to this one (" . $this->App->sqlSanitize($this->username) . ") from this IP address:\n";
+                $mail .= "    " . $_SERVER['REMOTE_ADDR'] . "\n\n";
+                $mail .= "To confirm this email change, please click the link below:\n";
+                $mail .= "    https://dev.eclipse.org/site_login/token.php?stage=confirm&t=$this->t\n\n";
+                $mail .= "If you have not issued this request, you can safely ignore it.\n\n";
+                $mail .= " -- Eclipse webmaster\n";
+                $headers = 'From: Eclipse Webmaster (automated) <webmaster@eclipse.org>';
+                mail($this->username, "Eclipse Account Change", $mail, $headers);
+                //notify EMO
+                $this->_sendNotice("Email address","from: " . $oldmail . " to: " . $this->username );
+              }
             }
+          }  else if ($this->is_committer && $this->changed_employer === "") {
+            $this->messages['myaccount']['danger'][] = "You must indicate if you have changed employers in order to save changes to your email address.";
+            return;
           }
         }
+
 
         if (empty($this->messages['myaccount']['danger'])) {
           $this->messages['myaccount']['success'][] = "Your account details have been updated successfully." . $mailmsg . "";
@@ -903,11 +993,13 @@ class Sitelogin {
         $this->_setStage('reset2');
         return FALSE;
       }
-      if ($this->skill != '16') {
-        $this->messages['reset3']['danger'][] = "Skill question is wrong.";
+
+      if (!$this->Captcha->validate()) {
+        $this->messages['reset3']['danger'][] = "- You haven't answered the captcha question correctly<br />";
         $this->_setStage('reset2');
         return FALSE;
       }
+
       $sql = "SELECT /* USE MASTER */ email, COUNT(1) AS RecordCount FROM account_requests WHERE token = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->t));
       $rs = $this->App->eclipse_sql($sql);
       $myrow = mysql_fetch_assoc($rs);
@@ -977,7 +1069,6 @@ class Sitelogin {
       'password2',
       'password_update',
       'remember',
-      'skill',
       'stage',
       'submit',
       'takemeback',
@@ -989,6 +1080,7 @@ class Sitelogin {
       'bio',
       'interests',
       'twitter_handle',
+      'changed_employer',
    );
 
     foreach ($inputs as $field) {
@@ -1080,6 +1172,50 @@ class Sitelogin {
       $this->stage = $stage;
     }
   }
+
+  private function _sendNotice($changed="", $details=""){
+    if ($this->is_committer) {
+      //do nothing if the changed state isn't yes or no.
+      if ($this->changed_employer === 'Yes') {
+        $mail = "Because you have changed employers, you must promptly provide the EMO(emo-records@eclipse.org) with your new employer information.\r\n";
+        $mail .= "The EMO will determine what, if any, new legal agreements and/or employer consent forms are required for your committer account to remain active.\r\n\r\n";
+        $mail .= " -- Eclipse webmaster\r\n";
+        $headers = "From: Eclipse Webmaster (automated) <webmaster@eclipse.org>\r\n";
+        $headers .= "CC: EMO-Records <emo-records@eclipse.org>";
+        mail($this->user_mail, "Eclipse Account Change", $mail, $headers);
+      } else if ($this->changed_employer === 'No') {
+        if ($changed === "" || $details === "" ){
+          $mail = "Committer: " . $this->user_uid . "\r\n";
+          $mail .= "Has changed something, but details are incomplete. \r\n";
+          $mail .= "What changed: " . $changed . " \r\n";
+          $mail .= "Details: " . $details . "\r\n\r\n";
+          $mail .= "Committer confirms they have NOT changed employers \r\n\r\n";
+        } else {
+          $mail = "Committer: " . $this->user_uid . "\r\n";
+          $mail .= "Has changed their " . $changed . " " . $details . "\r\n\r\n";
+          $mail .= "Committer confirms they have NOT changed employers \r\n\r\n";
+        }
+        $headers = "From: Eclipse Webmaster (automated) <webmaster@eclipse.org>";
+        mail("emo-records@eclipse.org", "Eclipse Account Change", $mail, $headers);
+      }
+    }
+  }
+
+  public function _showChangedEmployer() {
+    //show the changed employer buttons
+    if ($this->is_committer) {
+      echo <<<END
+      <div class="form-group  clearfix has-feedback">
+        <label class="col-sm-6 control-label">Have you changed employers<sup>[<a href="https://www.eclipse.org/legal/#CommitterAgreements" title="Why are we asking this?">?</a>]</sup><span class="required">*</span></label>
+        <div class="col-sm-16">
+          <input type="radio" name="changed_employer" value="Yes"> Yes
+          <input type="radio" name="changed_employer" value="No"> No
+        </div>
+      </div>
+END;
+    }
+  }
+
 
   private function _userAuthentification() {
     if (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username) && $this->stage == "login") {
