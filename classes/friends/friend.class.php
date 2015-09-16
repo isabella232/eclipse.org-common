@@ -415,4 +415,41 @@ class Friend {
     }
     return $rValue;
   }
+
+  /**
+   * Verify if our Friend is a Foundation Staff.
+   *
+   * @return boolean
+   */
+  public function checkUserIsFoundationStaff() {
+    return $this->_checkUserInGroup('www-auth');
+  }
+
+  /**
+   * Verify if a user is in a group
+   *
+   * A group name might change in the future,
+   * we will create a public function for each
+   * group we need to verify instead of using this
+   * function directly.
+   *
+   * For example,
+   * checkUserIsFoundationStaff().
+   *
+   * @param string $group
+   */
+  private function _checkUserInGroup($group = '') {
+    $group = filter_var($group, FILTER_SANITIZE_STRING);
+    $ldap_uid = $this->getLDAPUID();
+    if (empty($ldap_uid)) {
+      return FALSE;
+    }
+    require_once("/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php");
+
+    $Ldap = new LDAPConnection();
+    if ($Ldap->checkUserInGroup($ldap_uid, $group)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
 }
