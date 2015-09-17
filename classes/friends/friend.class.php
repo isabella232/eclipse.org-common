@@ -74,7 +74,18 @@ class Friend {
     return $this->is_benefit;
   }
 
+  /**
+   * Get Friend LDAP UID.
+   *
+   * @return string
+   */
   function getLDAPUID() {
+    // This might be empty if the user
+    // never made a donation and he his
+    // missing from the friends table.
+    if (empty($this->uid)) {
+      $this->getUID();
+    }
     return $this->uid;
   }
 
@@ -159,11 +170,20 @@ class Friend {
   function setDn($_dn) {
     $this->dn = $_dn;
   }
-    // Kept for legacy reasons
-    // @see getLDAPUID()
+
+  /**
+   * Get LDAP UID
+   *
+   * This was deprecated until it was discovered
+   * that a user might not have an entry in the
+   * friends database.
+   *
+   * @return string
+   */
   function getUID() {
-    if($this->dn != "") {
-      if(preg_match('/uid=(.*),ou=/', $this->dn, $matches)) {
+    if ($this->dn != "") {
+      if (preg_match('/uid=(.*),ou=/', $this->dn, $matches)) {
+        $this->uid = $matches[1];
         return $matches[1];
       }
     }
