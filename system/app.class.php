@@ -1310,9 +1310,9 @@ EOHTML;
         }
     } else {         # For PRODUCTION machines
       $class = null;
+      if( (strtoupper(substr(trim($query), 0, 6)) == 'SELECT' && strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") 
+        || $query == "") {  // Try to use read-only when possible. Blank queries occur when we call sqlSanitize.
 
-      if(strtoupper(substr(trim($query), 0, 6)) == 'SELECT'
-      && strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") {  // Try to use read-only when possible
         $classfile = $this->get($key . '_db_classfile_ro');
         $class = $this->get($key . '_db_class_ro');
       }
