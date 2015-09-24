@@ -342,6 +342,41 @@ class App {
   }
 
   /**
+   * Getting the IP address of the user
+   * @param string
+   * */
+  function getRemoteIPAddress() {
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+      return $_SERVER['HTTP_CLIENT_IP'];
+    } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+    return $_SERVER['REMOTE_ADDR'];
+  }
+
+  /**
+   * Getting the subnet the user is in right now.
+   * @param string
+   * */
+  function getSubnet(){
+    $ip_address = $this->getRemoteIPAddress();
+    $subnet = preg_replace('~(\d+)\.(\d+)\.(\d+)\.(\d+)~', "$1.$2.$3", $ip_address);
+    return $subnet;
+  }
+
+
+  /**
+   * This function look for the word staging in the URL
+   * @return boolean
+   * */
+  function is_staging() {
+    if(strpos($_SERVER['HTTP_HOST'], 'staging')){
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
    *  Sets the headers to prevent caching for the different browsers.
    *
    *  *** Deprecated function ***
@@ -601,7 +636,6 @@ EOHTML;
     }
     return $rValue;
   }
-
 
   function getClientOS() {
 

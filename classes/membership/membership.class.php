@@ -12,13 +12,36 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 
 class Membership {
-  private $App;
 
-  private $members = array();
+  protected $App;
 
-  private $id = NULL;
+  /**
+   * The member's id
+   * @var string
+   * */
+  protected $id = NULL;
 
-  private $profile = NULL;
+  public $members = array();
+
+  /**
+   * Member's profile info
+   * @var array
+   * */
+  public $profile = array();
+
+  private $current_name = NULL;
+
+  /**
+   * Result of the member id verification
+   * @var bool
+   * */
+  private $is_a_valid_member_id = NULL;
+
+  /**
+   * Member's current name
+   * @var string
+   * */
+  private $member_name = "";
 
   function __construct(){
     global $App;
@@ -84,7 +107,7 @@ class Membership {
    *
    * @return Ambigous <multitype:, multitype:string , boolean, multitype:unknown , multitype:multitype:string NULL  >|boolean|multitype:
    */
-  function fetchProfile() {
+  public function fetchProfile() {
     $sql = "SELECT
       ORG.member_type,
       ORGI.OrganizationID as id,
@@ -157,7 +180,7 @@ class Membership {
       }
 
 
-      switch($row['member_type']) {
+      switch($row['type']) {
         case 'AP':
           $this->members['solutions']['members'][] = $row;
           break;
@@ -296,7 +319,6 @@ class Membership {
    * @return multitype:|multitype:multitype:string NULL
    */
   function fetchMemberProjects() {
-
     $sql = "select distinct project from ProjectCompanyActivity where orgId=";
     $sql .= $this->App->returnQuotedString($this->App->sqlSanitize($this->profile['id']));
     $result = $this->App->dashboard_sql($sql);
@@ -339,6 +361,39 @@ class Membership {
     return $return;
   }
 
+
+  /**
+   * Getting the member's current name
+   * @param string
+   * */
+  public function getMemberName(){
+    if (is_null($this->current_name)) {
+      $profile = $this->fetchProfile();
+      $this->setMemberName($profile['name']);
+    }
+    return $this->current_name;
+  }
+
+  /**
+   * Find out if the member id is valid
+   * @return bool
+   * */
+  public function getIsAvalidMemberId(){
+    // If the id is null, verify it.
+    if (!$this->is_a_valid_member_id) {
+      $this->_verifyMemberId();
+    }
+    return $this->is_a_valid_member_id;
+  }
+
+  /**
+   * Setting the member's current name
+   * @param string
+   * */
+  protected function setMemberName($_val){
+    $this->current_name = $_val;
+  }
+
   /**
    * Fix db encoding problems
    *
@@ -364,4 +419,41 @@ class Membership {
     return substr(strip_tags(html_entity_decode($string)), 0, 250) . "...";
   }
 
+  /**
+   * Find out if the member id is valid
+   * @param bool
+   * */
+  private function _setIsAvalidMemberId($_val){
+    $this->is_a_valid_member_id = FALSE;
+    if (is_bool($_val) === TRUE){
+      $this->is_a_valid_member_id = $_val;
+    }
+  }
+
+  /**
+   * Verify if the member id i valid
+   * If not, an error message will be printed on the page
+   * @param boolean
+   * */
+  private function _verifyMemberId(){
+    // Select all the member ids from the database
+    $sql = "SELECT
+            org.OrganizationID as id
+            FROM OrganizationInformation as org";
+    $result = $this->App->eclipse_sql($sql);
+
+    // Find out if the current member id is part of the results
+    $_id_array = array();
+    while ($row = mysql_fetch_assoc($result)) {
+      if($row['id'] == $this->id){
+        $_id_array[] = $row['id'];
+      }
+    }
+
+    // IF there are no member ID found and the user CAN'T edit the page
+    if (empty($_id_array)) {
+      return $this->_setIsAvalidMemberId(FALSE);
+    }
+    return $this->_setIsAvalidMemberId(TRUE);
+  }
 }
