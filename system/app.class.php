@@ -1303,6 +1303,7 @@ EOHTML;
         $dbh = $rec['CONNECTION'];
         if( $dbh == null ) {
           $dbh = mysql_connect( $rec['HOST'], $rec['USERNAME'], $rec['PASSWORD']);
+           mysql_select_db($rec['DATABASE'], $dbh);
         }
         if(get_magic_quotes_gpc())
         {
@@ -1310,7 +1311,7 @@ EOHTML;
         }
     } else {         # For PRODUCTION machines
       $class = null;
-      if( (strtoupper(substr(trim($query), 0, 6)) == 'SELECT' && strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") 
+      if( (strtoupper(substr(trim($query), 0, 6)) == 'SELECT' && strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */")
         || $query == "") {  // Try to use read-only when possible. Blank queries occur when we call sqlSanitize.
 
         $classfile = $this->get($key . '_db_classfile_ro');
@@ -1328,7 +1329,6 @@ EOHTML;
     }
     $this->databases[$key]['CONNECTION'] = $dbh;
     $this->set('DBHANDLEMAP ' . $dbh, $key);
-    mysql_select_db( $rec['DATABASE'], $dbh );
     return $dbh;
   }
 
