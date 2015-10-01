@@ -593,7 +593,10 @@ EOHTML;
     if(isset($_GET[$_param_name])) {
       $rValue = $_GET[$_param_name];
     }
-    if(isset($_POST[$_param_name]) && $_method != "GET") {
+    if(isset($_FILES[$_param_name]) && $_method == "FILES") {
+      $rValue = $_FILES[$_param_name];
+    }
+    if((isset($_POST[$_param_name])) && ($_method != "GET" || $_method != "FILES")) {
       $rValue = $_POST[$_param_name];
     }
     return $rValue;
