@@ -162,28 +162,48 @@ class App {
    * @return array
    */
   public function getEclipseDomain(){
-    $allowed_hosts = array('eclipse.local', 'www.eclipse.local', 'dev.eclipse.local');
-    if (isset($_SERVER['HTTP_HOST']) && in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
-      return array(
-        'cookie' => '.eclipse.local',
-        'domain' => 'www.eclipse.local',
-        'dev_domain' => 'dev.eclipse.local'
-      );
-    }
-    $allowed_hosts = array('staging.eclipse.org');
-    if (isset($_SERVER['HTTP_HOST']) && in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
-      return array(
-        'cookie' => '.eclipse.org',
-        'domain' => 'staging.eclipse.org',
-        // We currently dont have a staging server for dev.eclipse.org
-        'dev_domain' => 'dev.eclipse.org',
-      );
-    }
-    return array(
+
+    $server['dev'] = array(
+      'cookie' => '.eclipse.local',
+      'domain' => 'www.eclipse.local',
+      'dev_domain' => 'dev.eclipse.local',
+      'allowed_hosts' => array(
+        'eclipse.local',
+        'www.eclipse.local',
+        'dev.eclipse.local',
+        'docker.local'
+      ),
+    );
+
+    $server['staging'] = array(
+      'cookie' => '.eclipse.org',
+      'domain' => 'staging.eclipse.org',
+      // We currently dont have a staging server for dev.eclipse.org
+      'dev_domain' => 'dev.eclipse.org',
+      'allowed_hosts' => array(
+        'staging.eclipse.org'
+      ),
+    );
+
+    $server['prod'] = array(
       'cookie' => '.eclipse.org',
       'domain' => 'www.eclipse.org',
-      'dev_domain' => 'dev.eclipse.org'
+      'dev_domain' => 'dev.eclipse.org',
+      'allowed_hosts' => array(
+        // Empty, since it's the default.
+      ),
     );
+
+    // It should not matter if we are on http or https here.
+    $host = parse_url('http://' . $_SERVER['HTTP_HOST'], PHP_URL_HOST);
+    if (!empty($host)) {
+      foreach ($server as $type) {
+        if (in_array($host, $type['allowed_hosts'])) {
+          return $type;
+        }
+      }
+    }
+    return $server['prod'];
   }
 
   function getAppName() {
