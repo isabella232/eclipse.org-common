@@ -298,19 +298,19 @@ class Mirror {
 
     if($datefrom != "" && $dateto != "") {
       $WHERE = $App->addAndIfNotNull($WHERE);
-      $WHERE .= " DOW.download_date BETWEEN \"$datefrom\" AND \"$dateto\"";
+      $WHERE .= " DOW.download_date >= '$datefrom' AND DOW.download_date < '$dateto 23:59:59'";
       $dateQuery = true;
     }
 
     if($datefrom != "" && $dateto == "") {
       $WHERE = $App->addAndIfNotNull($WHERE);
-      $WHERE .= " DOW.download_date >= \"$datefrom\"";
+      $WHERE .= " DOW.download_date >= '$datefrom'";
       $dateQuery = true;
     }
 
     if($datefrom == "" && $dateto != "") {
       $WHERE = $App->addAndIfNotNull($WHERE);
-      $WHERE .= "DOW.download_date <= \"$dateto\"";
+      $WHERE .= "DOW.download_date <= '$dateto 23:59:59'";
       $dateQuery = true;
     }
 
