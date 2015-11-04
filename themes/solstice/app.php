@@ -154,8 +154,8 @@ class Solstice {
     $variables['body']['id'] = 'body_solstice';
 
     // Logos
-    $variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" class="logo-eclipse-default"/>';
-    $variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-800x188.png" alt="Eclipse.org black and white logo" width="166" height="39" id="logo-eclipse-white"/>';
+    $variables['logo']['default'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-426x100.png" alt="Eclipse.org logo" class="logo-eclipse-default"/>';
+    $variables['logo']['white'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-logo-bw-332x78.png" alt="Eclipse.org black and white logo" width="166" height="39" id="logo-eclipse-white"/>';
     $variables['logo']['mobile'] = '<img src="' . $variables['theme_url'] . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" width="174" class="logo-eclipse-default"/>';
     $variables['logo']['default_link'] = '<a href="' . $variables['url'] . '">' . $variables['logo']['default'] . '</a>';
     $variables['logo']['mobile_link'] =  '<a href="' . $variables['url'] . '" class="navbar-brand visible-xs">' . $variables['logo']['mobile'] . '</a>';
