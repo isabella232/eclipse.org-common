@@ -65,6 +65,8 @@ class Sitelogin {
 
   private $password_update = 0;
 
+  private $password_expired = "";
+
   private $path_public_key = "";
 
   private $profile_default = array();
@@ -120,6 +122,7 @@ class Sitelogin {
     $this->user_uid = $this->Ldapconn->getUIDFromMail($this->Friend->getEmail());
     $this->user_mail = $this->Friend->getEmail();
     $this->is_committer = $this->Friend->getIsCommitter();
+    $this->password_expired = $this->_verifyIfPasswordExpired();
 
     $this->_setStage($stage);
 
@@ -179,8 +182,7 @@ class Sitelogin {
         if (count($value) == 1) {
           if ($key == 'danger'){
             $org_value = $value[0];
-            $value[0] = '<p>Your request could not be processed for the following reason(s):</p>';
-            $value[0] .= '<p><strong>' . $org_value . '</strong></p>';
+            $value[0] = '<p><strong>' . $org_value . '</strong></p>';
           }
           $return .= $this->_getMessageContainer($value[0], $key);
           continue;
@@ -584,8 +586,10 @@ class Sitelogin {
     return '<div class="' . $class . '" role="alert">' . $message . '</div>';
   }
 
-  private function _get_default_field_value($id, $value) {
-    if (!empty($value)) {
+  private function _get_default_field_value($id, $value, $default_values = TRUE) {
+    // If the value is not empty and the user is not requesting the default values,
+    // return the updated values.
+    if (!empty($value) && $default_values === FALSE) {
       return $value;
     }
 
@@ -642,8 +646,12 @@ class Sitelogin {
   }
 
   private function _processSaveProfile() {
-    $fname = $this->_get_default_field_value('fname', $this->fname);
-    $lname = $this->_get_default_field_value('lname', $this->lname);
+    if ($this->password_expired === TRUE) {
+      $this->messages['password_expired']['danger'][] = "You need to set a new password before you can update your profile.";
+      return FALSE;
+    }
+    $fname = $this->_get_default_field_value('fname', $this->fname, FALSE);
+    $lname = $this->_get_default_field_value('lname', $this->lname, FALSE);
 
     $default_values = $this->_getProfileDefaultValues();
     $default_org = $default_values['organization'];
@@ -672,7 +680,6 @@ class Sitelogin {
     if (!empty($fields['user_website']) && !filter_var($fields['user_website'], FILTER_VALIDATE_URL)) {
       $this->messages['profile']['danger'][] = 'Invalid website URL<br>';
     }
-
 
     if (!empty($this->messages['profile']['danger'])) {
       return FALSE;
@@ -734,6 +741,12 @@ class Sitelogin {
   }
 
   private function _processSave() {
+    if ($this->password_expired === TRUE) {
+      $this->messages['password_expired']['danger'][] = "You need to set a new password before you can update your Account Settings.";
+      $this->getVariables("welcomeback");
+      return FALSE;
+    }
+
     $user_is_changing_password = FALSE;
     if ($this->username != "" && $this->fname != "" && $this->lname != "" && $this->password != "") {
       # update account.
@@ -822,6 +835,10 @@ class Sitelogin {
 	            $this->App->bugzilla_sql($sql);
 	            $this->App->ipzilla_sql($sql);
 	            $this->messages['myaccount']['success'][] = "Your password was updated successfully.";
+	          }
+	          // If the user is trying to update password with the current password
+	          else{
+	            $this->messages['myaccount']['danger'][] = "- Your new password must be different than your current password.";
 	          }
 	        }
         }
@@ -1316,4 +1333,24 @@ END;
       $this->messages["login"]['danger'][] = "Authentication Failed. Please verify that your email address and password are correct.";
     }
   }
+
+  private function _verifyIfPasswordExpired() {
+
+    // Check if the user is logged in
+    if($this->Session->isLoggedIn()){
+      // Get the Distinguished Name from UID
+      $dn = $this->Ldapconn->getDNFromUID($this->user_uid);
+      // Get shadowLastChange in seconds
+      $lastChange = ($this->Ldapconn->getLDAPAttribute($dn, "shadowLastChange")) * 86400;
+      // Set the expiry date
+      $expiryDate = strtotime('+6 month', $lastChange);
+
+      if ($expiryDate > time() && $this->Friend->getIsCommitter()) {
+        $this->messages['password_expired']['danger'][] = "Your password is expired. Please update it immediately.";
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
 }
