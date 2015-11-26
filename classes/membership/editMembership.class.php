@@ -533,7 +533,7 @@ class EditMembership extends Membership{
   private function _editSelectedInformation(){
 
     // Set the member's information
-    $short_desc = filter_var($this->App->getHTTPParameter("member_short_description", "POST"), FILTER_SANITIZE_STRING);
+    $short_desc = filter_var($this->App->getHTTPParameter("member_short_description", "POST"), FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
     $long_desc = filter_var(strip_tags($this->App->getHTTPParameter("member_long_description", "POST"), '<p><strong><em><b><i><br><ul><li>'), FILTER_DEFAULT, FILTER_FLAG_STRIP_HIGH);
     $url = filter_var($this->App->getHTTPParameter("member_url", "POST") , FILTER_SANITIZE_URL);
     $id = $this->id;
