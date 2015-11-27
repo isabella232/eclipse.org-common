@@ -180,7 +180,7 @@ class Membership {
       }
 
 
-      switch($row['type']) {
+      switch($row['member_type']) {
         case 'AP':
           $this->members['solutions']['members'][] = $row;
           break;
