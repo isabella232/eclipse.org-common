@@ -824,7 +824,7 @@ class EditMembership extends Membership{
         'last_name' => array('name' => 'last name','value' => filter_var($this->App->getHTTPParameter("new_maintainer_last_name", "POST"), FILTER_SANITIZE_STRING)),
         'email' => array('name' => 'email address','value' => filter_var($this->App->getHTTPParameter("new_maintainer_email", "POST"), FILTER_SANITIZE_EMAIL)),
         'phone' => array('name' => 'phone number','value' => filter_var($this->App->getHTTPParameter("new_maintainer_phone", "POST"), FILTER_SANITIZE_STRING)),
-        'role' => array('name' => 'contact role','value' => filter_var($this->App->getHTTPParameter("new_maintainer_type", "POST"), FILTER_SANITIZE_STRING)),
+        'role' => array('name' => 'contact role','value' => filter_var_array($this->App->getHTTPParameter("new_maintainer_type", "POST"), FILTER_SANITIZE_STRING)),
     );
 
     // Fetch the current user's email and uid
@@ -858,7 +858,10 @@ class EditMembership extends Membership{
       $email_body .= PHP_EOL."Last Name: " . $newMaintainerFields['last_name']['value'];
       $email_body .= PHP_EOL."Email Address: " . $newMaintainerFields['email']['value'];
       $email_body .= PHP_EOL."Phone Number: " . $newMaintainerFields['phone']['value'];
-      $email_body .= PHP_EOL."Contact Type: " . $newMaintainerFields['role']['value'];
+      $email_body .= PHP_EOL."Contact Type: ";
+      foreach ($newMaintainerFields['role']['value'] as $role) {
+        $email_body .= PHP_EOL . $role . ',';
+      }
       $email_body .= PHP_EOL.PHP_EOL."Please verify these informations and add the new maintainer if required.";
       $email_body .= PHP_EOL.PHP_EOL."For more information about this request please contact:";
       $email_body .= PHP_EOL."Name: " . $currentUserFullName;
