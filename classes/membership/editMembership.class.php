@@ -871,7 +871,7 @@ class EditMembership extends Membership{
       }
       $this->createEmail($to, $email_subject, $email_body);
 
-      $status_message = $email_body."<br>Thank you. <br>Your changes will be reviewed by the Eclipse Foundation's membership
+      $status_message = "Thank you. <br>Your changes will be reviewed by the Eclipse Foundation's membership
                   management, and you may be contacted to provide further information.";
       $message_type = "success";
     }
