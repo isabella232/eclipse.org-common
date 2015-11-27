@@ -848,7 +848,7 @@ class EditMembership extends Membership{
     if($status_message == ""){
 
       // All new maintainers are to be sent to Perri
-      $to = "perri@eclipse.org";
+      $to = "membership-admin@eclipse.org";
 
       $email_subject = "New Maintainer Request for " . $this->getMemberName(). "";
       $email_body =  $currentUserFullName . " has requested for a new maintainer to be added to " . $this->getMemberName() . '.';
@@ -863,9 +863,15 @@ class EditMembership extends Membership{
       $email_body .= PHP_EOL.PHP_EOL."For more information about this request please contact:";
       $email_body .= PHP_EOL."Name: " . $currentUserFullName;
       $email_body .= PHP_EOL."Email: " . $currentUserEmail;
+      if ($newMaintainerFields['role']['value'] == 'Company Representative (CR)') {
+        $email_body .= PHP_EOL."NOTE: This person has been designated as a Company Representative.
+                                PLEASE MAKE SURE THE COMPANY HAS ONLY 1 COMPANY REPRESENTATIVE.
+                                THIS IS NOT AUTOMATED AND MUST BE VERIFIED WITH THE COMPANY AND
+                                UPDATED MANUALLY IN BOTH THE DATABASE AND THE CRM.";
+      }
       $this->createEmail($to, $email_subject, $email_body);
 
-      $status_message = "Thank you. <br>Your changes will be reviewed by the Eclipse Foundation's membership
+      $status_message = $email_body."<br>Thank you. <br>Your changes will be reviewed by the Eclipse Foundation's membership
                   management, and you may be contacted to provide further information.";
       $message_type = "success";
     }
