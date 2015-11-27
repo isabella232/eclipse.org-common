@@ -110,7 +110,7 @@ class Membership {
   public function fetchProfile() {
     $sql = "SELECT
       ORG.member_type,
-      ORGI.OrganizationID as id,
+      ORG.organization_id as id,
       ORG.name1 as name,
       ORGI.short_description as body,
       ORGI.long_description as full_text,
@@ -121,12 +121,12 @@ class Membership {
       ORGI.large_logo as large_logo,
       ORGI.small_mime as small_mime,
       ORGI.large_mime as large_mime
-    FROM OrganizationInformation as ORGI
-    RIGHT JOIN organizations as ORG on ORGI.OrganizationID = ORG.organization_id
+    FROM organizations as ORG
+    LEFT JOIN OrganizationInformation as ORGI on ORGI.OrganizationID = ORG.organization_id
     WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')";
 
     if (!is_null($this->id)) {
-      $sql .= " and ORGI.OrganizationID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
+      $sql .= " and ORG.organization_id = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
     }
     $sql .= "ORDER BY ORG.name1";
 
@@ -438,8 +438,8 @@ class Membership {
   private function _verifyMemberId(){
     // Select all the member ids from the database
     $sql = "SELECT
-            org.OrganizationID as id
-            FROM OrganizationInformation as org";
+            org.organization_id as id
+            FROM organizations as org";
     $result = $this->App->eclipse_sql($sql);
 
     // Find out if the current member id is part of the results
