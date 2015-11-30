@@ -838,6 +838,7 @@ class EditMembership extends Membership{
     $status_message = "";
     $message_type = "danger";
     $good_to_send = FALSE;
+    $is_company_rep = FALSE;
 
     foreach($newMaintainerFields as $field) {
       if($field['value'] == "") {
@@ -860,13 +861,16 @@ class EditMembership extends Membership{
       $email_body .= PHP_EOL."Phone Number: " . $newMaintainerFields['phone']['value'];
       $email_body .= PHP_EOL."Contact Type: ";
       foreach ($newMaintainerFields['role']['value'] as $role) {
+        if ($role == 'Company Representative (CR)') {
+          $is_company_rep = TRUE;
+        }
         $email_body .= PHP_EOL . $role . ',';
       }
-      $email_body .= PHP_EOL.PHP_EOL."Please verify these informations and add the new maintainer if required.";
+      $email_body .= PHP_EOL.PHP_EOL."Please verify this information and add the new maintainer if required.";
       $email_body .= PHP_EOL.PHP_EOL."For more information about this request please contact:";
       $email_body .= PHP_EOL."Name: " . $currentUserFullName;
       $email_body .= PHP_EOL."Email: " . $currentUserEmail;
-      if ($newMaintainerFields['role']['value'] == 'Company Representative (CR)') {
+      if ($is_company_rep === TRUE) {
         $email_body .= PHP_EOL."NOTE: This person has been designated as a Company Representative.
                                 PLEASE MAKE SURE THE COMPANY HAS ONLY 1 COMPANY REPRESENTATIVE.
                                 THIS IS NOT AUTOMATED AND MUST BE VERIFIED WITH THE COMPANY AND
