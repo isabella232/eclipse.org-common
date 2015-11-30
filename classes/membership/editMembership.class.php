@@ -232,13 +232,13 @@ class EditMembership extends Membership{
    * Fetch the user ID using the Friend's class
    * @param string
    * */
-  public function fetchUserId(){
+  public function fetchUserEmail(){
     if ($this->getToken() != "") {
-      return $this->_fetchUidBasedOnToken();
+      return $this->_fetchEmailBasedOnToken();
     }
     if($this->Session->isLoggedIn()){
       $Friend = $this->Session->getFriend();
-      return $Friend->getUID();
+      return $Friend->getEmail();
     }
   }
 
@@ -247,7 +247,7 @@ class EditMembership extends Membership{
    * @param array
    * */
   public function fetchMemberMaintainers($_users = ""){
-    $_uid = $this->App->returnQuotedString($this->App->sqlSanitize($this->fetchUserId()));
+    $_email = $this->App->returnQuotedString($this->App->sqlSanitize($this->fetchUserEmail()));
     $_member_id = $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
     $sql = 'SELECT
             p.PersonID, p.FName, p.LName, p.EMail, p.Phone,
@@ -262,13 +262,15 @@ class EditMembership extends Membership{
             LEFT JOIN OrganizationContacts as oc
               ON p.PersonID = oc.PersonID ';
     if ($_users == EDITMEMBERSHIP_LOGGED_IN_USER) {
-      $sql .= 'WHERE p.PersonID = '. $_uid;
+      $sql .= 'WHERE p.EMail = '. $_email;
     }
     else {
-      $sql .= 'WHERE p.PersonID IN
+      $sql .= 'WHERE p.EMail IN
                 (SELECT
-                  PersonID as uid
-                  FROM OrganizationContacts
+                  p.Email
+                  FROM OrganizationContacts as oc
+                  LEFT JOIN People as p
+                  ON oc.PersonID = p.PersonID
                   WHERE OrganizationID = ' . $_member_id . '
                 )';
     }
@@ -341,7 +343,7 @@ class EditMembership extends Membership{
    * @param string
    * */
   public function validateUser(){
-    $uid = $this->App->returnQuotedString($this->App->sqlSanitize($this->fetchUserId()));
+    $email = $this->App->returnQuotedString($this->App->sqlSanitize($this->fetchUserEmail()));
     $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
     $token = $this->App->returnQuotedString($this->App->sqlSanitize($this->getToken()));
     $_has_eclipse_account = "";
@@ -349,23 +351,24 @@ class EditMembership extends Membership{
     $_valid_token = array();
     $user_verified = FALSE;
 
-    if(!empty($member_id) && !empty($uid)){
+    if(!empty($member_id) && !empty($email)){
       $sql_maintainer = 'SELECT
-                         PersonID
-                         FROM OrganizationContacts
-                         WHERE OrganizationID = '. $member_id .'
-                         AND PersonID = '. $uid .'
-                         AND (Relation = "CR" OR Relation = "MA" OR Relation = "DE" OR Relation = "MPE")';
+                         p.EMail
+                         FROM OrganizationContacts as oc
+                         LEFT JOIN People as p
+                         ON oc.PersonID = p.PersonID
+                         WHERE oc.OrganizationID = '. $member_id .'
+                         AND p.EMail = '. $email .'
+                         AND (oc.Relation = "CR" OR oc.Relation = "MA" OR oc.Relation = "DE" OR oc.Relation = "MPE")';
       $result_maintainer = $this->App->foundation_sql($sql_maintainer);
 
       while ($row = mysql_fetch_assoc($result_maintainer)) {
-        $_is_maintainer[] = $row['PersonID'];
+        $_is_maintainer[] = $row['EMail'];
+        break;
       }
-
-      $_has_eclipse_account = $this->_fetchPersonIdFromPeople($uid);
     }
 
-    if(!empty($token)){
+    if(!empty($member_id) && !empty($token)){
       // Check to see if the token is there and valid
       $sql_token = 'SELECT *
                     FROM OrganizationTokens
@@ -377,12 +380,13 @@ class EditMembership extends Membership{
         $current_time = date('Y-m-d H:i:s');
         if($row['ValidUntil'] > $current_time && $row['Subnet'] == $this->App->getSubnet()){
           $_valid_token[] = $row['Token'];
+          break;
         }
       }
     }
 
     // Is a Maintainer AND has an Eclipse Account
-    if((!empty($_is_maintainer) && !empty($_has_eclipse_account)) || !empty($_valid_token)){
+    if(!empty($_is_maintainer) || !empty($_valid_token)){
       $user_verified = TRUE;
     }
     return $user_verified;
@@ -644,26 +648,9 @@ class EditMembership extends Membership{
   }
 
   /**
-   * Fetch the PersonID from People table
-   * */
-  private function _fetchPersonIdFromPeople($_uid){
-    $_uid = $this->App->returnQuotedString($this->App->sqlSanitize($this->fetchUserId()));
-    $sql = 'SELECT PersonID
-            FROM People
-            WHERE PersonID = ' . $_uid;
-    $result = $this->App->foundation_sql($sql);
-
-    $_has_eclipse_account = array();
-    while ($row = mysql_fetch_assoc($result)) {
-      $_has_eclipse_account[] = $row['PersonID'];
-    }
-    return $_has_eclipse_account;
-  }
-
-  /**
    * Validate that the token
    * */
-  private function _fetchUidBasedOnToken(){
+  private function _fetchEmailBasedOnToken(){
     $token = $this->App->returnQuotedString($this->App->sqlSanitize($this->getToken()));
     $sql = 'SELECT *
             FROM OrganizationTokens
@@ -675,16 +662,16 @@ class EditMembership extends Membership{
       $email_array['EMail'] = $row['Email'];
     }
     $email = $this->App->returnQuotedString($this->App->sqlSanitize($email_array['EMail']));
-    $sql_people = 'SELECT PersonID, EMail
+    $sql_people = 'SELECT EMail
                    FROM People
                    WHERE EMail = ' . $email;
     $result_people = $this->App->foundation_sql($sql_people);
 
     $uid_array = array();
     while ($row = mysql_fetch_assoc($result_people)) {
-      $uid_array['PersonID'] = $row['PersonID'];
+      $uid_array['EMail'] = $row['EMail'];
     }
-    return $uid_array['PersonID'];
+    return $uid_array['EMail'];
   }
 
   /**
@@ -895,10 +882,10 @@ class EditMembership extends Membership{
     // Check if it's ok to send the token
     // By verifying the email address submitted
     $email_to = filter_var($this->App->getHTTPParameter("token_request_email", "POST"), FILTER_SANITIZE_EMAIL);
-    $ids = $this->fetchMemberMaintainers();
+    $emails = $this->fetchMemberMaintainers();
     $good_to_send = FALSE;
-    foreach ($ids as $id){
-      if($id['EMail'] == $email_to){
+    foreach ($emails as $email){
+      if($email['EMail'] == $email_to){
         $good_to_send = TRUE;
         break;
       }
