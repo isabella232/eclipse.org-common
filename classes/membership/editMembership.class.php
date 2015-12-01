@@ -894,8 +894,8 @@ class EditMembership extends Membership{
     // Default status message is the error message
     $message = "The email address <strong>". $email_to ." is not defined
                 has a maintainer</strong> for the member <strong>". $this->getMemberName() ."</strong>.<br>
-                Please contact <a href='mailto:membership@eclipse.org?subject=Request access to Eclipse
-membership page'>membership@eclipse.org</a>
+                Please contact <a href='mailto:membership@eclipse.org?subject=Request access to Eclipse 
+membership page&body=Please provide the following information: %0D%0A%0D%0A Full name: %0D%0A Title: %0D%0A Email: '>membership@eclipse.org</a>
                 if you think you should have access and be defined as a maintainer.";
     $message_type = 'danger';
 
