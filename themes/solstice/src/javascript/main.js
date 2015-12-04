@@ -1,14 +1,12 @@
 // main.js
 (function($, document) {
   
+  $(window).unload(function() {
+    $('body').scrollTop(0);
+  });
+  
   $(document).ready(function() {
-    
-    // Remove the hash from url. 
-    // This prevent the page to scroll on reload.
-    if (window.location.hash.toLowerCase().indexOf("open_tab") >= 0){
-      window.location.hash = "";
-    }
-    
+
     var href_hash = window.location.hash;
     // Add a class if right column is non-existant.
     if ($("#rightcolumn").length == 0) {
@@ -33,6 +31,8 @@
         $(this).addClass('active');
       });
     });
+    
+    href_hash && $('ul.nav a[href="' + hash + '"]').tab('show');
   });
   
   // This code will prevent unexpected menu close when
@@ -60,15 +60,6 @@
     return false;
   });
   
-  var hash = window.location.hash;
-  // Check if the selector exist before scrolling back to the top of the page.
-  // Also make sure the selector is a tab menu.
-  // [Bug 465298] Link to bookmark not working
-  if (hash && $('ul.nav-tabs a[href="' + hash + '"]')[0]) {
-    $('ul.nav a[href="' + hash + '"]').tab('show');
-    $('html,body').scrollTop(0);
-  }
-  
   $('.nav-tabs a').click(function (e) {
     $(this).tab('show');
     history.pushState({}, "", this.href);
@@ -83,6 +74,4 @@
   $('.solstice-collapse').click(function(){
     $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
   });
-  
-
 })(jQuery, document);
