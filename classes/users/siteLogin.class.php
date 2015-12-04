@@ -741,7 +741,10 @@ class Sitelogin {
   }
 
   private function _processSave() {
-    if ($this->password_expired === TRUE) {
+
+    // Check IF the password is expired
+    // AND if the user is NOT trying to change the password
+    if ($this->password_expired === TRUE && (empty($this->password1) && empty($this->password2))) {
       $this->messages['password_expired']['danger'][] = "You need to set a new password before you can update your Account Settings.";
       $this->getVariables("welcomeback");
       return FALSE;
@@ -1342,12 +1345,22 @@ END;
       $dn = $this->Ldapconn->getDNFromUID($this->user_uid);
       // Get shadowLastChange in seconds
       $lastChange = ($this->Ldapconn->getLDAPAttribute($dn, "shadowLastChange")) * 86400;
+      // Get the number of days
+      $shadowMax = $this->Ldapconn->getLDAPAttribute($dn, "shadowMax");
       // Set the expiry date
-      $expiryDate = strtotime('+6 month', $lastChange);
-
-      if ($expiryDate > time() && $this->Friend->getIsCommitter()) {
-        $this->messages['password_expired']['danger'][] = "Your password is expired. Please update it immediately.";
-        return TRUE;
+      $expiryDate = strtotime('+'.$shadowMax.' days', $lastChange);
+      $expireSoon = strtotime('-30 days', $expiryDate);
+      if ($this->Friend->getIsCommitter()) {
+        $numberOfDays = round(($expiryDate - time()) / (3600*24));
+        if ($expiryDate >= time() && time() > $expireSoon) {
+          $days = $numberOfDays == 1 ? 'day' : 'days';
+          $this->messages['password_expire_soon']['info'][] = 'Your password expires in <strong>' . $numberOfDays . ' '. $days .'.</strong>';
+          return FALSE;
+        }
+        if ($expiryDate < time()) {
+          $this->messages['password_expired']['danger'][] = "Your password is expired. <br>Please update it immediately.";
+          return TRUE;
+        }
       }
     }
     return FALSE;
