@@ -894,8 +894,8 @@ class EditMembership extends Membership{
     // Default status message is the error message
     $message = "The email address <strong>". $email_to ." is not defined
                 has a maintainer</strong> for the member <strong>". $this->getMemberName() ."</strong>.<br>
-                Please contact <a href='mailto:membership@eclipse.org?subject=Request access to Eclipse 
-membership page&body=Please provide the following information: %0D%0A%0D%0A Full name: %0D%0A Title: %0D%0A Email: '>membership@eclipse.org</a>
+                Please contact <a href='mailto:membership-admin@eclipse.org?subject=Request access to Eclipse
+membership page - " . $this->getMemberName() . "&body=In order to receive the token to enable you to edit the company information for " . $this->getMemberName() . ", please provide the details below.  We will need to verify this information prior to responding to you - please leave up to 1 business day for this to occur. %0D%0A%0D%0A Thanks %0D%0A Eclipse Membership Administration Team %0D%0A%0D%0A PLEASE PROVIDE THE FOLLOWING DETAILS: %0D%0A%0D%0A Company name: " . $this->getMemberName() . "%0D%0A First name:%0D%0A Last name:%0D%0ATitle: %0D%0ACompany Email:%0D%0ARole (if known):%0D%0A'>membership-admin@eclipse.org</a>
                 if you think you should have access and be defined as a maintainer.";
     $message_type = 'danger';
 
@@ -924,7 +924,7 @@ membership page&body=Please provide the following information: %0D%0A%0D%0A Full
       $email_body = 'You have been granted 24 hours to edit the '. $this->getMemberName() .' member page.'.
       PHP_EOL. PHP_EOL .'Please use the following link to make the edits:'.
       PHP_EOL.'https://'. $domain .'/membership/editMember.php?member_id='. $this->id .'&token='. $token .
-      PHP_EOL. PHP_EOL .'For more information, please contact membership@eclipse.org.';
+      PHP_EOL. PHP_EOL .'For more information, please contact membership-admin@eclipse.org.';
       $this->createEmail($email_to, $email_subject, $email_body);
 
       // Set the status message to success if the token has been sent
