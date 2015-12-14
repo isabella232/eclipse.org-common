@@ -32,7 +32,7 @@
       });
     });
     
-    href_hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+    href_hash && $('ul.nav a[href="' + href_hash + '"]').tab('show');
   });
   
   // This code will prevent unexpected menu close when
