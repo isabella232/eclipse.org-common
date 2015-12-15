@@ -20,7 +20,7 @@
       <div class="container">
 
         <div class="row">
-          <section id="footer-eclipse-foundation" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
+          <section id="footer-eclipse-foundation" class="col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
             <h2 class="section-title">Eclipse Foundation</h2>
             <ul class="nav">
               <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
@@ -31,7 +31,7 @@
               <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
             </ul>
           </section>
-          <section id="footer-legal" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print ">
+          <section id="footer-legal" class="col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print ">
             <h2 class="section-title">Legal</h2>
             <ul class="nav">
               <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
@@ -43,7 +43,7 @@
             </ul>
           </section>
 
-          <section id="footer-useful-links" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
+          <section id="footer-useful-links" class="col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
             <h2 class="section-title">Useful Links</h2>
             <ul class="nav">
               <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
@@ -55,7 +55,7 @@
             </ul>
           </section>
 
-          <section id="footer-other" class="col-xs-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
+          <section id="footer-other" class="col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
 
             <h2 class="section-title">Other</h2>
             <ul class="nav">
@@ -72,7 +72,7 @@
             </ul>
 
           </section>
-          <div id="copyright"  class="col-xs-offset-1 col-sm-14 col-md-24 col-md-offset-0">
+          <div id="copyright"  class="col-sm-offset-1 col-sm-14 col-md-24 col-md-offset-0">
             <div>
               <span class="hidden-print"><?php print $variables['logo']['white']; ?></span>
               <p id="copyright-text"><?php print $variables['footer']['copyright'];?></p>
