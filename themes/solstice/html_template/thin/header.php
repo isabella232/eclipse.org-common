@@ -26,7 +26,7 @@
           </div>
         </div>
         <?php endif;?>
-        <div id="row-logo-search">
+        <div id="row-logo-search" class="row">
           <div id="header-left">
             <div class="row">
               <div class="hidden-xs col-sm-6">
