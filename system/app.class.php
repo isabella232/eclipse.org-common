@@ -58,7 +58,7 @@ class App {
   private $theme_variables = array();
 
   # Set to TRUE to disable all database operations
-  private $DB_READ_ONLY    = true;
+  private $DB_READ_ONLY    = FALSE;
 
   # Database config and handle cache
   private $databases;
