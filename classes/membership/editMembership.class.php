@@ -547,12 +547,20 @@ class EditMembership extends Membership{
     $message_type = 'danger';
     if(!empty($id) && !empty($short_desc) && !empty($long_desc) && !empty($url)){
       // Update the Members Descriptions and url in the database
-      $sql = 'UPDATE OrganizationInformation set
-              short_description = ' . $this->App->returnQuotedString($this->App->sqlSanitize($short_desc)) . ',
-              long_description = ' . $this->App->returnQuotedString($this->App->sqlSanitize($long_desc)) . ',
-              company_url = ' . $this->App->returnQuotedString($this->App->sqlSanitize($url)) . '
-          WHERE
-              OrganizationID = ' . $this->App->returnQuotedString($this->App->sqlSanitize($id));
+      $sql = "INSERT INTO OrganizationInformation
+              (OrganizationID,short_description,long_description,company_url,small_width,small_height,large_width,large_height)
+              VALUES
+              (". $this->App->returnQuotedString($this->App->sqlSanitize($id)) .",
+               ". $this->App->returnQuotedString($this->App->sqlSanitize($short_desc)) .",
+               ". $this->App->returnQuotedString($this->App->sqlSanitize($long_desc)) .",
+               ". $this->App->returnQuotedString($this->App->sqlSanitize($url)) .",
+                0,0,0,0)
+               ON DUPLICATE KEY
+               UPDATE
+               OrganizationID = " . $this->App->returnQuotedString($this->App->sqlSanitize($id)) . ",
+               short_description = ". $this->App->returnQuotedString($this->App->sqlSanitize($short_desc)) .",
+               long_description = ". $this->App->returnQuotedString($this->App->sqlSanitize($long_desc)) .",
+               company_url = ". $this->App->returnQuotedString($this->App->sqlSanitize($url));
       $result = $this->App->eclipse_sql($sql);
 
       // Get the most up to date text fields
@@ -626,13 +634,40 @@ class EditMembership extends Membership{
       $width = $this->App->sqlSanitize(imagesx($image));
       $height = $this->App->sqlSanitize(imagesy($image));
 
-      $sql = 'UPDATE OrganizationInformation set
-                '. $_param .'_mime = "' . $logo_mime . '",
-                '. $_param .'_width = "' . $width . '",
-                '. $_param .'_height = "' . $height . '",
-                '. $_param .'_logo = "' . $logo_blob . '"
-              WHERE
-                OrganizationID = "' . $_id . '"';
+      $other_param = ($_param == 'small' ? 'large' : 'small');
+
+      $sql = "INSERT INTO OrganizationInformation
+              (
+                OrganizationID,
+                company_url,
+                ".$_param."_mime,
+                ".$_param."_width,
+                ".$other_param."_width,
+                ".$_param."_height,
+                ".$other_param."_height,
+                ".$_param."_logo
+              )
+              VALUES
+              (
+                ". $this->App->returnQuotedString($this->App->sqlSanitize($_id)) .",
+                'http://',
+                '". $logo_mime ."',
+                ". $this->App->returnQuotedString($this->App->sqlSanitize($width)) .",
+                '0',
+                ". $this->App->returnQuotedString($this->App->sqlSanitize($height)) .",
+                '0',
+                '".$logo_blob."'
+              )
+              ON DUPLICATE KEY
+              UPDATE
+                OrganizationID = '". $this->App->sqlSanitize($_id) ."',
+                company_url = 'http://',
+                ".$_param."_mime = '". $logo_mime ."',
+                ".$_param."_width = ". $this->App->returnQuotedString($this->App->sqlSanitize($width)) .",
+                ".$other_param."_width = '0',
+                ".$_param."_height = ". $this->App->returnQuotedString($this->App->sqlSanitize($height)) .",
+                ".$other_param."_height = 0,
+                ".$_param."_logo = '". $logo_blob ."'";
       $result = $this->App->eclipse_sql($sql);
 
       $message = 'SUCCESS, you have submitted a new logo.';
