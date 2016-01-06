@@ -35,7 +35,7 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setBody('Early access to Java 9 support for Mars.');
     $Ad->setImage('/downloads/images/promoted_listings/default.png');
     $Ad->setCampaign('PP_JAVA9');
-    $Ad->setWeight(20);
+    $Ad->setWeight(50);
     $this->newAd($Ad);
 
     $Ad = new Ad();
@@ -44,18 +44,7 @@ class PromotedPlugin extends EclipseAds {
     $Ad->setBody('Eclipse plug-ins that provide support for building software using Gradle.');
     $Ad->setImage('/downloads/images/promoted_listings/Gradle-logo.png');
     $Ad->setCampaign('PP_GRADLE');
-    $Ad->setWeight(20);
-    $this->newAd($Ad);
-
-
-    // Genuitec's Promoted Plugin
-    $Ad = new Ad();
-    $Ad->setTitle('Webclipse - New!');
-    $this->_setMarketplaceNodeId('2456312', $Ad);
-    $Ad->setBody('Adding REST Inspect, Hot Reload, JavaScript Debug and more to your Eclipse, for free.');
-    $Ad->setImage('/downloads/images/promoted_listings/webclipse-logo.png');
-    $Ad->setCampaign('PP_MYECLIPSE');
-    $Ad->setWeight(60);
+    $Ad->setWeight(50);
     $this->newAd($Ad);
   }
 
