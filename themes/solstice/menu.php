@@ -99,8 +99,6 @@
     <main role="main" class="<?php print $variables['main_classes'];?>">
       <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
           <?php print $variables['deprecated'];?>
-          <div class="container padding-top-25">
-            <div class="col-md-24"><?php print $this->getSystemMessage(); ?></div>
-          </div>
+          <?php print $variables['sys_messages'];?>
           <?php print $variables['theme_variables']['main_container_html'];?>
           <?php print $SolsticeHeaderNav->build();?>

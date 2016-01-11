@@ -20,7 +20,7 @@ class Solstice {
   /**
    * Constructor
    */
-  function __construct($App, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers) {
+  function __construct(App $App, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers) {
 
     $variables['page']['App'] = $App;
     $variables['page']['author'] = $pageAuthor;
@@ -150,6 +150,20 @@ class Solstice {
       $variables['body']['classes'] .= ' ' . $variables['theme_variables']['body_classes'];
     }
 
+      // System messages
+    $variables['sys_messages'] = "";
+    if ($sys_messages = $App->getSystemMessage()) {
+      $container_classes_array = explode(' ', $variables['theme_variables']['main_container_classes']);
+      $sys_classes = 'clearfix';
+      // Verify if the system message is included in a .container class.
+      // If not, wrap the system message in a container.
+      if (!in_array('container', $container_classes_array)) {
+        $sys_classes .= ' container';
+      }
+      $variables['sys_messages'] = '<div id="sys_message" class="' . $sys_classes . '">';
+      $variables['sys_messages'] .= '<div class="row"><div class="col-md-24">' . $sys_messages . '</div></div>';
+      $variables['sys_messages'] .= '</div>';
+    }
 
     $variables['body']['id'] = 'body_solstice';
 
@@ -341,12 +355,11 @@ class Solstice {
   }
 }
 
-global $App;
 $extra_headers = (isset($extraHtmlHeaders)) ? $extraHtmlHeaders : "";
 if (!($Menu instanceof Menu)) {
   $Menu = new Menu();
 }
-$Solstice = new Solstice($App, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers);
+$Solstice = new Solstice($this, $pageAuthor, $pageKeywords, $pageTitle, $theme, $theme, $Nav, $Menu, $html, $Breadcrumb, $extra_headers);
 $variables = $Solstice->getVariables();
 
 $SolsticeHeaderNav = New SolsticeHeaderNav($variables['theme_variables']['header_nav']);
