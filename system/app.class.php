@@ -81,6 +81,9 @@ class App {
   # SQL Backtrace storage
   public $query_btrace;
 
+  # Messages variable
+  private $Messages = NULL;
+
   # Default constructor
   function App() {
     # Set value for WWW_PREFIX
@@ -135,6 +138,31 @@ class App {
     date_default_timezone_set("America/Montreal");
   }
 
+  /**
+   * This function sets System Messages
+   * @param $name - string containing the name of the message
+   * @param $msg  - string containing the message itself
+   * @param $type - string containing the type of the message
+   * */
+  public function setSystemMessage($name, $msg, $type) {
+    if (get_class($this->Messages) !== 'Messages') {
+      require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/messages.class.php");
+      $this->Messages = new Messages();
+    }
+    $this->Messages->setMessages($name, $msg, $type);
+  }
+
+  /**
+   * this function returns messages
+   * @return array
+   * */
+  public function getSystemMessage() {
+    if (get_class($this->Messages) !== 'Messages') {
+      require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/messages.class.php");
+      $this->Messages = new Messages();
+    }
+    return $this->Messages->getMessages();
+  }
 
   function getAppVersion() {
     return $this->APPVERSION;

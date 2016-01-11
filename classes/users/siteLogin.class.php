@@ -362,11 +362,12 @@ class Sitelogin {
       'planeteclipse.org',
       'locationtech.org',
       'polarsys.org',
+      'eclipse.local'
     );
 
     foreach ($domains as $d) {
-      if (preg_match('#^https?://' . $d . '/#', $takemeback)
-          || preg_match('#^https?://[\w+0-9-]{0,}\.' . $d . '/#', $takemeback)) {
+      if (preg_match('#^(http(s)?:\/\/)(www\.)?([\w+0-9-]{0,}\.)?' . $d . '(:\d{1,5})?(\/)?#', $takemeback) &&
+          strpos($takemeback, $d . ".") === FALSE){
         return TRUE;
         break;
       }

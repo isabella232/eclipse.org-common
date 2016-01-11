@@ -459,7 +459,7 @@ class CampaignManager extends Campaign{
     $acceptedValues = array('CreatorPortalID','CampaignGroup');
 
     // Get sanitized values
-    $user_or_group = $App->returnQuotedString($App->sqlSanitize($_user_or_group));
+    $user_or_group = $App->sqlSanitize($_user_or_group);
 
     if(in_array($user_or_group, $acceptedValues)) {
       $sql = "SELECT DISTINCT " . $user_or_group . " FROM Campaigns ORDER BY " . $user_or_group;
@@ -475,7 +475,6 @@ class CampaignManager extends Campaign{
   public function selectCampaignByUser() {
     $users = array();
     $results = $this->selectUserOrGroup("CreatorPortalID");
-    $sql = "SELECT DISTINCT " . $user_or_group . " FROM Campaigns ORDER BY " . $user_or_group;
     while ($result = mysql_fetch_array($results)){
       $users[] = $result;
     }

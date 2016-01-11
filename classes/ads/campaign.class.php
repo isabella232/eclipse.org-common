@@ -122,7 +122,7 @@ class Campaign{
     $this->state = filter_var($this->App->getHTTPParameter('action_state', 'POST'), FILTER_SANITIZE_STRING);
 
     // Define the page
-    $this->state = filter_var($this->App->getHTTPParameter('page', 'POST'), FILTER_SANITIZE_STRING);
+    $this->page = filter_var($this->App->getHTTPParameter('page', 'POST'), FILTER_SANITIZE_STRING);
 
     // Determine if the user is part of the staff
     if(!$this->Friend->checkUserIsFoundationStaff()) {
