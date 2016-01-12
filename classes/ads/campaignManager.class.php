@@ -445,6 +445,7 @@ class CampaignManager extends Campaign{
         $campaign['TargetUrl'] = $myrow['TargetUrl'];
         $campaign['DateExpires'] = $myrow['DateExpires'];
         $campaign['CampaignGroup'] = $myrow['CampaignGroup'];
+        $campaign['NewExpiryDate'] = date('Y-m-d',strtotime('+3 years'));
     }
     return $campaign;
   }

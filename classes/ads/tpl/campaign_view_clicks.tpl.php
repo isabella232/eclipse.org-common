@@ -65,7 +65,7 @@
       <tr>
         <th>NEW DATE: </th>
         <td>
-          <input type="text" name="campaignNewDATE" value="<?php print $currentCampaign['DateExpires']; ?>">
+          <input type="text" name="campaignNewDATE" value="<?php print $currentCampaign['NewExpiryDate']; ?>">
         </td>
       </tr>
       <tr>
