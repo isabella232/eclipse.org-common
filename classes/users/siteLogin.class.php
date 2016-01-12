@@ -770,7 +770,8 @@ class Sitelogin {
           if ( !$lname_changed && !$email_changed) {
             //I guess they just want us to know they've changed employers
             $this->messages['myaccount']['danger'][] = "A notice has been sent to you and EMO legal (emo-records@eclipse.org) so that they can advise what paperwork(if any) needs to be updated due to your change in employers.";
-          } else {
+          }
+          else {
             //they've changed something
             $this->messages['myaccount']['danger'][] = "You have indicated a change in employer.  As such any changes you made have not been saved.  A notice has been sent to you and EMO legal (emo-records@eclipse.org) so that they can advise what paperwork(if any) needs to be updated.";
           }
@@ -799,7 +800,8 @@ class Sitelogin {
 
           }
         }
-	//if either the first or last name has changed the cn should be updated.
+
+        //if either the first or last name has changed the cn should be updated.
         if ($fname_changed || $lname_changed) {
           $this->Ldapconn->changeAttributeValue($dn, $this->password, "cn", $this->fname . " " . $this->lname);
           $update_bz_name = TRUE;
@@ -809,6 +811,7 @@ class Sitelogin {
           $this->App->bugzilla_sql("SET NAMES 'utf8'");
           $sql = "UPDATE profiles SET realname='" . $this->App->sqlSanitize($this->fname . " " . $this->lname) . "' WHERE login_name = " .  $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . " LIMIT 1";
           $this->App->bugzilla_sql($sql);
+          $this->Session->updateSessionData($this->Friend);
         }
 
         # Update GitHub ID?

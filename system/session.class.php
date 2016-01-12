@@ -347,4 +347,28 @@ class Session {
     return $this->getGID() != "";
   }
 
+  /**
+   * Update Friend object in Sessions table.
+   *
+   * @param object $Friend
+   * @return boolean
+   */
+  function updateSessionData($Friend = NULL) {
+    if (is_null($Friend)) {
+      $Friend = $this->getFriend();
+    }
+
+   if (is_a($Friend, 'Friend') && $gid = $this->getGID()) {
+      $this->setFriend($Friend);
+      $this->setData($Friend);
+
+      $sql = "UPDATE sessions SET updated_at = NOW(),
+        data = '" . $this->App->sqlSanitize($this->data) . "'
+        WHERE gid = '" . $this->App->sqlSanitize($gid, NULL) . "'";
+       $this->App->eclipse_sql($sql);
+       return TRUE;
+    }
+
+    return FALSE;
+  }
 }
