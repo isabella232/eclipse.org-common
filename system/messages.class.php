@@ -70,7 +70,7 @@ class Messages {
    * @return string
    * */
   private function _getMessageContainer($message = '', $type = 'success') {
-    $class = "alert alert-" . $type;
+    $class = "stay-visible alert alert-" . $type;
     return '<div class="' . $class . '" role="alert">' . $message . '</div>';
   }
 }

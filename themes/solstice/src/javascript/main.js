@@ -63,7 +63,7 @@
   $('.nav-tabs a').click(function (e) {
     $(this).tab('show');
     history.pushState({}, "", this.href);
-    $('.alert').remove();
+    $('.alert:not(.stay-visible)').remove();
   });
   
   $("a[data-tab-destination]").on('click', function() {
