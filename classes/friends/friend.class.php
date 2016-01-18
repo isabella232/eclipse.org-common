@@ -446,6 +446,15 @@ class Friend {
   }
 
   /**
+   * Verify if our Friend is a Webmaster.
+   *
+   * @return boolean
+   */
+  public function checkUserIsWebmaster() {
+    return $this->_checkUserInGroup('admins');
+  }
+
+  /**
    * Verify if a user is in a group
    *
    * A group name might change in the future,

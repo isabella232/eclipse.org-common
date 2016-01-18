@@ -18,7 +18,6 @@ require_once('/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.p
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/captcha/captcha.class.php");
 
-
 define('SITELOGIN_EMAIL_REGEXP', '/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
 
 define('SITELOGIN_NAME_REGEXP', '/[^\p{L}\p{N}\-\.\' ]/u');
@@ -33,11 +32,17 @@ class Sitelogin {
 
   private $Captcha = NULL;
 
+  private $country = "";
+
+  private $country_list = NULL;
+
   private $githubid = "";
 
   private $Friend = NULL;
 
   private $fname = "";
+
+  private $gender = "";
 
   private $exipred_pass_token = FALSE;
 
@@ -50,6 +55,8 @@ class Sitelogin {
   private $lname = "";
 
   private $messages = array();
+
+  private $newsletter_status = "";
 
   private $organization = "";
 
@@ -157,12 +164,24 @@ class Sitelogin {
     }
   }
 
+  public function getDomain() {
+    $domain = $this->App->getEclipseDomain();
+    return 'https://' . $domain['dev_domain'];
+  }
+
   public function getStage(){
     return $this->stage;
   }
 
   public function getIsCommitter(){
     return $this->is_committer;
+  }
+
+  public function getCountryList() {
+    if (is_null($this->country_list)) {
+      $this->_fetchCountries();
+    }
+    return $this->country_list;
   }
 
   public function getSystemMessage() {
@@ -220,6 +239,9 @@ class Sitelogin {
       'bio' => "",
       'interests' => "",
       'twitter_handle' => "",
+      'country' => "",
+      'gender' => "",
+      'newsletter_status' => "",
     );
 
     $this->_get_default_profile_fields();
@@ -233,12 +255,15 @@ class Sitelogin {
     $password_update = filter_var($this->password_update, FILTER_SANITIZE_NUMBER_INT);
     $githubid = filter_var($this->Ldapconn->getGithubIDFromMail($this->Friend->getEmail()), FILTER_SANITIZE_STRING);
     $organization = filter_var($this->organization, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $country = filter_var($this->country, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $gender = filter_var($this->gender, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $jobtitle = filter_var($this->jobtitle, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $website = filter_var($this->website, FILTER_SANITIZE_URL);
     $bio = filter_var($this->bio, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $interests = filter_var($this->interests, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $token = filter_var($this->t, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $twitter_handle = filter_var($this->twitter_handle, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+    $newsletter_status = filter_var($this->newsletter_status, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
 
     switch ($type) {
       case 'login':
@@ -257,6 +282,8 @@ class Sitelogin {
         $return['jobtitle'] = $jobtitle;
         $return['website'] = $website;
         $return['bio'] = $bio;
+        $return['gender'] = $gender;
+        $return['country'] = $country;
         $return['interests'] = $interests;
         $return['twitter_handle'] = $twitter_handle;
         $return['friend'] = array(
@@ -274,8 +301,12 @@ class Sitelogin {
           $return['username'] = $username;
           $return['fname'] = $fname;
           $return['lname'] = $lname;
+          $return['organization'] = $organization;
+          $return['gender'] = $gender;
+          $return['country'] = $country;
           $return['agree'] =  $agree;
           $return['takemeback'] = $takemeback;
+          $return['newsletter_status'] = $newsletter_status;
         }
         break;
 
@@ -333,6 +364,43 @@ class Sitelogin {
   public function password_update() {
     $this->messages['logout']['success'][] = "Your account details have been updated successfully.";
     $this->messages['logout']['warning'][] = 'Please login to confirm your new password.';
+  }
+
+  public function showCountries() {
+    $options = "";
+    $continents = $this->_fetchcontinents();
+    $countries = $this->_fetchCountries();
+
+    foreach ($continents as $continent) {
+      $options .= '<optgroup label="'. $continent .'">';
+      foreach ($countries as $country) {
+        if ($country['continent'] == $continent) {
+          $selected = "";
+          if (!empty($this->country) && $this->country == $country['ccode']) {
+            $selected = "selected";
+          }
+          $options .= '<option value="'. $country['ccode'] .'" ' . $selected.'>'. $country['description'] .'</option>';
+        }
+      }
+      $options .= '</optgroup>';
+    }
+    return $options;
+  }
+
+  public function showGender() {
+    $options = array(
+        'M' => 'Male',
+        'F' => 'Female',
+        'X' => 'Prefer not to say'
+    );
+    foreach ($options as $option_code => $option_name){
+      $checked = "";
+      if(!empty($this->gender) && $this->gender == $option_code) {
+        $checked = 'checked';
+      }
+      $buttons .= '<input type="radio" name="gender" value="' . $option_code . '" ' . $checked . '> ' . $option_name . '&nbsp;&nbsp';
+    }
+    return $buttons;
   }
 
   function verifyUserStatus() {
@@ -483,6 +551,14 @@ class Sitelogin {
             $this->messages['create']['danger'][] = "- An error occurred while processing your request. (8730s)";
           }
 
+          if (empty($this->gender)) {
+            $this->messages['create']['danger'][] = "- You must select your gender.";
+          }
+
+          if (empty($this->country)) {
+            $this->messages['create']['danger'][] = "- You must select your country of residence.";
+          }
+
           if (empty($this->messages['create']['danger'])) {
             # Add request to database
             $this->t = $this->App->getAlphaCode(64);
@@ -495,6 +571,27 @@ class Sitelogin {
             " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
             NOW(),
             " . $this->App->returnQuotedString($this->t) . ")");
+
+
+            $this->App->eclipse_sql("INSERT INTO users_profiles
+                (user_uid,user_mail,user_country,user_gender,user_org,user_status)
+                VALUES (
+                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->t)) .",
+                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) .",
+                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->country)) .",
+                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->gender)) .",
+                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->organization)) .",
+                  0
+                )"
+            );
+
+            if ($this->newsletter_status === 'subscribe') {
+              $Subscriptions = $this->App->getSubscriptions();
+              $Subscriptions->setFirstName($this->fname);
+              $Subscriptions->setLastName($this->lname);
+              $Subscriptions->setEmail($this->username);
+              $Subscriptions->addUserToList();
+            }
 
             $EventLog = new EvtLog();
             $EventLog->setLogTable("__ldap");
@@ -616,7 +713,7 @@ class Sitelogin {
   private function _get_default_profile_fields($get_default_values = FALSE){
     if (empty($this->messages['profile']['danger'])) {
       $sql = "SELECT /* USE MASTER */
-      user_org as organization, user_jobtitle as jobtitle, user_bio as bio,  user_interests as interests, user_website as website, user_twitter_handle as twitter_handle
+        user_org as organization, user_jobtitle as jobtitle, user_bio as bio, user_interests as interests, user_website as website, user_twitter_handle as twitter_handle, user_country as country, user_gender as gender
       FROM users_profiles
       WHERE  user_uid = " . $this->App->returnQuotedString($this->user_uid) . "
       ORDER BY user_update DESC LIMIT 1";
@@ -666,6 +763,8 @@ class Sitelogin {
       'user_bio' => $this->bio,
       'user_interests' => $this->interests,
       'user_twitter_handle' => $this->twitter_handle,
+      'user_country' => $this->country,
+      'user_gender' => $this->gender,
     );
 
     $possible_null_field = array(
@@ -681,6 +780,13 @@ class Sitelogin {
     if (!empty($fields['user_website']) && !filter_var($fields['user_website'], FILTER_VALIDATE_URL)) {
       $this->messages['profile']['danger'][] = 'Invalid website URL<br>';
     }
+    if (empty($fields['user_country']) && !in_array($fields['user_country'], $this->getCountryList())) {
+      $this->messages['profile']['danger'][] = 'You must enter a valid country<br>';
+    }
+    if (empty($fields['user_gender']) && !in_array($fields['user_gender'], array('M','F','X'))) {
+      $this->messages['profile']['danger'][] = 'You must enter you gender<br>';
+    }
+
 
     if (!empty($this->messages['profile']['danger'])) {
       return FALSE;
@@ -1105,6 +1211,9 @@ class Sitelogin {
       'interests',
       'twitter_handle',
       'changed_employer',
+      'country',
+      'gender',
+      'newsletter_status',
    );
 
     foreach ($inputs as $field) {
@@ -1240,7 +1349,6 @@ END;
     }
   }
 
-
   private function _userAuthentification() {
     if (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username) && $this->stage == "login") {
       $this->messages['login']['danger'][] = "Your email address does not appear to be valid.";
@@ -1368,6 +1476,44 @@ END;
       }
     }
     return FALSE;
+  }
+
+  /**
+   * This function fetches all the countries and continents
+   * @return array
+   * */
+  private function _fetchCountries() {
+     $sql = "SELECT
+             countries.ccode,
+             countries.en_description as description,
+             countries.continent_code,
+             continents.en_description as continent
+             FROM SYS_countries as countries
+             LEFT JOIN SYS_continents as continents
+             ON countries.continent_code = continents.continent_code";
+     $result = $this->App->foundation_sql($sql);
+
+     $countries = array();
+     while ($row = mysql_fetch_array($result)) {
+        $countries[] = $row;
+     }
+     $this->country_list = $countries;
+     return $countries;
+  }
+
+  /**
+   * This function fetches all the continents from the SYS_continents table
+   * @return array
+   * */
+  private function _fetchcontinents() {
+    $sql = "SELECT en_description FROM SYS_continents ORDER BY sort_order DESC";
+    $result = $this->App->foundation_sql($sql);
+
+    $continents = array();
+    while ($row = mysql_fetch_array($result)) {
+      $continents[] = $row['en_description'];
+    }
+    return $continents;
   }
 
 }

@@ -138,6 +138,48 @@ class App {
     date_default_timezone_set("America/Montreal");
   }
 
+/**
+   * This function returns the Webmaster object
+   * @return object
+   * */
+  public function getWebmaster($action = '') {
+    switch ($action) {
+      case "webmaster":
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/webmaster.class.php");
+        return new Webmaster($this);
+        break;
+      case "mirrors":
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/mirrors.class.php");
+        return new Mirrors($this);
+        break;
+      case "jobs":
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/jobs.class.php");
+        return new Jobs($this);
+        break;
+      case "committers":
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/committers.class.php");
+        return new Committers($this);
+        break;
+      case "firewall":
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/firewall.class.php");
+        return new Firewall($this);
+        break;
+      case "mailinglists":
+        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/mailinglists.class.php");
+        return new MailingLists($this);
+        break;
+    }
+  }
+
+  /**
+   * This function returns the Subscriptions object
+   * @return object
+   * */
+  public function getSubscriptions() {
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/subscriptions/subscriptions.class.php");
+    return new Subscriptions($this);
+  }
+
   /**
    * This function sets System Messages
    * @param $name - string containing the name of the message
