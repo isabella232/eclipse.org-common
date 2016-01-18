@@ -1491,7 +1491,7 @@ END;
              FROM SYS_countries as countries
              LEFT JOIN SYS_continents as continents
              ON countries.continent_code = continents.continent_code";
-     $result = $this->App->foundation_sql($sql);
+     $result = $this->App->eclipse_sql($sql);
 
      $countries = array();
      while ($row = mysql_fetch_array($result)) {
@@ -1507,7 +1507,7 @@ END;
    * */
   private function _fetchcontinents() {
     $sql = "SELECT en_description FROM SYS_continents ORDER BY sort_order DESC";
-    $result = $this->App->foundation_sql($sql);
+    $result = $this->App->eclipse_sql($sql);
 
     $continents = array();
     while ($row = mysql_fetch_array($result)) {
