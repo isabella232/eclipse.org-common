@@ -251,7 +251,7 @@ class EditMembership extends Membership{
     $_member_id = $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
     $sql = 'SELECT
             p.PersonID, p.FName, p.LName, p.EMail, p.Phone,
-            group_concat(" ",
+            group_concat("",
             CASE oc.Relation
                WHEN "MPE" THEN "Membership Page Editor"
                WHEN "DE"  THEN "Delegate"
@@ -865,6 +865,24 @@ class EditMembership extends Membership{
     foreach($newMaintainerFields as $field) {
       if($field['value'] == "") {
         $status_message .= "Please enter a valid " . $field['name'] . ".<br>";
+      }
+    }
+
+    $maintainers = $this->fetchMemberMaintainers();
+    // Check if email is not empty
+    if ($newMaintainerFields['email']['value'] != "" && !empty($newMaintainerFields['role']['value'])) {
+      // Check if the email submitted matches with one already on record
+      // And already has the submitted role
+      foreach ($maintainers as $maintainer) {
+        if (($newMaintainerFields['email']['value'] == $maintainer['EMail'])) {
+          $roles = explode(",", $maintainer['Type']);
+          foreach ($newMaintainerFields['role']['value'] as $newRole) {
+            if (in_array($newRole, $roles)) {
+              $status_message .= $newMaintainerFields['email']['value'] . " is already a ". $newRole .".<br>";
+            }
+          }
+          break;
+        }
       }
     }
 
