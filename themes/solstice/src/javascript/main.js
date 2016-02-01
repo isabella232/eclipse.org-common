@@ -1,8 +1,13 @@
 // main.js
 (function($, document) {
   
-  $(window).unload(function() {
-    $('body').scrollTop(0);
+  $(window).on("load", function() {
+    if (window.location.hash && $(window.location.hash).hasClass("tab-pane")) {
+      window.scrollTo(0, 0);
+      setTimeout(function() {
+        window.scrollTo(0, 0);
+      }, 1);
+    }
   });
   
   $(document).ready(function() {
