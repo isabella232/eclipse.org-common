@@ -37,7 +37,7 @@ $search_results = $this->getSearchResults();
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="firewall-recent-block">
           <p><strong>Show last:</strong></p>
-          <form action="<?php print $this->getFormActionUrl();?>" method="POST">
+          <form action="<?php print $this->getFormActionUrl();?>#firewall-recent-block" method="POST">
             <input type="hidden" name="form_name" value="webmaster-firewall">
 
             <div class="form-group">
@@ -103,7 +103,7 @@ $search_results = $this->getSearchResults();
         </div>
 
         <div role="tabpanel" class="tab-pane" id="firewall-insert-block">
-          <form class="form-horizontal" method="POST" action="<?php print $this->getFormActionUrl();?>">
+          <form class="form-horizontal" method="POST" action="<?php print $this->getFormActionUrl();?>#firewall-insert-block">
             <input type="hidden" name="form_name" value="webmaster-firewall">
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">IP:<span class="required">*</span></label>

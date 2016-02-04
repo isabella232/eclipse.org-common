@@ -244,9 +244,6 @@ class Firewall extends Webmaster {
         $search_results[] = $row;
       }
     }
-    if (empty($search_results)) {
-      $search_results[0]['no_results'] = "No results were found.";
-    }
 
     $this->search_results = $search_results;
     return $search_results;

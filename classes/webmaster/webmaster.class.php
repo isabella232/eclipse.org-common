@@ -66,6 +66,9 @@ class Webmaster {
         'ProjectID' => $row['ProjectID']
       );
     }
+    // Add Foundation as first item of the array
+    array_unshift($projects, array('ProjectID' => 'Foundation'));
+
     $this->projects = $projects;
     return $projects;
   }

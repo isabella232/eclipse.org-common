@@ -24,6 +24,8 @@ class MailingLists extends Webmaster{
 
   private $search_results = NULL;
 
+  private $date_range = "5";
+
   public function __construct(App $App){
     parent::__construct($App);
     if ($this->getFormName() === 'webmaster-mailinglists') {
@@ -37,7 +39,17 @@ class MailingLists extends Webmaster{
         case 'search':
           $this->getSearchResults();
           break;
+        case 'date-range':
+          $this->_setDateRange();
+          break;
       }
+    }
+  }
+
+  private function _setDateRange() {
+    $range = filter_var($this->App->getHTTPParameter('date-range', 'POST'), FILTER_SANITIZE_STRING);
+    if (!empty($range)) {
+      $this->date_range = $range;
     }
   }
 
@@ -62,7 +74,7 @@ class MailingLists extends Webmaster{
    */
   public function getNewsgroups() {
     if (is_null($this->newsgroups)) {
-      $this->_fetchMailingListsOrNewsgroups('newsgroups');
+      $this->_fetchMailingListsOrNewsgroups('newsgroups', $this->date_range);
     }
     return $this->newsgroups;
   }
@@ -88,7 +100,7 @@ class MailingLists extends Webmaster{
    */
   public function getMailingLists(){
     if (is_null($this->mailing_lists)) {
-      $this->_fetchMailingListsOrNewsgroups('mailing_lists');
+      $this->_fetchMailingListsOrNewsgroups('mailing_lists', $this->date_range);
     }
     return $this->mailing_lists;
   }
@@ -238,19 +250,19 @@ class MailingLists extends Webmaster{
    * This function fetches mailing lists of newsgroups
    *
    * @param $table - This is the table name
-   * @param $provision_status - NULL, pending or completed
-   * @param $limit - Number of item to fetch
+   * @param $date - Number of days to limit the query
    *
    * @return array
    * */
-  private function _fetchMailingListsOrNewsgroups($table) {
+  private function _fetchMailingListsOrNewsgroups($table, $range) {
     $lists = array();
     if ($this->_isValidTable($table)) {
       $name = $this->getTableTitleName($table);
       $sql = "SELECT ". $this->App->sqlSanitize($name) ." as name, create_date, project_id, provision_status
               FROM " . $this->App->sqlSanitize($table) . "
-              WHERE is_deleted = 0";
-      $sql .= " ORDER BY create_date DESC LIMIT 2000";
+              WHERE is_deleted = 0
+              AND create_date BETWEEN NOW() - INTERVAL ". $this->App->sqlSanitize($range) ." DAY AND NOW()
+              ORDER BY create_date DESC LIMIT 2000";
 
       $result = $this->App->eclipse_sql($sql);
       while ($row = mysql_fetch_array($result)) {

@@ -51,10 +51,8 @@ class Mirrors extends Webmaster{
   public function getMirrorStatuses() {
     return array(
         'approve',
-        'wait',
         'active',
         'dropped',
-        'NULL',
     );
   }
 
@@ -76,7 +74,8 @@ class Mirrors extends Webmaster{
       FROM mirrors as m
       LEFT JOIN mirror_protocols  as mp
       ON m.mirror_id = mp.mirror_id";
-    $sql .= ' ORDER BY FIELD(m.create_status, NULL, "", "approve", "wait", "active", "dropped") ASC';
+    $sql .= ' WHERE m.create_status IN ("approve", "active", "dropped")
+              ORDER BY FIELD(m.create_status, "approve", "active", "dropped") ASC';
     $result = $this->App->eclipse_sql($sql);
 
     $mirrors = array();
@@ -84,9 +83,6 @@ class Mirrors extends Webmaster{
       $row['is_internal'] = 'No';
       if ($row['is_internal'] === "1") {
         $row['is_internal'] = 'yes';
-      }
-      if ($row['create_status'] === NULL) {
-        $create_status = 'NULL';
       }
       $row['row_context'] = "default";
       switch ($row['create_status']) {
@@ -96,14 +92,8 @@ class Mirrors extends Webmaster{
         case 'approve':
           $row['row_context'] = "warning";
           break;
-        case 'wait':
-          $row['row_context'] = "info";
-          break;
         case 'dropped':
           $row['row_context'] = "danger";
-          break;
-        case NULL:
-          $row['create_status'] = 'NULL';
           break;
       }
       $mirrors[$row['create_status']][] = $row;
@@ -117,41 +107,43 @@ class Mirrors extends Webmaster{
    * */
   private function _updateMirrors() {
 
-    $ids = array();
     $mirror_status = filter_var($this->App->getHTTPParameter('status', 'POST'), FILTER_SANITIZE_STRING);
-    $mirrors = $this->getMirrors($mirror_status);
 
-    foreach ($mirrors as $mirror) {
-      $status = filter_var($this->App->getHTTPParameter('status_update_' . $mirror['mirror_id'], 'POST'), FILTER_SANITIZE_STRING);
-      if ($status != $mirror['create_status']) {
-        $ids[] = array(
-          'mirror_id' => $mirror['mirror_id'],
-          'create_status' => $status
-        );
-      }
-    }
-
-    if (!empty($ids[0]['mirror_id']) && !empty($ids[0]['create_status'])) {
-      $sql = "UPDATE mirrors SET create_status = CASE ";
-      $in = array();
-      foreach ($ids as $id) {
-        $create_status = $this->App->returnQuotedString($this->App->sqlSanitize($id['create_status']));
-        if ($id['create_status'] === 'NULL') {
-          $create_status = 'NULL';
+    if (in_array($mirror_status, $this->getMirrorStatuses())) {
+      $mirrors = $this->getMirrors($mirror_status);
+      $ids = array();
+      foreach ($mirrors as $mirror) {
+        $status = filter_var($this->App->getHTTPParameter('status_update_' . $mirror['mirror_id'], 'POST'), FILTER_SANITIZE_STRING);
+        if ($status != $mirror['create_status']) {
+          $ids[] = array(
+            'mirror_id' => $mirror['mirror_id'],
+            'create_status' => $status
+          );
         }
-        $mirror_id = $this->App->returnQuotedString($this->App->sqlSanitize($id['mirror_id']));
-        $sql .= " WHEN mirror_id = " . $mirror_id . " THEN " . $create_status;
-        $in[] = $mirror_id;
       }
-      $in = implode(', ', $in);
-      $sql .= " END WHERE mirror_id in (" . $in . ")";
 
-      $result = $this->App->eclipse_sql($sql);
-      $this->_fetchMirrors();
-      $this->App->setSystemMessage('mirror_updated', 'You have successfully updated ' . count($ids) .' mirror(s).', 'success');
+      if (!empty($ids[0]['mirror_id']) && !empty($ids[0]['create_status'])) {
+        $sql = "UPDATE mirrors SET create_status = CASE ";
+        $in = array();
+        foreach ($ids as $id) {
+          $create_status = $this->App->returnQuotedString($this->App->sqlSanitize($id['create_status']));
+          $mirror_id = $this->App->returnQuotedString($this->App->sqlSanitize($id['mirror_id']));
+          $sql .= " WHEN mirror_id = " . $mirror_id . " THEN " . $create_status;
+          $in[] = $mirror_id;
+        }
+        $in = implode(', ', $in);
+        $sql .= " END WHERE mirror_id in (" . $in . ")";
+
+        $result = $this->App->eclipse_sql($sql);
+        $this->_fetchMirrors();
+        $this->App->setSystemMessage('mirror_updated', 'You have successfully updated ' . count($ids) .' mirror(s).', 'success');
+      }
+      else {
+        $this->App->setSystemMessage('mirror_updated', "The mirrors could not be updated.(#webmaster-mirrors-001)", 'danger');
+      }
     }
     else {
-      $this->App->setSystemMessage('mirror_updated', "The mirrors could not be updated.(#webmaster-mirrors-001)", 'danger');
+      $this->App->setSystemMessage('mirror_updated', "The mirror status is not valid.(#webmaster-mirrors-002)", 'danger');
     }
   }
 }
