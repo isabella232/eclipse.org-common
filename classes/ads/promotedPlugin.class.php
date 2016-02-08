@@ -29,23 +29,18 @@ class PromotedPlugin extends EclipseAds {
   public function PromotedPlugin($source = "") {
     parent::__construct($source);
 
-    $Ad = new Ad();
+    /* Note: Keeping the next block as a reference. 
+             If we decide to add the promoted plugins back to display */
+    
+    /*$Ad = new Ad();
     $Ad->setTitle('Java 9 Support (Beta)');
     $this->_setMarketplaceNodeId('2393593', $Ad);
     $Ad->setBody('Early access to Java 9 support for Mars.');
     $Ad->setImage('/downloads/images/promoted_listings/default.png');
     $Ad->setCampaign('PP_JAVA9');
     $Ad->setWeight(50);
-    $this->newAd($Ad);
+    $this->newAd($Ad);*/
 
-    $Ad = new Ad();
-    $Ad->setTitle('Gradle Integration from Buildship');
-    $this->_setMarketplaceNodeId('2306961', $Ad);
-    $Ad->setBody('Eclipse plug-ins that provide support for building software using Gradle.');
-    $Ad->setImage('/downloads/images/promoted_listings/Gradle-logo.png');
-    $Ad->setCampaign('PP_GRADLE');
-    $Ad->setWeight(50);
-    $this->newAd($Ad);
   }
 
   /**
