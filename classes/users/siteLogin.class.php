@@ -562,7 +562,6 @@ class Sitelogin {
           if (empty($this->messages['create']['danger'])) {
             # Add request to database
             $this->t = $this->App->getAlphaCode(64);
-            mysql_set_charset('utf8');
             $this->App->eclipse_sql("INSERT INTO account_requests VALUES (" . $this->App->returnQuotedString($this->App->sqlSanitize(trim($this->username))) . ",
             '',
             " . $this->App->returnQuotedString($this->App->sqlSanitize(trim($this->fname))) . ",
@@ -1224,7 +1223,7 @@ class Sitelogin {
       }
 
       if ($field == 'fname' || $field == 'lname') {
-        $this->$field = preg_replace(SITELOGIN_NAME_REGEXP, '', $this->$field);
+        $this->$field = preg_replace($this->xss_patterns, '', $this->$field);
       }
       else if ($field == 't') {
         $this->$field = preg_replace("/[^a-zA-Z0-9]/", "", $this->t);
