@@ -181,6 +181,15 @@ class App {
   }
 
   /**
+   * This function returns the CLA object
+   * @return object
+   * */
+  public function getCla() {
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/users/cla.class.php");
+    return new Cla($this);
+  }
+
+  /**
    * This function sets System Messages
    * @param $name - string containing the name of the message
    * @param $msg  - string containing the message itself
@@ -235,8 +244,8 @@ class App {
 
     $server['dev'] = array(
       'cookie' => '.eclipse.local',
-      'domain' => 'www.eclipse.local',
-      'dev_domain' => 'dev.eclipse.local',
+      'domain' => 'www.eclipse.local:50243',
+      'dev_domain' => 'dev.eclipse.local:51143',
       'allowed_hosts' => array(
         'eclipse.local',
         'www.eclipse.local',

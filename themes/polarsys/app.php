@@ -35,6 +35,8 @@ class Solstice {
 
     $base_url = $App->getWWWPrefix() . '/';
     $Session = $App->useSession();
+    $domains = $variables['page']['App']->getEclipseDomain();
+    $dev_domain = 'https://'.$domains['dev_domain'];
 
     $variables['session'] = array(
       'Friend' => NULL,
@@ -45,14 +47,14 @@ class Solstice {
     $variables['url'] = $base_url;
 
     $variables['session']['Friend'] = $Session->getFriend();
-    $variables['session']['create_account_link'] = '<a href="https://dev.eclipse.org/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create account</a>';
+    $variables['session']['create_account_link'] = '<a href="'.$dev_domain.'/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create account</a>';
     $variables['session']['my_account_link'] = '<a href="https://www.polarsys.org/user/login/sso"><i class="fa fa-sign-in fa-fw"></i> Log in</a>';
     $variables['session']['logout'] = '';
     if ($Session->isLoggedIn()) {
       $variables['session']['name'] = $variables['session']['Friend']->getFirstName();
       $variables['session']['last_name'] = $variables['session']['Friend']->getLastName();
       $variables['session']['create_account_link'] = 'Welcome, ' . $variables['session']['name'] . ' ' . $variables['session']['last_name'];
-      $variables['session']['my_account_link'] = '<a href="https://dev.eclipse.org/site_login/myaccount.php" class=""><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
+      $variables['session']['my_account_link'] = '<a href="'.$dev_domain.'/site_login/myaccount.php#open_tab_profile" class=""><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
       // Adding <li> with logout because we only display
       // two options if the user is not logged in.
       $variables['session']['logout'] = '<li><a href="https://www.polarsys.org/user/logout"><i class="fa fa-power-off fa-fw"></i> Log out</a></li>';
