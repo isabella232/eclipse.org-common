@@ -468,48 +468,12 @@ class App {
    *
    * @return array
    */
-  public function getEclipseDomain() {
-
-    $server['dev'] = array(
-      'cookie' => '.eclipse.local',
-      'domain' => 'www.eclipse.local:50243',
-      'dev_domain' => 'dev.eclipse.local:51143',
-      'allowed_hosts' => array(
-        'eclipse.local',
-        'www.eclipse.local',
-        'dev.eclipse.local',
-        'docker.local'
-      )
-    );
-
-    $server['staging'] = array(
-      'cookie' => '.eclipse.org',
-      'domain' => 'staging.eclipse.org',
-      // We currently dont have a staging server for dev.eclipse.org
-      'dev_domain' => 'dev.eclipse.org',
-      'allowed_hosts' => array(
-        'staging.eclipse.org'
-      )
-    );
-
-    $server['prod'] = array(
-      'cookie' => '.eclipse.org',
-      'domain' => 'www.eclipse.org',
-      'dev_domain' => 'dev.eclipse.org',
-      'allowed_hosts' => array()
-    );
-    // Empty, since it's the default.
-
-    // It should not matter if we are on http or https here.
-    $host = parse_url('http://' . $_SERVER['HTTP_HOST'], PHP_URL_HOST);
-    if (!empty($host)) {
-      foreach ($server as $type) {
-        if (in_array($host, $type['allowed_hosts'])) {
-          return $type;
-        }
-      }
+  public function getEclipseDomain(){
+    if (!class_exists('EclipseEnv')) {
+      require('eclipseenv.class.php');
     }
-    return $server['prod'];
+    $EclipseEnv = new EclipseEnv($this);
+    return $EclipseEnv->getEclipseEnv();
   }
 
   /**
@@ -1403,7 +1367,7 @@ EOHTML;
    * @author droy
    */
   function RESTClient() {
-    require_once ($this->getBasePath() . "/classes/rest/restclient.class.php");
+    require_once ($this->getBasePath() . "/classes/rest/lib/restclient.class.php");
     return new RestClient();
   }
 
