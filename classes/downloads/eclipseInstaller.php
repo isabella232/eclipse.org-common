@@ -58,8 +58,33 @@ class EclipseInstaller {
    * @return string
    */
   public function output() {
-    $html = "";
+    // Find out what OS the user is on
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+    $App = new App();
+    $os_client = $App->getClientOS();
+    $display = "windows"; // setting windows as default display
+    if ($os_client == "linux" || $os_client == "linux-x64") {
+      $display = "linux";
+    }
+    if ($os_client == "macosx" || $os_client == "cocoa64" || $os_client == "carbon") {
+      $display = "macosx";
+    }
+    
+    // Check if the OS has been selected manually
+    if (isset($_GET['osType'])) {
+      $display = $_GET['osType'];
+      if ($_GET['osType'] == 'win32') {
+        $display = "windows";
+      }
+    }
+
     $platforms = $this->platform;
+    $download_link = array();
+    foreach ($platforms as $platform) {
+      if ($display == strtolower(str_replace(' ', '', $platform['label']))) {
+        $download_link = $platform;
+      }
+    }
     $download_count = $this->total_download_count;
     if (!empty($platforms)) {
       ob_start();
