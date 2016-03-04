@@ -740,7 +740,11 @@ class EditMembership extends Membership{
     switch( $_type ) { //$_logo_info[2]
       case IMAGETYPE_GIF:  $image = imagecreatefromgif($_tmp_name); break;
       case IMAGETYPE_JPEG:  $image = imagecreatefromjpeg($_tmp_name); break;
-      case IMAGETYPE_PNG:  $image = imagecreatefrompng($_tmp_name); break;
+      case IMAGETYPE_PNG:
+        $image = imagecreatefrompng($_tmp_name);
+        $white = imagecolorallocate($logo_resize, 255, 255, 255);
+        imagefilledrectangle($logo_resize, 0, 0, $new_width, $new_height, $white);
+        break;
     }
     imagecopyresampled($logo_resize, $image, 0, 0, 0, 0, $new_width, $new_height, $_width, $_height);
     return $logo_resize;
