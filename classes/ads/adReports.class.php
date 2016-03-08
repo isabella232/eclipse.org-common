@@ -125,7 +125,7 @@ class AdReports {
     foreach ($impressions as $i) {
       $i['clicks'] = 0;
       foreach ($clicks as $c) {
-        if (!empty($c['clicks']) && $c['campaignKey'] == $i['campaignKey'] && $c['date'] == $i['date']) {
+        if (!empty($c['clicks']) && strcasecmp($c['campaignKey'], $i['campaignKey']) == 0  && $c['date'] == $i['date']) {
           $i['clicks'] = $c['clicks'];
         }
       }
