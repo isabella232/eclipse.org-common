@@ -1223,7 +1223,7 @@ class Sitelogin {
       }
 
       if ($field == 'fname' || $field == 'lname') {
-        $this->$field = preg_replace($this->xss_patterns, '', $this->$field);
+        $this->$field = preg_replace(SITELOGIN_NAME_REGEXP, '', $this->$field);
       }
       else if ($field == 't') {
         $this->$field = preg_replace("/[^a-zA-Z0-9]/", "", $this->t);
