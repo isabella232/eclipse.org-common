@@ -38,12 +38,12 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // compiling styles.less into styles.css
-                    './public/stylesheets/styles.css': './src/stylesheets/styles.less',
-                    './public/stylesheets/barebone.min.css': './html_template/barebone/stylesheets/styles.less',
-                    './public/stylesheets/barebone-toolbar.min.css': './html_template/barebone/stylesheets/styles-toolbar.less',
-                    './public/stylesheets/barebone-footer.min.css': './html_template/barebone/stylesheets/footer.less',
-                    './public/stylesheets/forums.min.css': './src/stylesheets/forums.less',
-                    './public/stylesheets/table.min.css': './src/stylesheets/table.less',
+                    './public/stylesheets/styles.css': './bower_components/solstice-assets/stylesheets/eclipse_org/styles.less',
+                    './public/stylesheets/barebone.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/styles.less',
+                    './public/stylesheets/barebone-toolbar.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/styles-toolbar.less',
+                    './public/stylesheets/barebone-footer.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/footer.less',
+                    './public/stylesheets/forums.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/forums.less',
+                    './public/stylesheets/table.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/table.less',
                     './public/stylesheets/polarsys.min.css': './src/stylesheets/polarsys.less'
                 }
             }
