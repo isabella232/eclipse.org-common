@@ -40,6 +40,9 @@ module.exports = function(grunt) {
                     // compiling styles.less into styles.css
                     './public/stylesheets/styles.css': './bower_components/solstice-assets/stylesheets/eclipse_org/styles.less',
                     './public/stylesheets/barebone.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/styles.less',
+                    './public/stylesheets/polarsys-barebone.min.css': './bower_components/solstice-assets/stylesheets/polarsys/barebone.less',
+                    './public/stylesheets/locationtech-barebone.min.css': './bower_components/solstice-assets/stylesheets/locationtech/barebone.less',
+                    './public/stylesheets/locationtech.min.css': './src/stylesheets/locationtech.less',
                     './public/stylesheets/barebone-toolbar.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/styles-toolbar.less',
                     './public/stylesheets/barebone-footer.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/footer.less',
                     './public/stylesheets/forums.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/forums.less',

@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2014 Eclipse Foundation and others.
+ * Copyright (c) 2014, 2015, 2016 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,17 +11,18 @@
  *******************************************************************************/
 
   require_once('../app.php');
+  $Theme->setAttributes('body', 'thin-layout');
   require_once('../../header.php');
 ?>
-<div class="thin-header">
+
     <header role="banner">
       <div class="container">
       <?php if (isset($_GET['site_login'])) :?>
       <div id="row-toolbar" class="text-right hidden-print">
           <div id="row-toolbar-col" class="col-md-24">
             <ul class="list-inline">
-              <li><?php print $variables['session']['create_account_link'];?></li>
-              <li><?php print $variables['session']['my_account_link'];?></li>
+              <li><?php print $Theme->getSessionVariables('create_account_link');?></li>
+              <li><?php print $Theme->getSessionVariables('my_account_link');?></li>
             </ul>
           </div>
         </div>
@@ -30,13 +31,13 @@
           <div id="header-left">
             <div class="row">
               <div class="hidden-xs col-sm-6">
-                <?php print $variables['logo']['default_link'];?>
+                <?php print $Theme->getLogo('default_link');?>
               </div>
                <div id="main-menu" class="navbar col-sm-18 yamm">
                 <div id="navbar-collapse-1" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <?php print $variables['menu']['main_menu']; ?>
-                    <?php print $variables['menu']['mobile_more'];?>
+                    <?php print $Theme->getMenu()?>
+                    <?php print $Theme->getMoreMenu('mobile')?>
                     <!-- More -->
                     <li class="dropdown hidden-xs"><a data-toggle="dropdown" class="dropdown-toggle">More<b class="caret"></b></a>
                       <ul class="dropdown-menu">
@@ -44,7 +45,7 @@
                           <!-- Content container to add padding -->
                           <div class="yamm-content">
                             <div class="row">
-                              <?php print $variables['menu']['desktop_more'];?>
+                              <?php print $Theme->getMoreMenu('desktop')?>
                             </div>
                           </div>
                         </li>
@@ -60,7 +61,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <?php print $variables['logo']['mobile_link'];?>
+                  <?php print $Theme->getLogo('mobile_link');?>
                 </div>
               </div>
             </div>
@@ -70,16 +71,23 @@
       </div>
     </header>
     <?php if (!$variables['theme_variables']['hide_breadcrumbs']) :?>
-      <section id="breadcrumb" class="<?php print $variables['theme_variables']['breadcrumbs_classes'];?>">
-        <div class="container">
-          <?php print $variables['breadcrumbs'];?>
-          <?php print $variables['theme_variables']['breadcrumbs_html'];?>
-          </div>
-        </section>
+      <?php if (!$Theme->getThemeVariables('hide_breadcrumbs')) :?>
+        <section id="breadcrumb" class="<?php print $Theme->getAttributes('breadcrumbs');?>">
+          <div class="container">
+          <h3 class="sr-only">Breadcrumbs</h3>
+            <div class="<?php print $Theme->getAttributes('breadcrumbs_wrapper');?>">
+              <?php print $Theme->getBreadcrumbHtml();?>
+            </div>
+            <?php print $Theme->getThemeVariables('breadcrumbs_html')?>
+            </div>
+          </section>
+        <?php endif; ?>
       <?php endif; ?>
-    </div>
-    <?php print $variables['promotion']['desktop'];?>
-    <main role="main">
-      <div class="<?php print $variables['theme_variables']['main_container_classes'];?>" id="novaContent">
-          <?php print $variables['deprecated'];?>
+    <?php print $Theme->getPromoHtml();?>
+    <main role="main" class="<?php print $Theme->getAttributes('main');?>">
+      <div class="<?php print $Theme->getAttributes('main_container');?>" id="novaContent">
+          <?php print $Theme->getDeprecatedMessage();?>
+          <?php print $Theme->getSystemMessages();?>
+          <?php print $Theme->getThemeVariables('main_container_html');?>
+          <?php print $Theme->getHeaderNav();?>
 

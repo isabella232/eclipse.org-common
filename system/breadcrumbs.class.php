@@ -10,7 +10,8 @@
  *    Denis Roy (Eclipse Foundation) - initial API and implementation
  *    Christopher Guindon (Eclipse Foundation) - Updated first level and added removeCrumb()
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menuitem.class.php");
+require_once("menuitem.class.php");
+require_once("menu.class.php");
 
 class Breadcrumb extends Menu {
 

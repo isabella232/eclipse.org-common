@@ -73,25 +73,37 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
   $App->setThemeVariables($variables);
 </div>
 
-<h2>Barebones static HTML template</h2>
-<p>A barebone HTML header &amp; footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists &amp; events.eclipse.org.</p>
-
-<h3>Default template</h3>
-<ul>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/header.php">Header</a></li>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/footer.php">Footer</a></li>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/">Full page</a></li>
-</ul>
-<h3>Thin template <small>(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=437384">Bug #437384</a>)</small></h3>
-<ul>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/thin/header.php">Thin header</a></li>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/thin/">Full page</a></li>
-</ul>
-<h3 id="tpl-barebone">Barebone template</h3>
-<ul>
-  <li><a href="https://eclipse.org/eclipse.org-common/themes/solstice/html_template/barebone/header.php">Thin header</a></li>
-</ul>
-<br/>
+<h2>Templates</h2>
+<?php
+  $themes = array('solstice', 'polarsys', 'locationtech');
+?>
+<?php foreach ($themes as $t) :?>
+    <h3><?php print ucfirst($t);?></h3>
+    <div class="well clearfix">
+      <div class="col-md-8">
+        <h4>Default layout</h4>
+      <ul>
+        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/header.php">Header</a></li>
+        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/footer.php">Footer</a></li>
+        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/">Full page</a></li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <h4>Thin layout <small>(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=437384">Bug #437384</a>)</small></h4>
+      <ul>
+        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/thin/header.php">Thin header</a></li>
+        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/thin/">Full page</a></li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <h4 id="tpl-barebone">Barebone layout*</h4>
+      <ul>
+        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/barebone/index.php">Barebone header</a></li>
+      </ul>
+    </div>
+  </div>
+<?php endforeach;?>
+<p>*A barebone HTML header &amp; footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists &amp; events.eclipse.org.</p>
 
 <h2>CSS</h2>
 <p><a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/classes.less">classes.less</a>

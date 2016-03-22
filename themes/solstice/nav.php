@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2014 Eclipse Foundation and others.
+ * Copyright (c) 2014, 2015, 2016 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,12 +11,13 @@
  *    gbarbier mia-software com - bug 284239
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation of solstice
  *******************************************************************************/
+$navigation = $Theme->getNav();
 ?>
 <!-- nav -->
 <aside id="leftcol" class="col-md-4">
-  <?php print $variables['theme_variables']['leftnav_html'];?>
+  <?php print $Theme->getThemeVariables('leftnav_html');?>
   <ul id="leftnav" class="ul-left-nav fa-ul hidden-print">
-    <?php foreach ($variables['menu']['nav']['#items'] as $link) :?>
+    <?php foreach ($navigation['#items'] as $link) :?>
 
       <?php if ($link->getURL() == "") :?>
         <?php if ($link->getTarget() == "__SEPARATOR") : ?>

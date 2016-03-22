@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2014 Eclipse Foundation and others.
+ * Copyright (c) 2014, 2015, 2016 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
+$base_url_link = $Theme->getBaseUrl();
 ?>
       </div>
     </main> <!-- /#main-content-container-row -->
@@ -23,22 +24,22 @@
           <section id="footer-eclipse-foundation" class="col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print">
             <h2 class="section-title">Eclipse Foundation</h2>
             <ul class="nav">
-              <li><a href="<?php print $variables['url']; ?>org/">About us</a></li>
-              <li><a href="<?php print $variables['url']; ?>org/foundation/contact.php">Contact Us</a></li>
-              <li><a href="<?php print $variables['url']; ?>donate">Donate</a></li>
-              <li><a href="<?php print $variables['url']; ?>org/documents/">Governance</a></li>
-              <li><a href="<?php print $variables['url']; ?>artwork/">Logo and Artwork</a></li>
-              <li><a href="<?php print $variables['url']; ?>org/foundation/directors.php">Board of Directors</a></li>
+              <li><a href="<?php print $base_url_link; ?>org/">About us</a></li>
+              <li><a href="<?php print $base_url_link; ?>org/foundation/contact.php">Contact Us</a></li>
+              <li><a href="<?php print $base_url_link; ?>donate">Donate</a></li>
+              <li><a href="<?php print $base_url_link; ?>org/documents/">Governance</a></li>
+              <li><a href="<?php print $base_url_link; ?>artwork/">Logo and Artwork</a></li>
+              <li><a href="<?php print $base_url_link; ?>org/foundation/directors.php">Board of Directors</a></li>
             </ul>
           </section>
           <section id="footer-legal" class="col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print ">
             <h2 class="section-title">Legal</h2>
             <ul class="nav">
-              <li><a href="<?php print $variables['url']; ?>legal/privacy.php">Privacy Policy</a></li>
-              <li><a href="<?php print $variables['url']; ?>legal/termsofuse.php">Terms of Use</a></li>
-              <li><a href="<?php print $variables['url']; ?>legal/copyright.php">Copyright Agent</a></li>
-              <li><a href="<?php print $variables['url']; ?>org/documents/epl-v10.php">Eclipse Public License </a></li>
-              <li><a href="<?php print $variables['url']; ?>legal/">Legal Resources </a></li>
+              <li><a href="<?php print $base_url_link; ?>legal/privacy.php">Privacy Policy</a></li>
+              <li><a href="<?php print $base_url_link; ?>legal/termsofuse.php">Terms of Use</a></li>
+              <li><a href="<?php print $base_url_link; ?>legal/copyright.php">Copyright Agent</a></li>
+              <li><a href="<?php print $base_url_link; ?>org/documents/epl-v10.php">Eclipse Public License </a></li>
+              <li><a href="<?php print $base_url_link; ?>legal/">Legal Resources </a></li>
 
             </ul>
           </section>
@@ -48,9 +49,9 @@
             <ul class="nav">
               <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
               <li><a href="//help.eclipse.org/">Documentation</a></li>
-              <li><a href="<?php print $variables['url']; ?>contribute/">How to Contribute</a></li>
-              <li><a href="<?php print $variables['url']; ?>mail/">Mailing Lists</a></li>
-              <li><a href="<?php print $variables['url']; ?>forums/">Forums</a></li>
+              <li><a href="<?php print $base_url_link; ?>contribute/">How to Contribute</a></li>
+              <li><a href="<?php print $base_url_link; ?>mail/">Mailing Lists</a></li>
+              <li><a href="<?php print $base_url_link; ?>forums/">Forums</a></li>
               <li><a href="//marketplace.eclipse.org">Marketplace</a></li>
             </ul>
           </section>
@@ -59,9 +60,9 @@
 
             <h2 class="section-title">Other</h2>
             <ul class="nav">
-               <li><a href="<?php print $variables['url']; ?>ide/">IDE and Tools</a></li>
-              <li><a href="<?php print $variables['url']; ?>projects">Community of Projects</a></li>
-              <li><a href="<?php print $variables['url']; ?>org/workinggroups/">Working Groups</a></li>
+               <li><a href="<?php print $base_url_link; ?>ide/">IDE and Tools</a></li>
+              <li><a href="<?php print $base_url_link; ?>projects">Community of Projects</a></li>
+              <li><a href="<?php print $base_url_link; ?>org/workinggroups/">Working Groups</a></li>
             </ul>
 
             <ul class="list-inline social-media">
@@ -74,8 +75,8 @@
           </section>
           <div id="copyright"  class="col-sm-offset-1 col-sm-14 col-md-24 col-md-offset-0">
             <div>
-              <span class="hidden-print"><?php print $variables['logo']['white']; ?></span>
-              <p id="copyright-text"><?php print $variables['footer']['copyright'];?></p>
+              <span class="hidden-print"><?php print $Theme->getLogo('white')?></span>
+              <p id="copyright-text"><?php print $Theme->getCopyrightNotice();?></p>
             </div>
           </div>
         <a href="#" class="scrollup">Back to the top</a>
@@ -84,8 +85,8 @@
     </footer>
 
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="<?php print $variables['theme_url'];?>public/javascript/main.min.js"></script>
-    <?php print $variables['page']['extra_js_footer'];?>
+    <script src="<?php print $Theme->getThemeUrl('solstice')?>public/javascript/main.min.js"></script>
+    <?php print $Theme->getExtraJsFooter();?>
     <?php print $google_javascript;?>
   </body>
 </html>

@@ -11,10 +11,14 @@
  *    Karl Matthias (Eclipse Foundation) - Database access management
  *    Christopher Guindon (Eclipse Foundation)
  *******************************************************************************/
+
 class App {
+
   private $APPVERSION   = "1.0";
+
   private $APPNAME    = "Eclipse.org";
 
+  private $eclipse_org_common_base_path = "";
 
   private $DEFAULT_ROW_HEIGHT  = 20;
 
@@ -34,7 +38,7 @@ class App {
   public  $PageRSSTitle    = "";
   public  $Promotion      = FALSE;
   public  $CustomPromotionPath = "";
-  private $THEME_LIST     =  array("", "Nova", "solstice", "polarsys");
+  private $THEME_LIST     =  array("Nova", "solstice", "polarsys", "locationtech");
 
   #Open Graph Protocol Variables
   private $OGTitle            = "";
@@ -46,7 +50,6 @@ class App {
 
   #Google Analytics Variables
   private $projectGoogleAnalyticsCode = "";
-  private $googleJavaScript = "";
 
   #jQuery Variables
   private $jQueryVersion = FALSE;
@@ -124,9 +127,9 @@ class App {
         # File just contains a function called app_config() which is called.  Nothing more is needed.
         app_config($this);
       }
-      else if(file_exists($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/system/app-config.php'))
+      else if(file_exists($this->getBasePath() . '/system/app-config.php'))
       {
-        include_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/system/app-config.php');
+        include_once($this->getBasePath() . '/system/app-config.php');
         app_config($this);
       }
     }
@@ -145,27 +148,27 @@ class App {
   public function getWebmaster($action = '') {
     switch ($action) {
       case "webmaster":
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/webmaster.class.php");
+        require_once($this->getBasePath() . "/classes/webmaster/webmaster.class.php");
         return new Webmaster($this);
         break;
       case "mirrors":
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/mirrors.class.php");
+        require_once($this->getBasePath() . "/classes/webmaster/mirrors.class.php");
         return new Mirrors($this);
         break;
       case "jobs":
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/jobs.class.php");
+        require_once($this->getBasePath() . "/classes/webmaster/jobs.class.php");
         return new Jobs($this);
         break;
       case "committers":
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/committers.class.php");
+        require_once($this->getBasePath() . "/classes/webmaster/committers.class.php");
         return new Committers($this);
         break;
       case "firewall":
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/firewall.class.php");
+        require_once($this->getBasePath() . "/classes/webmaster/firewall.class.php");
         return new Firewall($this);
         break;
       case "mailinglists":
-        require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/webmaster/mailinglists.class.php");
+        require_once($this->getBasePath() . "/classes/webmaster/mailinglists.class.php");
         return new MailingLists($this);
         break;
     }
@@ -176,7 +179,7 @@ class App {
    * @return object
    * */
   public function getSubscriptions() {
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/subscriptions/subscriptions.class.php");
+    require_once($this->getBasePath() . "/classes/subscriptions/subscriptions.class.php");
     return new Subscriptions($this);
   }
 
@@ -185,7 +188,7 @@ class App {
    * @return object
    * */
   public function getCla() {
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/users/cla.class.php");
+    require_once($this->getBasePath() . "/classes/users/cla.class.php");
     return new Cla($this);
   }
 
@@ -197,7 +200,7 @@ class App {
    * */
   public function setSystemMessage($name, $msg, $type) {
     if (get_class($this->Messages) !== 'Messages') {
-      require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/messages.class.php");
+      require_once($this->getBasePath() . "/system/messages.class.php");
       $this->Messages = new Messages();
     }
     $this->Messages->setMessages($name, $msg, $type);
@@ -209,7 +212,7 @@ class App {
    * */
   public function getSystemMessage() {
     if (get_class($this->Messages) !== 'Messages') {
-      require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/messages.class.php");
+      require_once($this->getBasePath() . "/system/messages.class.php");
       $this->Messages = new Messages();
     }
     return $this->Messages->getMessages();
@@ -219,17 +222,30 @@ class App {
     return $this->APPVERSION;
   }
 
+  /**
+   * Get eclipse.org-common base path
+   *
+   * Use this function for includes/requires.
+   */
+  public function getBasePath() {
+    if (empty($this->eclipse_org_common_base_path)) {
+      $this->eclipse_org_common_base_path = realpath(dirname(__FILE__) . '/../');
+    }
+
+    return $this->eclipse_org_common_base_path;
+  }
+
   function getHeaderPath($_theme) {
-    return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/header.php";
+    return $this->getBasePath() . "/themes/" . $_theme . "/header.php";
   }
   function getMenuPath($_theme) {
-    return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/menu.php";
+    return $this->getBasePath() . "/themes/" . $_theme . "/menu.php";
   }
   function getNavPath($_theme) {
-    return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/nav.php";
+    return $this->getBasePath() . "/themes/" . $_theme . "/nav.php";
   }
   function getFooterPath($_theme) {
-    return $_SERVER["DOCUMENT_ROOT"] . "/eclipse.org-common/themes/" . $_theme . "/footer.php";
+    return $this->getBasePath() . "/themes/" . $_theme . "/footer.php";
   }
   function getPromotionPath($_theme) {
     return $_SERVER["DOCUMENT_ROOT"] . "/home/promotions/promotion.php";
@@ -458,10 +474,11 @@ class App {
   /**
    *  Sets the headers to prevent caching for the different browsers.
    *
-   *  *** Deprecated function ***
+   *  @deprecated
    *  Please use preventCaching() instead.
    */
   function runStdWebAppCacheable() {
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
     $this->preventCaching();
   }
 
@@ -614,7 +631,7 @@ class App {
       $Breadcrumb = new Breadcrumb();
     }
 
-    if ($theme != "solstice" && $theme != "Nova" && $theme != "polarsys" ) {
+    if (!$this->isValidTheme($theme)) {
       $theme = "solstice";
     }
 
@@ -642,11 +659,11 @@ class App {
 
     echo $html;
 
-    $gaCode = $this->projectGoogleAnalyticsCode;
+    $gaCode = $this->getGoogleAnalyticsTrackingCode();
     if (!is_null($gaCode)) {
       $gaCode = ($gaCode == "") ? 'UA-910670-2' : $gaCode;
       #first lets insert the sitewide Analytics
-      $this->googleJavaScript  = <<<EOHTML
+      $googleJavaScript  = <<<EOHTML
       <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -664,11 +681,10 @@ EOHTML;
 
     }
 
-    if ($theme != "solstice")  {
-      echo $this->googleJavaScript;
+    if ($theme === "Nova" && isset($googleJavaScript))  {
+      echo $googleJavaScript;
     }
 
-    $google_javascript = $this->googleJavaScript;
     include($this->getFooterPath($theme));
   }
 
@@ -681,12 +697,22 @@ EOHTML;
   }
 
   function getThemeURL($_theme) {
-  	if ($_theme != "solstice" || $_theme != "Nova" || $_theme != "polarsys" ) {
+    if (!$this->isValidTheme()) {
       $theme = "solstice";
     }
-
     return "/eclipse.org-common/themes/" . $_theme;
+  }
 
+  function getThemeClass($_theme) {
+    $themes = array('locationtech', 'solstice', 'polarsys');
+
+    if (!in_array($_theme, $themes)) {
+      $_theme = "solstice";
+    }
+
+    require_once(realpath(dirname(__FILE__) . '/../classes/themes/' . $_theme . '.class.php'));
+    $theme = ucfirst($_theme);
+    return new $theme();
   }
 
   function getHTTPParameter($_param_name, $_method="") {
@@ -886,38 +912,28 @@ EOHTML;
         }
 
 
+  /*
+   * Returns true if supplied theme is in the array of valid themes
+   *
+   * 2005-12-07: droy
+   * @return: bool
+   */
+  function isValidTheme($_theme) {
+    return in_array($_theme, $this->THEME_LIST);
+  }
 
-        function isValidTheme($_theme) {
-    /* @return: bool
-     *
-     * returns true if supplied theme is in the array of valid themes
-     *
-     * 2005-12-07: droy
-     *
-     */
-          return array_search($_theme, $this->THEME_LIST);
-        }
-
-
-        function getUserPreferedTheme() {
-    /* @return: String
-     *
-     * returns theme name in a browser cookie, or the Empty String
-     *
-     * 2005-12-07: droy
-     *
-     */
-          if(isset($_COOKIE["theme"])) {
-        $theme = $_COOKIE["theme"];
-
-        if($this->isValidTheme($theme)) {
-          return $theme;
-        }
-        else {
-          return "";
-        }
-          }
-        }
+  /**
+   * Returns theme name in a browser cookie, or the Empty String
+   *
+   * @deprecated
+   *
+   * 2005-12-07: droy
+   * @return: String
+   */
+  function getUserPreferedTheme() {
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
+    return "";
+  }
 
         /**
          * @param layout string Button layout (standard, condensed)
@@ -957,10 +973,10 @@ EOHTML;
         }
 
         function usePolls() {
-          require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/polls/poll.php");
+          require_once($this->getBasePath() . "/classes/polls/poll.php");
         }
         function useJSON() {
-          require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/json/JSON.php");
+          require_once($this->getBasePath() . "/json/JSON.php");
         }
 
         /**
@@ -970,12 +986,12 @@ EOHTML;
          * @author droy
          */
         function RESTClient() {
-          require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/rest/restclient.class.php");
+          require_once($this->getBasePath() . "/classes/rest/restclient.class.php");
           return new RestClient();
         }
 
         function useProjectInfo() {
-          require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoList.class.php");
+          require_once($this->getBasePath() . "/classes/projects/projectInfoList.class.php");
         }
         /*
          * This function applies standard formatting to a date.
@@ -1079,7 +1095,7 @@ EOHTML;
      * @return Session object
      */
     function useSession($required="") {
-      require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
+      require_once($this->getBasePath() . "/system/session.class.php");
           $ssn = new Session();  # constructor calls validate
           if ($ssn->getGID() == "" && $required == "required") {
             $ssn->redirectToLogin();
@@ -1311,16 +1327,13 @@ EOHTML;
 
   }
 
+  /**
+   * @deprecated
+   * @return string
+   */
   function getGoogleSearchHTML() {
-    $strn = <<<EOHTML
-    <form action="//www.google.com/cse" id="searchbox_017941334893793413703:sqfrdtd112s">
-     <input type="hidden" name="cx" value="017941334893793413703:sqfrdtd112s" />
-      <input type="text" name="q" size="25" />
-      <input type="submit" name="sa" value="Search" />
-    </form>
-    <script type="text/javascript" src="//www.google.com/coop/cse/brand?form=searchbox_017941334893793413703%3Asqfrdtd112s&lang=en"></script>
-EOHTML;
-    return $strn;
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
+    return '';
   }
 
   /**
@@ -1331,8 +1344,22 @@ EOHTML;
    * Setting $gaUniqueID to NULL will remove Google Analytics
    * from the page.
    */
-  function setGoogleAnalyticsTrackingCode($gaUniqueID) {
-    $this->projectGoogleAnalyticsCode = $gaUniqueID;
+  function setGoogleAnalyticsTrackingCode($code = 'UA-910670-2') {
+    if (!is_null($this->projectGoogleAnalyticsCode)) {
+      $this->projectGoogleAnalyticsCode = $code;
+    }
+  }
+
+  /**
+   * Get Google Analytics Tracking code
+   *
+   * @param string OR Null $gaUniqueID
+   */
+  function getGoogleAnalyticsTrackingCode() {
+    if (empty($this->projectGoogleAnalyticsCode) && !is_null($this->projectGoogleAnalyticsCode)) {
+      $this->setGoogleAnalyticsTrackingCode();
+    }
+    return $this->projectGoogleAnalyticsCode;
   }
 
   function setPromotionPath($_path) {
@@ -1347,7 +1374,7 @@ EOHTML;
    * @return Captcha
    */
   public function useCaptcha($ssl = true) {
-    include_once($_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/classes/captcha/captcha.class.php');
+    include_once($this->getBasePath() . '/classes/captcha/captcha.class.php');
     return new Captcha($ssl);
   }
 

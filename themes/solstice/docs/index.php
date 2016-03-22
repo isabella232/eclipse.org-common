@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2014 Eclipse Foundation and others.
+ * Copyright (c) 2014, 2015, 2016 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -24,6 +24,13 @@
   $pageKeywords  = "eclipse solstice";
   $pageAuthor    = "Christopher Guindon";
 
+  $theme = 'solstice';
+  $allowed_themes = array('polarsys', 'locationtech', 'solstice');
+  $_theme = $App->getHTTPParameter('theme');
+  if (in_array($_theme, $allowed_themes)) {
+    $theme = $_theme;
+  }
+  $Theme = $App->getThemeClass($theme);
 
   // Place your html content in a file called content/en_pagename.php
   ob_start();
@@ -50,5 +57,5 @@
   });
 </script>');
 
-  $App->generatePage('solstice', $Menu, NULL, $pageAuthor, $pageKeywords, $pageTitle, $html);
+  $App->generatePage($theme, $Menu, NULL, $pageAuthor, $pageKeywords, $pageTitle, $html);
 
