@@ -990,11 +990,11 @@ EOHTML;
       $base_url = $this->getBaseUrl();
       // add faux class to #novaContent
       $this->setAttributes('main_container_classes', 'background-image-none');
-      $variables['link_count'] = $Nav->getLinkCount();
+      $variables['link_count'] = $this->Nav->getLinkCount();
       $variables['img_separator'] = '<img src="' . $base_url . 'public/images/template/separator.png"/>';
 
       for ($i = 0; $i < $variables['link_count']; $i++) {
-        $variables['#items'][] = $Nav->getLinkAt($i);
+        $variables['#items'][] = $this->Nav->getLinkAt($i);
       }
     }
 
