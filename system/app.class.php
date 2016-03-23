@@ -16,84 +16,229 @@
 
 class App {
 
+  /**
+   * Version of App()
+   * @var string
+   */
   private $APPVERSION = "1.0";
 
+  /**
+   * Name of App()
+   * @var string
+   */
   private $APPNAME = "Eclipse.org";
 
+  /**
+   * Base path of eclipse.org-common
+   * @var string
+   */
   private $eclipse_org_common_base_path = "";
 
+  /**
+   * Default row height
+   * @var int
+   */
   private $DEFAULT_ROW_HEIGHT = 20;
 
-  private $POST_MAX_SIZE = 262144; // 256KB Max post
-  private $OUR_DOWNLOAD_URL = "http://download1.eclipse.org";
-  private $PUB_DOWNLOAD_URL = "http://download.eclipse.org";
-  private $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
-  private $DB_CLASS_PATH = "/home/data/httpd/eclipse-php-classes/system/"; // ends
-                                                                           // with
-                                                                           // '/'
+  /**
+   * Max post size
+   * @var int
+   */
+  private $POST_MAX_SIZE = 262144;
 
+  /**
+   * Our download URL
+   * @var string
+   */
+  private $OUR_DOWNLOAD_URL = "http://download1.eclipse.org";
+
+  /**
+   * Public download URL
+   * @var string
+   */
+  private $PUB_DOWNLOAD_URL = "http://download.eclipse.org";
+
+  /**
+   * Download base path
+   * @var string
+   */
+  private $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
+
+
+  /**
+   * Database class path
+   * ends with '/'
+   *
+   * @var unknown
+   */
+  private $DB_CLASS_PATH = "/home/data/httpd/eclipse-php-classes/system/";
+
+  /**
+   * Current domain url
+   * @var string
+   */
   private $WWW_PREFIX = ""; // default is relative
+
+  /**
+   * Http prefix
+   * @var string
+   */
   private $HTTP_PREFIX = "http"; // default is http
 
-  // Additional page-related variables
+  /**
+   * String to include in <head>
+   * @var string
+   */
   public $ExtraHtmlHeaders = "";
+
+  /**
+   * JS to include in footer
+   * @var string
+   */
   public $ExtraJSFooter = "";
+
+  /**
+   * Page RSS feed Url
+   * @var string
+   */
   public $PageRSS = "";
+
+  /**
+   * Page RSS feed TITLE
+   * @var string
+   */
   public $PageRSSTitle = "";
+
+  /**
+   * Promotion flag
+   * @var bool
+   */
   public $Promotion = FALSE;
+
+  /**
+   * Custom Promotion Path
+   * @var string
+   */
   public $CustomPromotionPath = "";
-  private $THEME_LIST = array(
+
+  /**
+   * Valid eclipse.org-common themes
+   * @var array
+   */
+  private $valid_themes = array(
     "Nova",
     "solstice",
     "polarsys",
     "locationtech"
   );
 
-  // Open Graph Protocol Variables
+  /**
+   * Open Graph Protocol title
+   * @var string
+   */
   private $OGTitle = "";
+
+  /**
+   * Open Graph Protocol description
+   * @var string
+   */
   private $OGDescription = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
+
+  /**
+   * Open Graph Protocol image
+   * @var string
+   */
   private $OGImage = "https://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
 
-  // Doctype
-  private $doctype = FALSE;
+  /**
+   * Doctype
+   * @var string
+   */
+  private $doctype = '';
 
-  // Google Analytics Variables
+  /**
+   * Google analytics id code
+   * @var string
+   */
   private $projectGoogleAnalyticsCode = "";
 
-  // jQuery Variables
+  /**
+   * Jquery Version
+   * @var string
+   */
   private $jQueryVersion = FALSE;
 
-  // Twitter Follow Widget Variables
+  /**
+   * Twitter script flag
+   * @var bool
+   */
   private $twitterScriptInserted = FALSE;
 
-  // Variables for theme customization (Solstice and up).
+
+  /**
+   * Variables to customize solstice
+   *
+   * @var unknown
+   */
   private $theme_variables = array();
 
-  // Set to TRUE to disable all database operations
+  /**
+   * Disable all database operations
+   *
+   * @var unknown
+   */
   private $DB_READ_ONLY = FALSE;
 
-  // Database config and handle cache
+  /**
+   * Database config and handle cache
+   * @var unknown
+   */
   private $databases;
 
-  // Flag to determine whether the "deprecated" theme should be loaded.
-  private $OutDated = false;
+  /**
+   * "Deprecated" flag
+   * @var bool
+   */
+  private $OutDated = FALSE;
 
-  // Deprecated theme message.
+
+  /**
+   * "Deprecated"  message
+   * @var string
+   */
   private $OutDatedMsg = "";
 
-  // Flag to determine whether this is development mode or not (for databases)
-  public $devmode = false;
+  /**
+   * Development mode flag
+   *
+   * Flag to determine whether this is development mode or not (for databases)
+   *
+   * @var bool
+   */
+  public $devmode = FALSE;
 
-  // Flag to log SQL even on production systems
-  public $logsql = false;
+  /**
+   * Flag to log SQL even on production systems
+   *
+   * @var bool
+   */
+  public $logsql = FALSE;
 
-  // Arbitrary storage hash
+  /**
+   * Arbitrary storage hash
+   * @var unknown
+   */
   private $hash;
 
-  // SQL Backtrace storage
+  /**
+   * SQL Backtrace storage
+   * @var unknown
+   */
   public $query_btrace;
 
-  // Messages variable
+  /**
+   * Messages variable
+   */
   private $Messages = NULL;
 
   // Default constructor
@@ -156,10 +301,9 @@ class App {
   }
 
   /**
-   * This function returns the Webmaster object
+   * Returns the Webmaster object
    *
    * @return object
-   *
    */
   public function getWebmaster($action = '') {
     switch ($action) {
@@ -191,10 +335,9 @@ class App {
   }
 
   /**
-   * This function returns the Subscriptions object
+   * Returns the Subscriptions object
    *
    * @return object
-   *
    */
   public function getSubscriptions() {
     require_once ($this->getBasePath() . "/classes/subscriptions/subscriptions.class.php");
@@ -202,10 +345,9 @@ class App {
   }
 
   /**
-   * This function returns the CLA object
+   * Returns the CLA object
    *
    * @return object
-   *
    */
   public function getCla() {
     require_once ($this->getBasePath() . "/classes/users/cla.class.php");
@@ -215,12 +357,12 @@ class App {
   /**
    * This function sets System Messages
    *
-   * @param $name -
-   *        string containing the name of the message
-   * @param $msg -
-   *        string containing the message itself
-   * @param $type -
-   *        string containing the type of the message
+   * @param $name string
+   *  containing the name of the message
+   * @param $msg string
+   *  containing the message itself
+   * @param $type string
+   *  containing the type of the message
    *
    */
   public function setSystemMessage($name, $msg, $type) {
@@ -232,10 +374,9 @@ class App {
   }
 
   /**
-   * this function returns messages
+   * Return system messages
    *
    * @return array
-   *
    */
   public function getSystemMessage() {
     if (get_class($this->Messages) !== 'Messages') {
@@ -262,28 +403,62 @@ class App {
     return $this->eclipse_org_common_base_path;
   }
 
+  /**
+   * Get header path
+   *
+   * @param string $_theme
+   * @return string
+   */
   function getHeaderPath($_theme) {
     return $this->getBasePath() . "/themes/" . $_theme . "/header.php";
   }
 
+  /**
+   * Get menu path
+   *
+   * @param string $_theme
+   *
+   * @return string
+   */
   function getMenuPath($_theme) {
     return $this->getBasePath() . "/themes/" . $_theme . "/menu.php";
   }
 
+  /**
+   * Get template nav path
+   *
+   * @param string $_theme
+   *
+   * @return string
+   */
   function getNavPath($_theme) {
     return $this->getBasePath() . "/themes/" . $_theme . "/nav.php";
   }
 
+  /**
+   * Get template footer path
+   *
+   * @param string $_theme
+   * @return string
+   */
   function getFooterPath($_theme) {
     return $this->getBasePath() . "/themes/" . $_theme . "/footer.php";
   }
 
+  /**
+   * Get Eclipse promo path
+   *
+   * @param string $_theme
+   * @return string
+   */
   function getPromotionPath($_theme) {
     return $_SERVER["DOCUMENT_ROOT"] . "/home/promotions/promotion.php";
   }
 
   /**
-   * Get eclipse.org cookie domain and prefix based off the current environment
+   * Get eclipse.org cookie domain and prefix
+   *
+   * Based off the current environment.
    *
    * @return array
    */
@@ -316,10 +491,8 @@ class App {
       'domain' => 'www.eclipse.org',
       'dev_domain' => 'dev.eclipse.org',
       'allowed_hosts' => array()
-    )
+    );
     // Empty, since it's the default.
-
-    ;
 
     // It should not matter if we are on http or https here.
     $host = parse_url('http://' . $_SERVER['HTTP_HOST'], PHP_URL_HOST);
@@ -333,48 +506,90 @@ class App {
     return $server['prod'];
   }
 
+  /**
+   * Get $APPNAME
+   *
+   * @return string
+   */
   function getAppName() {
     return $this->APPNAME;
   }
 
+  /**
+   * Get $POST_MAX_SIZE
+   *
+   * @return number
+   */
   function getPostMaxSize() {
     return $this->POST_MAX_SIZE;
   }
 
+  /**
+   * Get $DEFAULT_ROW_HEIGHT
+   * @return number
+   */
   function getDefaultRowHeight() {
     return $this->DEFAULT_ROW_HEIGHT;
   }
 
+  /**
+   * Get $DB_READ_ONLY
+   * @return boolean
+   */
   function getDBReadOnly() {
     return $this->DB_READ_ONLY;
   }
 
+  /**
+   * Set XML header
+   *
+   * @return string
+   */
   function sendXMLHeader() {
     header("Content-type: text/xml");
   }
 
+  /**
+   * Get $OUR_DOWNLOAD_URL
+   *
+   * @return string
+   */
   function getOurDownloadServerUrl() {
     return $this->OUR_DOWNLOAD_URL;
   }
 
+  /**
+   * Get $DOWNLOAD_BASE_PATH
+   *
+   * @return string
+   */
   function getDownloadBasePath() {
     return $this->DOWNLOAD_BASE_PATH;
   }
 
+  /**
+   * Get $PUB_DOWNLOAD_URL
+   *
+   * @return string
+   */
   function getPubDownloadServerUrl() {
     return $this->PUB_DOWNLOAD_URL;
   }
 
+  /**
+   * Get $WWW_PREFIX
+   * @return string|unknown
+   */
   function getWWWPrefix() {
     return $this->WWW_PREFIX;
   }
 
   /**
+   * Get HTT PPrefix
+   * Return https if $_SERVER['HTTPS'] exist otherwise this function
+   * returns http.
    *
    * @return : a string
-   *
-   *         return https if $_SERVER['HTTPS'] exist otherwise this function
-   *         returns http
    */
   function getHTTPPrefix() {
     $protocol = $this->HTTP_PREFIX;
@@ -387,18 +602,20 @@ class App {
     return $this->HTTP_PREFIX;
   }
 
+  /**
+   * Get the language of the User
+   * @return: String
+   * Check the browser's default language and return
+   * 2006-06-28: droy
+   */
   function getUserLanguage() {
-    /*
-     * @return: String
-     * Check the browser's default language and return
-     * 2006-06-28: droy
-     */
 
     $validLanguages = array(
       'en',
       'de',
       'fr'
     );
+
     $defaultLanguage = "en";
 
     // get the default browser language (first one reported)
@@ -412,14 +629,17 @@ class App {
     }
   }
 
+  /**
+   * Get Local Content file
+   *
+   * Return the content/xx_filename.php filename,
+   * according to availability of the file
+   *
+   * @return: String
+   *
+   * 2006-06-28: droy
+   */
   function getLocalizedContentFilename() {
-    /*
-     * @return: String
-     * return the content/xx_filename.php filename, according to availability of
-     * the file
-     * 2006-06-28: droy
-     */
-
     $language = $this->getUserLanguage();
     $filename = "content/" . $language . "_" . $this->getScriptName();
 
@@ -430,24 +650,25 @@ class App {
     return $filename;
   }
 
+  /**
+   * Get current script name
+   *
+   * @return string
+   */
   function getScriptName() {
     // returns only the filename portion of a script
     return substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/") + 1);
   }
 
+  /**
+   * Find the closest _projectCommon.php file
+   *
+   * Walk up the directory structure to find the closest
+   * _projectCommon.php file.
+   *
+   * @return : String
+   */
   function getProjectCommon() {
-    /**
-     *
-     * @return : String
-     *
-     *         Walk up the directory structure to find the closest
-     *         _projectCommon.php file
-     *
-     *         2005-12-06: droy
-     *         - created basic code to walk up all the way to the DocumentRoot
-     *
-     */
-
     $currentScript = $_SERVER['SCRIPT_FILENAME'];
     $strLen = strlen($currentScript);
     $found = false;
@@ -478,9 +699,7 @@ class App {
   /**
    * Getting the IP address of the user
    *
-   * @param
-   *        string
-   *
+   * @return string
    */
   function getRemoteIPAddress() {
     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -496,9 +715,7 @@ class App {
   /**
    * Getting the subnet the user is in right now.
    *
-   * @param
-   *        string
-   *
+   * @return string
    */
   function getSubnet() {
     $ip_address = $this->getRemoteIPAddress();
@@ -510,7 +727,6 @@ class App {
    * This function look for the word staging in the URL
    *
    * @return boolean
-   *
    */
   function is_staging() {
     if (strpos($_SERVER['HTTP_HOST'], 'staging')) {
@@ -540,6 +756,12 @@ class App {
     header("Expires: 0");
   }
 
+  /**
+   * Get Alpha code
+   *
+   * @param unknown $_NumChars
+   * @return string
+   */
   function getAlphaCode($_NumChars) {
     // Accept: int - number of chars
     // return: string - random alphanumeric code
@@ -558,10 +780,22 @@ class App {
     return $addstring;
   }
 
+  /**
+   * Get the current date
+   *
+   * @return string
+   */
   function getCURDATE() {
     return date("Y-m-d");
   }
 
+  /**
+   * Add " OR " if string is not empty
+   *
+   * @param unknown $_String
+   *
+   * @return string
+   */
   function addOrIfNotNull($_String) {
     // Accept: String - String to be AND'ed
     // return: string - AND'ed String
@@ -573,6 +807,13 @@ class App {
     return $_String;
   }
 
+  /**
+   * Add " AND " if string is not empty
+   *
+   * @param unknown $_String
+   *
+   * @return string
+   */
   function addAndIfNotNull($_String) {
     // Accept: String - String to be AND'ed
     // return: string - AND'ed String
@@ -584,6 +825,12 @@ class App {
     return $_String;
   }
 
+  /**
+   * Get random numeric Code
+   *
+   * @param string $_NumChars
+   * @return string
+   */
   function getNumCode($_NumChars) {
     // Accept: int - number of chars
     // return: int - random numeric code
@@ -602,6 +849,16 @@ class App {
     return $addstring;
   }
 
+  /**
+   * Replace part of string X number of times
+   *
+   * @param unknown $find
+   * @param unknown $replace
+   * @param unknown $subject
+   * @param unknown $count
+   *
+   * @return string|unknown
+   */
   function str_replace_count($find, $replace, $subject, $count) {
     // Replaces $find with $replace in $subnect $count times only
 
@@ -623,6 +880,13 @@ class App {
     return $subjectnew;
   }
 
+  /**
+   * Return Quoated String
+   *
+   * @param string $_String
+   *
+   * @return string
+   */
   function returnQuotedString($_String) {
     // Accept: String - String to be quoted
     // return: string - Quoted String
@@ -635,6 +899,12 @@ class App {
     return "\"" . $_String . "\"";
   }
 
+  /**
+   * Return Safe HTML string
+   *
+   * @param string $_String
+   * @return string
+   */
   function returnHTMLSafeString($_String) {
     // Accept: String - String to be HTMLSafified
     // return: string
@@ -647,6 +917,13 @@ class App {
     return $_String;
   }
 
+  /**
+   * Return safe JS string
+   *
+   * @param string $_String
+   *
+   * @return string
+   */
   function returnJSSAfeString($_String) {
     // Accept: String - String to be quoted
     // return: string - Quoted String
@@ -657,10 +934,29 @@ class App {
     return $_String;
   }
 
+  /**
+   * Replace Enter with <br/>
+   *
+   * @param string $_String
+   *
+   * @return string
+   */
   function replaceEnterWithBR($_String) {
     return str_replace("\n", "<br />", $_String);
   }
 
+  /**
+   * Generate HTML page
+   *
+   * @param unknown $theme
+   * @param unknown $Menu
+   * @param unknown $Nav
+   * @param unknown $pageAuthor
+   * @param unknown $pageKeywords
+   * @param unknown $pageTitle
+   * @param unknown $html
+   * @param unknown $Breadcrumb
+   */
   function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL) {
     // Strip html tags from the page title.
     $pageTitle = strip_tags($pageTitle);
@@ -728,21 +1024,42 @@ EOHTML;
     include ($this->getFooterPath($theme));
   }
 
+  /**
+   * Add addionnal elements in <head>
+   * @param unknown $string
+   */
   function AddExtraHtmlHeader($string) {
     $this->ExtraHtmlHeaders .= $string;
   }
 
+  /**
+   * Add Extra Javascript in the footer
+   *
+   * @param string $string
+   */
   function AddExtraJSFooter($string) {
     $this->ExtraJSFooter .= $string;
   }
 
+  /**
+   * Get Theme URL
+   * @param unknown $_theme
+   * @return string
+   */
   function getThemeURL($_theme) {
-    if (!$this->isValidTheme()) {
-      $theme = "solstice";
+    if (!$this->isValidTheme($_theme)) {
+      $_theme = "solstice";
     }
     return "/eclipse.org-common/themes/" . $_theme;
   }
 
+  /**
+   * Get Theme Class
+   *
+   * @param strinb $_theme
+   *
+   * @return BaseTheme
+   */
   function getThemeClass($_theme) {
     $themes = array(
       'locationtech',
@@ -759,20 +1076,20 @@ EOHTML;
     return new $theme();
   }
 
+  /**
+   * Get HTTP parameter
+   *
+   * @author droy
+   * @since version - Oct 19, 2006
+   * @param String $_param_name
+   *  name of the HTTP GET/POST parameter
+   * @param string $_method
+   *  GET or POST, or the empty string for POST,GET order
+   * @return string
+   *  HTTP GET/POST parameter value, or the empty string
+   *  Fetch the HTTP parameter
+   */
   function getHTTPParameter($_param_name, $_method = "") {
-    /**
-     *
-     * @author droy
-     * @since version - Oct 19, 2006
-     * @param
-     *        String _param_name name of the HTTP GET/POST parameter
-     * @param
-     *        String _method GET or POST, or the empty string for POST,GET order
-     * @return String HTTP GET/POST parameter value, or the empty string
-     *
-     *         Fetch the HTTP parameter
-     *
-     */
 
     $rValue = "";
     $_method = strtoupper($_method);
@@ -791,6 +1108,11 @@ EOHTML;
     return $rValue;
   }
 
+  /**
+   * Get client OS
+   *
+   * @return string|unknown
+   */
   function getClientOS() {
 
     $UserAgent = $_SERVER['HTTP_USER_AGENT'];
@@ -952,13 +1274,14 @@ EOHTML;
     }
   }
 
-  /*
+  /**
    * Returns true if supplied theme is in the array of valid themes
+   *
    * 2005-12-07: droy
    * @return: bool
    */
   function isValidTheme($_theme) {
-    return in_array($_theme, $this->THEME_LIST);
+    return in_array($_theme, $this->valid_themes);
   }
 
   /**
@@ -973,11 +1296,12 @@ EOHTML;
   }
 
   /**
-   *
+   * Get Facebook like button
    * @param
    *        layout string Button layout (standard, condensed)
    * @param
    *        showfaces bool
+   *
    * @author droy
    * @since 2011-05-18
    * @return : HTML string for facebook like
@@ -1004,20 +1328,27 @@ EOHTML;
   }
 
   /**
+   * Get current URL
    *
    * @author droy
    * @since 2011-05-18
-   * @return URL of the current PHP page
-   *         Construct and return URL of the current script
+   * @return string
+   *  URL of the current PHP page
    */
   function getCurrentURL() {
     return "http" . ((empty($_SERVER['HTTPS']) && $_SERVER['SERVER_PORT'] != 443) ? "" : "s") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
   }
 
+  /**
+   * Return Poll()
+   */
   function usePolls() {
     require_once ($this->getBasePath() . "/classes/polls/poll.php");
   }
 
+  /**
+   * Return Services_JSON()
+   */
   function useJSON() {
     require_once ($this->getBasePath() . "/json/JSON.php");
   }
@@ -1034,12 +1365,16 @@ EOHTML;
     return new RestClient();
   }
 
+  /**
+   * Return projectInfoList()
+   */
   function useProjectInfo() {
     require_once ($this->getBasePath() . "/classes/projects/projectInfoList.class.php");
   }
 
-  /*
+  /**
    * This function applies standard formatting to a date.
+   *
    * The first parameter is either a string or a number representing a date.
    * If it's a string, it must be in a format that is parseable by the
    * strtotime() function. If it is a number, it must be an integer representing
@@ -1059,7 +1394,9 @@ EOHTML;
     }
   }
 
-  /*
+  /**
+   * Standard formatting to a date range
+   *
    * This function applies standard formatting to a date range.
    * See the comments for getFormattedDate($date, $format) for information
    * concerning what's expected in the parameters of this method).
@@ -1097,7 +1434,9 @@ EOHTML;
     }
   }
 
-  /*
+  /**
+   * Validate if dates are the same year
+   *
    * This method answers true if the two provided values represent
    * dates that occur in the same year.
    */
@@ -1105,7 +1444,9 @@ EOHTML;
     return date("Y", $a) == date("Y", $b);
   }
 
-  /*
+  /**
+   * Validate if dates are the same month
+   *
    * This method answers true if the two provided values represent
    * dates that occur in the same month.
    */
@@ -1118,9 +1459,11 @@ EOHTML;
    *
    * @author droy
    * @since Jun 7, 2007
-   * @param
-   *        string file File name relative to http://download.eclipse.org (the
-   *        &file= parameter used)
+   *
+   * @param string $_file
+   *  File name relative to http://download.eclipse.org (the
+   *  &file= parameter used)
+   *
    * @return string Returns a string in the format of XX MB
    */
   function getDownloadFileSizeString($_file) {
@@ -1137,8 +1480,10 @@ EOHTML;
    *
    * @author droy
    * @since Jun 7, 2007
-   * @param
-   *        string 'optional' or 'required'
+   *
+   * @param  string $required
+   *  optional' or 'required'
+   *
    * @return Session object
    */
   function useSession($required = "") {
@@ -1150,6 +1495,13 @@ EOHTML;
     return $ssn;
   }
 
+  /**
+   * Validate if valid caller
+   *
+   * @param unknown $_pathArray
+   *
+   * @return boolean
+   */
   function isValidCaller($_pathArray) {
     $a = debug_backtrace();
     $caller = $a[1]['file']; // Caller 0 is the class that called App();
@@ -1167,10 +1519,11 @@ EOHTML;
   /**
    * Sanitize incoming value to prevent SQL injections
    *
-   * @param
-   *        string value to sanitize
-   * @param
-   *        dbh database resource to use
+   * @param string
+   *  Value to sanitize
+   * @param dbh database
+   *  Resource to use
+   *
    * @return string santized string
    */
   function sqlSanitize($_value, $_dbh = NULL) {
@@ -1181,21 +1534,36 @@ EOHTML;
     return $_value;
   }
 
+  /**
+   * Get $OGTitle output
+   *
+   * @return string
+   */
   function getOGTitle() {
     return '<meta property="og:title" content="' . $this->OGTitle . '" />' . PHP_EOL;
   }
 
+  /**
+   * Set $OGTitle
+   *
+   * @param unknown $title
+   */
   function setOGTitle($title) {
     $this->OGTitle = $title;
   }
 
-
+  /**
+   * Get $OGDescription output
+   *
+   * @return string
+   */
   function getOGDescription() {
     return '<meta property="og:description" content="' . $this->OGDescription . '" />' . PHP_EOL;
   }
 
   /**
    * Set $OGDescription
+   *
    * @param unknown $description
    */
   function setOGDescription($description) {
