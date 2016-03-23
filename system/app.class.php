@@ -1164,16 +1164,16 @@ EOHTML;
     return $validCaller;
   }
 
+  /**
+   * Sanitize incoming value to prevent SQL injections
+   *
+   * @param
+   *        string value to sanitize
+   * @param
+   *        dbh database resource to use
+   * @return string santized string
+   */
   function sqlSanitize($_value, $_dbh = NULL) {
-    /**
-     * Sanitize incoming value to prevent SQL injections
-     *
-     * @param
-     *        string value to sanitize
-     * @param
-     *        dbh database resource to use
-     * @return string santized string
-     */
     if ($_dbh == NULL) {
       $_dbh = $this->database("eclipse", "");
     }
@@ -1189,22 +1189,41 @@ EOHTML;
     $this->OGTitle = $title;
   }
 
+
   function getOGDescription() {
     return '<meta property="og:description" content="' . $this->OGDescription . '" />' . PHP_EOL;
   }
 
+  /**
+   * Set $OGDescription
+   * @param unknown $description
+   */
   function setOGDescription($description) {
     $this->OGDescription = $description;
   }
 
+  /**
+   * Get $OGImage output
+   *
+   * @return string
+   */
   function getOGImage() {
     return '<meta property="og:image" content="' . $this->OGImage . '" />' . PHP_EOL;
   }
 
+  /**
+   * Set $OGImage
+   *
+   * @param unknown $image
+   */
   function setOGImage($image) {
     $this->OGImage = $image;
   }
 
+  /**
+   * Set Doctype
+   * @param unknown $doctype
+   */
   function setDoctype($doctype) {
     $accepted = array(
       'html5',
@@ -1216,6 +1235,10 @@ EOHTML;
     return;
   }
 
+  /**
+   * Get HTML document doctype
+   * @return string
+   */
   function getDoctype() {
     $doc = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">';
@@ -1286,7 +1309,7 @@ EOHTML;
    * Function to set the OutDated flag
    *
    * @param string $when.
-   *        Accepted formats 'YYYY-MM-DD' or 'now'.
+   *   Accepted formats 'YYYY-MM-DD' or 'now'.
    *
    * @return boolean
    */
@@ -1380,6 +1403,10 @@ EOHTML;
     return $strn;
   }
 
+  /**
+   * Get Twitter Follow widget
+   * @param unknown $_twitterhandle
+   */
   function getTwitterFollowWidget($_twitterhandle) {
     $output = '';
     $output = '<a href="https://twitter.com/' . $_twitterhandle . '" class="twitter-follow-button" data-show-count="false">Follow @' . $_twitterhandle . '</a>';
@@ -1393,7 +1420,7 @@ EOHTML;
   }
 
   /**
-   *
+   * Get Google Search HTML
    * @deprecated
    *
    * @return string
@@ -1406,11 +1433,10 @@ EOHTML;
   /**
    * Set Google Analytics Tracking code
    *
-   * @param
-   *        string OR Null $gaUniqueID
+   * Setting $gaUniqueID to NULL will remove Google Analytics
+   * from the page.
    *
-   *        Setting $gaUniqueID to NULL will remove Google Analytics
-   *        from the page.
+   * @param string/NULL $gaUniqueID
    */
   function setGoogleAnalyticsTrackingCode($code = 'UA-910670-2') {
     if (!is_null($this->projectGoogleAnalyticsCode)) {
@@ -1421,8 +1447,7 @@ EOHTML;
   /**
    * Get Google Analytics Tracking code
    *
-   * @param
-   *        string OR Null $gaUniqueID
+   * @param string/NULL $gaUniqueID
    */
   function getGoogleAnalyticsTrackingCode() {
     if (empty($this->projectGoogleAnalyticsCode) && !is_null($this->projectGoogleAnalyticsCode)) {
@@ -1431,6 +1456,10 @@ EOHTML;
     return $this->projectGoogleAnalyticsCode;
   }
 
+  /**
+   * Set Promotion Path
+   * @param unknown $_path
+   */
   function setPromotionPath($_path) {
     $this->CustomPromotionPath = $_SERVER['DOCUMENT_ROOT'] . $_path;
   }
@@ -1447,7 +1476,15 @@ EOHTML;
     return new Captcha($ssl);
   }
 
-  // Record a database record
+  /**
+   * Record a database record
+   *
+   * @param unknown $key
+   * @param unknown $host
+   * @param unknown $user
+   * @param unknown $pwd
+   * @param unknown $db
+   */
   public function setDatabase($key, $host, $user, $pwd, $db) {
     $rec = array();
     $rec['HOST'] = $host;
@@ -1458,10 +1495,13 @@ EOHTML;
     $this->databases[$key] = $rec;
   }
 
-  // Setup the handling of database connections. On production systems,
-  // reference the database connection
-  // classes, but on development systems, use the standardized local database
-  // distribution.
+  /**
+   * Setup the handling of database connections.
+   *
+   * On production systems, reference the database connection
+   * classes, but on development systems, use the standardized local database
+   * distribution.
+   */
   private function configureDatabases() {
     // -----------------------------------------------------------------------------------------------------
     // Dev Mode Databases
@@ -1480,9 +1520,7 @@ EOHTML;
     $this->setDatabase("epic", "localhost", "dashboard", "draobhsad", "epic_demo");
     $this->setDatabase("conferences", "localhost", "dashboard", "draobhsad", "conferences_demo");
     $this->setDatabase("marketplace", "localhost", "dashboard", "draobhsad", "marketplace_demo");
-    // -----------------------------------------------------------------------------------------------------
 
-    // -----------------------------------------------------------------------------------------------------
     // Production Databases
     $this->set("bugzilla_db_classfile_ro", 'dbconnection_bugs_ro.class.php');
     $this->set("bugzilla_db_class_ro", 'DBConnectionBugs');
@@ -1529,7 +1567,9 @@ EOHTML;
     // -----------------------------------------------------------------------------------------------------
   }
 
-  // Open a database and store the record
+  /**
+   * Open a database and store the record
+   */
   public function database($key, $query) {
     $rec = $this->databases[$key];
     $dbh = null;
@@ -1543,21 +1583,11 @@ EOHTML;
         trigger_error("magic_quotes_gpc is currently set to ON in your php.ini. This is highly DISCOURAGED.  Please change your setting or comment out this line.");
       }
     }
-    else { // For PRODUCTION machines
+    else {
+      // For PRODUCTION machines
       $class = null;
-      if ((strtoupper(substr(trim($query), 0, 6)) == 'SELECT' && strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") || $query == "") { // Try
-                                                                                                                                                          // to
-                                                                                                                                                          // use
-                                                                                                                                                          // read-only
-                                                                                                                                                          // when
-                                                                                                                                                          // possible.
-                                                                                                                                                          // Blank
-                                                                                                                                                          // queries
-                                                                                                                                                          // occur
-                                                                                                                                                          // when
-                                                                                                                                                          // we
-                                                                                                                                                          // call
-                                                                                                                                                          // sqlSanitize.
+      // Try to use read-only when possible. Blank queries occur when we call sqlSanitize
+      if ((strtoupper(substr(trim($query), 0, 6)) == 'SELECT' && strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") || $query == "") {
 
         $classfile = $this->get($key . '_db_classfile_ro');
         $class = $this->get($key . '_db_class_ro');
@@ -1577,38 +1607,58 @@ EOHTML;
     return $dbh;
   }
 
-  // Return a record for a database by name
+  /**
+   * Return a record for a database by name
+   */
   public function databaseName($key) {
     $rec = $this->databases[$key];
     return $rec['DATABASE'];
   }
 
-  // Return the name of a database by database handle
+  /**
+   * Return the name of a database by database handle
+   *
+   * @param unknown $dbh
+   */
   public function databaseNameForHandle($dbh) {
     return $this->get('DBHANDLEMAP ' . $dbh);
   }
 
-  // Storage functions for arbitraray hash
+  /**
+   * Storage functions for arbitraray hash
+   *
+   * @param unknown $key
+   */
   public function get($key) {
     if (isset($this->hash[$key])) {
       return $this->hash[$key];
     }
   }
 
-  // Storage functions for arbitraray hash
+  /**
+   * Storage functions for arbitraray hash
+   *
+   * @param unknown $key
+   * @param unknown $value
+   */
   public function set($key, $value) {
     $this->hash[$key] = $value;
   }
 
-  // Storage functions for arbitraray hash
+  /**
+   * Storage functions for arbitraray hash
+   */
   public function ifEmptyThenSet($key, $value) {
     if (!isset($this->hash[$key])) {
       $this->hash[$key] = $value;
     }
   }
 
-  // Display a backtrace of all the SQL queries run in this session. Only
-  // available when devmode == true or logsql == true.
+  /**
+   * Display a backtrace of all the SQL queries run in this session
+   *
+   * Only available when devmode == true or logsql == true.
+   */
   function SQLBacktrace() {
     if (($this->devmode && (count($this->query_btrace) > 0)) || $this->logsql) {
       $row = 1;
