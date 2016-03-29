@@ -13,14 +13,6 @@
 <?php if (is_a($this, 'Cla') && $this->Friend->getUID()): ?>
   <form id="frm_cla" name="frm_cla" action="#open_tab_cla" method="post">
     <?php print $this->getClaFormContent('text_1'); ?>
-    <ul>
-      <li><?php print $this->getClaFormContent('question_1'); ?></li>
-      <li><?php print $this->getClaFormContent('question_2'); ?></li>
-      <li><?php print $this->getClaFormContent('question_3'); ?></li>
-      <li><?php print $this->getClaFormContent('question_4'); ?></li>
-    </ul>
-    <?php print $this->getClaFormContent('text_2'); ?>
-    <?php print $this->getClaFormContent('text_3'); ?>
     <div class="well">
       <h2>YOU ACCEPT ...</h2>
 
@@ -81,14 +73,14 @@
       <label for="edit-agree">Electronic Signature <span
         class="form-required" title="This field is required.">*</span></label>
       <input class="form-control form-text required" type="text"
-        id="edit-agree" name="agree" value="<?php print $this->getFieldValues('Agree'); ?>" size="60" maxlength="128" />
+        id="edit-cla-agree" name="cla_agree" value="<?php print $this->getFieldValues('Agree'); ?>" size="60" maxlength="128" />
       <div class="description">Type &quot;I AGREE&quot; to accept the
         terms above</div>
       </div>
     </div>
 
 
-      <p><strong>You represent that the information provided below is accurate.</strong></p>
+    <?php print $this->getClaFormContent('text_3'); ?>
 
     <div class="form-group">
       <label for="edit-email">Email Address <span class="form-required"

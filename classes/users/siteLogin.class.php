@@ -1269,7 +1269,10 @@ class Sitelogin {
       $this->takemeback = "https://" . $matches[1];
     }
 
-    if (preg_match('#^https?://dev.eclipse.org/#', $this->takemeback) || !$this->validateTakemebackUrl()) {
+  if (preg_match('#^https?://dev.eclipse.org/#', $this->takemeback) && !preg_match('#^https?://dev.eclipse.org/site_login/myaccount.php#', $this->takemeback)){
+      $this->takemeback = "";
+    }
+    if (!$this->validateTakemebackUrl()) {
       $this->takemeback = "";
     }
   }

@@ -107,7 +107,7 @@ class Cla {
       'Public Name' => filter_var($this->App->getHTTPParameter("public_name", "POST"), FILTER_SANITIZE_STRING),
       'Employer' => filter_var($this->App->getHTTPParameter("employer", "POST"), FILTER_SANITIZE_STRING),
       'Address' => filter_var($this->App->getHTTPParameter("address", "POST"), FILTER_SANITIZE_STRING),
-      'Agree' => filter_var($this->App->getHTTPParameter("agree", "POST"), FILTER_SANITIZE_STRING)
+      'Agree' => filter_var($this->App->getHTTPParameter("cla_agree", "POST"), FILTER_SANITIZE_STRING)
     );
 
     // Return the field if we're asking for one in particular
@@ -197,7 +197,7 @@ class Cla {
                 'cla_service',
                 NOW()
               )";
-      $result = $this->App->foundation_sql($sql);
+      $result = $this->App->eclipse_sql($sql);
     }
     else {
       $this->App->setSystemMessage('account_requests', "There's been an error updated the LDAP group record. (LDAP-01)", "danger");
@@ -302,6 +302,60 @@ class Cla {
     return FALSE;
   }
 
+  /**
+   * This function creates a new people record in the foundationDB
+   * if it can't find an existing one
+   *
+   * @return bool
+   */
+  private function _createPeopleRecordIfNecessary() {
+
+    if (!isset($this->uid) || empty($this->uid)) {
+      return FALSE;
+    }
+
+    $sql = "SELECT PersonID FROM People
+        WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->uid));
+    $result = $this->App->foundation_sql($sql);
+
+    if ($row = mysql_fetch_assoc($result)) {
+      if (isset($row['PersonID']) && !empty($row['PersonID'])) {
+        $found_uid = TRUE;
+        return TRUE;
+      }
+    }
+
+    if (!isset($found_uid)) {
+      $sql = "INSERT INTO People
+              (PersonID, FName, LName, Type, IsMember, Email, IsUnixAcctCreated)
+              values (
+                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) .",
+                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getFirstName())) .",
+                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getLastName())) .",
+                'XX',
+                0,
+                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getEmail())) .",
+                0
+              )";
+      $result = $this->App->foundation_sql($sql);
+
+      // Log that this event occurred
+      $sql = "INSERT INTO SYS_ModLog
+                (LogTable,PK1,PK2,LogAction,PersonID,ModDateTime)
+                VALUES (
+                  'cla',
+                  'cla_service',
+                  'EclipseCLA-v1',
+                  'NEW PEOPLE RECORD',
+                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) .",
+                  NOW()
+                )";
+      $result = $this->App->foundation_sql($sql);
+
+      return TRUE;
+    }
+    return FALSE;
+  }
 
   /**
    * This function sets a cookie to hide the unsigned notification message
@@ -419,6 +473,9 @@ class Cla {
 
     // Check if the sumitted fields validate and if there is no signed CLA for this user
     if ($this->_allowSigning() && $this->_validatedClaFields() && !$this->_claIsSigned() && $this->_getClaDocumentId()) {
+
+      $this->_createPeopleRecordIfNecessary();
+
       // get the CLA document in Json format
       $blob = $this->_claDocumentInJson();
 
