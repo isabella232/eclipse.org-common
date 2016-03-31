@@ -38,16 +38,15 @@ module.exports = function(grunt) {
                 },
                 files: {
                     // compiling styles.less into styles.css
-                    './public/stylesheets/styles.css': './bower_components/solstice-assets/stylesheets/eclipse_org/styles.less',
-                    './public/stylesheets/barebone.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/styles.less',
-                    './public/stylesheets/polarsys-barebone.min.css': './bower_components/solstice-assets/stylesheets/polarsys/barebone.less',
-                    './public/stylesheets/locationtech-barebone.min.css': './bower_components/solstice-assets/stylesheets/locationtech/barebone.less',
-                    './public/stylesheets/locationtech.min.css': './src/stylesheets/locationtech.less',
-                    './public/stylesheets/barebone-toolbar.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/styles-toolbar.less',
-                    './public/stylesheets/barebone-footer.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/barebone/footer.less',
+                    './public/stylesheets/styles.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/styles.less',
+                    './public/stylesheets/barebone.min.css': './bower_components/solstice-assets/stylesheets/_core/barebone/styles.less',
+                    './public/stylesheets/barebone-footer.min.css': './bower_components/solstice-assets/stylesheets/_core/barebone/footer.less',
                     './public/stylesheets/forums.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/forums.less',
                     './public/stylesheets/table.min.css': './bower_components/solstice-assets/stylesheets/eclipse_org/table.less',
-                    './public/stylesheets/polarsys.min.css': './src/stylesheets/polarsys.less'
+                    './public/stylesheets/locationtech.min.css': './bower_components/solstice-assets/stylesheets/locationtech/styles.less',
+                    './public/stylesheets/locationtech-barebone.min.css': './bower_components/solstice-assets/stylesheets/locationtech/barebone.less',
+                    './public/stylesheets/polarsys.min.css': './bower_components/solstice-assets/stylesheets/polarsys/styles.less',
+                    './public/stylesheets/polarsys-barebone.min.css': './bower_components/solstice-assets/stylesheets/polarsys/barebone.less'
                 }
             }
         },
@@ -63,11 +62,7 @@ module.exports = function(grunt) {
                 src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/main.js'],
 
                 dest: './public/javascript/barebone.min.js',
-            },
-            css: {
-                src: ['./public/stylesheets/styles.css', './bower_components/bootstrapvalidator/dist/css/bootstrapValidator.min.css'],
-                dest: './public/stylesheets/styles.min.css',
-            },
+            }
         },
         uglify: {
             options: {
@@ -99,7 +94,7 @@ module.exports = function(grunt) {
                         './bower_components/solstice-assets/**/*.less',
                         './html_template/barebone/stylesheets/*.less'],
                 // watched files
-                tasks: ['less', 'concat:css'],
+                tasks: ['less'],
                 // tasks to run
             },
         }

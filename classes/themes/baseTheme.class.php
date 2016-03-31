@@ -50,6 +50,35 @@ class BaseTheme {
   protected $Breadcrumb = NULL;
 
   /**
+   * Display header right html
+   *
+   * @var bool
+   */
+  protected $display_header_right = TRUE;
+
+  /**
+   * More menu flag
+   *
+   * @var bool
+   */
+  protected $display_more = TRUE;
+
+  /**
+   * Inlude user toolbar in output
+   *
+   * @var unknown
+   */
+  protected $display_toolbar = TRUE;
+
+
+  /**
+   * Display google search in output
+   *
+   * @var unknown
+   */
+  protected $display_google_search = TRUE;
+
+  /**
    * Extra headers for <head>
    *
    * @var unknown
@@ -62,6 +91,20 @@ class BaseTheme {
    * @var string
    */
   protected $ga_code = "";
+
+  /**
+   * Page HTML content
+   *
+   * @var string
+   */
+  protected $html = "";
+
+  /**
+   * Page layout
+   *
+   * @var string
+   */
+  protected $layout = "";
 
   /**
    * List of theme logos
@@ -144,19 +187,72 @@ class BaseTheme {
    */
   function __construct($App = NULL) {
     $this->setApp($App);
-    $theme_url = $this->getThemeUrl('solstice');
-    $base_url = $this->getBaseUrl();
+    $image_path = $this->getThemeUrl('solstice') . 'public/images/logo/';
 
     // Set default images
-    $logo = array();
-    $logo['default'] = '<img src="' . $theme_url . 'public/images/logo/eclipse-426x100.png" alt="Eclipse.org logo" class="logo-eclipse-default"/>';
-    $logo['white'] = '<img src="' . $theme_url . 'public/images/logo/eclipse-logo-bw-332x78.png" alt="Eclipse.org black and white logo" width="166" height="39" id="logo-eclipse-white"/>';
-    $logo['white_link'] = '<a href="' . $base_url . '">' . $logo['white'] . '</a>';
-    $logo['mobile'] = '<img src="' . $theme_url . 'public/images/logo/eclipse-800x188.png" alt="Eclipse.org logo" width="174" class="logo-eclipse-default"/>';
-    $logo['default_link'] = '<a href="' . $base_url . '">' . $logo['default'] . '</a>';
-    $logo['mobile_link'] = '<a href="' . $base_url . '" class="navbar-brand visible-xs">' . $logo['mobile'] . '</a>';
-    $logo['mobile_link_always_show'] = '<a href="' . $base_url . '" class="navbar-brand">' . $logo['mobile'] . '</a>';
-    $this->setLogo($logo);
+    $this->setAttributes('img_logo_default', $image_path . 'eclipse-426x100.png', 'src');
+    $this->setAttributes('img_logo_default', 'Eclipse.org logo', 'alt');
+    $this->setAttributes('img_logo_default', 'logo-eclipse-default img-responsive hidden-xs', 'class');
+
+    $this->setAttributes('img_logo_eclipse_default', $image_path . 'eclipse-426x100.png', 'src');
+    $this->setAttributes('img_logo_eclipse_default', 'Eclipse.org logo', 'alt');
+    $this->setAttributes('img_logo_eclipse_default', 'img-responsive hidden-xs', 'class');
+
+    $this->setAttributes('img_logo_eclipse_white', $image_path . 'eclipse-logo-bw-332x78.png', 'src');
+    $this->setAttributes('img_logo_eclipse_white', 'Eclipse.org black and white logo', 'alt');
+    $this->setAttributes('img_logo_eclipse_white', 'logo-eclipse-white img-responsive');
+
+    $this->setAttributes('img_logo_mobile', $image_path . 'eclipse-800x188.png', 'src');
+    $this->setAttributes('img_logo_mobile', 'Eclipse.org logo', 'alt');
+    $this->setAttributes('img_logo_mobile', 'logo-eclipse-default-mobile img-responsive', 'class');
+
+    // Set attributes on mobile logo
+    $this->setAttributes('link_logo_mobile', 'navbar-brand visible-xs', 'class');
+
+    // Set attributes on body
+    $this->setAttributes('body', 'body_solstice', 'id');
+
+    // Set attribute on toolbar
+    $this->setAttributes('toolbar-container-wrapper', 'clearfix toolbar-container-wrapper');
+    $this->setAttributes('toolbar-container', 'container');
+    $this->setAttributes('toolbar-row', 'text-right toolbar-row row hidden-print');
+    $this->setAttributes('toolbar-user-links', 'col-md-24 row-toolbar-col');
+
+    // Set attributes for header
+    $this->setAttributes('header-wrapper', 'header-wrapper', 'id');
+    $this->setAttributes('header-container', 'container');
+    $this->setAttributes('header-row', 'header-row', 'id');
+    $this->setAttributes('header-row', 'row');
+    $this->setAttributes('header-left', 'header-left', 'id');
+    $this->setAttributes('header-left', 'hidden-xs');
+    $this->setAttributes('header-right', 'header-right', 'id');
+
+    // Set attributes on CFA button
+    $this->setAttributes('btn-call-for-action', 'btn-call-for-action', 'id');
+
+    // Set attributes on main-menu
+    $this->setAttributes('main-menu-wrapper', 'main-menu-wrapper', 'id');
+    $this->setAttributes('main-menu', 'main-menu', 'id');
+    $this->setAttributes('main-menu', 'navbar yamm');
+    $this->setAttributes('main-menu-ul-navbar', 'nav navbar-nav');
+
+    // Set attributes on breadcrumbs
+    $this->setAttributes('breadcrumbs', 'breadcrumb', 'id');
+    $this->setAttributes('breadcrumbs', 'hidden-print');
+    $this->setAttributes('breadcrumbs_wrapper', "col-xs-24");
+
+    // Set attributes on main content
+    $this->setAttributes('main', 'main', 'role');
+    $this->setAttributes('main', 'no-promo');
+    $this->setAttributes('main-container', 'novaContent');
+
+
+    // Set attributes on footer
+    $this->setAttributes('footer1', 'footer-eclipse-foundation', 'id');
+    $this->setAttributes('footer2', 'footer-legal', 'id');
+    $this->setAttributes('footer3', 'footer-useful-links', 'id');
+    $this->setAttributes('footer4', 'footer-other', 'id');
+
   }
 
   /**
@@ -206,59 +302,52 @@ class BaseTheme {
    *
    * @return string
    */
-  public function getAttributes($element = '', $type = 'class') {
-    // Default
-    $this->setAttributes('body', 'body_solstice', 'id');
-    $this->setAttributes('main', 'no-promo');
-    $breadcrumbs_html = $this->getThemeVariables('breadcrumbs_html');
-    if (!empty($breadcrumbs_html)) {
-      $this->setAttributes('breadcrumbs', 'large-breadcrumbs');
-    }
-    else {
-      $this->setAttributes('breadcrumbs', 'defaut-breadcrumbs');
-    }
-    $this->setAttributes('breadcrumbs', 'hidden-print');
-    $this->setAttributes('breadcrumbs_wrapper', "col-xs-24");
-
-    $Breadcrumb = $this->_getBreadcrumb();
-    $crumb1 = $Breadcrumb->getCrumbAt(1)->getText();
-    $url_parts = explode('/', str_ireplace(array(
-      'http://',
-      'https://'
-    ), '', $_SERVER['REQUEST_URI']));
-    // If we are hidding the CFA Button.
-    if (!empty($theme_variables['btn_cfa']['hide']) && $theme_variables['btn_cfa']['hide'] === TRUE) {
-      $this->setAttributes('body', 'hidden-cfa-button');
-    }
-    // Make sure this is a project and not the project sub-directory on
-    // eclipse.org
-    elseif ($crumb1 === 'Projects' && strtolower($url_parts[1]) != 'projects') {
-      // If the user is not trying to override this button, let's change
-      // it for all of our project websites.
-      if (empty($theme_variables['btn_cfa']['text']) && empty($theme_variables['btn_cfa']['url'])) {
-        $btn = array();
-        $btn['btn_cfa']['text'] = '<i class="fa fa-star"></i> Donate';
-        $btn['btn_cfa']['href'] = 'https://www.eclipse.org/donate/';
-        $btn['btn_cfa']['class'] = 'btn btn-huge btn-info';
-        $theme_variables = $this->setThemeVariables($btn);
-      }
-    }
-
-    $promo_html = $this->getPromoHtml();
-    if (!empty($promo_html) && !empty($theme_variables['btn_cfa']['hide_breadcrumbs'])) {
-      $this->setAttributes('body', "no-breadcrumbs-with-promo");
-    }
+  public function getAttributes($element = '', $type = NULL) {
 
     $allowed_type = array(
       'class',
-      'id'
+      'id',
+      'alt',
+      'title',
+      'href',
+      'height',
+      'width',
+      'src',
+      'title',
     );
+
+    // If type is null, we shall return the string with both class and id.
+    if (is_null($type)) {
+      $html = array();
+      if (is_string($element) && !empty($element)) {
+        foreach ($allowed_type as $type) {
+          if (isset($this->attributes[$type][$element]) && is_array($this->attributes[$type][$element])) {
+            $html[] = $type . '="' . implode(' ', $this->attributes[$type][$element]) . '"';
+          }
+        }
+      }
+
+      // Add a space if we have someting to return.
+      $prefix = "";
+      if (!empty($html)) {
+        $prefix = " ";
+      }
+
+      return $prefix . implode(" ", $html);
+    }
+
+    // If type is set, return only class or id values.
     if (in_array($type, $allowed_type) && is_string($element) && !empty($element)) {
       if (isset($this->attributes[$type][$element]) && is_array($this->attributes[$type][$element])) {
         return implode(' ', $this->attributes[$type][$element]);
       }
     }
+
     return '';
+  }
+
+  public function resetAttributes($element = '', $type = 'class') {
+    $this->attributes[$type][$element] = array();
   }
 
   /**
@@ -278,14 +367,56 @@ class BaseTheme {
   public function setAttributes($element = '', $value = "", $type = 'class') {
     $allowed_type = array(
       'class',
-      'id'
+      'id',
+      'alt',
+      'title',
+      'href',
+      'height',
+      'width',
+      'src',
+      'title',
     );
-    if (in_array($type, $allowed_type) && is_string($element) && !empty($element) && !empty($value)) {
-      if (!isset($this->attributes[$type][$element]) || !in_array($value, $this->attributes[$type][$element])) {
-        $this->attributes[$type][$element][] = $value;
+
+    $type = strtolower($type);
+    $value = explode(' ', $value);
+    foreach ($value as $val) {
+      if (in_array($type, $allowed_type) && is_string($element) && !empty($element) && !empty($val)) {
+        switch ($type) {
+          case 'class':
+            // Append classes instead of overriting them.
+            // This way we can set multiple classes for differents contexts.
+            if (!isset($this->attributes[$type][$element]) || !in_array($val, $this->attributes[$type][$element])) {
+              $this->attributes['class'][$element][] = $val;
+            }
+            break;
+
+          // For everything else, we only keep the last value set.
+          default:
+            $this->attributes[$type][$element] = array(
+              $val
+            );
+            break;
+        }
       }
     }
     return $this->attributes;
+  }
+
+  function getBareboneAssets() {
+    $url = $this->getEclipseUrl() . $this->getThemeUrl("solstice") . "public/stylesheets/";
+    $current_theme = $this->getTheme();
+    if ($current_theme !== "solstice") {
+      $url .= $current_theme . '-';
+    }
+    $url .= 'barebone.min.css';
+    return <<<EOHTML
+    <style type="text/css">
+    @import url('{$url}')
+    </style>
+    <script
+      src="{$this->getEclipseUrl()}/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js">
+    </script>
+EOHTML;
   }
 
   /**
@@ -347,6 +478,18 @@ class BaseTheme {
    */
   public function getBreadcrumbHtml() {
     // Breadcrumbs
+    if ($this->getThemeVariables('hide_breadcrumbs')){
+      return "";
+    }
+
+    $theme_breadcrumbs_html = $this->getThemeVariables('breadcrumbs_html');
+    if (!empty($theme_breadcrumbs_html)) {
+      $this->setAttributes('breadcrumbs', 'large-breadcrumbs');
+    }
+    else {
+      $this->setAttributes('breadcrumbs', 'default-breadcrumbs');
+    }
+
     $Breadcrumb = $this->_getBreadcrumb();
     $crumb_list = $Breadcrumb->getCrumbList();
 
@@ -368,7 +511,19 @@ class BaseTheme {
       }
     }
     $breadcrumb_html .= "</ol>";
-    return $breadcrumb_html;
+
+    return <<<EOHTML
+    <section{$this->getAttributes('breadcrumbs')}>
+      <div class="container">
+        <h3 class="sr-only">Breadcrumbs</h3>
+        <div{$this->getAttributes('breadcrumbs_wrapper')}>
+          {$breadcrumb_html}
+        </div>
+        {$theme_breadcrumbs_html}
+      </div>
+    </section> <!-- /#breadcrumb -->
+EOHTML;
+
   }
 
   /**
@@ -400,6 +555,27 @@ class BaseTheme {
     );
 
     $btn_cfa = $this->getThemeVariables('btn_cfa');
+    $Breadcrumb = $this->_getBreadcrumb();
+    $crumb1 = $Breadcrumb->getCrumbAt(1)->getText();
+    $url_parts = explode('/', str_ireplace(array(
+      'http://',
+      'https://'
+    ), '', $_SERVER['REQUEST_URI']));
+
+    // If we are hidding the CFA Button.
+     if ($crumb1 === 'Projects' && strtolower($url_parts[1]) != 'projects') {
+      // If the user is not trying to override this button, let's change
+      // it for all of our project websites.
+      if (empty($btn_cfa['text']) && empty($btn_cfa['url'])) {
+        $btn = array();
+        $btn['btn_cfa']['text'] = '<i class="fa fa-star"></i> Donate';
+        $btn['btn_cfa']['href'] = 'https://www.eclipse.org/donate/';
+        $btn['btn_cfa']['class'] = 'btn btn-huge btn-info';
+        $theme_variables = $this->setThemeVariables($btn);
+        $btn_cfa = $theme_variables['btn_cfa'];
+      }
+    }
+
     if (!$btn_cfa) {
       $btn_cfa = array();
     }
@@ -433,9 +609,9 @@ class BaseTheme {
       return $btn_cfa['html'];
     }
 
-    $html = '<a id="btn-call-for-action" href="' . $btn_cfa['href'] . '" class="' . $btn_cfa['class'] . '">';
+    $html = '<div' . $this->getAttributes('btn-call-for-action') . '><a href="' . $btn_cfa['href'] . '" class="' . $btn_cfa['class'] . '">';
     $html .= $btn_cfa['text'];
-    $html .= '</a>';
+    $html .= '</a></div>';
 
     return $html;
   }
@@ -492,6 +668,85 @@ class BaseTheme {
   }
 
   /**
+   * Get $diplay_more
+   */
+  public function getDisplayMore() {
+    return $this->display_more;
+  }
+
+
+  /**
+   * Set $diplay_more
+   *
+   * @param string $display
+   */
+  public function setDisplayMore($display = TRUE) {
+    if ($display !== FALSE) {
+      $display = TRUE;
+    }
+    $this->display_more = $display;
+  }
+
+  /**
+   * Get $display_google_search
+   */
+  public function getDisplayGoogleSearch() {
+    return $this->display_google_search;
+  }
+
+  /**
+   * Set $display_google_search
+   *
+   * @param bool $display
+   */
+  public function setDisplayGoogleSearch($display = TRUE) {
+    if ($display !== FALSE) {
+      $display = TRUE;
+    }
+    $this->display_google_search = $display;
+  }
+
+  /**
+   * Get $display_header_right
+   */
+  public function getDisplayHeaderRight() {
+    return $this->display_header_right;
+  }
+
+  /**
+   * Set $display_header_right
+   *
+   * @param bool $display
+   */
+  public function setDisplayHeaderRight($display = TRUE) {
+    if ($display !== FALSE) {
+      $display = TRUE;
+    }
+    $this->display_header_right = $display;
+  }
+
+  /**
+   * Get $display_toolbar
+   */
+  public function getDisplayToolbar() {
+    return $this->display_toolbar;
+  }
+
+  /**
+   * Set $display_toolbar
+   *
+   * @param bool $display
+   */
+  public function setDisplayToolbar($display = TRUE) {
+    if ($display !== FALSE) {
+      $display = TRUE;
+    }
+    $this->display_toolbar = $display;
+  }
+
+
+
+  /**
    * Get Eclipse.org base URL
    *
    * @return string
@@ -509,11 +764,36 @@ class BaseTheme {
   public function getExtraHeaders() {
     $App = $this->_getApp();
     $App->setOGTitle($this->getPageTitle());
+
+    $styles_name = 'styles';
+    switch ($this->getTheme()) {
+      case 'locationtech':
+        $styles_name = 'locationtech';
+        break;
+
+      case 'polarsys':
+        $styles_name = 'polarsys';
+        break;
+    }
+
+    $css = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css"/>';
+
+    $return = $css . PHP_EOL;
     // Append the OG tags to the extra headers
-    $return = $App->getOGDescription() . PHP_EOL;
+    $return .= $App->getOGDescription() . PHP_EOL;
     $return .= $App->getOGImage() . PHP_EOL;
     $return .= $App->getOGTitle() . PHP_EOL;
     $return .= $this->extra_headers;
+    $return .= $App->ExtraHtmlHeaders;
+
+    // page-specific RSS feed
+    if ($App->PageRSS != "") {
+      if ($App->PageRSSTitle != "") {
+        $App->PageRSSTitle = "Eclipse RSS Feed";
+      }
+      $return .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml"/>';
+    }
+
     return $return;
   }
 
@@ -527,6 +807,41 @@ class BaseTheme {
   }
 
   /**
+   * Get Html of Footer Region 1
+   */
+  public function getFooterRegion1() {
+    return "";
+  }
+
+  /**
+   * Get Html of Footer Region 2
+   */
+  public function getFooterRegion2() {
+    return "";
+  }
+
+  /**
+   * Get Html of Footer Region 3
+   */
+  public function getFooterRegion3() {
+    return "";
+  }
+
+  /**
+   * Get Html of Footer Region 4
+   */
+  public function getFooterRegion4() {
+    return "";
+  }
+
+  /**
+   * Get Html of Footer Region 5
+   */
+  public function getFooterRegion5() {
+    return "";
+  }
+
+  /**
    * Get footer javascript code
    *
    * @return string
@@ -536,6 +851,26 @@ class BaseTheme {
     $return = $App->ExtraJSFooter . PHP_EOL;
     $return .= $this->getGoogleAnalytics() . PHP_EOL;
     return $return;
+  }
+
+  public function getHeaderRight(){
+    if (!$this->getDisplayHeaderRight()) {
+      return "";
+    }
+    return <<<EOHTML
+      <div{$this->getAttributes('header-right')}>
+        {$this->getGoogleSearch()}
+        {$this->getCfaButton()}
+      </div>
+EOHTML;
+  }
+
+  public function getHeaderLeft(){
+    return <<<EOHTML
+      <div{$this->getAttributes('header-left')}>
+        {$this->getLogo('default', TRUE)}
+      </div>
+EOHTML;
   }
 
   /**
@@ -723,7 +1058,11 @@ EOHTML;
    * Get Google Search HTML
    */
   public function getGoogleSearch() {
+    if (!$this->getDisplayGoogleSearch()) {
+      return "";
+    }
     return <<<EOHTML
+    <div id="custom-search-form" class="reset-box-sizing">
     <script>
     (function() {
       var cx = '011805775785170369411:15ipmpflp-0';
@@ -737,7 +1076,56 @@ EOHTML;
     })();
     </script>
     <gcse:searchbox-only></gcse:searchbox-only>
+    </div>
 EOHTML;
+  }
+
+  /**
+   * Set page Html
+   *
+   * @param string $html
+   */
+  public function setHtml($html = "") {
+    if (is_string($html)) {
+      $this->html = $html;
+    }
+  }
+
+  /**
+   * Get page $html
+   */
+  public function getHtml() {
+    return $this->html;
+  }
+
+  /**
+   * Get $layout
+   */
+  public function getLayout() {
+    if (empty($this->layout)) {
+      $this->setLayout();
+    }
+    return $this->layout;
+  }
+
+  /**
+   * Set $layout
+   *
+   * @param string $layout
+   */
+  public function setLayout($layout = "") {
+    $acceptable_layouts = array(
+      'default',
+      'default-header',
+      'default-footer',
+      'barebone',
+      'thin',
+      'thin-header'
+    );
+    $this->layout = 'default';
+    if (in_array($layout, $acceptable_layouts)) {
+      $this->layout = $layout;
+    }
   }
 
   /**
@@ -749,14 +1137,40 @@ EOHTML;
    *
    * @return string
    */
-  public function getLogo($id = '') {
+  public function getLogo($id = '', $link = FALSE) {
     // Logos
-    $logos = $this->logos;
+    $link_logo = $this->getAttributes('link_logo_' . $id);
+    $img_logo = $this->getAttributes('img_logo_' . $id);
+    $return = "";
+    if (!empty($img_logo['src'])) {
+      $att_id = str_replace('_', '-', 'logo-' . $id);
+      $this->setAttributes($att_id, 'wrapper-' . $att_id);
+      //$logo['white_link'] = '<a href="' . $base_url . '">' . $logo['white'] . '</a>';
+      $return = '<div' . $this->getAttributes($att_id) . '>';
 
-    if (!empty($logos[$id])) {
-      return $logos[$id];
+      if ($link) {
+        $url = $this->getBaseUrl();
+        if (is_string($link)) {
+          $url =  $link;
+          $this->setAttributes('link_logo_' . $id, $url, 'href');
+          $logo_updated = TRUE;
+        }
+        $link_logo_href = $this->getAttributes('link_logo_' . $id, 'href');
+        if (empty($link_logo_href)) {
+          $this->setAttributes('link_logo_' . $id, $url, 'href');
+          $logo_updated = TRUE;
+        }
+        $return .= '<a'. $this->getAttributes('link_logo_' . $id) . '>';
+      }
+
+
+      $return .= '<img' . $this->getAttributes('img_logo_' . $id). '/>';
+      if (isset($logo_updated) && $logo_updated === TRUE) {
+        $return .= '</a>';
+      }
+      $return .= '</div>';
     }
-    return '';
+    return $return;
   }
 
   /**
@@ -985,14 +1399,18 @@ EOHTML;
    */
   public function getNav() {
     // Nav menu
-    $variables = array();
+    $variables = array(
+      '#items' => array(),
+      'link_count' => 0,
+      'img_separator' => '<img src="' . $base_url . 'public/images/template/separator.png"/>',
+      'html_block' => ''
+    );
     if ($this->Nav instanceof Nav) {
       $base_url = $this->getBaseUrl();
       // add faux class to #novaContent
       $this->setAttributes('main_container_classes', 'background-image-none');
       $variables['link_count'] = $this->Nav->getLinkCount();
-      $variables['img_separator'] = '<img src="' . $base_url . 'public/images/template/separator.png"/>';
-
+      $variables['html_block'] = $this->Nav->getHTMLBlock();
       for ($i = 0; $i < $variables['link_count']; $i++) {
         $variables['#items'][] = $this->Nav->getLinkAt($i);
       }
@@ -1072,7 +1490,7 @@ EOHTML;
    * @param string $title
    */
   public function setPageTitle($title) {
-    $this->page_title = $title;
+    $this->page_title = strip_tags($title);
   }
 
   /**
@@ -1187,7 +1605,7 @@ EOHTML;
     $variables['sys_messages'] = "";
     $App = $this->_getApp();
     if ($sys_messages = $App->getSystemMessage()) {
-      $main_container_classes = $this->getAttributes('main_container_classes');
+      $main_container_classes = $this->getAttributes('main_container_classes', 'class');
       $container_classes_array = explode(' ', $main_container_classes);
       $sys_classes = 'clearfix';
       // Verify if the system message is included in a .container class.
@@ -1222,6 +1640,137 @@ EOHTML;
   }
 
   /**
+   * Get array of theme files if they exist
+   */
+  public function getThemeFiles() {
+    $App = $this->_getApp();
+    $eclipse_org_common_root = $App->getBasePath();
+
+    $files = array();
+    $files['header'] = $eclipse_org_common_root . '/themes/solstice/header.php';
+    $files['menu'] = $eclipse_org_common_root . '/themes/solstice/menu.php';
+    $files['nav'] = $eclipse_org_common_root . '/themes/solstice/nav.php';
+    $files['body'] = $eclipse_org_common_root . '/themes/solstice/body.php';
+    $files['main_menu'] = $eclipse_org_common_root . '/themes/solstice/main_menu.php';
+    $files['footer'] = $eclipse_org_common_root . '/themes/solstice/footer.php';
+
+    // Validate theme files
+    foreach ($files as $key => $template_files) {
+      if (!file_exists($template_files)) {
+        unset($files[$key]);
+      }
+    }
+
+    return $files;
+  }
+
+  /**
+   * Generate page with theme
+   */
+  public function generatePage() {
+    $btn_cfa = $this->getThemeVariables('btn_cfa');
+    if (!empty($btn_cfa['hide']) && $btn_cfa['hide'] === TRUE) {
+      $this->setAttributes('body', 'hidden-cfa-button');
+    }
+
+    $promo_html = $this->getPromoHtml();
+    if (!empty($promo_html) && !empty($theme_variables['btn_cfa']['hide_breadcrumbs'])) {
+      $this->setAttributes('body', "no-breadcrumbs-with-promo");
+    }
+
+    ob_start();
+    switch ($this->getLayout()) {
+      case 'barebone':
+        $this->setAttributes('header-wrapper', 'barebone-layout');
+        $this->setAttributes('header-wrapper', 'thin-header');
+        $this->setAttributes('header-row', 'header-row', 'id');
+        $this->resetAttributes('header-row', 'class');
+        $this->setAttributes('header-row', 'row-fluid');
+        $this->setDisplayToolbar(FALSE);
+        $this->setDisplayGoogleSearch(FALSE);
+        $this->resetAttributes('header-left', 'class');
+        $this->setAttributes('header-left', 'col-sm-8 col-md-6 col-lg-4');
+        $this->resetAttributes('header-container', 'class');
+        $this->setAttributes('header-container', 'container-fluid');
+        $this->resetAttributes('main-menu-wrapper', 'class');
+        $this->setAttributes('main-menu-wrapper', 'col-sm-16 col-md-18 col-lg-20');
+        $this->setAttributes('main-menu-ul-navbar', 'navbar-right');
+        $this->setDisplayHeaderRight(FALSE);
+        print $this->getBareboneAssets();
+        print $this->getThemeFile('menu');
+        break;
+
+      case 'thin':
+        $this->setAttributes('header-wrapper', 'thin-header');
+        $this->resetAttributes('header-left', 'class');
+        $this->setAttributes('header-left', 'col-sm-6 col-md-6 col-lg-5');
+        $this->resetAttributes('main-menu-wrapper', 'class');
+        $this->setAttributes('main-menu-wrapper', 'col-sm-18 col-md-18 col-lg-19');
+        $this->setAttributes('main-menu-ul-navbar', 'navbar-right');
+        $this->setAttributes('header-row', 'row');
+
+        $this->setDisplayHeaderRight(FALSE);
+        print $this->getThemeFile('header');
+        print $this->getThemeFile('menu');
+        print $this->getThemeFile('body');
+        print $this->getThemeFile('footer');
+        break;
+
+      case 'thin-header':
+        $this->setAttributes('header-wrapper', 'thin-header');
+        $this->resetAttributes('header-left', 'class');
+        $this->setAttributes('header-left', 'col-sm-6 col-md-6 col-lg-5');
+        $this->resetAttributes('main-menu-wrapper', 'class');
+        $this->setAttributes('main-menu-wrapper', 'col-sm-18 col-md-18 col-lg-19');
+        $this->setAttributes('main-menu', 'navbar-right');
+        $this->setAttributes('header-row', 'row');
+
+        $this->setDisplayHeaderRight(FALSE);
+        print $this->getThemeFile('header');
+        print $this->getThemeFile('menu');
+        break;
+
+      case 'default-header':
+        print $this->getThemeFile('header');
+        print $this->getThemeFile('menu');
+        break;
+
+      case 'default':
+        print $this->getThemeFile('header');
+        print $this->getThemeFile('menu');
+        print $this->getThemeFile('body');
+        print $this->getThemeFile('footer');
+        break;
+
+      case 'default-footer':
+        print $this->getThemeFile('footer');
+        break;
+
+    }
+    return ob_flush();
+  }
+
+  /**
+   * Get HTML of theme file
+   *
+   * @param string $id
+   */
+  public function getThemeFile($id = "") {
+    $files = $this->getThemeFiles();
+
+    ob_start();
+    if (!empty($files[$id])) {
+      include ($files[$id]);
+    }
+    $html = ob_get_clean();
+
+    if ($html) {
+      return $html;
+    }
+    return "";
+  }
+
+  /**
    * Get absolute path of theme
    *
    * @param string $theme
@@ -1248,7 +1797,8 @@ EOHTML;
     $App = $this->_getApp();
     $this->theme_variables = $App->getThemeVariables();
 
-    $this->setAttributes('main_container', $this->theme_variables['main_container_classes']);
+    $this->setAttributes('main-container', $this->theme_variables['main_container_classes']);
+
     $this->setAttributes('body', $this->theme_variables['body_classes']);
 
     if (!empty($id) && isset($this->theme_variables[$id])) {
@@ -1270,6 +1820,27 @@ EOHTML;
     $this->theme_variables = $App->getThemeVariables();
 
     return $this->theme_variables;
+  }
+
+  public function getToolbarHtml() {
+    if (!$this->getDisplayToolbar()) {
+      return "";
+    }
+    return <<<EOHTML
+    <div{$this->getAttributes("toolbar-container-wrapper")}>
+      <div{$this->getAttributes("toolbar-container")}>
+        <div{$this->getAttributes("toolbar-row")}>
+          <div{$this->getAttributes("toolbar-user-links")}>
+            <ul class="list-inline">
+              <li>{$this->getSessionVariables('create_account_link')}</li>
+              <li>{$this->getSessionVariables('my_account_link')}</li>
+              {$this->getSessionVariables('logout')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+EOHTML;
   }
 
   /**

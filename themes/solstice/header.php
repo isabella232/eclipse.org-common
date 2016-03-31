@@ -9,7 +9,6 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
-include_once 'app.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,13 +16,12 @@ include_once 'app.php';
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="<?php print $Theme->getPageAuthor(); ?>"/>
-    <meta name="keywords" content="<?php print $Theme->getPageKeywords(); ?>"/>
+    <meta name="author" content="<?php print $this->getPageAuthor(); ?>"/>
+    <meta name="keywords" content="<?php print $this->getPageKeywords(); ?>"/>
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,100" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon" href="<?php print $Theme->getThemeUrl(); ?>public/images/favicon.ico"/>
-    <title><?php print $Theme->getPageTitle(); ?></title>
-    <link rel="stylesheet" href="<?php print $Theme->getThemeUrl(); ?>public/stylesheets/styles.min.css"/>
-    <?php print $Theme->getExtraHeaders();?>
+    <link rel="shortcut icon" href="<?php print $this->getThemeUrl(); ?>public/images/favicon.ico"/>
+    <title><?php print $this->getPageTitle(); ?></title>
+    <?php print $this->getExtraHeaders();?>
   </head>
-  <body class="<?php print $Theme->getAttributes('body');?>" id="<?php print $Theme->getAttributes('body', 'id');?>">
+  <body<?php print $this->getAttributes('body');?>>
     <a class="sr-only" href="#content">Skip to main content</a>

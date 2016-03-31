@@ -9,10 +9,15 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
-?>
 
-<?php include_once('header.php');?>
-	<!-- Start of content area -->
-	<h1><?php print $pageTitle;?></h1>
-	<!-- End of content area -->
-<?php include_once('footer.php');?>
+  require_once(realpath(dirname(__FILE__) . '/../../../system/app.class.php'));
+  $App = new App();
+
+  $Theme = $App->getThemeClass($App->getHTTPParameter('theme'));
+  $Theme->setPageAuthor("Christopher Guindon");
+  $Theme->setPageKeywords("eclipse.org, Eclipse Foundation");
+  $Theme->setPageTitle('HTML Template');
+  $Theme->setHtml('<h1>HTML Template</h1>');
+  $Theme->setLayout($App->getHTTPParameter('layout'));
+  $Theme->generatePage();
+

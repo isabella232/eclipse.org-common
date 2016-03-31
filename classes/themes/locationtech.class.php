@@ -24,19 +24,36 @@ class Locationtech extends baseTheme {
     parent::__construct($App);
 
     $this->setBaseUrl('https://www.locationtech.org');
-    $base_url = $this->getBaseUrl();
-    $theme_url = $this->getEclipseUrl() . $this->getThemeUrl('solstice');
-    $logo = array();
-    $logo['default_responsive'] = '<img src="' . $theme_url . 'public/images/locationtech/logo.png" alt="LocationTech logo" class="logo-eclipse-default img-responsive"/>';
-    $logo['default'] = '<img src="' . $theme_url . 'public/images/locationtech/logo.png" alt="LocationTech logo" class="logo-eclipse-default"/>';
-    $logo['mobile'] = '<img src="' . $theme_url . 'public/images/locationtech/logo.png" class="logo-eclipse-default-mobile" width="161" alt="LocationTech logo" />';
-    $logo['white'] = '<img src="' . $theme_url . 'public/images/logo/eclipse-logo-bw-332x78.png" alt="Eclipse.org black and white logo" width="166" height="39" id="logo-eclipse-white"/>';
-    $logo['default_thin'] = '<img src="' . $theme_url . 'public/images/locationtech/logo-color.png" alt="LocationTech logo" class="logo-eclipse-default img-responsive"/>';
-    $logo['default_thin_link'] = '<a href="' . $base_url . '">' . $logo['default_thin'] . '</a>';
-    $logo['default_link'] = '<a href="' . $base_url . '">' . $logo['default'] . '</a>';
-    $logo['default_responsive_link'] = '<a href="' . $base_url . '">' . $logo['default_responsive'] . '</a>';
-    $logo['mobile_link'] = '<a href="' . $base_url . '" class="navbar-brand visible-xs">' . $logo['mobile'] . '</a>';
-    $this->setLogo($logo);
+    $image_path = $this->getThemeUrl('solstice') . 'public/images/locationtech/';
+
+    // LocationTech logos
+    $this->setAttributes('img_logo_default', $image_path . 'logo.png', 'src');
+    $this->setAttributes('img_logo_default', 'Locationtech.org logo', 'alt');
+
+    $this->setAttributes('img_logo_mobile', $image_path . 'logo.png', 'src');
+    $this->setAttributes('img_logo_mobile', 'Locationtech.org logo', 'alt');
+
+    // Set default options
+    $this->setDisplayMore(FALSE);
+
+    // Set toolbar attributes
+    $this->setAttributes('toolbar-container-wrapper', 'toolbar-contrast');
+
+    // Set header attributes
+    $this->setAttributes('header-container', 'no-border');
+    $this->setAttributes('header-wrapper', 'page-header-logo-bordered');
+    $this->setAttributes('header-left', 'hidden-xs col-sm-8');
+    $this->setAttributes('header-right', 'hidden-xs col-md-6 col-sm-8 pull-right');
+
+    // Set attributes for main-menu
+    $this->setAttributes('main-menu-wrapper', 'col-sm-24');
+    $this->setAttributes('main-menu-ul-navbar', 'navbar-right');
+
+    // Set attributes for footer
+    $this->setAttributes('footer1', 'col-xs-offset-1 col-xs-11 col-sm-7 col-md-4 col-md-offset-0 hidden-print');
+    $this->setAttributes('footer2', 'col-xs-offset-1 col-xs-11 col-sm-7 col-md-4 col-md-offset-0 hidden-print');
+    $this->setAttributes('footer3', 'col-xs-offset-1 col-xs-11 col-sm-7 col-md-4 col-md-offset-0 hidden-print');
+    $this->setAttributes('footer4','col-xs-24 col-md-11 footer-other-working-groups col-md-offset-1 hidden-print');
   }
 
   /**
@@ -90,7 +107,7 @@ class Locationtech extends baseTheme {
       $App = $this->_getApp();
       ob_start();
       include($App->getBasePath() . '/themes/' . $this->getTheme() . '/_menu_links.php');
-      return ob_end_flush();
+      return ob_get_clean();
     }
 
     // Main-menu
@@ -116,6 +133,82 @@ class Locationtech extends baseTheme {
       return '<a href="https://www.locationtech.org/user/login/"><i class="fa fa-sign-in fa-fw"></i> Log in</a>';
     }
     return parent::getSessionVariables($id);
+  }
+
+  /**
+   * Get Html of Footer Region 1
+   */
+  public function getFooterRegion1() {
+    return <<<EOHTML
+      <h2 class="block-title">LocationTech</h2>
+        <ul class="menu nav">
+          <li class="first leaf"><a href="{$this->getBaseUrl()}/about" title="">About Us</a></li>
+          <li class="leaf"><a href="{$this->getBaseUrl()}/contact" title="">Contact us</a></li>
+          <li class="leaf"><a href="{$this->getBaseUrl()}/charter" title="">Governance</a></li>
+          <li class="leaf"><a href="{$this->getBaseUrl()}>/steeringcommittee" title="">Steering Committee</a></li>
+          <li class="last leaf"><a href="{$this->getBaseUrl()}>/jobs" title="">Jobs</a></li>
+        </ul>
+EOHTML;
+  }
+
+  /**
+   * Get Html of Footer Region 2
+   */
+  public function getFooterRegion2() {
+    return <<<EOHTML
+      <h2 class="block-title">Legal</h2>
+      <ul class="menu nav">
+        <li class="first leaf"><a href="https://www.eclipse.org/legal/copyright.php" title="">Copyright Agent</a></li>
+        <li class="leaf"><a href="https://www.eclipse.org/legal/privacy.php" title="">Privacy Policy</a></li>
+        <li class="leaf"><a href="https://www.eclipse.org/legal/termsofuse.php" title="">Terms of Use</a></li>
+        <li class="last leaf"><a href="https://www.eclipse.org/legal/" title="">Legal Resources</a></li>
+      </ul>
+EOHTML;
+  }
+
+  /**
+   * Get Html of Footer Region 3
+   */
+  public function getFooterRegion3() {
+    return <<<EOHTML
+      <h2 class="block-title">Useful Links</h2>
+      <ul class="menu nav">
+        <li class="first leaf"><a href="https://locationtech.org/mailman/listinfo" title="">Discussion lists</a></li>
+        <li class="leaf"><a href="https://github.com/LocationTech" title="">Github</a></li>
+        <li class="leaf"><a href="https://locationtech.org/wiki" title="">Wiki</a></li>
+        <li class="leaf"><a href="http://foss4g-na.org" title="">FOSS4G NA</a></li>
+        <li class="leaf"><a href="http://tour.locationtech.org" title="">Tour</a></li>
+        <li class="last leaf"><a href="http://fedgeoday.org" title="">FedGeoDay</a></li>
+      </ul>
+EOHTML;
+  }
+
+  /**
+   * Get Html of Footer Region 4
+   */
+  public function getFooterRegion4() {
+    return <<<EOHTML
+      <div id="footer-working-group-left" class="col-sm-10 col-xs-offset-1 col-md-11 col-md-offset-1 footer-working-group-col">
+        {$this->getLogo('default', TRUE)}<br/>
+        <h2 class="section-title sr-only">Other</h2>
+        <ul class="list-inline social-media">
+          <li class="link_twitter first"><a href="//twitter.com/locationtech"><i class="fa fa-twitter-square"></i></a></li>
+          <li class="link_facebook last"><a href="//www.facebook.com/groups/401867609865450/"><i class="fa fa-facebook-square"></i></a></li>
+        </ul>
+      </div>
+      <div  id="footer-working-group-right" class="col-sm-10 col-xs-offset-1 col-sm-offset-3 col-md-11 col-md-offset-1 footer-working-group-col">
+       <span class="hidden-print">{$this->getLogo('eclipse_white', $this->getEclipseUrl())}</span>
+        <p class="padding-top-15">LocationTech is a Working Group of The Eclipse Foundation.</p>
+        <p>{$this->getCopyrightNotice()}</p>
+      </div>
+EOHTML;
+  }
+
+  /**
+   * Get Html of Footer Region 5
+   */
+  public function getFooterRegion5() {
+    return "";
   }
 
 }

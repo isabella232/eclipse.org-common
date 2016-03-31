@@ -13,7 +13,7 @@ if (!is_a($this, 'baseTheme')) {
   return "";
 }
 ?>
-<li class="first expanded dropdown">
+<li class="dropdown">
   <a href="<?php print $this->getBaseUrl();?>/list-of-projects" title="List of Projects" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Technology <span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li class="first leaf"><a href="<?php print $this->getBaseUrl();?>/list-of-projects" title="List of Projects">View Projects</a></li>
@@ -21,7 +21,7 @@ if (!is_a($this, 'baseTheme')) {
     <li class="last leaf"><a href="<?php print $this->getBaseUrl();?>/proposals" title="List of project proposals">Proposals</a></li>
   </ul>
 </li>
-<li class="expanded dropdown">
+<li class="dropdown">
   <a href="<?php print $this->getBaseUrl();?>/members" title="Members" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Members <span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li class="first leaf"><a href="<?php print $this->getBaseUrl();?>/members-list" title="Members">View Members</a></li>
@@ -32,7 +32,7 @@ if (!is_a($this, 'baseTheme')) {
 <li class="leaf"><a href="<?php print $this->getBaseUrl();?>/meetings" title="Meetings">Meetings</a></li>
 <li class="leaf"><a href="<?php print $this->getBaseUrl();?>/events" title="LocationTech events">Events</a></li>
 <li class="leaf"><a href="<?php print $this->getBaseUrl();?>/steeringcommittee">Steering Committee</a></li>
-<li class="last expanded dropdown">
+<li class="dropdown">
   <a href="<?php print $this->getBaseUrl();?>/about" title="About LocationTech" data-target="#" class="dropdown-toggle" data-toggle="dropdown">About Us <span class="caret"></span></a>
   <ul class="dropdown-menu">
     <li class="first leaf"><a href="<?php print $this->getBaseUrl();?>/charter" title="LocationTech Charter">Charter</a></li>

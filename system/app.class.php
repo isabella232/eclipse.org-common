@@ -18,52 +18,59 @@ class App {
 
   /**
    * Version of App()
+   *
    * @var string
    */
   private $APPVERSION = "1.0";
 
   /**
    * Name of App()
+   *
    * @var string
    */
   private $APPNAME = "Eclipse.org";
 
   /**
    * Base path of eclipse.org-common
+   *
    * @var string
    */
   private $eclipse_org_common_base_path = "";
 
   /**
    * Default row height
+   *
    * @var int
    */
   private $DEFAULT_ROW_HEIGHT = 20;
 
   /**
    * Max post size
+   *
    * @var int
    */
   private $POST_MAX_SIZE = 262144;
 
   /**
    * Our download URL
+   *
    * @var string
    */
   private $OUR_DOWNLOAD_URL = "http://download1.eclipse.org";
 
   /**
    * Public download URL
+   *
    * @var string
    */
   private $PUB_DOWNLOAD_URL = "http://download.eclipse.org";
 
   /**
    * Download base path
+   *
    * @var string
    */
   private $DOWNLOAD_BASE_PATH = "/home/data2/httpd/download.eclipse.org";
-
 
   /**
    * Database class path
@@ -75,105 +82,121 @@ class App {
 
   /**
    * Current domain url
+   *
    * @var string
    */
   private $WWW_PREFIX = ""; // default is relative
 
   /**
    * Http prefix
+   *
    * @var string
    */
   private $HTTP_PREFIX = "http"; // default is http
 
   /**
    * String to include in <head>
+   *
    * @var string
    */
   public $ExtraHtmlHeaders = "";
 
   /**
    * JS to include in footer
+   *
    * @var string
    */
   public $ExtraJSFooter = "";
 
   /**
    * Page RSS feed Url
+   *
    * @var string
    */
   public $PageRSS = "";
 
   /**
    * Page RSS feed TITLE
+   *
    * @var string
    */
   public $PageRSSTitle = "";
 
   /**
    * Promotion flag
+   *
    * @var bool
    */
   public $Promotion = FALSE;
 
   /**
    * Custom Promotion Path
+   *
    * @var string
    */
   public $CustomPromotionPath = "";
 
   /**
    * Valid eclipse.org-common themes
+   *
    * @var array
    */
   private $valid_themes = array(
     "Nova",
     "solstice",
     "polarsys",
-    "locationtech"
+    "locationtech",
+    "Nova"
   );
 
   /**
    * Open Graph Protocol title
+   *
    * @var string
    */
   private $OGTitle = "";
 
   /**
    * Open Graph Protocol description
+   *
    * @var string
    */
   private $OGDescription = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
 
   /**
    * Open Graph Protocol image
+   *
    * @var string
    */
-  private $OGImage = "https://www.eclipse.org/eclipse.org-common/themes/Nova/images/eclipse.png";
+  private $OGImage = "https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse.png";
 
   /**
    * Doctype
+   *
    * @var string
    */
   private $doctype = '';
 
   /**
    * Google analytics id code
+   *
    * @var string
    */
   private $projectGoogleAnalyticsCode = "";
 
   /**
    * Jquery Version
+   *
    * @var string
    */
   private $jQueryVersion = FALSE;
 
   /**
    * Twitter script flag
+   *
    * @var bool
    */
   private $twitterScriptInserted = FALSE;
-
 
   /**
    * Variables to customize solstice
@@ -191,19 +214,21 @@ class App {
 
   /**
    * Database config and handle cache
+   *
    * @var unknown
    */
   private $databases;
 
   /**
    * "Deprecated" flag
+   *
    * @var bool
    */
   private $OutDated = FALSE;
 
-
   /**
-   * "Deprecated"  message
+   * "Deprecated" message
+   *
    * @var string
    */
   private $OutDatedMsg = "";
@@ -226,15 +251,17 @@ class App {
 
   /**
    * Arbitrary storage hash
+   *
    * @var unknown
    */
   private $hash;
 
   /**
    * SQL Backtrace storage
+   *
    * @var unknown
    */
-  public $query_btrace;
+  public $query_btrace = array();
 
   /**
    * Messages variable
@@ -243,31 +270,13 @@ class App {
 
   // Default constructor
   function App() {
-    // Set value for WWW_PREFIX
-    $valid_domains = array(
-      'www.eclipse.org',
-      'eclipse.org',
-      'staging.eclipse.org',
-      'eclipse.local',
-      'www.eclipse.local'
-    );
-
-    $http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
-    // Force http://www.eclipse.org if the serve_name is not whitelisted.
-    if (in_array($_SERVER['SERVER_NAME'], $valid_domains)) {
-      $this->WWW_PREFIX = $http_protocol;
-      $this->WWW_PREFIX .= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
-    }
-    else {
-      $this->WWW_PREFIX = $http_protocol . 'www.eclipse.org';
-    }
 
     $this->databases = array();
 
     // Figure out if we're in devmode by whether the classes are installed or
     // not
     if (!file_exists($this->DB_CLASS_PATH)) {
-      $this->devmode = true;
+      $this->devmode = TRUE;
     }
 
     // Configure databases (not connected)
@@ -292,9 +301,6 @@ class App {
           app_config($this);
         }
     }
-
-    // Initialize backtrace storage
-    $this->query_btrace = array();
 
     // Set server timezone
     date_default_timezone_set("America/Montreal");
@@ -358,11 +364,11 @@ class App {
    * This function sets System Messages
    *
    * @param $name string
-   *  containing the name of the message
+   *        containing the name of the message
    * @param $msg string
-   *  containing the message itself
+   *        containing the message itself
    * @param $type string
-   *  containing the type of the message
+   *        containing the type of the message
    *
    */
   public function setSystemMessage($name, $msg, $type) {
@@ -525,15 +531,8 @@ class App {
   }
 
   /**
-   * Get $DEFAULT_ROW_HEIGHT
-   * @return number
-   */
-  function getDefaultRowHeight() {
-    return $this->DEFAULT_ROW_HEIGHT;
-  }
-
-  /**
    * Get $DB_READ_ONLY
+   *
    * @return boolean
    */
   function getDBReadOnly() {
@@ -547,6 +546,15 @@ class App {
    */
   function sendXMLHeader() {
     header("Content-type: text/xml");
+  }
+
+  /**
+   * Get $DEFAULT_ROW_HEIGHT
+   *
+   * @return number
+   */
+  function getDefaultRowHeight() {
+    return $this->DEFAULT_ROW_HEIGHT;
   }
 
   /**
@@ -578,14 +586,34 @@ class App {
 
   /**
    * Get $WWW_PREFIX
+   *
    * @return string|unknown
    */
   function getWWWPrefix() {
+    // Set value for WWW_PREFIX
+    if (empty($this->WWW_PREFIX)) {
+      $valid_domains = array(
+        'www.eclipse.org',
+        'eclipse.org',
+        'staging.eclipse.org',
+        'eclipse.local',
+        'www.eclipse.local'
+      );
+      $http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
+      // Force http://www.eclipse.org if the serve_name is not whitelisted.
+      if (in_array($_SERVER['SERVER_NAME'], $valid_domains)) {
+        $this->WWW_PREFIX = $http_protocol;
+        $this->WWW_PREFIX .= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
+      }
+      else {
+        $this->WWW_PREFIX = $http_protocol . 'www.eclipse.org';
+      }
+    }
     return $this->WWW_PREFIX;
   }
 
   /**
-   * Get HTT PPrefix
+   * Get HTTP Prefix
    * Return https if $_SERVER['HTTPS'] exist otherwise this function
    * returns http.
    *
@@ -604,9 +632,10 @@ class App {
 
   /**
    * Get the language of the User
-   * @return: String
-   * Check the browser's default language and return
-   * 2006-06-28: droy
+   *
+   * @return : String
+   *         Check the browser's default language and return
+   *         2006-06-28: droy
    */
   function getUserLanguage() {
 
@@ -635,9 +664,9 @@ class App {
    * Return the content/xx_filename.php filename,
    * according to availability of the file
    *
-   * @return: String
+   * @return : String
    *
-   * 2006-06-28: droy
+   *         2006-06-28: droy
    */
   function getLocalizedContentFilename() {
     $language = $this->getUserLanguage();
@@ -958,6 +987,21 @@ class App {
    * @param unknown $Breadcrumb
    */
   function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL) {
+    if ($theme === "Nova") {
+      return $this->_generateNovaPage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL);
+    }
+    $Theme = $this->getThemeClass($theme);
+    $Theme->setBreadcrumb($Breadcrumb);
+    $Theme->setNav($Nav);
+    $Theme->setMenu($Menu);
+    $Theme->setPageAuthor($pageAuthor);
+    $Theme->setPageKeywords($pageKeywords);
+    $Theme->setPageTitle($pageTitle);
+    $Theme->setHtml($html);
+    $Theme->generatePage();
+  }
+
+  private function _generateNovaPage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL) {
     // Strip html tags from the page title.
     $pageTitle = strip_tags($pageTitle);
 
@@ -965,10 +1009,6 @@ class App {
     if ($Breadcrumb == NULL || !is_object($Breadcrumb)) {
       require_once ('breadcrumbs.class.php');
       $Breadcrumb = new Breadcrumb();
-    }
-
-    if (!$this->isValidTheme($theme)) {
-      $theme = "solstice";
     }
 
     if ($pageTitle == "") {
@@ -1026,6 +1066,7 @@ EOHTML;
 
   /**
    * Add addionnal elements in <head>
+   *
    * @param unknown $string
    */
   function AddExtraHtmlHeader($string) {
@@ -1043,6 +1084,7 @@ EOHTML;
 
   /**
    * Get Theme URL
+   *
    * @param unknown $_theme
    * @return string
    */
@@ -1073,7 +1115,7 @@ EOHTML;
 
     require_once (realpath(dirname(__FILE__) . '/../classes/themes/' . $_theme . '.class.php'));
     $theme = ucfirst($_theme);
-    return new $theme();
+    return new $theme($this);
   }
 
   /**
@@ -1082,12 +1124,11 @@ EOHTML;
    * @author droy
    * @since version - Oct 19, 2006
    * @param String $_param_name
-   *  name of the HTTP GET/POST parameter
+   *        name of the HTTP GET/POST parameter
    * @param string $_method
-   *  GET or POST, or the empty string for POST,GET order
-   * @return string
-   *  HTTP GET/POST parameter value, or the empty string
-   *  Fetch the HTTP parameter
+   *        GET or POST, or the empty string for POST,GET order
+   * @return string HTTP GET/POST parameter value, or the empty string
+   *         Fetch the HTTP parameter
    */
   function getHTTPParameter($_param_name, $_method = "") {
 
@@ -1278,7 +1319,8 @@ EOHTML;
    * Returns true if supplied theme is in the array of valid themes
    *
    * 2005-12-07: droy
-   * @return: bool
+   *
+   * @return : bool
    */
   function isValidTheme($_theme) {
     return in_array($_theme, $this->valid_themes);
@@ -1297,6 +1339,7 @@ EOHTML;
 
   /**
    * Get Facebook like button
+   *
    * @param
    *        layout string Button layout (standard, condensed)
    * @param
@@ -1332,8 +1375,7 @@ EOHTML;
    *
    * @author droy
    * @since 2011-05-18
-   * @return string
-   *  URL of the current PHP page
+   * @return string URL of the current PHP page
    */
   function getCurrentURL() {
     return "http" . ((empty($_SERVER['HTTPS']) && $_SERVER['SERVER_PORT'] != 443) ? "" : "s") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -1461,8 +1503,8 @@ EOHTML;
    * @since Jun 7, 2007
    *
    * @param string $_file
-   *  File name relative to http://download.eclipse.org (the
-   *  &file= parameter used)
+   *        File name relative to http://download.eclipse.org (the
+   *        &file= parameter used)
    *
    * @return string Returns a string in the format of XX MB
    */
@@ -1481,8 +1523,8 @@ EOHTML;
    * @author droy
    * @since Jun 7, 2007
    *
-   * @param  string $required
-   *  optional' or 'required'
+   * @param string $required
+   *        optional' or 'required'
    *
    * @return Session object
    */
@@ -1519,10 +1561,12 @@ EOHTML;
   /**
    * Sanitize incoming value to prevent SQL injections
    *
-   * @param string
-   *  Value to sanitize
-   * @param dbh database
-   *  Resource to use
+   * @param
+   *        string
+   *        Value to sanitize
+   * @param
+   *        dbh database
+   *        Resource to use
    *
    * @return string santized string
    */
@@ -1590,6 +1634,7 @@ EOHTML;
 
   /**
    * Set Doctype
+   *
    * @param unknown $doctype
    */
   function setDoctype($doctype) {
@@ -1605,6 +1650,7 @@ EOHTML;
 
   /**
    * Get HTML document doctype
+   *
    * @return string
    */
   function getDoctype() {
@@ -1677,7 +1723,7 @@ EOHTML;
    * Function to set the OutDated flag
    *
    * @param string $when.
-   *   Accepted formats 'YYYY-MM-DD' or 'now'.
+   *        Accepted formats 'YYYY-MM-DD' or 'now'.
    *
    * @return boolean
    */
@@ -1773,6 +1819,7 @@ EOHTML;
 
   /**
    * Get Twitter Follow widget
+   *
    * @param unknown $_twitterhandle
    */
   function getTwitterFollowWidget($_twitterhandle) {
@@ -1826,6 +1873,7 @@ EOHTML;
 
   /**
    * Set Promotion Path
+   *
    * @param unknown $_path
    */
   function setPromotionPath($_path) {
@@ -1932,7 +1980,6 @@ EOHTML;
     $this->set("conferences_db_class", 'DBConnectionConferencesRW');
     $this->set("marketplace_db_classfile_ro", 'dbconnection_marketplace_ro.class.php');
     $this->set("marketplace_db_class_ro", 'DBConnectionMarket');
-    // -----------------------------------------------------------------------------------------------------
   }
 
   /**
@@ -1954,7 +2001,8 @@ EOHTML;
     else {
       // For PRODUCTION machines
       $class = null;
-      // Try to use read-only when possible. Blank queries occur when we call sqlSanitize
+      // Try to use read-only when possible. Blank queries occur when we call
+      // sqlSanitize
       if ((strtoupper(substr(trim($query), 0, 6)) == 'SELECT' && strtoupper(substr(trim($query), 0, 23)) != "SELECT /* USE MASTER */") || $query == "") {
 
         $classfile = $this->get($key . '_db_classfile_ro');

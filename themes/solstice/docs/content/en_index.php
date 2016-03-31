@@ -83,22 +83,22 @@ $App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $
       <div class="col-md-8">
         <h4>Default layout</h4>
       <ul>
-        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/header.php">Header</a></li>
-        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/footer.php">Footer</a></li>
-        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/">Full page</a></li>
+        <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=default-header">Header</a></li>
+        <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=default-footer">Footer</a></li>
+        <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=default">Full page</a></li>
       </ul>
     </div>
     <div class="col-md-8">
       <h4>Thin layout <small>(<a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=437384">Bug #437384</a>)</small></h4>
       <ul>
-        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/thin/header.php">Thin header</a></li>
-        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/thin/">Full page</a></li>
+        <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=thin-header">Thin header</a></li>
+        <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=thin">Full page</a></li>
       </ul>
     </div>
     <div class="col-md-8">
       <h4 id="tpl-barebone">Barebone layout*</h4>
       <ul>
-        <li><a href="/eclipse.org-common/themes/<?php print $t;?>/html_template/barebone/index.php">Barebone header</a></li>
+        <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=barebone">Barebone header</a></li>
       </ul>
     </div>
   </div>
