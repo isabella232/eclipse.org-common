@@ -245,7 +245,7 @@ class BaseTheme {
     $this->setAttributes('main', 'main', 'role');
     $this->setAttributes('main', 'no-promo');
     $this->setAttributes('main-container', 'novaContent');
-
+    $this->setAttributes('main-container', 'novaContent', 'id');
 
     // Set attributes on footer
     $this->setAttributes('footer1', 'footer-eclipse-foundation', 'id');
