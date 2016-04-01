@@ -791,7 +791,7 @@ EOHTML;
       if ($App->PageRSSTitle != "") {
         $App->PageRSSTitle = "Eclipse RSS Feed";
       }
-      $return .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml"/>';
+      $return .= '<link rel="alternate" title="' . $App->PageRSSTitle . '" href="' . $App->PageRSS . '" type="application/rss+xml"/>';
     }
 
     return $return;
