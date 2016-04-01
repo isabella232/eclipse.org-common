@@ -794,7 +794,7 @@ EOHTML;
       $return .= '<link rel="alternate" title="' . $App->PageRSSTitle . '" href="' . $App->PageRSS . '" type="application/rss+xml"/>';
     }
 
-    return $return;
+    return $return. PHP_EOL;
   }
 
   /**
