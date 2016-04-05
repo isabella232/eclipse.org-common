@@ -45,6 +45,13 @@ class RestClient extends EclipseEnv {
    */
   protected $proxy = '';
 
+  /**
+   * Result of the last request made
+   *
+   * @var unknown
+   */
+  protected $result = NULL;
+
   function __construct(App $App = NULL) {
     parent::__construct($App);
     // Default headers
@@ -148,6 +155,22 @@ class RestClient extends EclipseEnv {
   }
 
   /**
+   * Shortcut for the decoded value of the request body
+   *
+   * The server must return data in JSON.
+   */
+  public function getRequestBody($json = TRUE) {
+    $return = new stdClass();
+    if (isset($this->result->body) && !empty($this->result->body)) {
+      $return = $this->result->body;
+      if ($json) {
+        $return = json_decode(stripslashes($this->result->body));
+      }
+    }
+    return $return;
+  }
+
+  /**
    * Get $cookie
    * Convert $cookie array into a string
    *
@@ -222,7 +245,7 @@ class RestClient extends EclipseEnv {
    * @return Response $return
    */
   protected function curl_exec($path = '', $options = array()) {
-    $return = new stdClass();
+    $this->result = new stdClass();
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_HEADER, TRUE);
     curl_setopt($ch, CURLOPT_FRESH_CONNECT, TRUE);
@@ -252,37 +275,37 @@ class RestClient extends EclipseEnv {
     curl_setopt_array($ch, $options);
     $result = curl_exec($ch);
     if (!$result) {
-      $return->error = curl_error($ch);
-      $return->code = 9990;
+      $this->result->error = curl_error($ch);
+      $this->result->code = 9990;
       curl_close($ch);
-      return $return;
+      return $this->result;
     }
-    $return->options = $options;
-    $return->request = curl_getinfo($ch);
-    $return->body = substr($result, $return->request['header_size']);
+    $this->result->options = $options;
+    $this->result->request = curl_getinfo($ch);
+    $this->result->body = substr($result, $this->result->request['header_size']);
     curl_close($ch);
 
-    $return->headers = array();
+    $this->result->headers = array();
     $header_text = substr($result, 0, strpos($result, "\r\n\r\n"));
     foreach (explode("\r\n", $header_text) as $i => $line) {
       if ($i === 0) {
-        $return->headers['http_code'] = $line;
+        $this->result->headers['http_code'] = $line;
       }
       else {
         list ($key, $value) = explode(': ', $line);
-        $return->headers[$key] = $value;
+        $this->result->headers[$key] = $value;
       }
     }
 
-    $response_array = explode(' ', trim($return->headers['http_code']), 3);
+    $response_array = explode(' ', trim($this->result->headers['http_code']), 3);
 
-    $return->status_message = '';
-    $return->protocol = $response_array[0];
-    $return->code = $return->request['http_code'];
+    $this->result->status_message = '';
+    $this->result->protocol = $response_array[0];
+    $this->result->code = $this->result->request['http_code'];
     if (isset($response_array[2])) {
-      $return->status_message = $response_array[2];
+      $this->result->status_message = $response_array[2];
     }
-    return $return;
+    return $this->result;
   }
 
   /**
