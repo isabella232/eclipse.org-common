@@ -18,7 +18,7 @@
     <?php print $this->getDeprecatedMessage();?>
     <?php print $this->getSystemMessages();?>
     <?php print $this->getThemeVariables('main_container_html');?>
-    <?php print $this->getHtml();?>
     <?php print $this->getHeaderNav();?>
+    <?php print $this->getHtml();?>
   </div>
 </main> <!-- /#main-content-container-row -->
