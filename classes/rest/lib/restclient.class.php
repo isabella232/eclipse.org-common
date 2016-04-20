@@ -258,8 +258,8 @@ class RestClient extends EclipseEnv {
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 
     //proxy configuration
-    curl_setopt($ch, CURLOPT_PROXY, $this->_get_proxy());
-    curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, 1);
+    //curl_setopt($ch, CURLOPT_PROXY, $this->_get_proxy());
+    //curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, 1);
     if ($this->_get_prefix_domain() === 'www.eclipse.local') {
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
       curl_setopt($ch, CURLOPT_PROXY, '');
