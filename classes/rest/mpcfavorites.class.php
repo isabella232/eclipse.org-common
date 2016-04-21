@@ -107,6 +107,7 @@ class MpcFavorites extends EclipseUSSBlob{
       $data[] = (string)trim($nid);
     }
 
+    $data = array_filter($data);
     // remove duplicates
     $data = array_unique($data);
     // create string
@@ -165,6 +166,7 @@ class MpcFavorites extends EclipseUSSBlob{
     }
 
     // remove duplicates.
+    $new_data = array_filter($new_data);
     $new_data = array_unique($new_data);
     // create string.
     $data_str = implode(',', $new_data);
