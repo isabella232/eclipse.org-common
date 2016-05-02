@@ -125,7 +125,7 @@
     </div>
 
     <div class="form-group">
-      <label for="edit-address">Mailing Address <span
+      <label for="edit-address">Postal Address <span
         class="form-required" title="This field is required.">*</span></label>
       <div class="form-textarea-wrapper resizable">
         <textarea class="form-control form-textarea required"
