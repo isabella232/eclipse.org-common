@@ -660,7 +660,7 @@ EOHTML;
     $App = $this->_getApp();
     if ($App->getOutDated()) {
       $classes[] = "deprecated";
-      $deprecated = '<div class="col-md-24" style="padding-left:0;"><div class="alert alert-danger" role="alert">';
+      $deprecated = '<div class="col-md-24"><div class="alert alert-danger" role="alert">';
       $deprecated .= $App->getOutDatedMessage();
       $deprecated .= '</div></div>';
     }
