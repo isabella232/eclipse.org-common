@@ -284,4 +284,28 @@ class EclipseUSSBlob extends RestClient{
     }
     return FALSE;
   }
+
+  protected function _errorConflict(){
+    return array(
+      'code' => '409',
+      'status_message' => 'Conflict',
+      'body' => NULL,
+    );
+  }
+
+  protected function _errorNotLoggedIn() {
+    return array(
+        'code' => '403',
+        'status_message' => 'Unable to login',
+        'body' => NULL,
+      );
+  }
+
+  protected function _errorBadRequest($fieldname = "", $type = "missing") {
+    return array(
+        'code' => '400',
+        'status_message' => ucfirst($type) . ' (' . $fieldname . ')',
+        'body' => NULL,
+      );
+  }
 }
