@@ -56,8 +56,8 @@ EOHTML;
     return <<<EOHTML
     <h2 class="section-title">Legal</h2>
     <ul class="nav">
-      <li><a href="{$this->getBaseUrl()}legal/privacy.php">Privacy Policy</a></li>
-      <li><a href="{$this->getBaseUrl()}legal/termsofuse.php">Terms of Use</a></li>
+      <li><a href="{$this->getBaseUrl()}legal/privacy.php">Privacy Policy <sup class="orange">Updated</sup></a></li>
+      <li><a href="{$this->getBaseUrl()}legal/termsofuse.php">Terms of Use <sup class="orange">Updated</sup></a></li>
       <li><a href="{$this->getBaseUrl()}legal/copyright.php">Copyright Agent</a></li>
       <li><a href="{$this->getBaseUrl()}org/documents/epl-v10.php">Eclipse Public License </a></li>
       <li><a href="{$this->getBaseUrl()}legal/">Legal Resources </a></li>
