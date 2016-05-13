@@ -36,7 +36,5 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?php print $this->getThemeUrl('solstice')?>public/javascript/main.min.js"></script>
 <?php print $this->getExtraJsFooter();?>
-<?php print $google_javascript;?>
-
 </body>
 </html>
