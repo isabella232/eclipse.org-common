@@ -10,7 +10,10 @@
  *    Denis Roy (Eclipse Foundation) - initial API and implementation
  *    Christopher Guindon (Eclipse Foundation)  - created getMenuArray()
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/menuitem.class.php");
+if (!class_exists('MenuItem')) {
+  require_once("menuitem.class.php");
+}
+
 class Menu {
 
 	#*****************************************************************************

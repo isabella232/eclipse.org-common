@@ -9,9 +9,9 @@
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/link.class.php");
+require_once("link.class.php");
 
-class MenuItem 
+class MenuItem
 	extends Link {
 
 	#*****************************************************************************
@@ -24,8 +24,8 @@ class MenuItem
 	#
 	# HISTORY:
 	#
-	#*****************************************************************************	
-	
+	#*****************************************************************************
+
 
 }
 ?>
