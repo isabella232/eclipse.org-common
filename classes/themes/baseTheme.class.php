@@ -274,7 +274,9 @@ class BaseTheme {
    */
   public function setApp($App = NULL) {
     if (!$App instanceof App) {
-      require_once (realpath(dirname(__FILE__) . '/../../system/app.class.php'));
+      if (!class_exists('App')) {
+        require_once(realpath(dirname(__FILE__) . '/../../system/app.class.php'));
+      }
       $App = new App();
     }
     $this->_hookSetApp($App);
@@ -534,7 +536,9 @@ EOHTML;
   public function setBreadcrumb($Breadcrumb = NULL) {
     if (!$Breadcrumb instanceof Breadcrumb) {
       $App = $this->_getApp();
-      require_once ($App->getBasePath() . '/system/breadcrumbs.class.php');
+      if (!class_exists('Breadcrumb')) {
+        require_once($App->getBasePath() . '/system/breadcrumbs.class.php');
+      }
       $Breadcrumb = new Breadcrumb();
     }
     $this->Breadcrumb = $Breadcrumb;
@@ -1200,7 +1204,9 @@ EOHTML;
   public function setMenu($Menu = NULL) {
     if (!$Menu instanceof Menu) {
       $App = $this->_getApp();
-      require_once ($App->getBasePath() . '/system/menu.class.php');
+      if (!class_exists('Menu')) {
+        require_once($App->getBasePath() . '/system/menu.class.php');
+      }
       $Menu = new Menu();
     }
     $this->Menu = $Menu;
@@ -1245,7 +1251,9 @@ EOHTML;
   protected function _getMenuDefault() {
     $base_url = $this->getBaseUrl();
     $App = $this->_getApp();
-    require_once ($App->getBasePath() . '/system/menu.class.php');
+    if (!class_exists('Menu')) {
+      require_once ($App->getBasePath() . '/system/menu.class.php');
+    }
     $Menu = new Menu();
     $Menu->setMenuItemList(array());
     $Menu->addMenuItem("Download", $base_url . "downloads/", "_self");
@@ -1399,6 +1407,7 @@ EOHTML;
    */
   public function getNav() {
     // Nav menu
+    $base_url = $this->getBaseUrl();
     $variables = array(
       '#items' => array(),
       'link_count' => 0,
@@ -1406,7 +1415,6 @@ EOHTML;
       'html_block' => ''
     );
     if ($this->Nav instanceof Nav) {
-      $base_url = $this->getBaseUrl();
       // add faux class to #novaContent
       $this->setAttributes('main_container_classes', 'background-image-none');
       $variables['link_count'] = $this->Nav->getLinkCount();
