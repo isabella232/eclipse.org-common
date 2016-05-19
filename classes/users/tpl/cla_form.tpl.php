@@ -96,7 +96,7 @@
     <div class="form-group">
       <label for="edit-legal-name">Legal Name <span class="form-required"
         title="This field is required.">*</span></label>
-      <input readonly
+      <input
         class="form-control form-text" type="text"
         id="edit-legal-name" name="legal_name" value="<?php print $this->Friend->getFirstName() . ' ' . $this->Friend->getLastName(); ?>"
         size="60" maxlength="128" />
