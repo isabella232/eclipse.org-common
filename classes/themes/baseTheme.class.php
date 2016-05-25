@@ -539,7 +539,7 @@ EOHTML;
       if (!class_exists('Breadcrumb')) {
         require_once($App->getBasePath() . '/system/breadcrumbs.class.php');
       }
-      $Breadcrumb = new Breadcrumb();
+      $Breadcrumb = new Breadcrumb($this->getPageTitle());
     }
     $this->Breadcrumb = $Breadcrumb;
   }

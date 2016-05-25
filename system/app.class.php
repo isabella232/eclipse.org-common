@@ -955,13 +955,13 @@ class App {
       return $this->_generateNovaPage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL);
     }
     $Theme = $this->getThemeClass($theme);
-    $Theme->setBreadcrumb($Breadcrumb);
     $Theme->setNav($Nav);
     $Theme->setMenu($Menu);
     $Theme->setPageAuthor($pageAuthor);
     $Theme->setPageKeywords($pageKeywords);
     $Theme->setPageTitle($pageTitle);
     $Theme->setHtml($html);
+    $Theme->setBreadcrumb($Breadcrumb);
     $Theme->generatePage();
   }
 
@@ -1066,7 +1066,7 @@ EOHTML;
    *
    * @return BaseTheme
    */
-  function getThemeClass($_theme) {
+  function getThemeClass($_theme = "solstice") {
     $themes = array(
       'locationtech',
       'solstice',

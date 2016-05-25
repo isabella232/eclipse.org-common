@@ -277,6 +277,7 @@ class RestClient extends EclipseEnv {
     if (!$result) {
       $this->result->error = curl_error($ch);
       $this->result->code = 9990;
+      $this->result->request_error = $result;
       curl_close($ch);
       return $this->result;
     }
