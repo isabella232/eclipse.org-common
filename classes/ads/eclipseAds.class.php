@@ -72,7 +72,7 @@ class EclipseAds{
    * The ad builder, this funciton is ussually overwritten in a parent class
    * @return string
    */
-  protected function _build() {
+  protected function _build($layout = "", $type = "") {
     return "";
   }
 
@@ -120,22 +120,25 @@ class EclipseAds{
     foreach ($this->ads as $ad) {
       $this->total_weight = $ad->getWeight() + $this->total_weight;
     }
-
     return $this->total_weight;
   }
 
   /**
    * Return HTML of the add and count impression if possible
    */
-  public function output() {
+  public function output($layout = "") {
     $this->_choseAd();
+
     if (!empty($this->ad)) {
+      if ($this->ad->getType() == "empty") {
+        return "";
+      }
       $campaign = $this->ad->getCampaign();
       if (!empty($this->ad) && $campaign != "") {
         $CampaignImpression = new CampaignImpression($campaign, $this->source, $this->remote_addr);
         $CampaignImpression->recordImpression();
       }
-      $this->_build();
+      $this->_build($layout, $this->ad->getType());
     }
     print $this->output;
   }

@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************************
- * Copyright (c) 2015 Eclipse Foundation and others.
+ * Copyright (c) 2015, 2016 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
+ *    Eric Poirier (Eclipse Foundation)
  *******************************************************************************/
 
 require_once("campaignImpression.class.php");
@@ -65,6 +66,160 @@ class Ad {
    * @var int
    */
   private $weight = 0;
+
+  /**
+   * The Script tag URL
+   * (This is mostly for IBM ads)
+   * @var string
+   */
+  private $script_url = "";
+
+  /**
+   * The iFrame tag URL
+   * (This is mostly for IBM ads)
+   * @var string
+   */
+  private $iframe_url = "";
+
+  /**
+   * The image within the iframe
+   * (This is mostly for IBM ads)
+   * @var string
+   */
+  private $iframe_image = "";
+
+  /**
+   * The type of the ad.
+   * @var string
+   */
+  private $type = "";
+
+  /**
+   * The Format of the Ad
+   * Image is the default format
+   * But can be changed to HTML
+   * @var string
+   */
+  private $format = "image";
+
+  /**
+   * The HTML of an ad
+   * @var string
+   */
+  private $html = "";
+
+  /**
+   * Get the HTML of an Ad
+   *
+   * @return string
+   */
+  public function getHtml() {
+    return $this->html;
+  }
+
+  /**
+   * Set the HTML of an Ad
+   *
+   * @param $html - string
+   */
+  public function setHtml($html = "") {
+    ob_start();
+    include $html;
+    $this->html = ob_get_clean();
+  }
+
+  /**
+   * Get the Script URL
+   *
+   * @return string
+   */
+  public function getScriptUrl() {
+    return $this->script_url;
+  }
+
+  /**
+   * Set the Script URL
+   *
+   * @param $url - string
+   */
+  public function setScriptUrl($url = "") {
+    $this->script_url = $url;
+  }
+
+  /**
+   * Get the IFrame URL
+   *
+   * @return string
+   */
+  public function getIframeUrl() {
+    return $this->iframe_url;
+  }
+
+  /**
+   * Set the Ifram URL
+   *
+   * @param $url - string
+   */
+  public function setIframeUrl($url = "") {
+    $this->iframe_url = $url;
+  }
+
+  /**
+   * Get the IFrame image
+   *
+   * @return string
+   * */
+  public function getIframeImage() {
+    return $this->iframe_image;
+  }
+
+  /**
+   * Set the IFrame image
+   *
+   * @param $url - string
+   */
+  public function setIframeImage($image = "") {
+    $this->iframe_image = $image;
+  }
+
+  /**
+   * Get the Ad's Format
+   *
+   * @return string
+   * */
+  public function getFormat() {
+    return $this->iframe_image;
+  }
+
+  /**
+   * Set the Ad's Format
+   * For example, the format could be "image", "html"
+   *
+   * @param $format - string
+   */
+  public function setFormat($format = "image") {
+    $this->format = $format;
+  }
+
+  /**
+   * Get the ad's type
+   *
+   * @return string
+   */
+  public function getType() {
+    return $this->type;
+  }
+
+  /**
+   * Set the Ad's type
+   *
+   * Image or html
+   *
+   * @param $type - string
+   */
+  public function setType($type = "") {
+    $this->type = $type;
+  }
 
 
   /**
@@ -188,7 +343,14 @@ class Ad {
    * @return boolean
    */
   public function validAd() {
-    if ($this->url == "" || $this->title  == "" || $this->body  == "" || $this->image  == "") {
+
+    // If we're dealing with an HTML Ad
+    if ($this->format == "html" && $this->html == "") {
+      return FALSE;
+    }
+
+    // If we're dealing with an Image Ad
+    if ($this->format == "image" && ($this->url == "" || $this->title  == "" || $this->body  == "" || $this->image  == "")) {
       return FALSE;
     }
     return TRUE;

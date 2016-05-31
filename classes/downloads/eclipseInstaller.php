@@ -8,12 +8,15 @@
  *
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
+ *    Eric Poirier (Eclipse Foundation)
  *******************************************************************************/
 
 //if name of the file requested is the same as the current file, the script will exit directly.
 if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 
-class EclipseInstaller {
+require_once(dirname(__FILE__) . "/../../system/eclipseenv.class.php");
+
+class EclipseInstaller extends EclipseEnv {
 
   private $platform = array();
 
@@ -21,10 +24,15 @@ class EclipseInstaller {
 
   private $json_data = array();
 
+  private $layout = "layout_b";
+
+  private $download_link = array();
+
   /**
    * Constructor
    */
   function EclipseInstaller($release = NULL) {
+    parent::__construct();
     $this->_addPlaform('Mac OS X');
     $this->_addPlaform('Windows');
     $this->_addPlaform('Linux');
@@ -45,11 +53,22 @@ class EclipseInstaller {
    * @return boolean
    */
   public function addlink($platform = '', $url = '', $text = '') {
-   if(!isset($this->platform[$this->_removeSpaces($platform)])) {
-     return FALSE;
-   }
-   $count = count($this->platform[$this->_removeSpaces($platform)]['links']);
-   $this->platform[$this->_removeSpaces($platform)]['links'][] = '<li class="download-link-' . $count . '"><a href="' . $url .'" title="' . $text . ' Download">' . $text .'</a></li>' . PHP_EOL;
+
+    if(!isset($this->platform[$this->_removeSpaces($platform)])) {
+      return FALSE;
+    }
+    $link_classes = "";
+    $count = count($this->platform[$this->_removeSpaces($platform)]['links']);
+    $platform_array = array(
+      'platform' => $platform,
+      'count' =>$count,
+      'link_classes' => "btn btn-warning",
+      'url' => $url,
+      'text' => $text,
+      'text_prefix' => 'Download',
+    );
+
+    $this->setPlatform($platform_array);
   }
 
   /**
@@ -69,7 +88,7 @@ class EclipseInstaller {
     if ($os_client == "macosx" || $os_client == "cocoa64" || $os_client == "carbon") {
       $display = "macosx";
     }
-    
+
     // Check if the OS has been selected manually
     if (isset($_GET['osType'])) {
       $display = $_GET['osType'];
@@ -78,20 +97,93 @@ class EclipseInstaller {
       }
     }
 
-    $platforms = $this->platform;
-    $download_link = array();
-    foreach ($platforms as $platform) {
+    $platforms = $this->getPlatform();
+    $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+    $layout = $this->getInstallerLayout();
+
+    foreach ($platforms as $platform_key => &$platform) {
+      foreach ($platform['links'] as $link_key => $link) {
+
+        // Remove every 32 bit links for the Layout A
+        if ($link['text'] == '32 bit' && $layout == 'layout_a') {
+          unset($platforms[$platform_key]['links'][$link_key]);
+        }
+      }
       if ($display == strtolower(str_replace(' ', '', $platform['label']))) {
-        $download_link = $platform;
+        $this->setDownloadLink($platform);
       }
     }
     $download_count = $this->total_download_count;
     if (!empty($platforms)) {
+      switch ($layout) {
+        case 'layout_a':
+          $tpl = "view/eclipseInstallerLayoutA.php";
+          break;
+        case 'layout_b':
+          $tpl = "view/eclipseInstallerLayoutB.php";
+          break;
+      }
       ob_start();
-      include("view/eclipseInstaller.php");
+      include($tpl);
       $html = ob_get_clean();
     }
     return $html;
+  }
+
+  /**
+   * Returns the layout for the Installer
+   *
+   * @return string
+   */
+  public function getInstallerLayout() {
+    return $this->layout;
+  }
+
+  /**
+   * Sets a specified layout for the Installer
+   *
+   * @param string $layout
+   */
+  public function setInstallerLayout($layout = "") {
+    if (filter_var($layout, FILTER_SANITIZE_STRING)) {
+      $this->layout = $layout;
+    }
+  }
+
+  /**
+   * Returns the download link
+   *
+   * @return array
+   */
+  public function getDownloadLink() {
+    return $this->download_link;
+  }
+
+  /**
+   * Set the download link
+   *
+   * @param array $link
+   */
+  public function setDownloadLink($link = array()) {
+    $this->download_link = $link;
+  }
+
+  /**
+   * Return a platform
+   *
+   * @return array
+   */
+  public function getPlatform() {
+    return $this->platform;
+  }
+
+  /**
+   * Sets a specified platform
+   *
+   * @param array $platform
+   */
+  public function setPlatform($platform = array()) {
+    $this->platform[$this->_removeSpaces($platform['platform'])]['links'][] = $platform;
   }
 
   /**
@@ -99,25 +191,26 @@ class EclipseInstaller {
    */
   private function _addLinksFromJson() {
     $data = $this->json_data;
+    $eclipse_env = $this->getEclipseEnv();
 
     if (!empty($data['files']['mac64'])) {
-      $this->addlink('Mac OS X', $data['files']['mac64']['url'], '64 bit');
+      $this->addlink('Mac OS X', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['mac64']['url']), "64 bit");
     }
 
     if (!empty($data['files']['win32'])) {
-      $this->addlink('Windows', $data['files']['win32']['url'], '32 bit');
+      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win32']['url']), '32 bit');
     }
 
     if (!empty($data['files']['win64'])) {
-      $this->addlink('Windows', $data['files']['win64']['url'], '64 bit');
+      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win64']['url']), '64 bit');
     }
 
     if (!empty($data['files']['linux32'])) {
-      $this->addlink('Linux', $data['files']['linux32']['url'], '32 bit');
+      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux32']['url']), '32 bit');
     }
 
     if (!empty($data['files']['linux64'])) {
-      $this->addlink('Linux', $data['files']['linux64']['url'], '64 bit');
+      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux64']['url']), "64 bit");
     }
   }
 

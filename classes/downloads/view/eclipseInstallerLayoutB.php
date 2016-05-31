@@ -11,6 +11,7 @@
  *******************************************************************************/
 //if name of the file requested is the same as the current file, the script will exit directly.
 if(basename(__FILE__) == basename($_SERVER['PHP_SELF']) || empty($platforms)){exit();}
+$download_links = $this->getDownloadLink();
 ?>
 <div class="installer">
   <div class="row row-eq-height">
@@ -38,8 +39,10 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF']) || empty($platforms)){ex
         <li class="title"><?php print $download_link['label']; ?></li>
         <li>
           <ul class="list-inline links">
-            <?php foreach ($download_link['links'] as $link): ?>
-              <?php print $link; ?>
+            <?php foreach ($download_links['links'] as $link): ?>
+              <li class="download-link-<?php print $link['count']; ?>">
+                <a href="<?php print $link['url']; ?>" title="<?php print $link['text']; ?> Download"><?php print $link['text']; ?></a>
+              </li>
             <?php endforeach; ?>
           </ul>
         </li>
