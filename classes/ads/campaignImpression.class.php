@@ -11,7 +11,7 @@
  *    Christopher Guindon (Eclipse Foundation)
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 /**
  * CampaignImpression

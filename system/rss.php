@@ -17,12 +17,12 @@
 # Author: 		Wayne Beaton
 # Date:			2006-02-02 (Happy Groundhog Day)
 #
-# Description: Use the rss_to_html($newsfile) function in this file to generate 
-# the html equivalent of the provided RSS file.  
+# Description: Use the rss_to_html($newsfile) function in this file to generate
+# the html equivalent of the provided RSS file.
 #
 #****************************************************************************
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/xml_sax_parsing.php");
+require_once("xml_sax_parsing.php");
 
 /*
  * This function parses the file with the provided name and
@@ -47,7 +47,7 @@ function & get_news($file_name) {
  * $rss_url - If provided, an "RSS" link will be rendered. When clicked
  *   the user will be sent to this URL. Use this to provide the user with
  *   a way to access the RSS file directly (so they can use it in their
- *   favourite news reader. Defaults to false meaning that no "RSS" link 
+ *   favourite news reader. Defaults to false meaning that no "RSS" link
  *   be rendered.
  *
  * $more_url - If provided, a "More" link will be rendered. When clicked
@@ -68,10 +68,10 @@ function & get_news($file_name) {
  * Examples
  *
  * $file_name = $_SERVER['DOCUMENT_ROOT'] . "/webtools/wtpnews.rss";
- * 
+ *
  * To get the HTML representation of the RSS file located at $file_name
  * with no links to the RSS file, or to more information, displaying a
- * long format (including the description):	
+ * long format (including the description):
  *
  * $news = rss_to_html($file_name);
  *
@@ -92,31 +92,31 @@ function & get_news($file_name) {
  *
  * $news = rss_to_html($file_name, '/webtools/wtpnews.rss', false, 'short', 7);
  */
- 
+
 function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long', $count=1000) {
 	$rss = get_news($file_name);
-	
+
 	if (!in_array($format, array ('short', 'long'))) {
 		$format = 'short';
 	}
-	
+
 	foreach ($rss->channel as $channel) {
 		$html = "<h3>";
-		
+
 		// Add the RSS image on the right
 		if ($rss_url) {
 			$html .= "<a href=\"$rss_url\"><img src=\"/images/rss2.gif\" align=\"right\" title=\"RSS Feed\" alt=\"[RSS]\" /></a>";
 		}
-		
-		// Add the title of the channel 
-		$html .= "$channel->title";	
+
+		// Add the title of the channel
+		$html .= "$channel->title";
 		// If we're displaying short format, provide a link to
 		// show news in long format.
 		if ($more_url)
 			$html .= "&nbsp;<a href=\"$more_url\"><img src=\"/images/more.gif\" title=\"More...\" alt=\"[More]\" /></a>";
 
 		$html .= "</h3>";
-		
+
 		$html .= "<ul class=\"midlist\">";
 
 		foreach ($channel->item as $item) {
@@ -125,7 +125,7 @@ function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long'
 			// The date is formatted day-month-year using numbers
 			// The &#8209 is a non-breaking en dash.
 			$html .= "<a href=\"$item->link\" target=\"_blank\">$item->title</a>";
-			
+
 			// If the pubDate was not specified correctly or was not
 			// specified at all, don't try to print it.
 			if ($item->pubDate > 0) {
@@ -133,11 +133,11 @@ function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long'
 				$date = str_replace(" ", "&nbsp;", $date);
 				$html .= " posted&nbsp;$date";
 			}
-			
+
 			if ($format == 'long') {
 				$html .= "<blockquote>$item->description</blockquote>";
 			}
-			
+
 			$html .= "</li>";
 			$count--;
 		}
@@ -158,11 +158,11 @@ function rss_to_html($file_name, $rss_url=false, $more_url=false, $format='long'
  */
 class Feed {
 	var $channel;
-	
+
 	function Feed() {
 		$this->channel = array();
 	}
-	
+
 	function add_channel(&$channel) {
 		array_push($this->channel, $channel);
 	}
@@ -175,13 +175,13 @@ class Channel {
 	var $title;
 	var $link;
 	var $description;
-	var $image;	
+	var $image;
 	var $item;
-	
+
 	function Channel() {
 		$this->item = array();
 	}
-	
+
 	function add_item(&$item) {
 		array_push($this->item, $item);
 	}
@@ -238,7 +238,7 @@ class RssFileHandler extends XmlFileHandler {
 }
 
 /*
- * The RssRootHandler class takes care of the root element 
+ * The RssRootHandler class takes care of the root element
  * in the file. This handler doesn't correspond to any particular
  * element that may occur in the XML file. It represents the file
  * itself and must deal with any elements that occur at the root
@@ -264,11 +264,11 @@ class RssRootHandler extends XmlElementHandler {
  */
 class RssHandler extends XmlElementHandler {
 	var $feed;
-	
+
 	function RssHandler() {
 		$this->feed = new Feed();
 	}
-	
+
 	/*
 	 * This method handles the <channel>...</channel> element.
 	 */
@@ -283,11 +283,11 @@ class RssHandler extends XmlElementHandler {
 
 class ChannelHandler extends XmlElementHandler {
 	var $channel;
-	
+
 	function ChannelHandler() {
 		$this->channel = new Channel();
 	}
-	
+
 	/*
 	 * This method handles the <title>...</title> element.
 	 */
@@ -306,25 +306,25 @@ class ChannelHandler extends XmlElementHandler {
 	function & get_description_handler($attributes) {
 		return new SimplePropertyHandler($this->channel, "description");
 	}
-	
+
 	/*
 	 * This method handles the <title>...</title> element.
 	 */
 	function & get_item_handler($attributes) {
 		return new ItemHandler();
 	}
-	
+
 	function end_item_handler($handler) {
 		$this->channel->add_item($handler->item);
 	}
-	
+
 	/*
 	 * This method handles the <image>...</image> element.
 	 */
 	function & get_image_handler($attributes) {
 		return new ImageHandler();
 	}
-	
+
 	function end_image_handler($handler) {
 		$this->channel->image = $handler->image;
 	}
@@ -332,11 +332,11 @@ class ChannelHandler extends XmlElementHandler {
 
 class ItemHandler extends XmlElementHandler {
 	var $item;
-	
+
 	function ItemHandler() {
 		$this->item = new Item();
 	}
-	
+
 	/*
 	 * This method handles the <title>...</title> element.
 	 */
@@ -355,14 +355,14 @@ class ItemHandler extends XmlElementHandler {
 	function & get_description_handler($attributes) {
 		return new SimplePropertyHandler($this->item, "description");
 	}
-	
+
 	/*
 	 * This method handles the <pubDate>...</pubDate> element.
 	 */
 	function & get_pubdate_handler($attributes) {
 		return new SimpleTextHandler();
 	}
-	
+
 	function end_pubdate_handler($handler) {
 		$value = trim($handler->text);
 		if (strlen($value)>0) {
@@ -373,11 +373,11 @@ class ItemHandler extends XmlElementHandler {
 
 class ImageHandler extends XmlElementHandler {
 	var $image;
-	
+
 	function ImageHander() {
 		$this->image = new Image();
-	}	
-		
+	}
+
 	/*
 	 * This method handles the <title>...</title> element.
 	 */

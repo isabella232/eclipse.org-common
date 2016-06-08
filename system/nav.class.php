@@ -10,7 +10,7 @@
  * Contributors:
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/link.class.php");
+require_once("link.class.php");
 
 class Nav {
 
@@ -25,36 +25,36 @@ class Nav {
 	#
 	# HISTORY:
 	#
-	#*****************************************************************************	
-	
+	#*****************************************************************************
+
 	private $LinkList = array();
-	
+
 	private $HTMLBlock = "";
-	
-	
+
+
 	function getLinkList() {
 		return $this->LinkList;
 	}
-	
+
 	function setLinkList($_LinkList) {
 		$this->LinkList = $_LinkList;
 	}
-	
+
 	function getHTMLBlock () {
 		return $this->HTMLBlock;
 	}
-	
+
 	function setHTMLBlock ($html) {
 		$this->HTMLBlock = $html;
 	}
-	
 
-	
+
+
 	# Main constructor
 	function Nav() {
 
 		$www_prefix = "";
-		
+
 		global $App;
 
 		if(isset($App)) {
@@ -62,29 +62,29 @@ class Nav {
 		}
 
 	}
-	
+
 	function addCustomNav($_Text, $_URL, $_Target, $_Level, $_CSS=NULL) {
 		if($_Level == "") {
 			$_Level = 0;
 		}
 		$Link = new Link($_Text, $_URL, $_Target, $_Level, $_CSS);
-			
+
 		# Add incoming Nav Item
 		$this->LinkList[count($this->LinkList)] = $Link;
 	}
 
 	function addNavSeparator($_Text, $_URL) {
 		$Link = new Link($_Text, $_URL, "__SEPARATOR", 1);
-			
+
 		# Add incoming Nav Item
 		$this->LinkList[count($this->LinkList)] = $Link;
 	}
-	
+
 	function addMetaNav($_Project){
       if (!class_exists("projectInfoList")) {
         require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoList.class.php");
       }
-      
+
       #set the default depth
       $depth = 1;
       #New info data instance
@@ -106,7 +106,7 @@ class Nav {
               $depth = 1;
             }
           }
-        }  
+        }
       }
     }
 
@@ -116,7 +116,7 @@ class Nav {
         function cmp_navobj($a, $b) {
           $al = $a->order;
           $bl = $b->order;
-          if ($al == $bl) {    
+          if ($al == $bl) {
             return 0;
           }
           return ($al > $bl) ? +1 : -1;
@@ -129,14 +129,14 @@ class Nav {
 	function getLinkCount() {
 		return count($this->LinkList);
 	}
-	
+
 	function getLinkAt($_Pos) {
 		if($_Pos < $this->getLinkCount()) {
 			return $this->LinkList[$_Pos];
 		}
 	}
-	
-	
+
+
 
 }
 ?>

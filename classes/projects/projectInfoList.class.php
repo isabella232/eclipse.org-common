@@ -10,16 +10,16 @@
  *    Nathan Gervais (Eclipse Foundation)- initial API and implementation
  *    Karl Matthias (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectInfoData.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once("projectInfoData.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 class projectInfoList {
 
-	
+
 	var $list = array();
-	
+
    	function alphaSortList(){
-		
+
    		if (!function_exists("cmp_obj"))
    		{
 	   		function cmp_obj($a, $b)
@@ -30,15 +30,15 @@ class projectInfoList {
 		            return 0;
 		        }
 		        return ($al > $bl) ? +1 : -1;
-		   	}	   		
+		   	}
    		}
 		usort($this->list, "cmp_obj");
 	}
-	
-	
+
+
 	function getList() {
 		return $this->list;
-	} 
+	}
 	function setList($_list) {
 		$this->list = $_list;
 	}
@@ -60,63 +60,63 @@ class projectInfoList {
 	function selectProjectInfoList($_projectID = NULL, $_mainKey = NULL, $_subKey = NULL, $_value = NULL, $_projectInfoID = NULL , $_order_by = NULL) {
 
 		   $App = new App();
-		   	
+
 		   $sql = "SELECT DISTINCT ProjectID
 						FROM ProjectInfo, ProjectInfoValues";
-		   
+
 		   if ($_projectID) {
-		   	
+
 		   		$wheresql .= " ProjectID like '$_projectID%'";
 		   }
 		   if ($_mainKey) {
-		   		$wheresql = $this->addAndIfNotNull($wheresql);	
+		   		$wheresql = $this->addAndIfNotNull($wheresql);
 		   		$wheresql .= " MainKey = '$_mainKey'";
 		   }
 		   if ($_subKey) {
-		   		$wheresql = $this->addAndIfNotNull($wheresql);	
+		   		$wheresql = $this->addAndIfNotNull($wheresql);
 		   		$wheresql .= " SubKey = '$_subKey'";
 		   }
 		   if ($_value) {
-		   		$wheresql = $this->addAndIfNotNull($wheresql);	
+		   		$wheresql = $this->addAndIfNotNull($wheresql);
 		   		$wheresql .= " Value = '$_value'";
 		   }
 		   if ($_projectInfoID) {
-		   		$wheresql = $this->addAndIfNotNull($wheresql);	
+		   		$wheresql = $this->addAndIfNotNull($wheresql);
 		   		$wheresql .= " ProjectInfo.ProjectInfoID = '$_projectInfoID'";
 		   }
-		   		   		   		   
-	   
+
+
 		if($wheresql != "") {
 	            $wheresql = " WHERE " . $wheresql. " AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID";
 	    }
-	
+
 	    if($_order_by == "") {
 	            $_order_by = "MainKey";
 	    }
-	    $_order_by = " ORDER BY " . $_order_by;		   	
-	    
+	    $_order_by = " ORDER BY " . $_order_by;
+
 	    $sql = $sql . $wheresql . $_order_by;
-	    
-	    
+
+
 	    $result = $App->eclipse_sql($sql) or die ("ProjectInfoList.selectProjectInfoList: ". mysql_error());
-	    
+
 	    while ($sqlIterator = mysql_fetch_array($result))
 	    {
 	    	$projectID = $sqlIterator['ProjectID'];
 	    	$ProjectInfoData = new ProjectInfoData($projectID);
-	    	$this->add($ProjectInfoData); 
-	    } 		   
+	    	$this->add($ProjectInfoData);
+	    }
     }
-    
+
 	function addAndIfNotNull($_String) {
 		# Accept: String - String to be AND'ed
 		# return: string - AND'ed String
-		
+
 		if($_String != "") {
 			$_String = $_String . " AND ";
 		}
-		
+
 		return $_String;
-	}    
+	}
 }
 ?>

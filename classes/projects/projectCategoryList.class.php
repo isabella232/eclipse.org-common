@@ -10,8 +10,8 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/projectCategory.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once("projectCategory.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 class ProjectCategoryList {
 
@@ -29,11 +29,11 @@ class ProjectCategoryList {
 	#*****************************************************************************
 
 	var $list = array();
-	
-	
+
+
 	function getList() {
 		return $this->$list;
-	} 
+	}
 	function setList($_list) {
 		$this->list = $_list;
 	}
@@ -55,10 +55,10 @@ class ProjectCategoryList {
     }
 
 	function selectProjectCategoryList($_project_id, $_category_id, $_order_by) {
-		
+
 		$App = new App();
 	    $WHERE = "";
-	
+
 	    if($_project_id != "") {
 	            $WHERE = $App->addAndIfNotNull($WHERE);
 	            $WHERE .= " PRC.project_id = " . $App->returnQuotedString($_project_id);
@@ -67,20 +67,20 @@ class ProjectCategoryList {
 	            $WHERE = $App->addAndIfNotNull($WHERE);
 	            $WHERE .= " PRC.category_id = " . $App->returnQuotedString($_category_id);
 	    }
-	
+
 	    if($WHERE != "") {
 	            $WHERE = " WHERE " . $WHERE;
 	    }
-	
+
 	    if($_order_by == "") {
 	            $_order_by = "PRC.description";
 	    }
-	
+
 	    $_order_by = " ORDER BY " . $_order_by;
-		
-	    $sql = "SELECT 
+
+	    $sql = "SELECT
 					PRC.project_id,
-					PRC.category_id, 
+					PRC.category_id,
 					PRC.description AS ProjectCategoryDescription ,
 					PRC.long_description AS ProjectCategoryLongDescription,
 					PRJ.name,
@@ -98,12 +98,12 @@ class ProjectCategoryList {
 					CAT.category_shortname,
 					CAT.image_name
 	        	FROM
-					project_categories 		AS PRC 
+					project_categories 		AS PRC
 					INNER JOIN projects 	AS PRJ ON PRJ.project_id = PRC.project_id
 					INNER JOIN categories 	AS CAT ON CAT.category_id = PRC.category_id "
 				. $WHERE
 				. $_order_by;
-				
+
 	    $result = $App->eclipse_sql($sql);
 
 	    while($myrow = mysql_fetch_array($result))
@@ -121,13 +121,13 @@ class ProjectCategoryList {
 	    		$Project->setUrlDocs		($myrow["url_docs"]);
 	    		$Project->setUrlIndex		($myrow["url_index"]);
 				$Project->setIsTopframe		($myrow["is_topframe"]);
-				
+
 				$Category = new Category();
 				$Category->setCategoryID	($myrow["category_id"]);
 				$Category->setDescription	($myrow["CategoryDescription"]);
 				$Category->setCategoryShortname	($myrow["category_shortname"]);
 				$Category->setImageName		($myrow["image_name"]);
-				
+
 				$ProjectCategory = new ProjectCategory();
 				$ProjectCategory->setProjectID	($myrow["project_id"]);
 				$ProjectCategory->setCategoryID	($myrow["category_id"]);
@@ -135,12 +135,12 @@ class ProjectCategoryList {
 				$ProjectCategory->setLongDescription($myrow["ProjectCategoryLongDescription"]);
 				$ProjectCategory->setProjectObject($Project);
 				$ProjectCategory->setCategoryObject($Category);
-				
+
 
 	            $this->add($ProjectCategory);
 	    }
-	    
-	    	
+
+
 	    $result = null;
 	    $myrow	= null;
 	}

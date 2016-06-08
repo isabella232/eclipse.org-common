@@ -10,7 +10,7 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 class Project {
 
@@ -43,8 +43,8 @@ class Project {
 	var $url_docs			= "";
 	var $is_project			= 0;
 	var $drop;
-	
-	
+
+
 	function getProjectID() {
 		return $this->project_id;
 	}
@@ -76,25 +76,25 @@ class Project {
 		return $this->is_active;
 	}
 	function getUrlNewsgroup() {
-		return $this->url_newsgroup;	
+		return $this->url_newsgroup;
 	}
 	function getUrlMailingList() {
-		return $this->url_mailinglist;	
+		return $this->url_mailinglist;
 	}
 	function getUrlWiki() {
-		return $this->url_wiki;	
+		return $this->url_wiki;
 	}
 	function getUrlDocs() {
-		return $this->url_docs;	
-	}	
+		return $this->url_docs;
+	}
 	function getIsProject() {
-		return $this->is_project;	
-	}	
+		return $this->is_project;
+	}
 	function getProjectShortName() {
 		$rValue = "";
-	
+
 		$intPos = strrpos($this->getProjectID(), ".");
-	
+
 		if($intPos) {
 			return substr($this->getProjectID(), $intPos + 1);
 		}
@@ -102,12 +102,12 @@ class Project {
 			return $this->getProjectID();
 		}
 	}
-	
-	
+
+
 	function getDrop() {
 		return $this->drop;
 	}
-	
+
 	function setProjectID($_project_id) {
 		$this->project_id = $_project_id;
 	}
@@ -152,23 +152,23 @@ class Project {
 	}
 	function setUrlDocs($_url_docs) {
 		$this->url_docs = $_url_docs;
-	}	
+	}
 	function setIsProject($_is_project) {
 		$this->is_project = $_is_project;
-	}	
+	}
 
 
 
 	function selectList($_project_id) {
-		
+
 		$App = new App();
 	    $WHERE = "";
-	
+
 	    if($_project_id != "") {
 
             $WHERE .= " WHERE PRJ.project_id = " . $App->returnQuotedString($_project_id);
-	
-		    $sql = "SELECT 
+
+		    $sql = "SELECT
 						PRJ.project_id,
 						PRJ.name,
 						PRJ.level,
@@ -189,9 +189,9 @@ class Project {
 					. $WHERE;
 
 		    $result = $App->eclipse_sql($sql);
-	
+
 			if($myrow = mysql_fetch_array($result)) {
-		    		
+
 				$this->setProjectID		($myrow["project_id"]);
 				$this->setName			($myrow["name"]);
 				$this->setLevel			($myrow["level"]);
@@ -208,7 +208,7 @@ class Project {
 				$this->setUrlDocs  		($myrow["url_docs"]);
 				$this->setIsProject		($myrow["is_project"]);
 		    }
-		    
+
 		    $result = null;
 		    $myrow	= null;
 

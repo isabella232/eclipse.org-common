@@ -10,7 +10,7 @@
  *    Eric Poirier (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
+require_once(realpath(dirname(__FILE__) . "/../friends/friend.class.php"));
 
 class Cla {
 

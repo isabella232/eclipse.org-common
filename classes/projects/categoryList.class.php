@@ -11,8 +11,8 @@
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/category.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once("category.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 class CategoryList {
 
@@ -30,8 +30,8 @@ class CategoryList {
 	#*****************************************************************************
 
 	var $list = array();
-	
-	
+
+
 	function getList() {
 		return $this->$list;
 	}
@@ -57,23 +57,23 @@ class CategoryList {
     }
 
 	function selectCategoryList() {
-		
+
 		$App = new App();
 	    $WHERE = "";
-	
-	    $sql = "SELECT 
+
+	    $sql = "SELECT
 					CAT.category_id,
 					CAT.description,
 					CAT.image_name,
 					CAT.category_shortname
 	        	FROM
-					categories AS CAT 
+					categories AS CAT
 				ORDER BY CAT.description ";
-				
+
 	    $result = $App->eclipse_sql($sql);
 
 	    while($myrow = mysql_fetch_array($result)) {
-	    		
+
 	            $Category = new Category();
 	            $Category->setCategoryID	($myrow["category_id"]);
 	            $Category->setDescription	($myrow["description"]);

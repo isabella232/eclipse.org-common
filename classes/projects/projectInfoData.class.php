@@ -14,7 +14,7 @@
  * 					Meta-data inheritance
  * 					Fixed meta-data inheritance not to override name/short name
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 class ProjectInfoData implements Countable
 {
@@ -36,7 +36,7 @@ class ProjectInfoData implements Countable
 						SELECT COUNT(1) AS count FROM ProjectInfo, ProjectInfoValues
 							WHERE ProjectID = '$projectid'
 							  AND ProjectInfo.ProjectInfoID = ProjectInfoValues.ProjectInfoID
-							  AND MainKey = 'inherit'	
+							  AND MainKey = 'inherit'
 							  AND Value = 'true'");
 			$row = mysql_fetch_object( $result );
 			if( $row && $row->count > 0 ) {
@@ -49,7 +49,7 @@ class ProjectInfoData implements Countable
 				);
 				$row = mysql_fetch_object($result2);
 				$this->projectname = $row->projectname;
-				
+
 				// Store shortname, too
 				$result2 = $App->eclipse_sql("
 						SELECT Value AS projectshortname FROM ProjectInfo, ProjectInfoValues
@@ -59,15 +59,15 @@ class ProjectInfoData implements Countable
 				);
 				$row = mysql_fetch_object($result2);
 				$this->projectshortname = $row->projectshortname;
-				
+
 				// Set inherited flag
 				$this->inherited = true;
-				
+
 				// Set the new projectid
 				$words = explode( '.', $projectid );
 				array_pop( $words);
 				$projectid = implode( '.', $words );
-				
+
 			} else {
 				break;
 			}
@@ -93,7 +93,7 @@ class ProjectInfoData implements Countable
 				$this->subkeys[$mainkey] = true;
 		}
 	}
-	
+
 	function __get( $varname ) {
 		// When inheriting data, don't inherit the project name/short name
 		if(($varname == 'projectname') && $this->inherited) {
@@ -105,7 +105,7 @@ class ProjectInfoData implements Countable
 		} elseif(($varname == 'projectshortnames') && $this->inherited) {
 			return array($this->projectshortname);
 		}
-			
+
 		$check_multiples = false;
 		if(preg_match('/s$/', $varname)) // see if we need to look for "newsgroups" instead of just "newsgroup" for example
 			$check_multiples = true;

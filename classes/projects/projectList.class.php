@@ -10,8 +10,8 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/project.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
+require_once("project.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 class ProjectList {
 
@@ -29,8 +29,8 @@ class ProjectList {
 	#*****************************************************************************
 
 	var $list = array();
-	
-	
+
+
 	function getList() {
 		return $this->list;
 	}
@@ -55,10 +55,10 @@ class ProjectList {
     }
 
 	function selectProjectList($_project_id, $_name, $_level, $_parent_project_id, $_description, $_order_by, $_is_project = 0) {
-		
+
 		$App = new App();
 	    $WHERE = " PRJ.is_active = 1";
-	
+
 	    if($_project_id != "") {
 	            $WHERE = $App->addAndIfNotNull($WHERE);
 	            $WHERE .= " PRJ.project_id = " . $App->returnQuotedString($_project_id);
@@ -66,7 +66,7 @@ class ProjectList {
 	    if($_name != "") {
 	            $WHERE = $App->addAndIfNotNull($WHERE);
 	            $WHERE .= " PRJ.name LIKE " . $App->returnQuotedString("%" . $_name . "%");
-	
+
 	    }
 	    if($_level > 0) {
 	            $WHERE = $App->addAndIfNotNull($WHERE);
@@ -79,26 +79,26 @@ class ProjectList {
 	    if($_description != "") {
 	            $WHERE = $App->addAndIfNotNull($WHERE);
 	            $WHERE .= " PRJ.description LIKE " . $App->returnQuotedString("%" . $_description . "%");
-	
+
 	    }
 	    if ($_is_project != 0)
 	    {
 	    		$WHERE = $App->addAndIfNotNull($WHERE);
-	    		$WHERE .= " PRJ.is_project = " . $_is_project;	
+	    		$WHERE .= " PRJ.is_project = " . $_is_project;
 	    }
-	
+
 	    if($WHERE != "") {
 	            $WHERE = " WHERE " . $WHERE;
 	    }
-	
+
 	    if($_order_by == "") {
 	            $_order_by = "PRJ.name";
 	    }
-	
+
 	    $_order_by = " ORDER BY " . $_order_by;
-	
-	
-	    $sql = "SELECT 
+
+
+	    $sql = "SELECT
 					PRJ.project_id,
 					PRJ.name,
 					PRJ.level,
@@ -118,12 +118,12 @@ class ProjectList {
 					projects AS PRJ "
 				. $WHERE
 				. $_order_by;
-# echo $sql;	
+# echo $sql;
 	    $result = $App->eclipse_sql($sql);
 
 	    while($myrow = mysql_fetch_array($result))
 	    {
-	    		
+
 	            $Project 	= new Project();
 	            $Project->setProjectID		($myrow["project_id"]);
 	            $Project->setName			($myrow["name"]);
@@ -139,20 +139,20 @@ class ProjectList {
 				$Project->setUrlMailingList($myrow["url_mailinglist"]);
 				$Project->setUrlWiki  		($myrow["url_wiki"]);
 				$Project->setUrlDocs  		($myrow["url_docs"]);
-				$Project->setIsProject		($myrow["is_project"]);				
+				$Project->setIsProject		($myrow["is_project"]);
 	            $this->add($Project);
 	    }
-	    
+
 	    $result = null;
 	    $myrow	= null;
 	}
-	
-	
+
+
 	/**
 	 * @param string $_uid UID (committer ID) of the committer
 	 * @since 2013-11-07
 	 * @author droy
-	 * 
+	 *
 	 */
 	function selectCommitterProjectList($_uid) {
 		if($_uid != "") {
@@ -167,7 +167,7 @@ class ProjectList {
 						PRJ.UrlIndex,
 						PRJ.IsActive
 		        	FROM
-						Projects AS PRJ 
+						Projects AS PRJ
 					INNER JOIN PeopleProjects AS PPL ON PRJ.ProjectID = PPL.ProjectID
 					WHERE
 						PRJ.IsActive
@@ -175,7 +175,7 @@ class ProjectList {
 						AND PPL.Relation IN ('CM', 'PL', 'PD', 'PM')
 						AND (PPL.InactiveDate IS NULL OR PPL.InactiveDate > NOW())";
 			$result = $App->foundation_sql($sql);
-		
+
 			while($myrow = mysql_fetch_array($result))
 			{
 				$Project 	= new Project();
@@ -189,7 +189,6 @@ class ProjectList {
 				$Project->setIsActive		($myrow["IsActive"]);
 				$this->add($Project);
 			}
-			 
 			$result = null;
 			$myrow	= null;
 		}

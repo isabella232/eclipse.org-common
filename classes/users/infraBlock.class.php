@@ -11,8 +11,8 @@
  *    Christopher Guindon (Eclipse Foundation)
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../friends/friend.class.php"));
 require_once('/home/data/httpd/eclipse-php-classes/system/dbconnection_infra_ro.class.php');
 
 

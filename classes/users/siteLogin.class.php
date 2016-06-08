@@ -10,13 +10,13 @@
  *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/friends/friend.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/users/accountCreator.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../friends/friend.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../../system/session.class.php"));
+require_once("accountCreator.class.php");
 require_once('/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/evt_log.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/captcha/captcha.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/evt_log.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../captcha/captcha.class.php"));
 
 define('SITELOGIN_EMAIL_REGEXP', '/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
 

@@ -10,12 +10,11 @@
  *    Denis Roy (Eclipse Foundation)- initial API and implementation
  *    Christopher Guindon (Eclipse Foundation) - Bug 440590 - Improve the flexibility of session.class.php
  *******************************************************************************/
-
-require_once(dirname(__FILE__) . "/../classes/friends/friend.class.php");
-require_once(dirname(__FILE__) . "/app.class.php");
+require_once(realpath(dirname(__FILE__) . "/../classes/friends/friend.class.php"));
+require_once("app.class.php");
 
 if (!class_exists("EvtLog")) {
-  require_once(dirname(__FILE__) . "/evt_log.class.php");
+  require_once("evt_log.class.php");
 }
 
 class Session {

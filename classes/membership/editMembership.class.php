@@ -10,9 +10,10 @@
  *    Eric Poirier (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/membership/membership.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../../system/session.class.php"));
+
+require_once("membership.class.php");
 
 define('EDITMEMBERSHIP_LOGGED_IN_USER', 'EDITMEMBERSHIP_LOGGED_IN_USER');
 

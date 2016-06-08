@@ -11,8 +11,7 @@
 *******************************************************************************/
 
 require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection.class.php");  # Read-only slave
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 
 class Mirror {
 
@@ -201,7 +200,7 @@ class Mirror {
     * @see download.eclipse.org/errors/404.php
     * @since 2014-11-18
     * @return boolean
-    * 
+    *
     */
   function isMachineBrowser() {
 
@@ -406,7 +405,7 @@ class Mirror {
         }
       }
       else {
-        $sql = "SELECT $FILESPEC, COUNT(DOW.file_id) AS file_count FROM	download_file_index AS IDX LEFT JOIN downloads AS DOW ON DOW.file_id = IDX.file_id" 
+        $sql = "SELECT $FILESPEC, COUNT(DOW.file_id) AS file_count FROM	download_file_index AS IDX LEFT JOIN downloads AS DOW ON DOW.file_id = IDX.file_id"
           . $WHERE . $GROUPBY . " ORDER BY file_count DESC";
       }
     }
@@ -456,7 +455,7 @@ class Mirror {
 
     return json_encode($rValue);
   }
-  
+
   function microtime_float() {
     list($usec, $sec) = explode(" ", microtime());
     return ((float)$usec + (float)$sec);

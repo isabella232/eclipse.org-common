@@ -11,9 +11,9 @@
  *    Nathan Gervais (Eclipse Foundation) - Expanded new fields being added
  *******************************************************************************/
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/project.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/projects/category.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
+require_once("project.class.php");
+require_once("category.class.php");
 
 class ProjectCategory {
 
@@ -47,7 +47,7 @@ class ProjectCategory {
 		$this->projectObject	= new Project();
 		$this->categoryObject	= new Category();
 	}
-	
+
 	function getProjectID() {
 		return $this->project_id;
 	}
@@ -59,14 +59,14 @@ class ProjectCategory {
 	}
 	function getLongDescription() {
 		return $this->long_description;
-	}	
+	}
 	function getProjectObject() {
 		return $this->projectObject;
 	}
 	function getCategoryObject() {
 		return $this->categoryObject;
 	}
-	 
+
 
 	function setProjectID($_project_id) {
 		$this->project_id = $_project_id;
@@ -79,7 +79,7 @@ class ProjectCategory {
 	}
 	function setLongDescription($_long_description) {
 		$this->long_description = $_long_description;
-	}	
+	}
 	function setProjectObject($_Project) {
 		$this->projectObject = $_Project;
 	}
@@ -89,32 +89,32 @@ class ProjectCategory {
 
 
 	function deleteProjectCategory($_project_id, $_category_id) {
-		
+
 		$App = new App();
-	
+
 	    if($_project_id != "" && $_category_id != "") {
 			$WHERE .= " WHERE project_id = " . $App->returnQuotedString($_project_id);
 			$WHERE .= " AND category_id = " . $App->returnQuotedString($_category_id);
-	
-		
+
+
 		    $sql = "DELETE
 	        	FROM
 					project_categories "
 				. $WHERE;
-				
+
 		    $result = $App->eclipse_sql($sql);
-		
+
 		    $result = null;
 		    $myrow	= null;
 	    }
 	}
 
 	function insertUpdateProjectCategory($_project_id, $_category_id, $_description) {
-		
+
 		$App = new App();
-	
+
 	    if($_project_id != "" && $_category_id != "") {
-		
+
 		    $sql = "INSERT INTO project_categories (
 						project_id,
 						category_id,
@@ -127,9 +127,9 @@ class ProjectCategory {
 					" . $App->returnQuotedString($_description) . ",
 					" . $App->returnQuotedString($this->getLongDescription()). "
 						)";
-		
+
 		    $result = $App->eclipse_sql($sql);
-		
+
 		    $result = null;
 		    $myrow	= null;
 	    }
