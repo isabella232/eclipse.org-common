@@ -52,6 +52,13 @@ class RestClient extends EclipseEnv {
    */
   protected $result = NULL;
 
+  /**
+   * Oauth2 access_token
+   *
+   * @var string
+   */
+  protected $access_token = "";
+
   function __construct(App $App = NULL) {
     parent::__construct($App);
     // Default headers
@@ -223,6 +230,25 @@ class RestClient extends EclipseEnv {
   }
 
   /**
+   * Get access_token
+   *
+   * @return string
+   */
+  public function getAccessToken() {
+    return $this->access_token;
+  }
+
+  /**
+   * Get access_token
+   *
+   * @param string $token
+   */
+  public function setAccessToken($token = "") {
+    $this->access_token = $token;
+    $_SESSION['access_token']['uss'] = $token;
+  }
+
+  /**
    * Unset $header
    * @param string $header
    *
@@ -266,6 +292,12 @@ class RestClient extends EclipseEnv {
       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
     }
     $options[CURLOPT_URL] = $this->base_url . '/' . $path;
+
+    // Use access token if set
+    if ($token = $this->getAccessToken()) {
+      $this->setHeader(array('Authorization' => 'Bearer ' . $token));
+    }
+
     $headers = $this->getHeader();
     $cookies = $this->getCookie();
     if (!empty($cookies)) {
