@@ -1066,6 +1066,7 @@ EOHTML;
       return "";
     }
     return <<<EOHTML
+    <div class="row"><div class="col-md-24">
     <div id="custom-search-form" class="reset-box-sizing">
     <script>
     (function() {
@@ -1080,7 +1081,7 @@ EOHTML;
     })();
     </script>
     <gcse:searchbox-only></gcse:searchbox-only>
-    </div>
+    </div></div></div>
 EOHTML;
   }
 
