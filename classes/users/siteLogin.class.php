@@ -1232,6 +1232,11 @@ class Sitelogin {
         $this->$field = preg_replace($this->xss_patterns, '', $this->$field);
       }
 
+      // Remove whitespace characters on the githubid field
+      if ($field == 'githubid') {
+        $this->$field = preg_replace("/\s+/", "", $this->$field);
+      }
+
       # Magic quotes feature is removed from PHP 5.4 but just incase.
       if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
         $this->$field = stripslashes($this->$field);

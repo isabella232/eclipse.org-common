@@ -243,7 +243,7 @@ class Cla {
       'cla_doc' => base64_encode(stream_get_contents($cla_document)),
     );
     fclose($cla_document);
-    return json_encode($data, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
+    return json_encode($data);
   }
 
   /**
