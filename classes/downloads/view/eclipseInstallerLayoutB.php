@@ -36,7 +36,7 @@ $download_links = $this->getDownloadLink();
     <div class="col-sm-6 options">
       <ul class="list-unstyled">
         <li><i class="fa fa-download white"></i></li>
-        <li class="title"><?php print $download_link['label']; ?></li>
+        <li class="title"><?php print $download_links['label']; ?></li>
         <li>
           <ul class="list-inline links">
             <?php foreach ($download_links['links'] as $link): ?>
