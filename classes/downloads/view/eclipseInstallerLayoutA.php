@@ -10,8 +10,7 @@
  *    Christopher Guindon (Eclipse Foundation)- initial API and implementation
  *******************************************************************************/
 //if name of the file requested is the same as the current file, the script will exit directly.
-if(basename(__FILE__) == basename($_SERVER['PHP_SELF']) || empty($platforms)){exit();}
-$download_links = $this->getDownloadLink();
+if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 ?>
 
 <div class="downloads-installer">
@@ -20,7 +19,7 @@ $download_links = $this->getDownloadLink();
   <h3>Get Eclipse Mars</h3>
   <p>Install your favorite Eclipse packages.</p>
   <p>
-    <?php foreach ($download_links['links'] as $link): ?>
+    <?php foreach ($installer_links['links'] as $link): ?>
       <a class="<?php print $link['link_classes']; ?>" href="<?php print $link['url']; ?>" title="<?php print $link['text']; ?> Download"><?php print $link['text_prefix'] . ' ' . $link['text']; ?></a>
     <?php endforeach; ?>
   </p>

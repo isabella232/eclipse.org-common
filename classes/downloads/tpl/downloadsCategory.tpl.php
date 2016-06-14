@@ -20,7 +20,7 @@
       <?php if ($key == 'tool_platforms') :?>
         <!-- Installer -->
         <div class="col-md-10th col-sm-24">
-          <?php print $this->Installer->output(); ?>
+          <?php print $this->Installer->output('64bit'); ?>
         </div>
       <?php endif;?>
 
