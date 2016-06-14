@@ -36,7 +36,7 @@ class Downloads extends DownloadsProject {
 
   public function __construct() {
 
-    $this->Installer = new EclipseInstaller('mars/R2');
+    $this->Installer = new EclipseInstaller('neon/R');
     $this->Installer->setInstallerLayout('layout_a');
 
     $this->PromotedDownloads = New PromotedDownloads();
