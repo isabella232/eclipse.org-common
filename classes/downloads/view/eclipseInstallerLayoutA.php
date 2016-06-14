@@ -24,5 +24,5 @@ $download_links = $this->getDownloadLink();
       <a class="<?php print $link['link_classes']; ?>" href="<?php print $link['url']; ?>" title="<?php print $link['text']; ?> Download"><?php print $link['text_prefix'] . ' ' . $link['text']; ?></a>
     <?php endforeach; ?>
   </p>
-  <p><a href="index-packages.php" class="grey-link">Download Packages</a></p>
+  <p><a href="/downloads/eclipse-packages" class="grey-link">Download Packages</a></p>
 </div>
