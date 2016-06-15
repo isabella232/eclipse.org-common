@@ -1,5 +1,6 @@
 <?php
-/*******************************************************************************
+/**
+ * *****************************************************************************
  * Copyright (c) 2004,2007,2016 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,8 +8,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Denis Roy (Eclipse Foundation)- initial API and implementation
- *******************************************************************************/
+ * Denis Roy (Eclipse Foundation)- initial API and implementation
+ * *****************************************************************************
+ */
 
 /**
  * Description: Functions and modules related to a modification log entry
@@ -17,8 +19,8 @@
 define('MAX_LOG_DAYS', 365);
 $dblog = "/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php";
 
-if(is_readable($dblog)) {
-  require_once("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
+if (is_readable($dblog)) {
+  require_once ("/home/data/httpd/eclipse-php-classes/system/dbconnection_rw.class.php");
   define('LOG_TO_DB', TRUE);
 }
 else {
@@ -27,13 +29,13 @@ else {
 
 class EvtLog {
 
-  var $LogID     = 0;
-  var $LogTable    = "";
-  var $PK1    = "";
-  var $PK2    = "";
-  var $LogAction    = "";
-  var $uid    = "";
-  var $EvtDateTime  = "";
+  var $LogID = 0;
+  var $LogTable = "";
+  var $PK1 = "";
+  var $PK2 = "";
+  var $LogAction = "";
+  var $uid = "";
+  var $EvtDateTime = "";
 
   function getLogID() {
     return $this->LogID;
@@ -91,10 +93,10 @@ class EvtLog {
     $this->EvtDateTime = $_EvtDateTime;
   }
 
-  function insertModLog ($_uid) {
+  function insertModLog($_uid) {
     $uid = $_uid;
-    if(LOG_TO_DB) {
-      if($this->getLogTable() != "" && $this->getPK1() != "" && $this->getLogAction() != "" && $uid != "") {
+    if (LOG_TO_DB) {
+      if ($this->getLogTable() != "" && $this->getPK1() != "" && $this->getLogAction() != "" && $uid != "") {
 
         $App = new App();
         $dbc = new DBConnectionRW();
@@ -110,35 +112,35 @@ class EvtLog {
             EvtDateTime)
           VALUES (
             NULL,
-            " . $App->returnQuotedString($App->sqlSanitize($this->getLogTable(),$dbh)) . ",
-            " . $App->returnQuotedString($App->sqlSanitize($this->getPK1(),$dbh)) . ",
-            " . $App->returnQuotedString($App->sqlSanitize($this->getPK2(),$dbh)) . ",
-            " . $App->returnQuotedString($App->sqlSanitize($this->getLogAction(),$dbh)) . ",
-            " . $App->returnQuotedString($App->sqlSanitize($uid),$dbh) . ",
+            " . $App->returnQuotedString($App->sqlSanitize($this->getLogTable(), $dbh)) . ",
+            " . $App->returnQuotedString($App->sqlSanitize($this->getPK1(), $dbh)) . ",
+            " . $App->returnQuotedString($App->sqlSanitize($this->getPK2(), $dbh)) . ",
+            " . $App->returnQuotedString($App->sqlSanitize($this->getLogAction(), $dbh)) . ",
+            " . $App->returnQuotedString($App->sqlSanitize($uid), $dbh) . ",
             NOW()
           )";
 
         mysql_query($sql, $dbh);
-        if(mysql_error() != "") {
+        if (mysql_error() != "") {
           echo "An unknown database error has occurred while logging information.  Please contact the System Administrator.";
           echo mysql_error();
-          exit;
+          exit();
         }
 
         $dbc->disconnect();
 
-        # 1% of each hits will perform clean up
-        if(rand(0, 100) < 1) {
+        // 1% of each hits will perform clean up
+        if (rand(0, 100) < 1) {
           $this->cleanup();
         }
       }
       else {
         echo "An unknown system error has occurred while logging information.  Please contact the System Administrator.";
-        exit;
+        exit();
       }
     }
     else {
-      # TODO: local logging
+      // TODO: local logging
     }
   }
 
@@ -150,4 +152,5 @@ class EvtLog {
     mysql_query($sql, $dbh);
     $dbc->disconnect();
   }
+
 }
