@@ -37,7 +37,7 @@ class Webmaster {
   }
 
   public function getFormActionUrl(){
-    return basename($_SERVER['SCRIPT_FILENAME']);
+    return '#';
   }
 
   /**
@@ -93,9 +93,9 @@ class Webmaster {
    * @param $pageTitle - Title of the page
    * @param $page - The page we'd like to retrieve
    */
-  public function outputPage($pageTitle, $page = "") {
+  public function outputPage($page = "") {
     $page = filter_var($page, FILTER_SANITIZE_STRING);
-    $path = $_SERVER['DOCUMENT_ROOT'] . '/eclipse.org-common/classes/webmaster/tpl/' . $page . '.tpl.php';
+    $path = $this->App->getBasePath() . '/classes/webmaster/tpl/' . $page . '.tpl.php';
     if (!file_exists($path)) {
       $this->App->setSystemMessage('webmaster', 'An error has occurred. (#webmaster-001)', 'danger');
       return '';

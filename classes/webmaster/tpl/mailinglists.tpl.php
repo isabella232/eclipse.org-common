@@ -16,47 +16,36 @@ if(!is_a($this, 'MailingLists') || !$this->Friend->checkUserIsWebmaster()){
 $projects = $this->getProjects();
 ?>
 
-<div class="container padding-top-25 padding-bottom-25">
-  <div id="maincontent">
-    <div id="midcolumn">
-      <h1><?php print $pageTitle; ?></h1>
 
-       <!-- Nav tabs -->
-       <ul class="nav nav-tabs" role="tablist">
-         <li role="presentation" class="active">
-           <a href="#mailinglists-create" aria-controls="mailinglists-create" role="tab" data-toggle="tab">Create</a>
-         </li>
-         <li role="presentation">
-           <a href="#mailinglists-search" aria-controls="mailinglists-search" role="tab" data-toggle="tab">Search</a>
-         </li>
-         <li role="presentation">
-           <a href="#mailinglists-completed" aria-controls="mailinglists-completed" role="tab" data-toggle="tab">Recently Completed</a>
-         </li>
-         <li role="presentation">
-           <a href="#mailinglists-new" aria-controls="mailinglists-new" role="tab" data-toggle="tab">New/Pending</a>
-         </li>
-       </ul>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#mailinglists-create" aria-controls="mailinglists-create" role="tab" data-toggle="tab">Create</a>
+  </li>
+  <li role="presentation">
+    <a href="#mailinglists-search" aria-controls="mailinglists-search" role="tab" data-toggle="tab">Search</a>
+  </li>
+  <li role="presentation">
+    <a href="#mailinglists-completed" aria-controls="mailinglists-completed" role="tab" data-toggle="tab">Recently Completed</a>
+  </li>
+  <li role="presentation">
+    <a href="#mailinglists-new" aria-controls="mailinglists-new" role="tab" data-toggle="tab">New/Pending</a>
+  </li>
+</ul>
 
-       <!-- Tab panes -->
-       <div class="tab-content">
-         <div role="tabpanel" class="tab-pane active" id="mailinglists-create">
-           <?php include('mailinglists/mailinglists-create.tpl.php');?>
-         </div>
-         <div role="tabpanel" class="tab-pane" id="mailinglists-search">
-           <?php include('mailinglists/mailinglists-search.tpl.php');?>
-         </div>
-         <div role="tabpanel" class="tab-pane" id="mailinglists-completed">
-           <?php include('mailinglists/mailinglists-completed.tpl.php');?>
-         </div>
-         <div role="tabpanel" class="tab-pane" id="mailinglists-new">
-           <?php include('mailinglists/mailinglists-new.tpl.php');?>
-         </div>
-       </div>
-
-      </div>
-    </div>
-    <div id="rightcolumn">
-      <?php include "sidebar.tpl.php" ?>
-    </div>
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="mailinglists-create">
+    <?php include('mailinglists/mailinglists-create.tpl.php');?>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="mailinglists-search">
+    <?php include('mailinglists/mailinglists-search.tpl.php');?>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="mailinglists-completed">
+    <?php include('mailinglists/mailinglists-completed.tpl.php');?>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="mailinglists-new">
+    <?php include('mailinglists/mailinglists-new.tpl.php');?>
   </div>
 </div>
+

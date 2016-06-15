@@ -15,17 +15,9 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF']) || !$this->Friend->check
 }
 ?>
 
-<div class="container padding-top-25 padding-bottom-25">
-  <div id="maincontent">
-    <div id="midcolumn">
-      <h1><?php print $pageTitle; ?></h1>
-      <ul>
-        <li><a href="/webmaster/mirrors.php">Manage mirrors</a></li>
-        <li><a href="/webmaster/jobs.php">Work with jobs</a></li>
-        <li><a href="/webmaster/firewall.php">Manage firewall rules</a></li>
-        <li><a href="/webmaster/mailinglists.php">Manage mailing lists and newsgroups</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
+<ul>
+  <li><a href="/webmaster/mirrors.php">Manage mirrors</a></li>
+  <li><a href="/webmaster/jobs.php">Work with jobs</a></li>
+  <li><a href="/webmaster/firewall.php">Manage firewall rules</a></li>
+  <li><a href="/webmaster/mailinglists.php">Manage mailing lists and newsgroups</a></li>
+</ul>
