@@ -12,7 +12,15 @@
 
 class Messages {
 
-  private $messages = array();
+  function __construct() {
+    if (session_id() == '') {
+      session_start();
+    }
+
+    if (empty($_SESSION['eclipse_system_messages']) || !is_array($_SESSION['eclipse_system_messages'])) {
+      $_SESSION['eclipse_system_messages'] = array();
+    }
+  }
 
   /**
    * This function sets the message
@@ -28,19 +36,48 @@ class Messages {
       'danger'
     );
     if (in_array($type, $allowed_type) && !empty($msg) && !empty($name)) {
-      $this->messages[$name][$type][] = $msg;
+      $_SESSION['eclipse_system_messages'][$name][$type][] = $msg;
     }
   }
 
   /**
+   * Convert message type to valid drupal message type
+   *
+   * drupal_set_message only supports 'status',
+   * 'warning' and 'error'. This translate a status
+   * from this class to a drupal status.
+   *
+   * @param string $type
+   */
+  public function translateToDrupalStatus($type = ""){
+    $type = strtolower($type);
+    switch($type) {
+      case 'success':
+        return 'status';
+      case 'info':
+      case 'warning':
+        return 'warning';
+      case 'danger':
+        return 'error';
+    }
+    return 'status';
+  }
+
+  /**
    * This function returns the Messages
+   *
+   * Messages are removed from $_SESSION['eclipse_system_messages']
+   * after calling this function.
+   *
    * @param $msg - array containing the names, types and content of each messages
    * @return string
    * */
   public function getMessages() {
+    $messages = $_SESSION['eclipse_system_messages'];
+    $_SESSION['eclipse_system_messages'] = array();
     $return = "";
-    if (!empty($this->messages)) {
-      foreach ($this->messages as $type) {
+    if (!empty($messages)) {
+      foreach ($messages as $type) {
         foreach ($type as $key => $value) {
           $list = '<ul>';
           if (count($value) == 1) {
@@ -56,6 +93,30 @@ class Messages {
           }
           $list .= '</ul>';
           $return .= $this->_getMessageContainer($list, $key);
+        }
+      }
+    }
+    return $return;
+  }
+
+  /**
+   * Get system message array
+   *
+   * Messages are removed from $_SESSION['eclipse_system_messages']
+   * after calling this function.
+   *
+   * @return array
+   */
+  function getMessagesArray(){
+    $messages = $_SESSION['eclipse_system_messages'];
+    $_SESSION['eclipse_system_messages'] = array();
+    $return  = array();
+    if (!empty($messages)) {
+      foreach ($messages as $type) {
+        foreach ($type as $key => $value) {
+          foreach ($value as $msg) {
+            $return[$key][] = $msg;
+          }
         }
       }
     }
