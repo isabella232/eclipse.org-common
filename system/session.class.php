@@ -118,7 +118,9 @@ class Session {
   }
 
   function setBugzillaID($_bugzilla_id) {
-    $this->bugzilla_id = $_bugzilla_id;
+    if (ctype_digit($_bugzilla_id)) {
+      $this->bugzilla_id = $_bugzilla_id;
+    }
   }
 
   function setSubnet($_subnet) {
@@ -195,17 +197,24 @@ class Session {
   }
 
   function create() {
-    # create session on the database
+    # create session in the database.
     $Friend = $this->getFriend();
     $this->setData($Friend);
 
-    # need to have a bugzilla ID to log in
-    if ($Friend->getBugzillaID() > 0) {
+    # need to have a LDAP ID to log in.
+    if ($Friend->getUID()) {
       $App = new App();
       $this->setGID(md5(uniqid(rand(), TRUE)));
       $this->setSubnet($this->getClientSubnet());
       $this->setUpdatedAt($App->getCURDATE());
+
+      // Bugzilla id is missing, let's try to find it.
+      if (!$Friend->getBugzillaID() && $Friend->getEmail()) {
+        $Friend->setBugzillaID($Friend->getBugzillaIDFromEmail($Friend->getEmail()));
+      }
+
       $this->setBugzillaID($Friend->getBugzillaID());
+      //$Friend->insertUpdateFriend();
 
       $sql = "INSERT INTO sessions (
             gid,

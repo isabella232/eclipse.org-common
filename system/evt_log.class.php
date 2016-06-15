@@ -27,7 +27,7 @@ else {
   define('LOG_TO_DB', FALSE);
 }
 
-if (!class_exists ("EvtLog")) {
+if (!class_exists("EvtLog")) {
   class EvtLog {
 
     var $LogID = 0;
@@ -97,8 +97,8 @@ if (!class_exists ("EvtLog")) {
     function insertModLog($_uid) {
       $uid = $_uid;
       if (LOG_TO_DB) {
-        if ($this->getLogTable() != "" && $this->getPK1() != "" && $this->getLogAction() != "" && $uid != "") {
-
+        // $var != "" is not a valid check here because we might want to log 0
+        if ($this->getLogTable() !== "" && $this->getPK1() !== "" && $this->getLogAction() !== "" && $uid !== "") {
           $App = new App();
           $dbc = new DBConnectionRW();
           $dbh = $dbc->connect();

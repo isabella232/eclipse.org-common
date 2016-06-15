@@ -14,7 +14,7 @@ class Friend {
 
   private $friend_id  = 0;
 
-  private $bugzilla_id = "";
+  private $bugzilla_id = 0;
 
   private $first_name = "";
 
@@ -128,7 +128,9 @@ class Friend {
   }
 
   function setBugzillaID($_bugzilla_id) {
-    $this->bugzilla_id = $_bugzilla_id;
+    if (ctype_digit($_bugzilla_id)) {
+      $this->bugzilla_id = $_bugzilla_id;
+    }
   }
 
   function setFirstName($_first_name) {
@@ -183,10 +185,11 @@ class Friend {
   function getUID() {
     if ($this->dn != "") {
       if (preg_match('/uid=(.*),ou=/', $this->dn, $matches)) {
-        $this->uid = $matches[1];
+        $this->setLDAPUID($matches[1]);
         return $matches[1];
       }
     }
+    return FALSE;
   }
 
   /**
@@ -258,10 +261,6 @@ class Friend {
 
         $App->eclipse_sql($sql);
         $retVal = $this->friend_id;
-        #$ModLog->setLogAction("UPDATE");
-        #$ModLog->insertModLog();
-
-        # Set the Primary Employer ID
     }
     else {
       # insert
@@ -283,8 +282,7 @@ class Friend {
             " . $App->returnQuotedString($this->getLDAPUID()) . ")";
       $App->eclipse_sql($sql);
       $retVal = mysql_insert_id();
-      #$ModLog->setLogAction("INSERT");
-      #$ModLog->insertModLog();
+      $this->setFriendID($retVal);
     }
     return $retVal;
   }
@@ -313,6 +311,7 @@ class Friend {
         $this->setIsBenefit    ($myrow["is_benefit"]);
         $this->setLDAPUID           ($myrow["uid"]);
         $this->setBenefitExpires($myrow["date_expired"]);
+        $this->getRoles();
         return TRUE;
       }
     }
