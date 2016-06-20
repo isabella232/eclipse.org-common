@@ -53,23 +53,23 @@ You may get a security warning to run this file. If the Eclipse Foundation is
 the Publisher, you are good to select Run.</p>
 <p>For Mac and Linux users, you will still need to unzip the download to create the Installer.
 Start the Installer once it is available.</p>
-<img class="img-responsive" src="assets/public/images/installer-instructions-02-b.png" alt="Screenshot of the Eclipse Installer executable.">
+<img class="img-responsive" src="/downloads/assets/public/images/installer-instructions-02-b.png" alt="Screenshot of the Eclipse Installer executable.">
 <hr>
 <h2>3. Select the package to install</h2>
 <p>The new Eclipse Installer shows the packages available to Eclipse users.
 You can search for the package you want to install or scroll through the list.</p>
 <p>Select and click on the package you want to install.</p>
-<img class="img-responsive" src="assets/public/images/installer-instructions-03.png" alt="Screenshot of the Eclipse packages.">
+<img class="img-responsive" src="/downloads/assets/public/images/installer-instructions-03.png" alt="Screenshot of the Eclipse packages.">
 <hr>
 <h2>4. Select your installation folder</h2>
 <p>Specify the folder where you want Eclipse to be installed. The default folder will be in your User directory.</p>
 <p>Select the ‘Install’ button to begin the installation.</p>
-<img class="img-responsive" src="assets/public/images/installer-instructions-04.png" alt="Screenshot of the Install window.">
+<img class="img-responsive" src="/downloads/assets/public/images/installer-instructions-04.png" alt="Screenshot of the Install window.">
 <hr>
 <h2>5. Launch Eclipse</h2>
 <p>Once the installation is complete you can now launch Eclipse.
 The Eclipse Installer has done it's work. Happy coding.</p>
-<img class="img-responsive" src="assets/public/images/installer-instructions-05.png" alt="Screenshot of the Launch window.">
+<img class="img-responsive" src="/downloads/assets/public/images/installer-instructions-05.png" alt="Screenshot of the Launch window.">
 <p class="text-right padding-top-25">
   <a class="btn btn-warning btn-sm" data-target="#collapseEinstaller" class="solstice-collapse orange" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseEinstaller">
     <i class="fa fa-times"></i> Hide
