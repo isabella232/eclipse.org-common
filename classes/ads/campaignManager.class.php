@@ -192,30 +192,40 @@ class CampaignManager extends Campaign{
    */
   public function pastMonthClicks($_campaign_name) {
     $App = new App();
-    $clicks = array();
+
 
     // Get sanitized values
     $campaign_name = $App->returnQuotedString($App->sqlSanitize($_campaign_name));
 
-    $sql = "SELECT COUNT(*) AS count, TimeClicked as date FROM CampaignClicks
-            WHERE CampaignKey=" . $campaign_name;
+    // Select dates and counts for each month for the past 6 month
+    $sql = 'SELECT
+                 count(TimeClicked) as count,
+                 DATE_FORMAT(TimeClicked, "%Y-%m") as date
+            FROM
+                 CampaignClicks
+            WHERE CampaignKey = '.$campaign_name.'
+            GROUP BY
+                 MONTH(TimeClicked)
+            ORDER BY TimeClicked DESC
+            LIMIT 6';
     $result = $App->eclipse_sql($sql);
-
-    $thisMonth = date("Y-m");
-    for($i = 0; $i <= 5; $i++){
-      $clicks[$i]['date'] = date('Y-m', strtotime(date('Y-m')." -". $i ." month"));
-      $clicks[$i]['count'] = 0;
-    }
-
-    $i = 1;
+    $results = array();
     while($row = mysql_fetch_array($result)) {
-      $date = substr($row['date'], 0,7);
-      if(!empty($date)){
-        $clicks[$i]['count'] = $row['count'];
-        $clicks[$i]['date'] = $date;
-        $i++;
-      }
+      $results[$row['date']] = $row['count'];
     }
+
+    $clicks = array();
+    $thisMonth = strtotime('now');
+
+    while ($thisMonth >= strtotime("-5 month")) {
+      $date = date('Y-m',$thisMonth);
+      $clicks[] = array(
+          'date' => $date,
+          'count' => (!empty($results[$date])) ? $results[$date] : 0,
+      );
+      $thisMonth = strtotime(" -1 month", $thisMonth);
+    }
+
     return $clicks;
   }
 
