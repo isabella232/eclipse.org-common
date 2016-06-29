@@ -575,7 +575,9 @@ class App {
         'eclipse.org',
         'staging.eclipse.org',
         'eclipse.local',
-        'www.eclipse.local'
+        'www.eclipse.local',
+        'dev.eclipse.local',
+        'dev.eclipse.org'
       );
       $http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
       // Force http://www.eclipse.org if the serve_name is not whitelisted.

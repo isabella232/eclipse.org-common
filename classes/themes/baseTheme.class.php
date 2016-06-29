@@ -1728,6 +1728,27 @@ EOHTML;
   }
 
   /**
+   * Returns a Take me back
+   *
+   * @return string
+   */
+  private function _getTakeMeBack() {
+
+    $path = parse_url($this->App->getCurrentURL(), PHP_URL_PATH);
+    if (substr($path, 0, 1) == "/") {
+      $path = substr($path, 1);
+    }
+
+    // Check to see if URI already contains a takemeback
+    if (strpos($path, '?takemeback=')) {
+      // Return only the value of takemeback
+      return "?takemeback=" . preg_replace('/(.+)?takemeback=/', "", $path);
+    }
+
+    return "?takemeback=" . $this->getBaseUrl() . $path;
+  }
+
+  /**
    * Get $ession_variables
    *
    * @param string $id
@@ -1744,7 +1765,7 @@ EOHTML;
       $Session = $this->_getSession();
       $Friend = $Session->getFriend();
       $this->session_variables['create_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/site_login/createaccount.php"><i class="fa fa-user fa-fw"></i> Create account</a>';
-      $this->session_variables['my_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/site_login/?takemeback=' . $this->getBaseUrl() . $_SERVER['REQUEST_URI'] . '"><i class="fa fa-sign-in fa-fw"></i> Log in</a>';
+      $this->session_variables['my_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/site_login/' . $this->_getTakeMeBack() . '"><i class="fa fa-sign-in fa-fw"></i> Log in</a>';
       $this->session_variables['logout'] = '';
 
       if ($Session->isLoggedIn()) {
