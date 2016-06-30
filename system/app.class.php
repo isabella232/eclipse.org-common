@@ -168,7 +168,21 @@ class App {
    *
    * @var string
    */
-  private $OGImage = "https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse.png";
+  private $OGImage = "https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-200x200.png";
+
+  /**
+   * Open Graph Protocol image width
+   *
+   * @var string
+   */
+  private $OGImageWidth = "200";
+
+  /**
+   * Open Graph Protocol image height
+   *
+   * @var string
+   */
+  private $OGImageHeight = "200";
 
   /**
    * Doctype
@@ -1594,6 +1608,42 @@ EOHTML;
    */
   function setOGImage($image) {
     $this->OGImage = $image;
+  }
+
+  /**
+   * Get $OGImageWidth output
+   */
+  function getOGImageWidth() {
+    return '<meta property="og:image:width" content="' . $this->OGImageWidth . '" />' . PHP_EOL;
+  }
+
+  /**
+   * Set $OGImageWidth
+   *
+   * @param string $width
+   */
+  function setOGImageWidth($width) {
+    if (is_numeric($width)) {
+      $this->OGImageWidth = $width;
+    }
+  }
+
+  /**
+   * Get $OGImageHeight output
+   */
+  function getOGImageHeight() {
+    return '<meta property="og:image:height" content="' . $this->OGImageHeight . '" />' . PHP_EOL;
+  }
+
+  /**
+   * Set $OGImageHeight
+   *
+   * @param string $height
+   */
+  function setOGImageHeight($height) {
+  if (is_numeric($height)) {
+      $this->OGImageHeight = $height;
+    }
   }
 
   /**

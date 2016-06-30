@@ -787,6 +787,8 @@ EOHTML;
     $return .= $App->getOGDescription() . PHP_EOL;
     $return .= $App->getOGImage() . PHP_EOL;
     $return .= $App->getOGTitle() . PHP_EOL;
+    $return .= $App->getOGImageWidth() . PHP_EOL;
+    $return .= $App->getOGImageHeight() . PHP_EOL;
     $return .= $this->extra_headers;
     $return .= $App->ExtraHtmlHeaders;
 
