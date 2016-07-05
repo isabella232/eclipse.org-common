@@ -19,8 +19,11 @@ class PromotedDownloads extends EclipseAds {
   public function __construct($source = "") {
     parent::__construct($source);
 
-    // IBM B
-    $Ad = new Ad();
+    // Note: 1 slot = 20
+    //       Total = 100
+
+    // IBM B // Keep this Ad for futur reference
+    /*$Ad = new Ad();
     $Ad->setTitle('Use your Eclipse IDE to build in the cloud');
     $Ad->setUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=17277852&PluID=0&ord=[timestamp]');
     $Ad->setScriptUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=rsb&c=28&pli=17255646&PluID=0&w=32&h=32&ord=[timestamp]');
@@ -31,49 +34,7 @@ class PromotedDownloads extends EclipseAds {
     $Ad->setCampaign('PROMO_DOWNLOAD_IBM_B');
     $Ad->setWeight(10);
     $Ad->setType('ibm');
-    $this->newAd($Ad);
-
-    // IBM D
-    $Ad = new Ad();
-    $Ad->setTitle('Use your Eclipse IDE to build in the cloud');
-    $Ad->setUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=17816180&PluID=0&ord=[timestamp]');
-    $Ad->setScriptUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=rsb&c=28&pli=17822140&PluID=0&w=32&h=32&ord=[timestamp]');
-    $Ad->setIframeUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=brd&FlightID=17822140&Page=&PluID=0&Pos=2019636108');
-    $Ad->setIframeImage('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=bsr&FlightID=17822140&Page=&PluID=0&Pos=2019636108');
-    $Ad->setBody('Love Eclipse? Want to move to Cloud? Bluemix + Eclipse make it easy. Sign up to begin building today!');
-    $Ad->setImage('/downloads/images/bluemix-logo-32x-promoted-download.png');
-    $Ad->setCampaign('PROMO_DOWNLOAD_IBM_D');
-    $Ad->setWeight(10);
-    $Ad->setType('ibm');
-    $this->newAd($Ad);
-
-    // IBM E
-    $Ad = new Ad();
-    $Ad->setTitle('Eclipse IDE + IBM Bluemix = your app in the cloud.');
-    $Ad->setUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=17816181&PluID=0&ord=[timestamp]');
-    $Ad->setScriptUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=rsb&c=28&pli=17822139&PluID=0&w=32&h=32&ord=[timestamp]');
-    $Ad->setIframeUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=brd&FlightID=17822139&Page=&PluID=0&Pos=403705173');
-    $Ad->setIframeImage('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=brd&FlightID=17822139&Page=&PluID=0&Pos=403705173');
-    $Ad->setBody('Sign up, Build & Push for Free');
-    $Ad->setImage('/downloads/images/bluemix-logo-32x-promoted-download.png');
-    $Ad->setCampaign('PROMO_DOWNLOAD_IBM_E');
-    $Ad->setWeight(10);
-    $Ad->setType('ibm');
-    $this->newAd($Ad);
-
-    // IBM F
-    $Ad = new Ad();
-    $Ad->setTitle('Use Eclipse IDE to Move Onto The Next-Gen Cloud');
-    $Ad->setUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=17816179&PluID=0&ord=[timestamp]');
-    $Ad->setScriptUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=rsb&c=28&pli=17822141&PluID=0&w=32&h=32&ord=[timestamp]');
-    $Ad->setIframeUrl('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=brd&FlightID=17822141&Page=&PluID=0&Pos=649771322');
-    $Ad->setIframeImage('//bs.serving-sys.com/BurstingPipe/adServer.bs?cn=brd&FlightID=17822141&Page=&PluID=0&Pos=649771322');
-    $Ad->setBody('Sign Up For a Free Account to Build, Run and Manage Your Apps');
-    $Ad->setImage('/downloads/images/bluemix-logo-32x-promoted-download.png');
-    $Ad->setCampaign('PROMO_DOWNLOAD_IBM_F');
-    $Ad->setWeight(10);
-    $Ad->setType('ibm');
-    $this->newAd($Ad);
+    $this->newAd($Ad);*/
 
     // EMPTY
     $Ad = new Ad();
@@ -82,7 +43,7 @@ class PromotedDownloads extends EclipseAds {
     $Ad->setImage("EMPTY");
     $Ad->setCampaign('EMPTY');
     $Ad->setUrl("https://");
-    $Ad->setWeight(20);
+    $Ad->setWeight(60);
     $Ad->setType('empty');
     $this->newAd($Ad);
 
