@@ -18,11 +18,12 @@
 </p>
 <h1>5 Steps to Install Eclipse</h1>
 
-<p class="lead">For the Mars release, we are introducing a new Eclipse installer.
-This is a new and more efficient way to install Eclipse. It is a proper
-installer, so no more zip files, with a self extracting download that
-will lead you through the installation experience.  For those not into
-installers, we still have the packages and zip files available on our download pages.</p>
+<p class="lead">
+We've recently introduced the Eclipse Installer, a new and more efficient way
+to install Eclipse. It is a proper installer (no zip files), with a
+self-extracting download that leads you through the installation process. For
+those who prefer not to use the Installer, the packages and zip files are still
+available on our <a href="/downloads/eclipse-packages/">package download</a> page.</p>
 <hr>
 <h2>1. Download the Eclipse Installer</h2>
 <?php if (!empty($platforms)) :?>
