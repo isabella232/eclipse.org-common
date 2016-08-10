@@ -42,49 +42,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param array $data
    */
   public function createCommitterPaperwork($username = NULL, $data = array()) {
-    // Make sure the user is logged in.
-    if (!$this->loginSSO()) {
-      return $this->_errorNotLoggedIn();
-    }
-
-    // Validate username.
-    $username = filter_var($username, FILTER_SANITIZE_STRING);
-    if (empty($username) || !is_string($username)) {
-      return $this->_errorBadRequest('username');
-    }
-
-    // As of PHP 5.4.11, the numbers +0 and -0 validate as both integers
-    // as well as floats (using FILTER_VALIDATE_FLOAT and FILTER_VALIDATE_INT).
-    // Before PHP 5.4.11 they only validated as floats (using
-    // FILTER_VALIDATE_FLOAT).
-    $required_field = array(
-      'project_url' => FILTER_VALIDATE_URL,
-      'election_url' => FILTER_VALIDATE_URL,
-      'forge' => FILTER_SANITIZE_STRING,
-      'project_id' => FILTER_SANITIZE_STRING,
-      'election_status' => FILTER_VALIDATE_FLOAT
-    );
-
-    foreach ($data as $field_name => $field_value) {
-      // Unknown field.
-      if (!isset($required_field[$field_name])) {
-        return $this->_errorBadRequest($field_name, 'unknown');
-      }
-    }
-
-    foreach ($required_field as $field_name => $validator) {
-      if (!isset($data[$field_name])) {
-        // Missing field.
-        return $this->_errorBadRequest($field_name);
-      }
-
-      // Validate field.
-      if (filter_var($data[$field_name], $validator) === FALSE) {
-        return $this->_errorBadRequest($field_name, 'validation failed');
-      }
-    }
-
-    return $this->post('committer_paperwork/' . $username, json_encode($data));
+    return $this->post('committer/paperwork/' . $username, json_encode($data));
   }
 
   /**
@@ -94,30 +52,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param unknown $id
    */
   public function deleteCommitterPaperwork($username = "", $id = "", $etag = "") {
-    // Make sure the user is logged in.
-    if (!$this->loginSSO()) {
-      return $this->_errorNotLoggedIn();
-    }
-
-    // Validate username.
-    $username = filter_var($username, FILTER_SANITIZE_STRING);
-    if (empty($username) || !is_string($username)) {
-      return $this->_errorBadRequest('username');
-    }
-
-    // Validate id.
-    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-    if (empty($id) && !is_int($id)) {
-      return $this->_errorBadRequest('id');
-    }
-
-    if (!empty($etag)) {
-      $this->setHeader(array(
-        'If-Match' => $etag
-      ));
-    }
-
-    $response = $this->delete('committer_paperwork/' . $username . '/' . $id);
+    $response = $this->delete('committer/paperwork/' . $username . '/' . $id);
     $this->unsetHeader('If-Match');
     return $response;
   }
@@ -129,23 +64,6 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param string $id
    */
   public function retrieveCommitterPaperwork($username = "", $id = "", $etag = "") {
-    // Make sure the user is logged in.
-    if (!$this->loginSSO()) {
-      return $this->_errorNotLoggedIn();
-    }
-
-    // Validate username.
-    $username = filter_var($username, FILTER_SANITIZE_STRING);
-    if (empty($username) || !is_string($username)) {
-      return $this->_errorBadRequest('username');
-    }
-
-    // Validate id.
-
-    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-    if (empty($id) && !is_int($id)) {
-      return $this->_errorBadRequest('id');
-    }
 
     if (!empty($etag)) {
       $this->setHeader(array(
@@ -153,7 +71,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
       ));
     }
 
-    $response = $this->get('committer_paperwork/' . $username . '/' . $id);
+    $response = $this->get('committer/paperwork/' . $username . '/' . $id);
     if (isset($response->code) && $response->code == 200) {
       $data = json_decode($response->body);
       $this->data[$data->id] = $data;
@@ -171,64 +89,12 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param string $etag
    */
   public function updateCommitterPaperwork($username = NULL, $id = NULL, $data = array(), $etag = "") {
-    if (!$this->loginSSO()) {
-      return $this->_errorNotLoggedIn();
-    }
 
-    // Validate username.
-    $username = filter_var($username, FILTER_SANITIZE_STRING);
-    if (empty($username) || !is_string($username)) {
-      return $this->_errorBadRequest('username');
-    }
-    // Validate id.
-    $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
-    if (empty($id) && !is_int($id)) {
-      return $this->_errorBadRequest('id');
-    }
+    $this->setHeader(array(
+      'If-Match' => '"' . $etag . '"',
+    ));
 
-    // As of PHP 5.4.11, the numbers +0 and -0 validate as both integers
-    // as well as floats (using FILTER_VALIDATE_FLOAT and FILTER_VALIDATE_INT).
-    // Before PHP 5.4.11 they only validated as floats (using
-    // FILTER_VALIDATE_FLOAT).
-    $fields = array(
-      'project_url' => FILTER_VALIDATE_URL,
-      'election_url' => FILTER_VALIDATE_URL,
-      'forge' => FILTER_SANITIZE_STRING,
-      'project_id' => FILTER_SANITIZE_STRING,
-      'election_status' => FILTER_VALIDATE_FLOAT,
-      'committer_paperwork_url' => FILTER_VALIDATE_URL,
-      'committer_paperwork_status' => FILTER_VALIDATE_FLOAT
-    );
-
-    foreach ($fields as $field_name => $field_value) {
-      // Unknown field.
-      if (!isset($fields[$field_name])) {
-        return $this->_errorBadRequest($field_name, 'unknown');
-      }
-    }
-
-    foreach ($fields as $field_name => $validator) {
-      // Validate field.
-      if (isset($data[$field_name]) && filter_var($data[$field_name], $validator) === FALSE) {
-        return $this->_errorBadRequest($field_name, 'validation failed');
-      }
-    }
-
-    if (empty($this->data[$id]->etag) && empty($etag)) {
-      return $this->_errorConflict();
-    }
-
-    if (empty($etag)) {
-      $etag = $this->data[$id]->etag;
-    }
-
-    if (!empty($etag)) {
-      $this->setHeader(array(
-        'If-Match' => $etag
-      ));
-    }
-
-    $response = $this->put('committer_paperwork/' . $username . '/' . $id, json_encode($data));
+    $response = $this->put('committer/paperwork/' . $username . '/' . $id, json_encode($data));
     $this->unsetHeader('If-Match');
     return $response;
   }
@@ -238,62 +104,174 @@ class CommitterPaperwork extends EclipseUSSBlob {
    *
    * @param unknown $username
    * @param array $params
-   * @param number $page
-   * @param number $pagesize
+   *
+   * @return array
    */
-  public function indexCommitterPaperwork($username = NULL, $params = array(), $page = 1, $pagesize = 20) {
-    if (!$this->loginSSO()) {
-      return $this->_errorNotLoggedIn();
-    }
+  public function indexCommitterPaperwork($username = NULL, $params = array()) {
 
-    $url = 'committer_paperwork';
-    // Validate username.
-    $username = filter_var($username, FILTER_SANITIZE_STRING);
-    if (!empty($username) && !is_string($username)) {
-      return $this->_errorBadRequest('username', 'invalid');
-    }
-    else {
+    $url = 'committer/paperwork';
+    if (!is_null($username) && is_string($username)) {
       $url .= '/' . $username;
     }
 
-    $allowed_params = array(
-      'election_status' => FILTER_VALIDATE_INT,
-      'committer_paperwork_status' => FILTER_VALIDATE_INT
-    );
-
-    foreach ($params as $param => $validator) {
-      if (!isset($allowed_params[$param])) {
-        return $this->_errorBadRequest($param, 'invalid parameter');
-      }
-    }
-
-    foreach ($allowed_params as $param => $validator) {
-      if (!isset($params[$param])) {
-        continue;
-      }
-      // Validate field.
-      if (filter_var($params[$param], $validator) === FALSE) {
-        return $this->_errorBadRequest($param, 'parameter validation failed');
-      }
-    }
-
-    if (!is_int($page)) {
-      return $this->_errorBadRequest('page', 'invalid');
-    }
-
-    if (!is_int($pagesize)) {
-      return $this->_errorBadRequest('pagesize', 'invalid');
-    }
-
-    $query_array = array();
-    $query_array['parameters'] = $params;
-    $query_array['page'] = $page;
-    $query_array['pagesize'] = $pagesize;
-
-    $query = http_build_query($query_array);
-
+    $query = http_build_query($params);
     $response = $this->get($url . '?' . $query);
     return $response;
   }
 
+  /**
+   * Fetch all Committer Paperwork index
+   *
+   * @param unknown $username
+   * @param array $params
+   *
+   * @return array
+   */
+  public function indexAllCommitterPaperwork($username = NULL, $params = array()) {
+
+    $data = $this->indexCommitterPaperwork($username, $params);
+
+    $return = array();
+    $return[] = $data;
+    if (!isset($data->error) && !empty($data->body) && $data) {
+      while ($data = $this->_getNextPage($data)) {
+        $return[] = $data;
+      }
+    }
+    return $return;
+  }
+
+  /**
+   * Validate a username
+   *
+   * @param string $username
+   *
+   * @return bool
+   */
+  function validateCommitterPaperworkUsername($username) {
+    if (empty($username) || !is_string($username)) {
+      return FALSE;
+    }
+
+    // Validate that the username is in LDAP
+    require_once("/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php");
+    $LDAPConnection = new LDAPConnection();
+    $dn = $LDAPConnection->getDNFromUID($username);
+
+    if (empty($dn)) {
+      return FALSE;
+    }
+
+    return TRUE;
+  }
+
+  /**
+   * Validate an id
+   *
+   * @param string $id
+   *
+   * @return bool
+   */
+  function validateCommitterPaperworkId($id) {
+    $id = filter_var($id, FILTER_VALIDATE_INT);
+    if (empty($id) && !is_int($id) && $id !== 0) {
+      return FALSE;
+    }
+    return TRUE;
+  }
+
+  /**
+   * Validate an etag
+   *
+   * @param string $etag
+   *
+   * @return bool
+   */
+  function validateCommitterPaperworkEtag($etag) {
+    if (empty($etag) || !is_string($etag)) {
+      return FALSE;
+    }
+    return TRUE;
+  }
+
+  /**
+   * Validate a page number
+   *
+   * @param int $page
+   *
+   * @return bool
+   */
+  function validateCommitterPaperworkPage($page) {
+    if (!is_int($page)) {
+      return FALSE;
+    }
+    return TRUE;
+  }
+
+  /**
+   * Validate a pagesize
+   *
+   * @param string $pagesize
+   *
+   * @return bool
+   */
+  function validateCommitterPaperworkPagesize($pagesize) {
+    if (!is_int($pagesize) || $pagesize > 100) {
+      return FALSE;
+    }
+
+    return $pagesize;
+  }
+
+  /**
+   * Validate fields
+   *
+   * @param array $data
+   *
+   * @return bool
+   */
+  function validateCommitterPaperworkFields($data = array()) {
+
+    // If there are no parameters passed this is still valid
+    // but we can quit here
+    if (empty($data)) {
+      return TRUE;
+    }
+
+    $float_fields = array(
+      'id',
+      'election_nid',
+      'election_status',
+      'committer_paperwork_nid',
+      'committer_paperwork_status'
+    );
+
+    $string_fields = array(
+      'project_id',
+      'forge',
+    );
+
+    foreach ($data['parameters'] as $data_field_name => $field_value) {
+      // Verify the the field name exist in the float and string fields
+      if (!in_array($data_field_name, $float_fields) && !in_array($data_field_name, $string_fields)) {
+        return FALSE;
+      }
+
+      foreach ($float_fields as $float_field_name) {
+        // If the default field name exist in the data array,
+        // Make sure it validates with the appropriate filter
+        if (isset($data[$float_field_name]) && filter_var($data[$float_field_name], FILTER_VALIDATE_FLOAT) === FALSE) {
+          return FALSE;
+        }
+      }
+
+      // Making sure we are dealing with strings
+      foreach ($string_fields as $string_field_name) {
+        if (isset($data[$string_field_name]) && !is_string($data[$string_field_name])) {
+          return FALSE;
+        }
+      }
+    }
+    return TRUE;
+  }
 }

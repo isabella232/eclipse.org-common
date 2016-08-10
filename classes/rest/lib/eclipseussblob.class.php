@@ -129,7 +129,6 @@ class EclipseUSSBlob extends RestClient{
     $url = 'uss/blob/' . $application_token . '?page=' . $page . '&pagesize=' . $pagesize;
     $data = $this->get($url);
 
-    $pages = $this->_getHeaderLink($data->headers['Link']);
     $return = array();
     $return[] = $data;
     if (!isset($data->error) && !empty($data->body) && $data) {
