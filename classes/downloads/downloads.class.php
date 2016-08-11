@@ -52,7 +52,7 @@ class Downloads extends DownloadsProject {
     $Project->setDescription('Eclipse Che is a developer workspace server and cloud IDE.');
     $Project->setLogo('assets/public/images/logo-che.png');
     $Project->setProjectType($this->projects['tool_platforms']['title']);
-    $Project->setDownloadUrl64Bit('https://eclipse.org/che/download/');
+    $Project->setDownloadUrl64Bit('https://www.eclipse.org/che/getting-started/download/');
     $Project->setLearnMoreUrl('https://eclipse.org/che');
     $Project->setProjectsAttributes('image','height','50');
     $this->newProject($Project);
