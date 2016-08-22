@@ -10,11 +10,11 @@
  *    Eric Poirier (Eclipse Foundation) - initial API and implementation
  *******************************************************************************/
 ?>
-<?php if (is_a($this, 'Cla') && $this->Friend->getUID()): ?>
+<?php if (is_a($this, 'Cla') && $this->ldap_uid): ?>
   <form id="frm_cla" name="frm_cla" action="#open_tab_cla" method="post">
     <?php print $this->getClaFormContent('text_1'); ?>
     <div class="well">
-      <h2>YOU ACCEPT ...</h2>
+      <?php print $this->getClaFormContent('text_2'); ?>
 
       <div class="form-group clearfix">
         <div class="col-xs-1 position-static">
@@ -23,7 +23,7 @@
           type="checkbox" id="edit-question-1" name="question_1" value="1" />
         </div>
         <div class="col-xs-22">
-          <label class="option" for="edit-question-1">Question 1 <span
+          <label class="option" for="edit-question-1">Question A <span
           class="form-required" title="This field is required.">*</span></label>
           <div class="description"><?php print $this->getClaFormContent('question_1'); ?></div>
         </div>
@@ -36,7 +36,7 @@
         type="checkbox" id="edit-question-2" name="question_2" value="1" />
       </div>
         <div class="col-xs-22">
-      <label class="option" for="edit-question-2">Question 2 <span
+      <label class="option" for="edit-question-2">Question B <span
         class="form-required" title="This field is required.">*</span></label>
       <div class="description"><?php print $this->getClaFormContent('question_2'); ?></div>
         </div>
@@ -49,7 +49,7 @@
         type="checkbox" id="edit-question-3" name="question_3" value="1" />
       </div>
         <div class="col-xs-22">
-      <label class="option" for="edit-question-3">Question 3 <span
+      <label class="option" for="edit-question-3">Question C <span
         class="form-required" title="This field is required.">*</span></label>
       <div class="description"><?php print $this->getClaFormContent('question_3'); ?></div>
         </div></div>
@@ -61,13 +61,13 @@
         type="checkbox" id="edit-question-4" name="question_4" value="1" />
       </div>
         <div class="col-xs-22">
-      <label class="option" for="edit-question-4">Question 4 <span
+      <label class="option" for="edit-question-4">Question D <span
         class="form-required" title="This field is required.">*</span></label>
       <div class="description"><?php print $this->getClaFormContent('question_4'); ?></div>
       </div></div>
 
       <div class="form-group">
-      <?php print $this->getClaFormContent('text_2'); ?>
+      <?php print $this->getClaFormContent('text_3'); ?>
       </div>
       <div class="form-group">
       <label for="edit-agree">Electronic Signature <span
@@ -80,7 +80,7 @@
     </div>
 
 
-    <?php print $this->getClaFormContent('text_3'); ?>
+    <?php print $this->getClaFormContent('text_4'); ?>
 
     <div class="form-group">
       <label for="edit-email">Email Address <span class="form-required"

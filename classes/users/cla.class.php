@@ -14,46 +14,91 @@ require_once(realpath(dirname(__FILE__) . "/../friends/friend.class.php"));
 
 class Cla {
 
+  /**
+   * Eclipse App class
+   *
+   * @var stdClass
+   */
   private $App = NULL;
 
-  private $cla_document_id = "";
+  /**
+   * List of possible contributor agreements
+   *
+   * @var Array
+   */
+  private $contributor_agreement_documents = NULL;
 
-  private $cla_expiry_date = "";
+  /**
+   * Signed Agreements by the user
+   * @var unknown
+   */
+  private $user_contributor_agreement_documents = NULL;
 
-  private $cla_fields = array();
+  /**
+   * Form field values
+   *
+   * @var array
+   */
+  private $form_fields = NULL;
 
-  private $cla_form_content = array();
+  /**
+   * Content for the Contributor aggrement form
+   *
+   * @var array
+   */
+  private $form_content = array();
 
-  private $cla_is_signed = NULL;
+  /**
+   * Display Contributor notification flag
+   *
+   * @var string
+   */
+  private $display_notificaiton = TRUE;
 
-  private $form = "";
-
+  /**
+   * Eclipse Friend object
+   *
+   * @var stdClass
+   */
   private $Friend = NULL;
 
-  private $is_committer = "";
+  /**
+   * LDAP UID of the user
+   * @var string
+   */
+  private $ldap_uid =  '';
 
-  private $messages = array();
+  /**
+   * Current state of contributor agreement
+   * @var string
+   */
+  private $eca = TRUE;
 
-  private $Session = NULL;
-
-  private $SiteLogin = NULL;
-
-  private $state = "";
-
-  private $uid = "";
+  /**
+   * URL of ECA document
+   *
+   * https://eclipse.local:50243/legal/ECA.html
+   * @var string
+   */
+  private $eca_url = "http://www.eclipse.org/legal/ECA.html";
 
   public function Cla(App $App) {
+    // Load the user
     $this->App = $App;
-    $this->Session = $this->App->useSession();
-    $this->Friend = $this->Session->getFriend();
-    $this->uid = $this->Friend->getUID();
-    $this->is_committer = $this->Friend->getIsCommitter();
+    $Session = $this->App->useSession();
+    $this->Friend = $Session->getFriend();
+    $this->ldap_uid = $this->Friend->getUID();
+
+    // Load contributor agreement documents
+    $this->_setContributorDocuments();
+    $this->_setUserContributorSignedDocuments();
 
     // Get the current state
-    $this->state = filter_var($this->App->getHTTPParameter("state", "POST"), FILTER_SANITIZE_STRING);
-    $this->form = filter_var($this->App->getHTTPParameter("form_name", "POST"), FILTER_SANITIZE_STRING);
-    if (!empty($this->uid) && $this->form == "cla-form") {
-      switch ($this->state) {
+    $state = filter_var($this->App->getHTTPParameter("state", "POST"), FILTER_SANITIZE_STRING);
+    $form = filter_var($this->App->getHTTPParameter("form_name", "POST"), FILTER_SANITIZE_STRING);
+
+    if (!empty($this->ldap_uid) && $form == "cla-form") {
+      switch ($state) {
         case 'submit_cla':
           $this->_submitClaDocument();
           break;
@@ -67,88 +112,269 @@ class Cla {
     }
 
     // Check if the current user has a signed CLA
-    if ($this->_claIsSigned() === FALSE && isset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION']) && $_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION'] === '1') {
-      $this->_notifyUserOfUnsignedCla();
+    $this->notifyUserOfUnsignedCla();
+  }
+
+  private function _setEca($eca = TRUE) {
+    if (is_bool($eca)) {
+      $this->eca = $eca;
     }
+    return $this->eca;
+  }
+
+  public function getEca() {
+    return $this->eca;
+  }
+
+  /**
+   * Get CLA Document Id
+   * @return string
+   */
+  public function getClaDocumentId() {
+     return 'a6f31f81d1b9abbcdbba';
+  }
+
+  /**
+   * Get ECA Document Id
+   * @return string
+   */
+  public function getEcaDocumentId() {
+    return '99f64b0dac3e41dc1e97';
+  }
+
+  /**
+   * Return CLA document id if still valid,
+   * otherwise return eca document id
+   *
+   * @return string
+   */
+  public function getContributorDocumentId() {
+    if (!$this->getEca()) {
+      return $this->getClaDocumentId();
+    }
+    return $this->getEcaDocumentId();
+  }
+
+  /**
+   * Get Display CLA notification flag
+   * @return boolean|string
+   */
+  public function getDisplayNotification() {
+    return $this->display_notificaiton;
+  }
+
+  /**
+   * Set Display CLA notification flag
+   *
+   * @param string $value
+   * @return boolean|string
+   */
+  public function setDisplayNotification($value = TRUE) {
+    if (is_bool($value)) {
+      $this->display_notificaiton = $value;
+    }
+    return $this->display_notificaiton;
+  }
+
+  /**
+   * This function let the user know about an unsigned CLA
+   *
+   * @return boolean
+   */
+  public function notifyUserOfUnsignedCla() {
+    // Verify if the display notification flag was disabled
+    if (!$this->getDisplayNotification()) {
+      return FALSE;
+    }
+
+    // We don't need to display the nofication if the user already signed the cla
+    if ($this->getClaIsSigned()) {
+      return FALSE;
+    }
+
+    // Check if user don't want to see the notification
+    if (isset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION']) && $_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION'] === '1') {
+      return FALSE;
+    }
+
+    $committer_string = '';
+    if ($this->Friend->getIsCommitter()) {
+      $committer_string = ' for which you are not a committer ';
+    }
+
+    $message = '
+      <p>In order to contribute code to an Eclipse Foundation Project ' . $committer_string . 'you will be required to sign a Eclipse Contributor Agreement (ECA).</p>
+      <form action="" method="POST">
+        <input type="hidden" name="unsigned_cla_notification" value="1">
+        <input type="hidden" name="state" value="disable_unsigned_notification">
+        <input type="hidden" name="form_name" value="cla-form">
+        <ul class="list-inline margin-top-10 margin-bottom-0">
+          <li><a class="small btn btn-primary" href="http://www.eclipse.org/legal/clafaq.php">What is a CLA?</a></li>
+          <li><a class="small btn btn-primary" href="#open_tab_cla">Sign your CLA</a></li>
+          <li><button class="small btn btn-primary">Disable this message</button></li>
+        </ul>
+      </form>';
+
+    $this->App->setSystemMessage('unsigned_cla',$message,'info');
   }
 
   /**
    * This function returns the CLA expiry date
    *
    * @return string
-   * */
+   */
   public function getClaExpiryDate() {
-    return $this->cla_expiry_date;
+    $user_documents = $this->_getUserContributorSignedDocuments();
+    if (!empty($user_documents[$this->getContributorDocumentId()]['EffectiveDate'])) {
+      return date("Y-m-d", strtotime('+3 years', strtotime($user_documents[$this->getContributorDocumentId()]['EffectiveDate'])));
+    }
+
+    return '';
   }
 
   /**
    * These functions returns the text to put on the CLA form
-   * @param $key - String containing a specified key
-   * @return string
-   * */
+   *
+   * @param string $key
+   * @return NULL|string|string
+   */
   public function getClaFormContent($key = "") {
-    if (!empty($key) && isset($this->cla_form_content[$key])) {
-      return $this->cla_form_content[$key];
+    if (!empty($key) && isset($this->form_content[$key])) {
+      return $this->form_content[$key];
     }
     return '';
   }
 
   /**
-   * This function sets the CLA fields values from what's being posted from the form
-   * */
+   * This function sets the CLA fields
+   * values from what's being posted from the form
+   *
+   * @param string $field
+   * @return mixed
+   */
   public function getFieldValues($field = "") {
-    $this->cla_fields = array(
-      'Question 1' => filter_var($this->App->getHTTPParameter("question_1", "POST"), FILTER_SANITIZE_NUMBER_INT),
-      'Question 2' => filter_var($this->App->getHTTPParameter("question_2", "POST"), FILTER_SANITIZE_NUMBER_INT),
-      'Question 3' => filter_var($this->App->getHTTPParameter("question_3", "POST"), FILTER_SANITIZE_NUMBER_INT),
-      'Question 4' => filter_var($this->App->getHTTPParameter("question_4", "POST"), FILTER_SANITIZE_NUMBER_INT),
-      'Email' => filter_var($this->App->getHTTPParameter("email", "POST"), FILTER_SANITIZE_EMAIL),
-      'Legal Name' => filter_var($this->App->getHTTPParameter("legal_name", "POST"), FILTER_SANITIZE_STRING),
-      'Public Name' => filter_var($this->App->getHTTPParameter("public_name", "POST"), FILTER_SANITIZE_STRING),
-      'Employer' => filter_var($this->App->getHTTPParameter("employer", "POST"), FILTER_SANITIZE_STRING),
-      'Address' => filter_var($this->App->getHTTPParameter("address", "POST"), FILTER_SANITIZE_STRING),
-      'Agree' => filter_var($this->App->getHTTPParameter("cla_agree", "POST"), FILTER_SANITIZE_STRING)
-    );
+    if (is_null($this->form_fields)) {
+      $this->form_fields = array(
+        'Question 1' => filter_var($this->App->getHTTPParameter("question_1", "POST"), FILTER_SANITIZE_NUMBER_INT),
+        'Question 2' => filter_var($this->App->getHTTPParameter("question_2", "POST"), FILTER_SANITIZE_NUMBER_INT),
+        'Question 3' => filter_var($this->App->getHTTPParameter("question_3", "POST"), FILTER_SANITIZE_NUMBER_INT),
+        'Question 4' => filter_var($this->App->getHTTPParameter("question_4", "POST"), FILTER_SANITIZE_NUMBER_INT),
+        'Email' => filter_var($this->App->getHTTPParameter("email", "POST"), FILTER_SANITIZE_EMAIL),
+        'Legal Name' => filter_var($this->App->getHTTPParameter("legal_name", "POST"), FILTER_SANITIZE_STRING),
+        'Public Name' => filter_var($this->App->getHTTPParameter("public_name", "POST"), FILTER_SANITIZE_STRING),
+        'Employer' => filter_var($this->App->getHTTPParameter("employer", "POST"), FILTER_SANITIZE_STRING),
+        'Address' => filter_var($this->App->getHTTPParameter("address", "POST"), FILTER_SANITIZE_STRING),
+        'Agree' => filter_var($this->App->getHTTPParameter("cla_agree", "POST"), FILTER_SANITIZE_STRING)
+      );
+    }
 
     // Return the field if we're asking for one in particular
-    if (!empty($field) && !empty($this->cla_fields[$field])) {
-      return $this->cla_fields[$field];
-    }
-  }
-
-  public function getClaIsSigned() {
-    if (is_null($this->cla_is_signed)) {
-      $this->cla_is_signed = $this->_claIsSigned();
-    }
-    return $this->cla_is_signed;
-  }
-
-  /**
-   * This function returns an Array containing the user's signed CLA
-   *
-   * @return array OR string
-   * */
-  public function getSignedClaDocument() {
-    if (!empty($this->uid)) {
-      $sql ="SELECT ScannedDocumentBLOB From PeopleDocuments
-             WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->uid))."
-             AND ExpirationDate IS NULL";
-      $result = $this->App->foundation_sql($sql);
-
-      if ($row = mysql_fetch_assoc($result)) {
-        $decode = json_decode($row['ScannedDocumentBLOB'], TRUE);
-        $decode['cla_doc'] = base64_decode($decode['cla_doc']);
-        return $decode;
+    if (!empty($field)) {
+      if (empty($this->form_fields[$field])) {
+        return '';
       }
+      return $this->form_fields[$field];
     }
-    return "Document not signed.";
+
+    return $this->form_fields;
   }
 
   /**
-   * This function puts the right content on the CLA tab
-   * */
+   * Set contributor_agreement_documents
+   * @return Array
+   */
+  protected function _setContributorDocuments() {
+    $this->contributor_agreement_documents = array();
+    $sql = "SELECT * FROM SYS_Documents
+    WHERE DocumentID = " . $this->App->returnQuotedString($this->getClaDocumentID()) . " or " .
+    $this->App->returnQuotedString($this->getECADocumentID()) . " AND Version=1 AND Type='IN'";
+    $result = $this->App->foundation_sql($sql);
+    while ($row = mysql_fetch_assoc($result)) {
+       $this->contributor_agreement_documents[$row['DocumentID']] = $row;
+    }
+    return $this->contributor_agreement_documents;
+  }
+
+  /**
+   * Get contributor_agreement_documents
+   * @return Array
+   */
+  protected function _getContributorDocuments(){
+    if (is_null($this->contributor_agreement_documents)) {
+      $this->_setContributorDocuments();
+    }
+    return $this->contributor_agreement_documents;
+  }
+
+  /**
+   * Set user_contributor_agreement_documents
+   *
+   * @return array
+   */
+  protected function _setUserContributorSignedDocuments(){
+    $this->user_contributor_agreement_documents = array();
+    $sql = "SELECT PersonID, EffectiveDate, DocumentID
+    FROM PeopleDocuments
+    WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid)) . "
+    AND (DocumentID = " . $this->App->returnQuotedString($this->getClaDocumentID()) . " or " .
+    $this->App->returnQuotedString($this->getECADocumentID()) . ")
+    AND ExpirationDate IS NULL";
+    $result = $this->App->foundation_sql($sql);
+
+    while ($row = mysql_fetch_assoc($result)) {
+       $this->user_contributor_agreement_documents[$row['DocumentID']] = $row;
+    }
+
+    if (!empty($this->user_contributor_agreement_documents[$this->getClaDocumentID()])) {
+       $this->_setEca(FALSE);
+    }
+    return $this->user_contributor_agreement_documents;
+  }
+
+  /**
+   * Set user_contributor_agreement_documents
+   *
+   * @return array
+   */
+  protected function _getUserContributorSignedDocuments(){
+    if (is_null($this->user_contributor_agreement_documents)) {
+      $this->_setUserContributorSignedDocuments();
+    }
+    return $this->user_contributor_agreement_documents;
+  }
+
+  /**
+   * Verify if the user signed his CLA.
+   *
+   * @return boolean
+   */
+  public function getClaIsSigned($document_id = NULL) {
+
+    if (is_null($document_id)) {
+      $document_id = $this->getContributorDocumentId();
+    }
+
+    $user_documents = $this->_getUserContributorSignedDocuments();
+
+    // If the array is empty, the user did not
+    // sign the eca or cla.
+    if (empty($user_documents)) {
+      return FALSE;
+    }
+
+    if (!empty($user_documents[$document_id])) {
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
+
+  /**
+   * Generate HTML for CLA page
+   */
   public function outputPage() {
-    switch ($this->_claIsSigned()){
+    switch ($this->getClaIsSigned()){
       case TRUE:
         include $_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/classes/users/tpl/cla_record.tpl.php";
         break;
@@ -164,6 +390,7 @@ class Cla {
    * depending on $action is specified
    *
    * @param $action - Validate or invalidate a CLA
+   * @return mysql_query()
    */
   private function _actionLdapGroupRecord($action) {
     $email = $this->Friend->getEmail();
@@ -171,48 +398,46 @@ class Cla {
         'CLA_SIGNED',
         'CLA_INVALIDATED'
     );
-    if ($this->uid && in_array($action, $accepted_actions) && !empty($email)) {
+    if ($this->ldap_uid && in_array($action, $accepted_actions) && !empty($email)) {
       //Insert the request to add to LDAP.
       $sql = "INSERT INTO account_requests
-              (email,fname,lname,password,ip,token,req_when)
-              values (
-                ".$this->App->returnQuotedString($this->App->sqlSanitize($email)).",
-                ".$this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getFirstName())).",
-                ".$this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getLastName())).",
-                'eclipsecla',
-                ".$this->App->returnQuotedString($this->App->sqlSanitize($_SERVER['REMOTE_ADDR'])).",
-                ".$this->App->returnQuotedString($this->App->sqlSanitize($action)).",
-                NOW()
-              )";
+        (email,fname,lname,password,ip,token,req_when)
+        values (
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($email)).",
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getFirstName())).",
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getLastName())).",
+        'eclipsecla',
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($_SERVER['REMOTE_ADDR'])).",
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($action)).",
+        NOW()
+      )";
       $result = $this->App->eclipse_sql($sql);
 
       // Log that this event occurred
       $sql = "INSERT INTO SYS_EvtLog
-              (LogTable,PK1,PK2,LogAction,uid,EvtDateTime)
-              values (
-                'cla',
-                ".$this->App->returnQuotedString($this->App->sqlSanitize($this->uid)).",
-                'EclipseCLA-v1',
-                ".$this->App->returnQuotedString($this->App->sqlSanitize($action)).",
-                'cla_service',
-                NOW()
-              )";
-      $result = $this->App->eclipse_sql($sql);
+        (LogTable,PK1,PK2,LogAction,uid,EvtDateTime)
+        values (
+        'cla',
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid)).",
+        'EclipseCLA-v1',
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($action)).",
+        'cla_service',
+        NOW()
+      )";
+      return  $this->App->eclipse_sql($sql);
     }
-    else {
-      $this->App->setSystemMessage('account_requests', "There's been an error updated the LDAP group record. (LDAP-01)", "danger");
-    }
+    $this->App->setSystemMessage('account_requests', "There's been an error updated the LDAP group record. (LDAP-01)", "danger");
   }
 
   /**
    * This function check if the current user has access to sign the CLA
-   * @return BOOL
-   * */
+   *
+   * @return boolean
+   */
   private function _allowSigning() {
-
     // If user is logged in
     $email = $this->Friend->getEmail();
-    if (!empty($this->uid) || !empty($email) || $this->Friend->checkUserIsFoundationStaff()) {
+    if (!empty($this->ldap_uid) || !empty($email)) {
       return TRUE;
     }
 
@@ -228,18 +453,18 @@ class Cla {
    */
   private function _claDocumentInJson() {
 
-    $cla_document = fopen('http://www.eclipse.org/legal/CLA.html', 'r');
+    $cla_document = fopen($this->eca_url, 'r');
     $data = array(
-      'legal_name' => $this->cla_fields['Legal Name'],
-      'public_name' => $this->cla_fields['Public Name'],
-      'employer' => $this->cla_fields['Employer'],
-      'address' => $this->cla_fields['Address'],
-      'email' => $this->cla_fields['Email'],
-      'question_1' => $this->cla_fields['Question 1'],
-      'question_2' => $this->cla_fields['Question 2'],
-      'question_3' => $this->cla_fields['Question 3'],
-      'question_4' => $this->cla_fields['Question 4'],
-      'agree' => $this->cla_fields['Agree'],
+      'legal_name' => $this->form_fields['Legal Name'],
+      'public_name' => $this->form_fields['Public Name'],
+      'employer' => $this->form_fields['Employer'],
+      'address' => $this->form_fields['Address'],
+      'email' => $this->form_fields['Email'],
+      'question_1' => $this->form_fields['Question 1'],
+      'question_2' => $this->form_fields['Question 2'],
+      'question_3' => $this->form_fields['Question 3'],
+      'question_4' => $this->form_fields['Question 4'],
+      'agree' => $this->form_fields['Agree'],
       'cla_doc' => base64_encode(stream_get_contents($cla_document)),
     );
     fclose($cla_document);
@@ -248,11 +473,11 @@ class Cla {
 
   /**
    * This function fetches content from the CLA html file
-   * */
+   */
   private function _claFormContent() {
 
     $cla_document = new DomDocument();
-    $cla_document->loadhtmlfile('http://www.eclipse.org/legal/CLA.html');
+    $cla_document->loadhtmlfile($this->eca_url);
 
     // Remove the #reference DIV
     $reference = $cla_document->getElementById('reference');
@@ -266,8 +491,9 @@ class Cla {
     $text1 = $cla_document->getElementById('text1');
     $text2 = $cla_document->getElementById('text2');
     $text3 = $cla_document->getElementById('text3');
+    $text4 = $cla_document->getElementById('text4');
 
-    $this->cla_form_content = array(
+    $this->form_content = array(
       'question_1' => $question1->nodeValue,
       'question_2' => $question2->nodeValue,
       'question_3' => $question3->nodeValue,
@@ -275,31 +501,8 @@ class Cla {
       'text_1' => $cla_document->saveXML($text1),
       'text_2' => $cla_document->saveXML($text2),
       'text_3' => $cla_document->saveXML($text3),
+      'text_4' => $cla_document->saveXML($text4),
     );
-  }
-
-  /**
-   * Ckeck if Effective Date the CLA was signed for the logged in user,
-   * or FALSE if no record was found
-   *
-   * @return string or BOOL FALSE
-   */
-  private function _claIsSigned() {
-    $cla_document_id = $this->_getClaDocumentId();
-    if (!empty($this->uid) && !empty($cla_document_id)) {
-      $sql = "SELECT EffectiveDate FROM PeopleDocuments
-              WHERE PersonID = ". $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) ."
-              AND DocumentID = ". $this->App->returnQuotedString($this->App->sqlSanitize($cla_document_id)) ."
-              AND ExpirationDate IS NULL";
-      $result = $this->App->foundation_sql($sql);
-
-      if ($row = mysql_fetch_assoc($result)) {
-        // Returns the Expiry date and making sure we remove the time from the date.
-        $this->cla_expiry_date = date("Y-m-d", strtotime('+3 years', strtotime($row['EffectiveDate'])));
-        return TRUE;
-      }
-    }
-    return FALSE;
   }
 
   /**
@@ -310,51 +513,48 @@ class Cla {
    */
   private function _createPeopleRecordIfNecessary() {
 
-    if (!isset($this->uid) || empty($this->uid)) {
+    if (empty($this->ldap_uid)) {
       return FALSE;
     }
 
     $sql = "SELECT PersonID FROM People
-        WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->uid));
+    WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid));
     $result = $this->App->foundation_sql($sql);
 
     if ($row = mysql_fetch_assoc($result)) {
       if (isset($row['PersonID']) && !empty($row['PersonID'])) {
-        $found_uid = TRUE;
         return TRUE;
       }
     }
 
-    if (!isset($found_uid)) {
-      $sql = "INSERT INTO People
-              (PersonID, FName, LName, Type, IsMember, Email, IsUnixAcctCreated)
-              values (
-                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) .",
-                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getFirstName())) .",
-                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getLastName())) .",
-                'XX',
-                0,
-                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getEmail())) .",
-                0
-              )";
-      $result = $this->App->foundation_sql($sql);
+    $sql = "INSERT INTO People
+      (PersonID, FName, LName, Type, IsMember, Email, IsUnixAcctCreated)
+      values (
+      ". $this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid)) .",
+      ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getFirstName())) .",
+      ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getLastName())) .",
+      'XX',
+      0,
+      ". $this->App->returnQuotedString($this->App->sqlSanitize($this->Friend->getEmail())) .",
+      0
+    )";
+    $result_insert = $this->App->foundation_sql($sql);
 
-      // Log that this event occurred
-      $sql = "INSERT INTO SYS_ModLog
-                (LogTable,PK1,PK2,LogAction,PersonID,ModDateTime)
-                VALUES (
-                  'cla',
-                  'cla_service',
-                  'EclipseCLA-v1',
-                  'NEW PEOPLE RECORD',
-                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) .",
-                  NOW()
-                )";
-      $result = $this->App->foundation_sql($sql);
+    // Log that this event occurred
+    $sql = "INSERT INTO SYS_ModLog
+      (LogTable,PK1,PK2,LogAction,PersonID,ModDateTime)
+      VALUES (
+      'cla',
+      'cla_service',
+      'EclipseCLA-v1',
+      'NEW PEOPLE RECORD',
+      ". $this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid)) .",
+      NOW()
+    )";
+    $result_log = $this->App->foundation_sql($sql);
 
-      return TRUE;
-    }
-    return FALSE;
+
+    return (bool)$result_insert;
   }
 
   /**
@@ -362,117 +562,64 @@ class Cla {
    * */
   private function _disableUnsignedNotification() {
     setcookie ('ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION', '1',  time() + 3600 * 24 * 1095, '/' );
-  }
-
-  /**
-   * This internal function returns the Document ID for CLAs
-   * @return string OR NULL
-   * */
-  private function _getClaDocumentId() {
-    $sql = "SELECT DocumentId FROM SYS_Documents
-            WHERE Description='Contributor License Agreement'
-            AND Version=1 AND Type='IN'";
-    $result = $this->App->foundation_sql($sql);
-    if ($row = mysql_fetch_assoc($result)) {
-      return $row['DocumentId'];
-    }
-    return NULL;
+    $this->setDisplayNotification(FALSE);
   }
 
 /**
  * This function invalidates a user's CLA document
  */
   private function _invalidateClaDocument() {
-    if (!empty($this->uid) && $this->_getClaDocumentId()) {
-      //First we need to find the active CLA record.
-      $sql = "SELECT PersonID, EffectiveDate
-                FROM PeopleDocuments
-                WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) . "
-                AND DocumentID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->_getClaDocumentId())) . "
-                AND ExpirationDate IS NULL";
+    $document_id = $this->getContributorDocumentId();
+    $user_documents = $this->_getUserContributorSignedDocuments();
+    $document = $user_documents[$document_id];
+
+    if (!empty($this->ldap_uid)  && !empty($document['EffectiveDate'])) {
+      // Log that this event occurred Note that foundationdb uses SYS_ModLog instead of SYS_EvtLog;
+      $sql = "INSERT INTO SYS_ModLog
+        (LogTable,PK1,PK2,LogAction,PersonID,ModDateTime)
+        values (
+        'cla',
+        'cla_service',
+        'EclipseCLA-v1',
+        'INVALIDATE_CLA DOCUMENT',
+        ".$this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid)).",
+        NOW()
+      )";
       $result = $this->App->foundation_sql($sql);
 
-      if ($myrow = mysql_fetch_assoc($result)) {
-         // Log that this event occurred Note that foundationdb uses SYS_ModLog instead of SYS_EvtLog;
-        $sql = "INSERT INTO SYS_ModLog
-                  (LogTable,PK1,PK2,LogAction,PersonID,ModDateTime)
-                  values (
-                    'cla',
-                    'cla_service',
-                    'EclipseCLA-v1',
-                    'INVALIDATE_CLA DOCUMENT',
-                    ".$this->App->returnQuotedString($this->App->sqlSanitize($myrow['PersonID'])).",
-                    NOW()
-                  )";
-        $result = $this->App->foundation_sql($sql);
+      $sql = "UPDATE PeopleDocuments
+        SET ExpirationDate=NOW()
+        WHERE PersonID = ".$this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid))."
+        AND DocumentID = ".$this->App->returnQuotedString($this->App->sqlSanitize($document_id))."
+        AND EffectiveDate = ".$this->App->returnQuotedString($this->App->sqlSanitize($document['EffectiveDate']));
+      $result = $this->App->foundation_sql($sql);
 
-        $sql = "UPDATE PeopleDocuments
-                SET ExpirationDate=NOW()
-                WHERE PersonID = ".$this->App->returnQuotedString($this->App->sqlSanitize($myrow['PersonID']))."
-                AND DocumentID = ".$this->App->returnQuotedString($this->App->sqlSanitize($this->_getClaDocumentId()))."
-                AND EffectiveDate = ".$this->App->returnQuotedString($this->App->sqlSanitize($myrow['EffectiveDate']));
-        $result = $this->App->foundation_sql($sql);
+      // Invalidate the users LDAP group.
+      $this->_actionLdapGroupRecord('CLA_INVALIDATED');
 
-        //Invalidate the users LDAP group.
-        $this->_actionLdapGroupRecord('CLA_INVALIDATED');
-
-        // Making sure we add the notification back in the page
-        if (isset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION'])) {
-          unset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION']);
-          setcookie('ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION', '', time() - 3600, '/');
-        }
-
-
-        // Create success message
-        $this->App->setSystemMessage('invalidate_cla','You have successfuly invalidated your CLA.','success');
+      // Making sure we add the notification back in the page
+      if (isset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION'])) {
+        unset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION']);
+        setcookie('ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION', '', time() - 3600, '/');
       }
-      else {
-        // Create error message
-        $this->App->setSystemMessage('invalidate_cla','An attempt to invalidate the CLA failed because we were unable to find the CLA that matches. (LDAP-02)','danger');
-      }
-    }
-  }
 
-  /**
-   * This function let the user know about an unsigned CLA
-   * */
-  private function _notifyUserOfUnsignedCla() {
-
-    // Check if user don't want to see the notification
-    if (isset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION']) && $_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION'] === '1') {
-      return FALSE;
+      // Create success message
+      $this->App->setSystemMessage('invalidate_cla','You have successfuly invalidated your CLA.','success');
+      $this->_setUserContributorSignedDocuments();
+      return TRUE;
     }
 
-    $committer_string = '';
-    if ($this->is_committer) {
-      $committer_string = ' for which you are not a committer ';
-    }
-
-    $message = '
-      <p>In order to contribute code to an Eclipse Foundation Project ' . $committer_string . 'you will be required to sign a Contributor License Agreement (CLA).</p>
-      <form action="" method="POST">
-        <input type="hidden" name="unsigned_cla_notification" value="1">
-        <input type="hidden" name="state" value="disable_unsigned_notification">
-        <ul class="list-inline margin-top-10 margin-bottom-0">
-          <li><a class="small btn btn-primary" href="http://www.eclipse.org/legal/clafaq.php">What is a CLA?</a></li>
-          <li><a class="small btn btn-primary" href="#open_tab_cla">Sign your CLA</a></li>
-          <li><button class="small btn btn-primary">Disable this message</button></li>
-        </ul>
-      </form>';
-
-    $this->App->setSystemMessage('unsigned_cla',$message,'info');
+    $this->App->setSystemMessage('invalidate_cla','An attempt to invalidate the CLA failed because we were unable to find the CLA that matches. (LDAP-02)','danger');
+    return FALSE;
   }
 
   /**
    * This internal function inserts a new CLA document based off the form data submitted.
    */
   private function _submitClaDocument() {
-
-    // Get values from the submitted form
-    $this->getFieldValues();
-
     // Check if the sumitted fields validate and if there is no signed CLA for this user
-    if ($this->_allowSigning() && $this->_validatedClaFields() && !$this->_claIsSigned() && $this->_getClaDocumentId()) {
+    $document_id = $this->getEcaDocumentId();
+    if ($this->_allowSigning() && $this->_validatedClaFields() && !$this->getClaIsSigned($document_id)) {
 
       $this->_createPeopleRecordIfNecessary();
 
@@ -480,54 +627,56 @@ class Cla {
       $blob = $this->_claDocumentInJson();
 
       $sql = "INSERT INTO PeopleDocuments
-                (PersonId,DocumentId,Version,EffectiveDate,ReceivedDate,
-                ScannedDocumentBLOB,ScannedDocumentMime,ScannedDocumentBytes,
-                ScannedDocumentFileName,Comments)
-              VALUES (
-                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) .",
-                ". $this->App->returnQuotedString($this->App->sqlSanitize($this->_getClaDocumentId())) .",
-                1,
-                now(),
-                now(),
-                '". $blob ."',
-                'application/json',
-                ". strlen($blob) .",
-                'eclipse-cla.json',
-                'Automatically generated CLA'
-              )";
+        (PersonId,DocumentId,Version,EffectiveDate,ReceivedDate,
+        ScannedDocumentBLOB,ScannedDocumentMime,ScannedDocumentBytes,
+        ScannedDocumentFileName,Comments)
+        VALUES (
+        ". $this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid)) .",
+        ". $this->App->returnQuotedString($this->App->sqlSanitize($document_id)) .",
+        1,
+        now(),
+        now(),
+        '". $blob ."',
+        'application/json',
+        ". strlen($blob) .",
+        'eclipse-eca.json',
+        'Automatically generated CLA'
+      )";
       $result = $this->App->foundation_sql($sql);
 
       // Log that this event occurred
       $sql = "INSERT INTO SYS_ModLog
-                (LogTable,PK1,PK2,LogAction,PersonID,ModDateTime)
-                VALUES (
-                  'cla',
-                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->uid)) .",
-                  'EclipseCLA-v1',
-                  'NEW CLA DOCUMENT',
-                  'cla_service',
-                  NOW()
-                )";
+        (LogTable,PK1,PK2,LogAction,PersonID,ModDateTime)
+        VALUES (
+        'cla',
+        ". $this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid)) .",
+        'EclipseCLA-v1',
+        'NEW CLA DOCUMENT',
+        'cla_service',
+        NOW()
+      )";
       $result = $this->App->foundation_sql($sql);
 
       // Submit the users LDAP group.
       $this->_actionLdapGroupRecord('CLA_SIGNED');
-
       $this->App->setSystemMessage('submit_cla',"You successfully submitted the CLA!",'success');
+      $this->_setUserContributorSignedDocuments();
+      return TRUE;
     }
-    else {
-      $this->App->setSystemMessage('submit_cla',"Error, the CLA have not been submitted. (LDAP-03)",'danger');
-    }
+
+    $this->App->setSystemMessage('submit_cla',"Error, the CLA have not been submitted. (LDAP-03)",'danger');
+    return FALSE;
   }
 
   /**
    * This function checks if all the fields from the form validates
    *
    * @return BOOL
-   * */
+   *
+   */
   private function _validatedClaFields() {
-    $is_valid = TRUE;
-    foreach ($this->cla_fields as $field_name => $field_value) {
+    $form_fields = $this->getFieldValues();
+    foreach ($form_fields as $field_name => $field_value) {
       if (strpos($field_name, 'Question') !== FALSE && $field_value !== "1") {
         $this->App->setSystemMessage('submit_cla','You must accept ' . $field_name,'danger');
         $is_valid = FALSE;
@@ -541,7 +690,12 @@ class Cla {
         $is_valid = FALSE;
       }
     }
-    return $is_valid;
+
+    if (!isset($is_valid)) {
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
 }

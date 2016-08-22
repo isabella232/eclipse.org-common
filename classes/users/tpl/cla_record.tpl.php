@@ -13,16 +13,16 @@
 
 <?php if (is_a($this, 'Cla') && $this->Friend->getUID()): ?>
   <div class="alert alert-info" role="alert">
-    <p>The Contributor License Agreement that we have on record for
+    <p>The Eclipse Contributor Agreement that we have on record for
     you will expire on <?php print $this->getClaExpiryDate(); ?></p>
   </div>
   <p>If you've changed employers or your contact information,
-  please invalidate your current CLA and complete the form again.
-  <strong>Note that if you invalidate your CLA, it cannot be undone;
-  you will be prompted to sign a new CLA.</strong></p>
+  please invalidate your current ECA and complete the form again.
+  <strong>Note that if you invalidate your ECA, it cannot be undone;
+  you will be prompted to sign a new ECA.</strong></p>
   <form action="#open_tab_cla" method="POST">
     <input type="hidden" name="state" value="invalidate_cla">
     <input type="hidden" name="form_name" value="cla-form">
-    <button class="btn btn-primary">Invalidate CLA</button>
+    <button class="btn btn-primary">Invalidate ECA</button>
   </form>
 <?php endif; ?>
