@@ -1890,4 +1890,25 @@ EOHTML;
     }
   }
 
+  /**
+   * Get Html of Header Top
+   */
+  public function getHeaderTop() {
+    return "";
+  }
+
+  /**
+   * Get Settings in Javascript variables
+   *
+   * @return string
+   */
+  public function getScriptSettings() {
+
+    // Creates a Javascript object
+    // that can store various settings
+    return "<script>
+              var eclipse = {};
+            </script>";
+  }
+
 }

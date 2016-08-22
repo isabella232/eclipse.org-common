@@ -11,6 +11,7 @@
  *******************************************************************************/
 require_once(realpath(dirname(__FILE__) . "/../../system/session.class.php"));
 require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../../system/cookies.class.php"));
 require_once("donor.class.php");
 require_once("donationEmails.class.php");
 
@@ -25,6 +26,11 @@ class Donation {
    * Eclipse $App()
    */
   private $App = NULL;
+
+  /**
+   * Cookies
+   */
+  private $Cookies = NULL;
 
   /**
    * Donation amount.
@@ -101,6 +107,7 @@ class Donation {
     }
     $this->Donor = new Donor($test_mode);
     $this->App = new App();
+    $this->Cookies = new Cookies();
   }
 
   /**
@@ -519,5 +526,157 @@ class Donation {
     // Send out Emails
     $DonationEmails = new DonationEmails($this);
     $content = $DonationEmails->send_email();
+  }
+
+  /**
+   * Output the HTML of the Banner Ad
+   *
+   * return string
+   */
+  public function outputBannerAd() {
+
+    // Don't display the banner if the date is greater than Sept 30, 2016
+    if(date("Y/m/d") > "2016/09/30") {
+      return FALSE;
+    }
+
+    $banner_cookie = $this->getBannerCookies();
+
+    // Check if the banner should NOT be visible
+    // By default the visible value is 1
+    // The banner should not be visible if the value is anything but 1
+    if (!isset($banner_cookie['donation_banner']['value']['visible']) || $banner_cookie['donation_banner']['value']['visible'] !== 1) {
+      return FALSE;
+    }
+
+    // Don't print the banner if the user is on the donate page or sub pages
+    if (strpos($this->App->getCurrentURL(), '/donate/') !== FALSE) {
+      return FALSE;
+    }
+
+    // Set the default content if the cookie is empty
+    if (!isset($banner_cookie['donation_banner']['value']['template'])) {
+      $banner_cookie['donation_banner']['value']['template'] = 1;
+    }
+
+    // Set the correct content for the template
+    switch ($banner_cookie['donation_banner']['value']['template']) {
+      case 1:
+        $banner_content['title']    = '<h2>September Friend Campaign</h2>';
+        $banner_content['text']     = '<p>Friends of Eclipse,</p>
+                                       <p>Eclipse is an open source community that benefits millions of developers around
+                                       the world each and every day! During the month of September, we are asking you
+                                       to give back to our wonderful open source community. All donations will be used
+                                       to improve Eclipse technology. Your contribution counts!</p>';
+        $banner_content['thankyou'] = '<p>We thank you for this gesture, and for giving back to our community. <i class="fa fa-heart"></i></p>';
+        $banner_content['campaign'] = "PROMO_DONATE_BANNER_1";
+        break;
+      case 2:
+        $banner_content['title']    = '<h2>September Friend Campaign</h2>';
+        $banner_content['text']     = '<p>Calling all Eclipse community members,</p>
+                                       <p>This month are asking you to support the future of the Eclipse community. Show
+                                       your support for open source by contributing today.</p>';
+        $banner_content['thankyou'] = '<p>Thank you for giving back! <i class="fa fa-heart"></i></p>';
+        $banner_content['campaign'] = "PROMO_DONATE_BANNER_2";
+        break;
+      case 3:
+        $banner_content['title']    = '<h2>September Friend Campaign</h2>';
+        $banner_content['text']     = '<p>Eclipse Users,</p>
+                                       <p>The last 15 years with the Eclipse open source community has been an incredible
+                                       ride. Help make the next 15 years even more awesome by contributing today!</p>';
+        $banner_content['thankyou'] = '<p>Thank you for giving back! <i class="fa fa-heart"></i></p>';
+        $banner_content['campaign'] = "PROMO_DONATE_BANNER_3";
+        break;
+      case 4:
+        $banner_content['title']    = '<h2>September Friend Campaign</h2>';
+        $banner_content['text']     = '<p>Friends of Eclipse,</p>
+                                       <p>We love our open source Eclipse community. Donate and help shape the future of
+                                       open source.</p>';
+        $banner_content['thankyou'] = '<p>Thank you for giving back! <i class="fa fa-heart"></i></p>';
+        $banner_content['campaign'] = "PROMO_DONATE_BANNER_4";
+        break;
+    }
+
+    // Print the output if the user is a commiter
+    ob_start();
+    include("tpl/donate_ad.tpl.php");
+    return ob_get_clean();
+  }
+
+  /**
+   * Get the Banner Ad cookies
+   *
+   * return array
+   */
+  public function getBannerCookies() {
+
+    // json decoded cookie
+    $cookies = $this->Cookies->getCookie();
+
+    if (!empty($cookies)) {
+
+      $template = $cookies['donation_banner']['value']['template'];
+      $banner_expiration = $cookies['donation_banner']['value']['banner_expiration'];
+
+      // Check if the expiration data has been set AND has expired
+      // We don't need to go through the loop if the user is seeing the template #4
+      if (isset($banner_expiration) && time() > $banner_expiration && $template !== 4) {
+
+        for ($t = 1; $t <= 3; $t++) {
+          // Check what template is currently being displayed
+          if ($cookies['donation_banner']['value']['template'] == $t) {
+
+            // Update the cookie with the next template
+            // for another 24 hours
+            return $this->_setCookieData($t + 1);
+          }
+        }
+
+      }
+      return $cookies;
+    }
+
+    // If the cookie is not set,
+    // set and return the default values
+    return $this->_setCookieData(1);
+  }
+
+  /**
+   * Set the cookie data
+   *
+   * @param string $name - Name of the cookie item that will be stored
+   * @param int $template - Template number
+   * @param string $banner_expiration - Expiration of the item
+   * @param int $visible
+   * @param string $expiration
+   *
+   * @return array
+   */
+  private function _setCookieData($template = NULL, $visible = 1, $banner_expiration = "", $expiration = "") {
+
+    if (is_null($template) || !is_numeric($visible)) {
+      return FALSE;
+    }
+
+    // Set the default banner expiration date if empty
+    if (empty($banner_expiration)) {
+      $banner_expiration = strtotime('+1 day');
+    }
+
+    // Set the default expiration date if empty
+    if (empty($expiration)) {
+      $expiration = strtotime('+1 month');
+    }
+
+    $data = array(
+      'value' => array(
+        'template' => $template,
+        'banner_expiration' => $banner_expiration,
+        'visible' => $visible
+      ),
+      'expiration' => $expiration,
+    );
+    $this->Cookies->setCookies('donation_banner',$data['value'], $data['expiration']);
+    return $data;
   }
 }

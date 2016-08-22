@@ -22,6 +22,8 @@
     <link rel="shortcut icon" href="<?php print $this->getThemeUrl(); ?>public/images/favicon.ico"/>
     <title><?php print $this->getPageTitle(); ?></title>
     <?php print $this->getExtraHeaders();?>
+    <?php print $this->getScriptSettings(); ?>
   </head>
   <body<?php print $this->getAttributes('body');?>>
     <a class="sr-only" href="#content">Skip to main content</a>
+    <?php print $this->getHeaderTop(); ?>

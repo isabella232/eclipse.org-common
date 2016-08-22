@@ -115,4 +115,45 @@ EOHTML;
 EOHTML;
   }
 
+  /**
+   * Get Html of Header Top
+   */
+  public function getHeaderTop() {
+    require_once(realpath(dirname(__FILE__) . "/../../classes/friends/donation.class.php"));
+    $Donation = new Donation();
+
+    return $Donation->outputBannerAd();
+  }
+
+  public function getScriptSettings() {
+
+    $cookie_name = 'eclipse_settings';
+
+    // Keep only the majob and minor version
+    $php_version = substr(phpversion(), 0, 3);
+
+    // Remove the dot separating the major and minor version
+    $php_version = str_replace(".", "", $php_version);
+
+    // The Cookie class is enabled by default
+    $cookie_enabled = 1;
+
+    // If the PHP version is lower than 5.3
+    // We need to disable the cookie class
+    if ($php_version < "53") {
+      $cookie_enabled = 0;
+    }
+
+    $script_array = array(
+      "settings" => array(
+        "cookies_class" => array(
+          "name" => $cookie_name,
+          "enabled" => $cookie_enabled,
+        ),
+      ),
+    );
+
+    return "<script> var eclipse_org_common = ". json_encode($script_array) ."</script>";
+  }
+
 }

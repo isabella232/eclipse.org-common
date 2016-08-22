@@ -132,23 +132,14 @@ class DonationEmails {
       $this->_get_email_link_eclipse_account();
     }
     else {
-      switch ($level) {
-        case 'donor':
-          $this->_get_email_donor();
-          break;
+      // Check if the donation is at the "donor" level
+      if ($level == 'donor') {
+        $this->_get_email_donor();
+      }
 
-        case 'friend':
-          $this->_get_email_friend();
-          break;
-
-        case 'best_friend':
-          $this->_get_email_best_friend();
-
-          break;
-
-        case 'webmaster_idol':
-          $this->_get_email_webmaster_idol();
-          break;
+      // Check if the donation is at the friend, best_friend or webmaster_idol level
+      if ($level == 'friend' || $level == 'best_friend' || $level == 'webmaster_idol') {
+        $this->_get_email_friend();
       }
     }
 
@@ -282,9 +273,10 @@ class DonationEmails {
    *
    */
   private function _get_email_donor() {
-    $this->email_content = $this->_get_email_greeting_string();
-    $this->email_content .= "Thank you for your donation." . PHP_EOL . PHP_EOL;
-    $this->email_content .= $this->_get_email_footer_string();
+    $email = $this->_get_email_greeting_string();
+    $email .= "Thank you for your donation. Your support is greatly appreciated and your donation will help make the Eclipse Platform even better for millions of developers around the world." . PHP_EOL . PHP_EOL;
+    $email .= $this->_get_email_footer_string();
+    $this->email_content = $email;
   }
 
   /**
@@ -293,42 +285,18 @@ class DonationEmails {
    * This is for a donation between 35USD and 99.99USD
    */
   private function _get_email_friend() {
+    $domain = $this->App->getEclipseDomain();
+    $query = array(
+      'tid' => $this->Donation->get_donation_txn_id(),
+      'iid' => $this->Donation->get_donation_random_invoice_id(),
+    );
+    $query_string = http_build_query($query);
     $email = $this->_get_email_greeting_string();
-    $email .= "Thank you for your donation. We are happy to welcome you as a Friend of Eclipse." . PHP_EOL . PHP_EOL;
-    $email .= "In recognition of your donation, we are pleased to provide the following Friend of Eclipse benefits:" . PHP_EOL . PHP_EOL;
-    $email .= "\t-\tYou may use the Friend of Eclipse logo. It can be found here: " . $this->_get_email_foe_logo_link() . PHP_EOL;
-    $email .= "\t-\tYou get access to the Mirror Site while downloading Eclipse when logged in." . PHP_EOL;
-    $email .= "\t-\tYou get 40% off prints & 50% off ebooks at http://oreilly.com using the discount code: " . $this->_get_email_code('OREILLY') . PHP_EOL . PHP_EOL;
+    $email .= "Thank you for your donation. Your support is greatly appreciated and your donation will help make the Eclipse Platform even better for millions of developers around the world." . PHP_EOL . PHP_EOL;
+    $email .= "You’ve donated more than 35 USD, which means that you are now a Friend of Eclipse (FoE)!  As a Friend of Eclipse you will now have access to the FoE mirror site and a Friend badge for your Eclipse Account. Use this personalized link to login into your Eclipse Account to get access to the mirror site and the badge: https://" . $domain['domain'] . "/donate/link-account.php?" . $query_string . PHP_EOL . PHP_EOL;
+    $email .= "Finally, as a Friend, you also get 40% off print & 50% off ebooks at oreilly.com using the discount code " . $this->_get_email_code('OREILLY') . PHP_EOL . PHP_EOL;
     $email .= $this->_get_email_footer_string();
     $this->email_content = $email;
-  }
-
-  /**
-   * Email for a best friend of Eclipse
-   *
-   * This is for a donation between 100USD and 249.99USD
-   */
-  private function _get_email_best_friend() {
-    $email = $this->_get_email_greeting_string();
-    $email .= "Thank you for your generous donation. We are happy to welcome you as a Best Friend of Eclipse." . PHP_EOL . PHP_EOL;
-    $email .= "In recognition of your donation, we are pleased to provide the following Best Friend of Eclipse benefits:" . PHP_EOL . PHP_EOL;
-    $email .= "\t-\tYou may use the Friend of Eclipse logo. It can be found here: " . $this->_get_email_foe_logo_link() . PHP_EOL;
-    $email .= "\t-\tYou get access to the Mirror Site while downloading Eclipse when logged in." . PHP_EOL;
-    $email .= "\t-\tYou get 40% off prints & 50% off ebooks at http://oreilly.com using the discount code: " . $this->_get_email_code('OREILLY') . PHP_EOL;
-    $email .= "\t-\tYou qualify for a Best Friend discount to attend an EclipseCon conference. The amount depends on the event but use the discount code: " . $this->_get_email_code('ECLIPSECON') . PHP_EOL;
-    $email .= $this->_get_email_tshirt_code_message();
-    $email .= $this->_get_email_footer_string();
-    $this->email_content = $email;
-  }
-
-  /**
-   * Email for a webmaster idol
-   *
-   * This is for a donation of 250USD or more
-   */
-  private function _get_email_webmaster_idol() {
-    //@todo: Confirm with roxanne that best_friend email and webmaster e-mail is the same.
-    return $this->_get_email_best_friend();
   }
 
   /**
@@ -395,9 +363,8 @@ class DonationEmails {
 
   private function _get_email_footer_string() {
     $email = "The Eclipse Foundation relies upon our users' generosity to make Eclipse a great place for open source software development. On behalf of the entire community, thank you for making it possible." . PHP_EOL . PHP_EOL;
+    $email .= "If you have any questions about your donation please visit http://www.eclipse.org/donate/faq.php or send an email to donate@eclipse.org." . PHP_EOL . PHP_EOL;
     $email .= "Best Regards,\n\nMike Milinkovich\nExecutive Director\nEclipse Foundation" . PHP_EOL . PHP_EOL;
-    $email .= "http://www.eclipse.org/donate/\nfriends@eclipse.org" . PHP_EOL . PHP_EOL;
-    $email .= "P.S. We have a Corporate Sponsor program for companies that want to support the Eclipse community.  Please encourage your employer to contribute to the success of open source software at Eclipse.\nhttp://www.eclipse.org/corporate_sponsors/";
     return $email;
   }
 
