@@ -34,7 +34,7 @@ class EclipseUSSBlob extends RestClient{
 
   function __construct(App $App = NULL) {
     parent::__construct($App);
-    $this->setBaseUrl('https://api.eclipse.org/api');
+    $this->setBaseUrl('https://api.eclipse.org');
 
     switch ($this->getEnvShortName()) {
       case 'local':
