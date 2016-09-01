@@ -30,7 +30,7 @@ $Paypal = new Paypal();
       </div>
       <div class="col-sm-10 text-center donate-form">
 
-        <form id="donation_default_eclipse_form" action="<?php print $Paypal->get_gateway_process_url();?>" method="POST">
+        <form id="donation_default_eclipse_form" action="<?php print $Paypal->get_gateway_process_url();?>?utm_source=eclipse.org&utm_medium=donate_program&utm_content=donate-banner&utm_campaign=eclipse_org_<?php print $banner_content['campaign']; ?>" method="POST">
           <div class="row">
             <div class="col-sm-24">
               <ul class="list-inline list-amount">
