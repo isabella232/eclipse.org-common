@@ -587,13 +587,6 @@ class Cla {
       )";
       $result = $this->App->foundation_sql($sql);
 
-      $sql = "UPDATE PeopleDocuments
-        SET ExpirationDate=NOW()
-        WHERE PersonID = ".$this->App->returnQuotedString($this->App->sqlSanitize($this->ldap_uid))."
-        AND DocumentID = ".$this->App->returnQuotedString($this->App->sqlSanitize($document_id))."
-        AND EffectiveDate = ".$this->App->returnQuotedString($this->App->sqlSanitize($document['EffectiveDate']));
-      $result = $this->App->foundation_sql($sql);
-
       // Invalidate the users LDAP group.
       $this->_actionLdapGroupRecord('CLA_INVALIDATED');
 
