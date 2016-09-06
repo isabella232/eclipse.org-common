@@ -15,10 +15,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-20 col-md-18 downloads-bar-ad-white-shape">
-        <p><strong>Register now</strong>  for Eclipse Con Europe 2016, in Ludwidsburg, Germany, October October 25 - 27, 2016</p>
+        <p><?php print $variables['body']; ?></p>
       </div>
       <div class="col-lg-4 col-md-6 downloads-bar-ad-white-content">
-        <a class="btn btn-default" href="#">Register Now</a>
+        <a class="btn btn-default" href="/go/<?php print $variables['button_url']; ?>"><?php print $variables['button_text']; ?></a>
       </div>
     </div>
   </div>

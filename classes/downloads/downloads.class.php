@@ -17,6 +17,7 @@ require_once(dirname(__FILE__) . "/DownloadsProject.class.php");
 require_once(dirname(__FILE__) . "/../../../membership/promo/promos.php");
 require_once(dirname(__FILE__) . "/eclipseInstaller.php");
 require_once(dirname(__FILE__) . "/../ads/promotedDownloads.class.php");
+require_once(dirname(__FILE__) . "/../ads/downloadsBannerAd.class.php");
 
 class Downloads extends DownloadsProject {
 
@@ -187,9 +188,8 @@ class Downloads extends DownloadsProject {
     if ($this->hide_banner_ad) {
       return "";
     }
-    ob_start();
-    include 'tpl/downloadsBannerAd.tpl.php';
-    return ob_get_clean();
+    $DownloadsBannerAd = new DownloadsBannerAd();
+    return $DownloadsBannerAd->output();
   }
 
   /**

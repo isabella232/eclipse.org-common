@@ -120,11 +120,19 @@ class Ad {
   /**
    * Set the HTML of an Ad
    *
-   * @param $html - string
+   * @param $template_path - string
+   *
+   * @param $variables - array - Define an array of strings to be printed in the html template
    */
-  public function setHtml($html = "") {
+  public function setHtml($template_path = "", $variables = array()) {
+
+    // Make sure the template file exist before using it
+    if (!file_exists(dirname(__FILE__) . "/" . $template_path)) {
+      return FALSE;
+    }
+
     ob_start();
-    include $html;
+    include $template_path;
     $this->html = ob_get_clean();
   }
 
