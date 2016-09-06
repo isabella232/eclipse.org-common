@@ -120,6 +120,13 @@ class BaseTheme {
   protected $Menu = NULL;
 
   /**
+   * Metatags
+   *
+   * @var array
+   */
+  protected $metatags = array();
+
+  /**
    *
    * @var Nav()
    */
@@ -253,6 +260,55 @@ class BaseTheme {
     $this->setAttributes('footer3', 'footer-useful-links', 'id');
     $this->setAttributes('footer4', 'footer-other', 'id');
 
+    $image = 'https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-400x400.png';
+    $description = 'Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.';
+
+    // Schema.org markup for Google+
+    $this->setMetatags('itemprop:name', array(
+      'itemprop' => 'name',
+      'content' => $this->getPageTitle(),
+    ));
+
+    $this->setMetatags('itemprop:description', array(
+      'itemprop' => 'description',
+      'content' => $description,
+    ));
+
+   $this->setMetatags('itemprop:image', array(
+      'itemprop' => 'image',
+      'content' => $image,
+    ));
+
+    // Twitter Card data
+    $this->setMetatags('twitter:site', array(
+      'name' => 'twitter:site',
+      'content' => '@EclipseFdn',
+    ));
+
+    $this->setMetatags('twitter:card', array(
+      'name' => 'twitter:card',
+      'content' => 'summary',
+    ));
+
+    $this->setMetatags('twitter:title', array(
+      'name' => 'twitter:title',
+      'content' => $this->getPageTitle(),
+    ));
+
+    $this->setMetatags('twitter:url', array(
+      'name' => 'twitter:url',
+      'content' => $this->App->getCurrentURL(),
+    ));
+
+    $this->setMetatags('twitter:description', array(
+      'name' => 'twitter:description',
+      'content' => $description,
+    ));
+
+    $this->setMetatags('twitter:image', array(
+      'name' => 'twitter:image',
+      'content' => $image,
+    ));
   }
 
   /**
@@ -748,8 +804,6 @@ EOHTML;
     $this->display_toolbar = $display;
   }
 
-
-
   /**
    * Get Eclipse.org base URL
    *
@@ -758,6 +812,58 @@ EOHTML;
   public function getEclipseUrl() {
     $App = $this->_getApp();
     return $App->getWWWPrefix();
+  }
+
+  /**
+   * Set Metatags
+   *
+   * @param string $key
+   * @param array $body
+   * @return boolean
+   */
+  public function setMetatags($key = '', $body = array()) {
+    if (empty($key) || empty($body) || !is_array($body)) {
+      return FALSE;
+    }
+    $this->metatags[$key] = $body;
+    return TRUE;
+  }
+
+  /**
+   * Get Metatags
+   */
+  public function getMetatags(){
+    return $this->metatags;
+  }
+
+  /**
+   * Get metatag by key
+   *
+   * @param string $property
+   * @return boolean|mixed
+   */
+  public function getMetatagByKey($property = '') {
+    if (!isset($this->metatags[$property])) {
+      return FALSE;
+    }
+    return $this->metatags[$property];
+  }
+
+  /**
+   * Get metatags HTML
+   * @return string
+   */
+  public function getMetatagsHTML(){
+    $metatags = $this->getMetatags();
+    $html = "";
+    foreach ($metatags as $key => $body) {
+      $html .= '<meta';
+      foreach ($body as $property => $value) {
+        $html .= ' ' . $property . '="' . $value . '"';
+      }
+      $html .= '/>' . PHP_EOL;
+    }
+    return $html;
   }
 
   /**
@@ -783,12 +889,45 @@ EOHTML;
     $css = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css"/>';
 
     $return = $css . PHP_EOL;
-    // Append the OG tags to the extra headers
-    $return .= $App->getOGDescription() . PHP_EOL;
-    $return .= $App->getOGImage() . PHP_EOL;
-    $return .= $App->getOGTitle() . PHP_EOL;
-    $return .= $App->getOGImageWidth() . PHP_EOL;
-    $return .= $App->getOGImageHeight() . PHP_EOL;
+
+    // Add og:metatags if they haven't been set.
+    // @todo: deprecated og functions in App().
+    if (!$this->getMetatagByKey('og:description')) {
+      $this->setMetatags('og:description', array(
+        'property' => 'og:description',
+        'content' => $App->getOGDescription(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('og:image')) {
+      $this->setMetatags('og:image', array(
+        'property' => 'og:image',
+        'content' => $App->getOGImage(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('og:title')) {
+      $this->setMetatags('og:title', array(
+        'property' => 'og:title',
+        'content' => $App->getOGTitle(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('og:image:width')) {
+      $this->setMetatags('og:image:width', array(
+        'property' => 'og:image:width',
+        'content' => $App->getOGImageWidth(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('og:image:height')) {
+      $this->setMetatags('og:image:height', array(
+        'property' => 'og:image:height',
+        'content' => $App->getOGImageHeight(),
+      ));
+    }
+
+    $return .= $this->getMetatagsHTML();
     $return .= $this->extra_headers;
     $return .= $App->ExtraHtmlHeaders;
 
@@ -1888,27 +2027,6 @@ EOHTML;
         return FALSE;
         break;
     }
-  }
-
-  /**
-   * Get Html of Header Top
-   */
-  public function getHeaderTop() {
-    return "";
-  }
-
-  /**
-   * Get Settings in Javascript variables
-   *
-   * @return string
-   */
-  public function getScriptSettings() {
-
-    // Creates a Javascript object
-    // that can store various settings
-    return "<script>
-              var eclipse = {};
-            </script>";
   }
 
 }

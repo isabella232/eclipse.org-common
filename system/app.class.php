@@ -1562,7 +1562,7 @@ EOHTML;
    * @return string
    */
   function getOGTitle() {
-    return '<meta property="og:title" content="' . $this->OGTitle . '" />' . PHP_EOL;
+    return $this->OGTitle;
   }
 
   /**
@@ -1580,7 +1580,7 @@ EOHTML;
    * @return string
    */
   function getOGDescription() {
-    return '<meta property="og:description" content="' . $this->OGDescription . '" />' . PHP_EOL;
+    return $this->OGDescription;
   }
 
   /**
@@ -1598,7 +1598,7 @@ EOHTML;
    * @return string
    */
   function getOGImage() {
-    return '<meta property="og:image" content="' . $this->OGImage . '" />' . PHP_EOL;
+    return $this->OGImage;
   }
 
   /**
@@ -1614,7 +1614,7 @@ EOHTML;
    * Get $OGImageWidth output
    */
   function getOGImageWidth() {
-    return '<meta property="og:image:width" content="' . $this->OGImageWidth . '" />' . PHP_EOL;
+    return $this->OGImageWidth;
   }
 
   /**
@@ -1632,7 +1632,7 @@ EOHTML;
    * Get $OGImageHeight output
    */
   function getOGImageHeight() {
-    return '<meta property="og:image:height" content="' . $this->OGImageHeight . '" />' . PHP_EOL;
+    return $this->OGImageHeight;
   }
 
   /**
