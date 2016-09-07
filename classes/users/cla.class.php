@@ -590,19 +590,42 @@ class Cla {
       // Invalidate the users LDAP group.
       $this->_actionLdapGroupRecord('CLA_INVALIDATED');
 
-      // Making sure we add the notification back in the page
-      if (isset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION'])) {
-        unset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION']);
-        setcookie('ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION', '', time() - 3600, '/');
+      $invalidated = FALSE;
+      $loop = 0;
+
+      while($loop < 10) {
+        // Wait 1 second for the Perl script to invalidate
+        // the user's CLA/ECA in the PeopleDocuments table
+        sleep(1);
+
+        // Perform another Select to find out if the user
+        // still has a valid CLA/ECA
+        $this->_setUserContributorSignedDocuments();
+
+        if ($this->getClaIsSigned() == FALSE) {
+          $invalidated = TRUE;
+          break;
+        }
+        $loop++;
       }
 
-      // Create success message
-      $this->App->setSystemMessage('invalidate_cla','You have successfuly invalidated your CLA.','success');
-      $this->_setUserContributorSignedDocuments();
-      return TRUE;
+      if ($invalidated) {
+
+        // Making sure we add the notification back in the page
+        if (isset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION'])) {
+          unset($_COOKIE['ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION']);
+          setcookie('ECLIPSE_CLA_DISABLE_UNSIGNED_NOTIFICATION', '', time() - 3600, '/');
+        }
+
+        // Create success message
+        $this->App->setSystemMessage('invalidate_cla','You have successfully invalidated your CLA.','success');
+        return TRUE;
+      }
+      $this->App->setSystemMessage('invalidate_cla','We were unable to invalidate the CLA we have on record. (LDAP-02)','danger');
+      return FALSE;
     }
 
-    $this->App->setSystemMessage('invalidate_cla','An attempt to invalidate the CLA failed because we were unable to find the CLA that matches. (LDAP-02)','danger');
+    $this->App->setSystemMessage('invalidate_cla','An attempt to invalidate the CLA failed because we were unable to find the CLA that matches. (LDAP-03)','danger');
     return FALSE;
   }
 
