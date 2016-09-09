@@ -313,8 +313,10 @@ class Friend {
         $this->setIsBenefit    ($myrow["is_benefit"]);
         $this->setLDAPUID           ($myrow["uid"]);
         $this->setBenefitExpires($myrow["date_expired"]);
+        return TRUE;
       }
     }
+    return FALSE;
   }
 
   function selectFriendID($_fieldname, $_searchfor) {
