@@ -574,24 +574,27 @@ class Donation {
       case 2:
         $banner_content['title']    = '<h2>September Friend Campaign</h2>';
         $banner_content['text']     = '<p>Calling all Eclipse community members,</p>
-                                       <p>This month are asking you to support the future of the Eclipse community. Show
-                                       your support for open source by contributing today.</p>';
+                                       <p>This month we are asking you to support the future of the Eclipse community.
+                                       Show your support for Eclipse by donating today. All donations will be used to
+                                       improve the Eclipse platform.</p>';
         $banner_content['thankyou'] = '<p>Thank you for giving back! <i class="fa fa-heart"></i></p>';
         $banner_content['campaign'] = "PROMO_DONATE_BANNER_2";
         break;
       case 3:
         $banner_content['title']    = '<h2>September Friend Campaign</h2>';
-        $banner_content['text']     = '<p>Eclipse Users,</p>
-                                       <p>The last 15 years with the Eclipse open source community has been an incredible
-                                       ride. Help make the next 15 years even more awesome by contributing today!</p>';
+        $banner_content['text']     = '<p>Friends of Eclipse,</p>
+                                       <p>Eclipse is a free IDE used by millions of developers every day. If each
+                                       developer donates the price of a coffee or beer, we can fund some amazing
+                                       improvements to Eclipse. Please donate today.</p>';
         $banner_content['thankyou'] = '<p>Thank you for giving back! <i class="fa fa-heart"></i></p>';
         $banner_content['campaign'] = "PROMO_DONATE_BANNER_3";
         break;
       case 4:
         $banner_content['title']    = '<h2>September Friend Campaign</h2>';
-        $banner_content['text']     = '<p>Friends of Eclipse,</p>
-                                       <p>We love our open source Eclipse community. Donate and help shape the future of
-                                       open source.</p>';
+        $banner_content['text']     = '<p>Eclipse Users,</p>
+                                       <p>For 15 years, Eclipse has been providing great development tools and they are
+                                       free! Today we need your support to fund the ongoing development of the Eclipse
+                                       platform. Please donate and support Eclipse.</p>';
         $banner_content['thankyou'] = '<p>Thank you for giving back! <i class="fa fa-heart"></i></p>';
         $banner_content['campaign'] = "PROMO_DONATE_BANNER_4";
         break;
