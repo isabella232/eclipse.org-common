@@ -613,7 +613,27 @@ class Donation {
     // json decoded cookie
     $cookies = $this->Cookies->getCookie();
 
-    if (!empty($cookies)) {
+    // Default value of the reset cookie
+    $reset_cookies = FALSE;
+
+    // If the current date is greater or equal to sept 15
+    if (date("Y/m/d") >= "2016/09/15") {
+
+      // By default we don't want to assume
+      // we need to reset the cookie yet
+      $reset_cookies = TRUE;
+
+      // If the reset cookie has been set and the value is 1
+      // this means that we already have resetted the cookie
+      // and don't need to do it again
+      if (isset($cookies['donation_banner']['value']['reset']) && $cookies['donation_banner']['value']['reset'] == 1) {
+        $reset_cookies = FALSE;
+      }
+    }
+
+    // Check if the cookie is not empty
+    // And if the cookie is not reseting
+    if (!empty($cookies) && !$reset_cookies) {
 
       $template = $cookies['donation_banner']['value']['template'];
       $banner_expiration = $cookies['donation_banner']['value']['banner_expiration'];
@@ -638,7 +658,7 @@ class Donation {
 
     // If the cookie is not set,
     // set and return the default values
-    return $this->_setCookieData(1);
+    return $this->_setCookieData(1, 1, '', '', $reset_cookies);
   }
 
   /**
@@ -649,13 +669,22 @@ class Donation {
    * @param string $banner_expiration - Expiration of the item
    * @param int $visible
    * @param string $expiration
+   * @param bool $reset
    *
    * @return array
    */
-  private function _setCookieData($template = NULL, $visible = 1, $banner_expiration = "", $expiration = "") {
+  private function _setCookieData($template = NULL, $visible = 1, $banner_expiration = "", $expiration = "", $reset = NULL) {
 
     if (is_null($template) || !is_numeric($visible)) {
       return FALSE;
+    }
+
+    // If the cookie is reseting,
+    // return its state to 0
+    // so it doesn't reset a second time
+    $reset_value = 0;
+    if ($reset) {
+      $reset_value = 1;
     }
 
     // Set the default banner expiration date if empty
@@ -672,11 +701,12 @@ class Donation {
       'value' => array(
         'template' => $template,
         'banner_expiration' => $banner_expiration,
-        'visible' => $visible
+        'visible' => $visible,
+        'reset' => $reset_value,
       ),
       'expiration' => $expiration,
     );
     $this->Cookies->setCookies('donation_banner',$data['value'], $data['expiration']);
-    return $data;
+    return array('donation_banner' => $data);
   }
 }

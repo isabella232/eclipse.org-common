@@ -35,9 +35,9 @@ $Paypal = new Paypal();
             <div class="col-sm-24">
               <ul class="list-inline list-amount">
                 <li><button type="button" class="btn btn-focus btn-square" value="5">$5</button></li>
-                <li><button type="button" class="btn btn-focus btn-square" value="10">$10</button></li>
+                <li><button type="button" class="btn btn-focus btn-square active" value="10">$10</button></li>
                 <li><button type="button" class="btn btn-focus btn-square" value="35">$35</button></li>
-                <li><button type="button" class="btn btn-focus btn-square active" value="50">$50</button></li>
+                <li><button type="button" class="btn btn-focus btn-square" value="50">$50</button></li>
                 <li><button type="button" class="btn btn-focus btn-square" value="100">$100</button></li>
               </ul>
             </div>
@@ -79,7 +79,7 @@ $Paypal = new Paypal();
             <div class="form-group">
               <div class="input-group">
                 <div class="input-group-addon">USD</div>
-                <input class="donate-amount form-control" type="number" name="amount" value="50">
+                <input class="donate-amount form-control" type="number" name="amount" value="10">
               </div>
             </div>
             <div class="form-group">
