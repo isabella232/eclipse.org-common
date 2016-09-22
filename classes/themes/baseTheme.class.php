@@ -260,55 +260,6 @@ class BaseTheme {
     $this->setAttributes('footer3', 'footer-useful-links', 'id');
     $this->setAttributes('footer4', 'footer-other', 'id');
 
-    $image = 'https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-400x400.png';
-    $description = 'Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.';
-
-    // Schema.org markup for Google+
-    $this->setMetatags('itemprop:name', array(
-      'itemprop' => 'name',
-      'content' => $this->getPageTitle(),
-    ));
-
-    $this->setMetatags('itemprop:description', array(
-      'itemprop' => 'description',
-      'content' => $description,
-    ));
-
-   $this->setMetatags('itemprop:image', array(
-      'itemprop' => 'image',
-      'content' => $image,
-    ));
-
-    // Twitter Card data
-    $this->setMetatags('twitter:site', array(
-      'name' => 'twitter:site',
-      'content' => '@EclipseFdn',
-    ));
-
-    $this->setMetatags('twitter:card', array(
-      'name' => 'twitter:card',
-      'content' => 'summary',
-    ));
-
-    $this->setMetatags('twitter:title', array(
-      'name' => 'twitter:title',
-      'content' => $this->getPageTitle(),
-    ));
-
-    $this->setMetatags('twitter:url', array(
-      'name' => 'twitter:url',
-      'content' => $this->App->getCurrentURL(),
-    ));
-
-    $this->setMetatags('twitter:description', array(
-      'name' => 'twitter:description',
-      'content' => $description,
-    ));
-
-    $this->setMetatags('twitter:image', array(
-      'name' => 'twitter:image',
-      'content' => $image,
-    ));
   }
 
   /**
@@ -924,6 +875,73 @@ EOHTML;
       $this->setMetatags('og:image:height', array(
         'property' => 'og:image:height',
         'content' => $App->getOGImageHeight(),
+      ));
+    }
+
+    $image = 'https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-400x400.png';
+
+    // Schema.org markup for Google+
+    if (!$this->getMetatagByKey('itemprop:name')) {
+      $this->setMetatags('itemprop:name', array(
+        'itemprop' => 'name',
+        'content' => $App->getOGTitle(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('itemprop:description')) {
+      $this->setMetatags('itemprop:description', array(
+        'itemprop' => 'description',
+        'content' => $App->getOGDescription(),
+      ));
+    }
+
+   if (!$this->getMetatagByKey('itemprop:image')) {
+     $this->setMetatags('itemprop:image', array(
+        'itemprop' => 'image',
+        'content' => $image,
+      ));
+   }
+
+    // Twitter Card data
+   if (!$this->getMetatagByKey('twitter:site')) {
+      $this->setMetatags('twitter:site', array(
+        'name' => 'twitter:site',
+        'content' => '@EclipseFdn',
+      ));
+    }
+
+    if (!$this->getMetatagByKey('twitter:card')) {
+      $this->setMetatags('twitter:card', array(
+        'name' => 'twitter:card',
+        'content' => 'summary',
+      ));
+    }
+
+    if (!$this->getMetatagByKey('twitter:title')) {
+      $this->setMetatags('twitter:title', array(
+        'name' => 'twitter:title',
+        'content' => $App->getOGTitle(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('twitter:url')) {
+      $this->setMetatags('twitter:url', array(
+        'name' => 'twitter:url',
+        'content' => $this->App->getCurrentURL(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('twitter:description')) {
+      $this->setMetatags('twitter:description', array(
+        'name' => 'twitter:description',
+        'content' => $App->getOGDescription(),
+      ));
+    }
+
+    if (!$this->getMetatagByKey('twitter:image')) {
+      $this->setMetatags('twitter:image', array(
+        'name' => 'twitter:image',
+        'content' => $image,
       ));
     }
 
