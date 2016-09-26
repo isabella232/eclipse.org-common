@@ -78,7 +78,7 @@ $Paypal = new Paypal();
           <div class="form-inline margin-bottom-10 donate-submit">
             <div class="form-group">
               <div class="input-group">
-                <div class="input-group-addon">USD</div>
+                <div class="input-group-addon">$</div>
                 <input class="donate-amount form-control" type="number" name="amount" value="10">
               </div>
             </div>
