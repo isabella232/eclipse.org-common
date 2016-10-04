@@ -55,12 +55,11 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             js_frontend: {
-                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/main.js'],
+                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/lib/solstice-cookies.js', './src/javascript/main.js', './src/javascript/donate.js'],
                 dest: './public/javascript/main.min.js',
             },
             js_barebone: {
                 src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/main.js'],
-
                 dest: './public/javascript/barebone.min.js',
             }
         },
@@ -80,17 +79,19 @@ module.exports = function(grunt) {
             js_frontend: {
                 files: [
                 // watched files
-                './bower_components/jquery/jquery.js', 
-                './bower_components/bootstrap/dist/js/bootstrap.js', 
-                './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', 
-                './src/javascript/main.js'],
+                './bower_components/jquery/jquery.js',
+                './bower_components/bootstrap/dist/js/bootstrap.js',
+                './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js',
+                './src/javascript/main.js',
+                './src/javascript/donate.js',
+                './src/javascript/lib/solstice-cookies.js'],
                 // tasks to run
                 tasks: ['concat:js_barebone', 'concat:js_frontend', 'uglify:frontend'],
             },
             less: {
-                files: ['./src/stylesheets/*.less', 
-                        './src/stylesheets/**/*.less', 
-                        './bower_components/solstice-assets/less/*.less', 
+                files: ['./src/stylesheets/*.less',
+                        './src/stylesheets/**/*.less',
+                        './bower_components/solstice-assets/less/*.less',
                         './bower_components/solstice-assets/**/*.less',
                         './html_template/barebone/stylesheets/*.less'],
                 // watched files
