@@ -452,7 +452,7 @@ class Sitelogin {
     }
     else {
       if ($this->t != "") {
-        $sql = "SELECT /* USE MASTER */ email, COUNT(1) AS RecordCount FROM account_requests WHERE token = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->t));
+        $sql = "SELECT /* USE MASTER */ email, fname, lname, COUNT(1) AS RecordCount FROM account_requests WHERE token = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->t));
         $rs = $this->App->eclipse_sql($sql);
         $myrow = mysql_fetch_assoc($rs);
         if ($myrow['RecordCount'] <= 0) {
@@ -477,20 +477,42 @@ class Sitelogin {
         }
         else {
           # Update this row, change IP address to reflect that of the person who successfully confirmed this email to avoid bombing
-          $sql = "UPDATE account_requests SET token = 'CONFIRM_SUCCESS', ip = " . $this->App->returnQuotedString($this->App->sqlSanitize($_SERVER['REMOTE_ADDR']))
+          $sql = "UPDATE account_requests SET token = 'CONFIRM_SUCCESS_MOD', ip = " . $this->App->returnQuotedString($this->App->sqlSanitize($_SERVER['REMOTE_ADDR']))
           . " WHERE token = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->t));
           $rs = $this->App->eclipse_sql($sql);
-
+/*
           $this->messages['confirm']['success'][] = "Thank you for confirming your email address.
           Your Eclipse.org account is now active and you may now </strong>log in</strong></a>.
           Please note that some Eclipse.org pages may require you to provide your login
           credentials.";
+*/
+          $this->messages['confirm']['success'][] = "Thank you for confirming your email address.
+          Your Eclipse.org account is under moderation and it can take up to few days before it's approved.";
+
+          # Send mail to webmaster
+          $mail = "Dear webmaster,\n\n";
+          $mail .= "A new eclipse.org account was confirmed and is ready for review:\n\n";
+          $mail .= "Email: " . $myrow['email'] . "\n\n";
+          $mail .= "First name: " . $myrow['fname'] . "\n\n";
+          $mail .= "Last name: " . $myrow['lname'] . "\n\n";
+          // add profile info if a record was found.
+          if ($this->_get_profile_from_token($this->t)) {
+             $mail .= "Organization: " . $this->organization. "\n\n";
+             $mail .= "Country: " . $this->country. "\n\n";
+             $mail .= "Gender: " . $this->gender. "\n\n";
+             $mail .= "Remote addr: " . $_SERVER['REMOTE_ADDR'] . "\n\n";
+             $mail .= "Browser: " . $_SERVER['HTTP_USER_AGENT'] . "\n\n";
+             $mail .= "Referer: " . $_SERVER['HTTP_REFERER'] . "\n\n";
+          }
+          $mail .= " -- Eclipse webdev\n";
+          $headers = 'From: Eclipse Webmaster (automated) <webmaster@eclipse.org>' . "\n" . 'Content-Type: text/plain; charset=UTF-8';
+          mail('webmaster@eclipse.org', "New account request (Moderation)", $mail, $headers);
 
           $EventLog = new EvtLog();
           $EventLog->setLogTable("__ldap");
           $EventLog->setPK1($this->App->sqlSanitize($this->t));
           $EventLog->setPK2($_SERVER['REMOTE_ADDR']);
-          $EventLog->setLogAction("ACCT_CREATE_CONFIRM_SUCCESS");
+          $EventLog->setLogAction("ACCT_CREATE_CONFIRM_MOD");
           $EventLog->insertModLog($myrow['email']);
         }
       }
@@ -707,6 +729,30 @@ class Sitelogin {
         return $this->Ldapconn->getGithubIDFromMail($this->Friend->getEmail());
         break;
     }
+  }
+
+  private function _get_profile_from_token($token = NULL){
+    if (empty($token)) {
+      return FALSE;
+    }
+    $sql = "SELECT /* USE MASTER */
+        user_org as organization, user_jobtitle as jobtitle, user_bio as bio, user_interests as interests, user_website as website, user_twitter_handle as twitter_handle, user_country as country, user_gender as gender
+      FROM users_profiles
+      WHERE  user_uid = " . $this->App->returnQuotedString($token) . "
+      ORDER BY user_update DESC LIMIT 1";
+      $rs = $this->App->eclipse_sql($sql);
+      $profile = mysql_fetch_assoc($rs);
+
+    if (!empty($profile)) {
+      foreach ($profile as $key => $value) {
+        if (is_null($value)) {
+          $value = "";
+        }
+        $this->{$key} = $value;
+      }
+      return TRUE;
+    }
+    return FALSE;
   }
 
   private function _get_default_profile_fields($get_default_values = FALSE){
