@@ -89,14 +89,20 @@ class EclipseUSSBlob extends RestClient{
    *
    * @return Response $data
    */
-  public function getBlob($application_token = "", $blob_key = "") {
+  public function getBlob($application_token = "", $blob_key = "", $username = "") {
     $etag = $this->getEtag();
     if (!empty($etag)) {
       $this->setHeader(array(
         'If-None-Match' => $etag,
       ));
     }
-    $data = $this->get('uss/blob/' . $application_token . '/' . $blob_key);
+
+    $url = 'uss/blob/';
+    if (!empty($username)) {
+      $url =  'account/profile/' . $username . '/blob/';
+    }
+    $url .= $application_token . '/' . $blob_key;
+    $data = $this->get($url);
     $this->unsetHeader('If-None-Match');
     return $data;
   }
@@ -110,9 +116,12 @@ class EclipseUSSBlob extends RestClient{
    *
    * @return Response $data
    */
-  public function indexBlob($application_token = "", $page = 1, $pagesize = 20) {
-    $url = 'uss/blob/' . $application_token . '?page=' . $page . '&pagesize=' . $pagesize;
-    $data = $this->get($url);
+  public function indexBlob($application_token = "", $page = 1, $pagesize = 20, $username = "") {
+    $url = 'uss/blob/' . $application_token;
+    if (!empty($username)) {
+      $url = 'account/profile/' . $username . '/blob/' . $application_token;
+    }
+    $data = $this->get($url . '?page=' . $page . '&pagesize=' . $pagesize);
     return $data;
   }
 
@@ -125,9 +134,8 @@ class EclipseUSSBlob extends RestClient{
    *
    * @return Response $data
    */
-  public function indexAllBlob($application_token = "", $page = 1, $pagesize = 20) {
-    $url = 'uss/blob/' . $application_token . '?page=' . $page . '&pagesize=' . $pagesize;
-    $data = $this->get($url);
+  public function indexAllBlob($application_token = "", $page = 1, $pagesize = 20, $username = "") {
+    $data = $this->indexBlob($application_token, $page, $pagesize, $username);
 
     $return = array();
     $return[] = $data;
