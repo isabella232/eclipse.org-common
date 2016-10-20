@@ -19,14 +19,15 @@ if(isset($App)) {
 print $this->getDoctype();
 ?>
 <head>
-	<title><?= $pageTitle ?></title><meta name="author" content="<?= $pageAuthor ?>" />
-	<?php
-	if ($App->OGTitle != "") {
-		echo($App->getOGTitle());
-	}
-	echo($App->getOGDescription());
-	echo($App->getOGImage());
-	?>
+	<title><?= $pageTitle ?></title>
+	<meta name="author" content="<?= $pageAuthor ?>" />
+	<?php if ($App->getOGTitle() != "") :?>
+		<meta property="og:title" content="<?php print $App->getOGTitle(); ?>" />
+	<?php else: ?>
+		<meta property="og:title" content="<?php print $pageTitle; ?>" />
+	<?php endif;?>
+	<meta property="og:description" content="<?php print $App->getOGDescription();?>"/>
+	<meta property="og:image" content="<?php print $App->getOGImage();?>"/>
 	<meta name="keywords" content="<?= $pageKeywords ?>" />
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<link rel="stylesheet" type="text/css" href="/eclipse.org-common/yui/2.6.0/build/reset-fonts-grids/reset-fonts-grids.css" media="screen" />
