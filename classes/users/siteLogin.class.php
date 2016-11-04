@@ -17,6 +17,7 @@ require_once("accountCreator.class.php");
 require_once('/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php');
 require_once(realpath(dirname(__FILE__) . "/../../system/evt_log.class.php"));
 require_once(realpath(dirname(__FILE__) . "/../captcha/captcha.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../forms/formToken.class.php"));
 
 define('SITELOGIN_EMAIL_REGEXP', '/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/');
 
@@ -477,49 +478,22 @@ class Sitelogin {
         }
         else {
           // New accounts will always have a value in $myrow['password'].
-          $token_confirm = 'CONFIRM_SUCCESS_MOD';
-          if (empty($myrow['password'])) {
-            $token_confirm = 'CONFIRM_SUCCESS';
-          }
+          $token_confirm = 'CONFIRM_SUCCESS';
           # Update this row, change IP address to reflect that of the person who successfully confirmed this email to avoid bombing
           $sql = "UPDATE account_requests SET token = ". $this->App->returnQuotedString($this->App->sqlSanitize($token_confirm)) .", ip = " . $this->App->returnQuotedString($this->App->sqlSanitize($_SERVER['REMOTE_ADDR']))
           . " WHERE token = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->t));
           $rs = $this->App->eclipse_sql($sql);
 
-          if ($token_confirm === 'CONFIRM_SUCCESS') {
-            $this->messages['confirm']['success'][] = "Thank you for confirming your email address.
-            Your Eclipse.org account is now active and you may now </strong>log in</strong></a>.
-            Please note that some Eclipse.org pages may require you to provide your login
-            credentials.";
-          }
-          else {
-            $this->messages['confirm']['success'][] = "Thank you for confirming your email address.
-            Your Eclipse.org account is under moderation and it can take up to few days before it's approved.";
+          $this->messages['confirm']['success'][] = "Thank you for confirming your email address.
+          Your Eclipse.org account is now active and you may now </strong>log in</strong></a>.
+          Please note that some Eclipse.org pages may require you to provide your login
+          credentials.";
 
-            # Send mail to webmaster
-            $mail = "Dear webmaster,\n\n";
-            $mail .= "A new eclipse.org account was confirmed and is ready for review:\n\n";
-            $mail .= "Email: " . $myrow['email'] . "\n\n";
-            $mail .= "First name: " . $myrow['fname'] . "\n\n";
-            $mail .= "Last name: " . $myrow['lname'] . "\n\n";
-            // add profile info if a record was found.
-            if ($this->_get_profile_from_token($this->t)) {
-               $mail .= "Organization: " . $this->organization. "\n\n";
-               $mail .= "Country: " . $this->country. "\n\n";
-               $mail .= "Gender: " . $this->gender. "\n\n";
-               $mail .= "Remote addr: " . $_SERVER['REMOTE_ADDR'] . "\n\n";
-               $mail .= "Browser: " . $_SERVER['HTTP_USER_AGENT'] . "\n\n";
-               $mail .= "Referer: " . $_SERVER['HTTP_REFERER'] . "\n\n";
-            }
-            $mail .= " -- Eclipse webdev\n";
-            $headers = 'From: Eclipse Webmaster (automated) <webmaster@eclipse.org>' . "\n" . 'Content-Type: text/plain; charset=UTF-8';
-            mail('webmaster@eclipse.org', "New account request (Moderation)", $mail, $headers);
-          }
           $EventLog = new EvtLog();
           $EventLog->setLogTable("__ldap");
           $EventLog->setPK1($this->App->sqlSanitize($this->t));
           $EventLog->setPK2($_SERVER['REMOTE_ADDR']);
-          $EventLog->setLogAction("ACCT_CREATE_CONFIRM_MOD");
+          $EventLog->setLogAction("ACCT_CREATE_CONFIRM");
           $EventLog->insertModLog($myrow['email']);
         }
       }
@@ -529,8 +503,29 @@ class Sitelogin {
     }
   }
 
-  private function _createAccount(){
+  private function _createAccount() {
     if ($this->username != "" && $this->fname != "" && $this->lname != "" && $this->password1 != "") {
+      $FormToken = new FormToken();
+      if (!$FormToken->verifyToken($_POST['token-create-account']) || !empty($_POST['create-account-email-req'])) {
+        # Send mail to webmaster
+        $mail = "Dear webmaster,\n\n";
+        $mail .= "A new eclipse.org account was denied:\n\n";
+        $mail .= "Email: " . $this->username . "\n\n";
+        $mail .= "First name: " . $this->fname . "\n\n";
+        $mail .= "Last name: " . $this->lname . "\n\n";
+
+        $mail .= "Organization: " . $this->organization. "\n\n";
+        $mail .= "Country: " . $this->country. "\n\n";
+        $mail .= "Gender: " . $this->gender. "\n\n";
+        $mail .= "Remote addr: " . $_SERVER['REMOTE_ADDR'] . "\n\n";
+        $mail .= "Browser: " . $_SERVER['HTTP_USER_AGENT'] . "\n\n";
+        $mail .= "Referer: " . $_SERVER['HTTP_REFERER'] . "\n\n";
+
+        $mail .= " -- Eclipse webdev\n";
+        $headers = 'From: Eclipse Webmaster (automated) <webmaster@eclipse.org>' . "\n" . 'Content-Type: text/plain; charset=UTF-8';
+        mail('webmaster@eclipse.org', "Denied Account: Possible spammer", $mail, $headers);
+        return FALSE;
+      }
       # Create an account.  Check to ensure this IP address hasn't flooded us with requests
       # or that this email address doesn't already have an account
       $sql = "SELECT /* USE MASTER */ COUNT(1) AS RecordCount FROM account_requests WHERE ip = " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']);
@@ -1420,102 +1415,110 @@ END;
   }
 
   private function _userAuthentification() {
-    if (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username) && $this->stage == "login") {
-      $this->messages['login']['danger'][] = "Your email address does not appear to be valid.";
+    $process = FALSE;
+    $FormToken = new FormToken();
+    if ($FormToken->verifyToken($_POST['token-login']) && empty($_POST['login-username'])) {
+      $process = TRUE;
     }
 
-    $dn = $this->Ldapconn->authenticate($this->username, $this->password);
-    if ($dn) {
-      # If you've logged in with your uid, we need to get the email.
-      if (!preg_match("/@/", $this->username)) {
-        $this->username = $this->Ldapconn->getLDAPAttribute($dn, "mail");
-      }
+    if (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username) && $this->stage == "login") {
+      $this->messages['login']['danger'][] = "Your email address does not appear to be valid.";
+      $process = FALSE;
+    }
 
-      $this->Friend->getIsCommitter();
+    if ($process) {
+      $dn = $this->Ldapconn->authenticate($this->username, $this->password);
+      if ($dn) {
+        # If you've logged in with your uid, we need to get the email.
+        if (!preg_match("/@/", $this->username)) {
+          $this->username = $this->Ldapconn->getLDAPAttribute($dn, "mail");
+        }
 
-      # Look up BZ ID
+        $this->Friend->getIsCommitter();
 
-      $sql = "SELECT /* USE MASTER */ userid FROM profiles where login_name = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->username));
-      $rs = $this->App->bugzilla_sql($sql);
+        # Look up BZ ID
 
-      if ($myrow = mysql_fetch_assoc($rs)) {
-
-        $uid = $this->Ldapconn->getUIDFromMail($this->username);
-        $this->Friend->selectFriend($this->Friend->selectFriendID("uid", $uid));
-        $this->Friend->setBugzillaID($myrow['userid']);
-
-      }
-      else {
-        # Try to log into Bugzilla using these credentials
-        # This will create one
-        # creating one is important, since not all our sites use LDAP auth, and some rely on BZ auth
-        $AccountCreator = New AccountCreator();
-        $AccountCreator->setUsername($this->username);
-        $AccountCreator->setPassword($this->password);
-        $AccountCreator->execute();
-
-        # create/update Gerrit account
-        # Bug 421319
-        # sleep(1);  # not needed if we take the time to log into Gerrit
-        $AccountCreator = New AccountCreator();
-        $AccountCreator->setUrl('https://git.eclipse.org/r/login/q/status:open,n,z');
-        $AccountCreator->setAccountType('gerrit');
-        $AccountCreator->setUsername($this->username);
-        $AccountCreator->setPassword($this->password);
-        $http_code = $AccountCreator->execute();
-        # TODO: verify that account was created (see bugzilla SQL below)
-
-        # Get BZ ID now that an acct should be created
         $sql = "SELECT /* USE MASTER */ userid FROM profiles where login_name = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->username));
         $rs = $this->App->bugzilla_sql($sql);
+
         if ($myrow = mysql_fetch_assoc($rs)) {
+
           $uid = $this->Ldapconn->getUIDFromMail($this->username);
           $this->Friend->selectFriend($this->Friend->selectFriendID("uid", $uid));
           $this->Friend->setBugzillaID($myrow['userid']);
+
         }
         else {
-          $EventLog = new EvtLog();
-          $EventLog->setLogTable("bugs");
-          $EventLog->setPK1($this->password);
-          $EventLog->setPK2($sql);
-          $EventLog->setLogAction("AUTH_BZID_NOT_FOUND");
-          $EventLog->insertModLog($dn);
-          $this->Friend->setBugzillaID(41806);  # Nobody.
+          # Try to log into Bugzilla using these credentials
+          # This will create one
+          # creating one is important, since not all our sites use LDAP auth, and some rely on BZ auth
+          $AccountCreator = New AccountCreator();
+          $AccountCreator->setUsername($this->username);
+          $AccountCreator->setPassword($this->password);
+          $AccountCreator->execute();
+
+          # create/update Gerrit account
+          # Bug 421319
+          # sleep(1);  # not needed if we take the time to log into Gerrit
+          $AccountCreator = New AccountCreator();
+          $AccountCreator->setUrl('https://git.eclipse.org/r/login/q/status:open,n,z');
+          $AccountCreator->setAccountType('gerrit');
+          $AccountCreator->setUsername($this->username);
+          $AccountCreator->setPassword($this->password);
+          $http_code = $AccountCreator->execute();
+          # TODO: verify that account was created (see bugzilla SQL below)
+
+          # Get BZ ID now that an acct should be created
+          $sql = "SELECT /* USE MASTER */ userid FROM profiles where login_name = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->username));
+          $rs = $this->App->bugzilla_sql($sql);
+          if ($myrow = mysql_fetch_assoc($rs)) {
+            $uid = $this->Ldapconn->getUIDFromMail($this->username);
+            $this->Friend->selectFriend($this->Friend->selectFriendID("uid", $uid));
+            $this->Friend->setBugzillaID($myrow['userid']);
+          }
+          else {
+            $EventLog = new EvtLog();
+            $EventLog->setLogTable("bugs");
+            $EventLog->setPK1($this->password);
+            $EventLog->setPK2($sql);
+            $EventLog->setLogAction("AUTH_BZID_NOT_FOUND");
+            $EventLog->insertModLog($dn);
+            $this->Friend->setBugzillaID(41806);  # Nobody.
+          }
         }
-      }
 
-      # Override loaded friends info with LDAP info
-      $this->Friend->setFirstName($this->Ldapconn->getLDAPAttribute($dn, "givenName"));
-      $this->Friend->setLastName($this->Ldapconn->getLDAPAttribute($dn, "sn"));
-      $realname = $this->Friend->getFirstName() . " " . $this->Friend->getLastName();
-      $this->Friend->setDn($dn);
-      $this->Friend->setEMail($this->username);
+        # Override loaded friends info with LDAP info
+        $this->Friend->setFirstName($this->Ldapconn->getLDAPAttribute($dn, "givenName"));
+        $this->Friend->setLastName($this->Ldapconn->getLDAPAttribute($dn, "sn"));
+        $realname = $this->Friend->getFirstName() . " " . $this->Friend->getLastName();
+        $this->Friend->setDn($dn);
+        $this->Friend->setEMail($this->username);
 
-      $this->Session->setIsPersistent($this->remember);
-      $this->Session->setFriend($this->Friend);
-      $this->Session->create();
+        $this->Session->setIsPersistent($this->remember);
+        $this->Session->setFriend($this->Friend);
+        $this->Session->create();
 
 
-      # Only temporarily, re-hash the password in Bugzilla so that other services can use it
-      $bzpass = $this->_generateBugzillaSHA256Password($this->password);
-      $this->App->bugzilla_sql("SET NAMES 'utf8'");
-      $sql = "UPDATE profiles SET cryptpassword='" . $this->App->sqlSanitize($bzpass) . "', realname='" . $this->App->sqlSanitize($realname) . "' WHERE login_name = " .  $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . " LIMIT 1";
+        # Only temporarily, re-hash the password in Bugzilla so that other services can use it
+        $bzpass = $this->_generateBugzillaSHA256Password($this->password);
+        $this->App->bugzilla_sql("SET NAMES 'utf8'");
+        $sql = "UPDATE profiles SET cryptpassword='" . $this->App->sqlSanitize($bzpass) . "', realname='" . $this->App->sqlSanitize($realname) . "' WHERE login_name = " .  $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . " LIMIT 1";
 
-      $this->App->bugzilla_sql($sql);
+        $this->App->bugzilla_sql($sql);
 
-      # Begin: Bug 432830 - Remove the continue button in site_login
-      if ($this->takemeback != "") {
-        header("Location: " . $this->takemeback, 302);
+        # Begin: Bug 432830 - Remove the continue button in site_login
+        if ($this->takemeback != "") {
+          header("Location: " . $this->takemeback, 302);
+        }
+        else {
+         header("Location: myaccount.php", 302);
+        }
+        exit();
+        # END: Bug 432830 - Remove the continue button in site_login
       }
       else {
-       header("Location: myaccount.php", 302);
+        $this->messages["login"]['danger'][] = "Authentication Failed. Please verify that your email address and password are correct.";
       }
-      exit();
-      # END: Bug 432830 - Remove the continue button in site_login
-
-    }
-    else {
-      $this->messages["login"]['danger'][] = "Authentication Failed. Please verify that your email address and password are correct.";
     }
   }
 
