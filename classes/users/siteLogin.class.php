@@ -39,6 +39,8 @@ class Sitelogin {
 
   private $githubid = "";
 
+  private $formToken = NULL;
+
   private $Friend = NULL;
 
   private $fname = "";
@@ -125,6 +127,7 @@ class Sitelogin {
     $this->Session = $this->App->useSession();
     $this->Friend = $this->Session->getFriend();
     $this->Ldapconn = new LDAPConnection();
+    $this->FormToken = new FormToken();
 
     $this->_sanitizeVariables();
     $this->user_uid = $this->Ldapconn->getUIDFromMail($this->Friend->getEmail());
@@ -505,8 +508,7 @@ class Sitelogin {
 
   private function _createAccount() {
     if ($this->username != "" && $this->fname != "" && $this->lname != "" && $this->password1 != "") {
-      $FormToken = new FormToken();
-      if (!$FormToken->verifyToken($_POST['token-create-account']) || !empty($_POST['create-account-email-req'])) {
+      if (!$this->FormToken->verifyToken($_POST['token-create-account']) || !empty($_POST['create-account-email-req'])) {
         # Send mail to webmaster
         $mail = "Dear webmaster,\n\n";
         $mail .= "A new eclipse.org account was denied:\n\n";
@@ -1416,8 +1418,7 @@ END;
 
   private function _userAuthentification() {
     $process = FALSE;
-    $FormToken = new FormToken();
-    if ($FormToken->verifyToken($_POST['token-login']) && empty($_POST['login-username'])) {
+    if ($this->FormToken->verifyToken($_POST['token-login']) && empty($_POST['login-username'])) {
       $process = TRUE;
     }
 
