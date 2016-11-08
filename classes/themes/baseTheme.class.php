@@ -1284,7 +1284,8 @@ EOHTML;
       'default-footer',
       'barebone',
       'thin',
-      'thin-header'
+      'thin-header',
+      'default-with-footer-min'
     );
     $this->layout = 'default';
     if (in_array($layout, $acceptable_layouts)) {
@@ -1847,6 +1848,7 @@ EOHTML;
     $files['body'] = $eclipse_org_common_root . '/themes/solstice/body.php';
     $files['main_menu'] = $eclipse_org_common_root . '/themes/solstice/main_menu.php';
     $files['footer'] = $eclipse_org_common_root . '/themes/solstice/footer.php';
+    $files['footer-min'] = $eclipse_org_common_root . '/themes/solstice/footer-min.php';
 
     // Validate theme files
     foreach ($files as $key => $template_files) {
@@ -1918,7 +1920,6 @@ EOHTML;
         $this->setAttributes('main-menu-wrapper', 'col-sm-18 col-md-18 col-lg-19');
         $this->setAttributes('main-menu', 'navbar-right');
         $this->setAttributes('header-row', 'row');
-
         $this->setDisplayHeaderRight(FALSE);
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
@@ -1927,6 +1928,13 @@ EOHTML;
       case 'default-header':
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
+        break;
+
+      case 'default-with-footer-min':
+        print $this->getThemeFile('header');
+        print $this->getThemeFile('menu');
+        print $this->getThemeFile('body');
+        print $this->getThemeFile('footer-min');
         break;
 
       case 'default':
