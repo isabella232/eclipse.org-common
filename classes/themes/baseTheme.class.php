@@ -1285,7 +1285,8 @@ EOHTML;
       'barebone',
       'thin',
       'thin-header',
-      'default-with-footer-min'
+      'default-with-footer-min',
+      'thin-with-footer-min'
     );
     $this->layout = 'default';
     if (in_array($layout, $acceptable_layouts)) {
@@ -1923,6 +1924,21 @@ EOHTML;
         $this->setDisplayHeaderRight(FALSE);
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
+        break;
+
+      case 'thin-with-footer-min':
+        $this->setAttributes('header-wrapper', 'thin-header');
+        $this->resetAttributes('header-left', 'class');
+        $this->setAttributes('header-left', 'col-sm-6 col-md-6 col-lg-5');
+        $this->resetAttributes('main-menu-wrapper', 'class');
+        $this->setAttributes('main-menu-wrapper', 'col-sm-18 col-md-18 col-lg-19');
+        $this->setAttributes('main-menu', 'navbar-right');
+        $this->setAttributes('header-row', 'row');
+        $this->setDisplayHeaderRight(FALSE);
+        print $this->getThemeFile('header');
+        print $this->getThemeFile('menu');
+        print $this->getThemeFile('body');
+        print $this->getThemeFile('footer-min');
         break;
 
       case 'default-header':
