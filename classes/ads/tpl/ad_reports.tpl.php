@@ -1,4 +1,9 @@
 <?php $impressions = $this->getImpressions();?>
+<form method="POST" action="">
+  <input name="state" value="exportCsv" type="hidden">
+  <input class="btn btn-primary" type="submit" value="Export CSV" name="exportCsv">
+</form>
+<hr>
 <table class="table">
   <thead>
     <tr>

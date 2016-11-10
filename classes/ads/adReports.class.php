@@ -9,11 +9,15 @@
  * Contributors:
  *    Eric Poirier(Eclipse Foundation)
  *******************************************************************************/
+
 require_once(realpath(dirname(__FILE__) . "/../../system/app.class.php"));
 require_once(realpath(dirname(__FILE__) . "/../../system/session.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../../system/file_export.class.php"));
 
 class AdReports {
   private $App;
+
+  private $FileExport = NULL;
 
   private $impressions = NULL;
 
@@ -23,15 +27,25 @@ class AdReports {
 
   private $Session = NULL;
 
+  private $state = "";
+
   public function AdReports() {
 
     $this->App = new App();
+
+    $this->FileExport = new FileExport();
 
     // Require login for this page.
     // Anonymous users get redirected to login page
     $this->Session = $this->App->useSession('required');
 
     $this->Friend = $this->Session->getFriend();
+
+    $this->state = $this->App->getHTTPParameter('state','POST');
+
+    if ($this->state == 'exportCsv') {
+      $this->FileExport->buildCsv('ad-reports', $this->getImpressions(), array('campaignKey','date','impressions','clicks','Ratio (%)'));
+    }
   }
 
   public function outputPage($pageTitle = 'Eclipse Ads Report') {
