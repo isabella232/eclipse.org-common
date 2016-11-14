@@ -1224,6 +1224,7 @@ EOHTML;
     if (!$this->getDisplayGoogleSearch()) {
       return "";
     }
+    $domain = $this->App->getEclipseDomain();
     return <<<EOHTML
     <div class="row"><div class="col-md-24">
     <div id="custom-search-form" class="reset-box-sizing">
@@ -1239,7 +1240,7 @@ EOHTML;
       s.parentNode.insertBefore(gcse, s);
     })();
     </script>
-    <gcse:searchbox-only></gcse:searchbox-only>
+    <gcse:searchbox-only gname="main" resultsUrl="https://{$domain['domain']}/home/search.php"></gcse:searchbox-only>
     </div></div></div>
 EOHTML;
   }
