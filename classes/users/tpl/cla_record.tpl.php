@@ -18,11 +18,11 @@
   </div>
   <p>If you've changed employers or your contact information,
   please invalidate your current ECA and complete the form again.
-  <strong>Note that if you invalidate your ECA, it cannot be undone;
+  <strong>Note that if you invalidate / renew your ECA, it cannot be undone;
   you will be prompted to sign a new ECA.</strong></p>
   <form action="#open_tab_cla" method="POST">
     <input type="hidden" name="state" value="invalidate_cla">
     <input type="hidden" name="form_name" value="cla-form">
-    <button class="btn btn-primary">Invalidate ECA</button>
+    <button class="btn btn-primary">Invalidate / Renew ECA</button>
   </form>
 <?php endif; ?>
