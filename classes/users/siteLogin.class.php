@@ -772,6 +772,10 @@ class Sitelogin {
   }
 
   private function _processSaveProfile() {
+    if (!$this->FormToken->verifyToken($_POST['token-update-profile']) || !empty($_POST['profile-name-req'])) {
+      //token verification failed or expected empty field wasn't empty
+      return FALSE;
+    }
     if ($this->password_expired === TRUE) {
       $this->messages['password_expired']['danger'][] = "You need to set a new password before you can update your profile.";
       return FALSE;
@@ -874,7 +878,10 @@ class Sitelogin {
   }
 
   private function _processSave() {
-
+    if (!$this->FormToken->verifyToken($_POST['token-edit-account']) || !empty($_POST['edit-account-email-req'])) {
+      //token verification failed or expected empty field wasn't empty
+      return FALSE;
+    }
     // Check IF the password is expired
     // AND if the user is NOT trying to change the password
     if ($this->password_expired === TRUE && (empty($this->password1) && empty($this->password2))) {
@@ -1054,6 +1061,10 @@ class Sitelogin {
   }
 
   private function _resetPassword() {
+    if (!$this->FormToken->verifyToken($_POST['token-password-recovery']) || !empty($_POST['recover-account-email-req'])) {
+      //token verification failed or expected empty field wasn't empty
+      return FALSE;
+    }
     # reset stage 1.  We got an email address, create token and email to user
     # make sure someone isn't blasting us.  We disregard "token failed" since a common use-case
     # is to click the reset link after it has expired.
@@ -1142,6 +1153,10 @@ class Sitelogin {
   }
 
   private function _resetPassword3() {
+    if (!$this->FormToken->verifyToken($_POST['token-password-reset']) || !empty($_POST['reset-account-email-req'])) {
+      //token verification failed or expected empty field wasn't empty
+      return FALSE;
+    }
       # reset stage 3.  We got a token back, and user is submitting a password.
     if ($this->t != "" && $this->password1 != "" ) {
       if ($this->password1 != $this->password2) {
