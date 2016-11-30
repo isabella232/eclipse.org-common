@@ -54,7 +54,6 @@ class AdReports {
     // Print the output if the user is a commiter
     if($this->state != 'not-staff') {
       ob_start();
-      print '<h1>' . $pageTitle . '</h1>';
       include("tpl/ad_reports.tpl.php");
       $html = ob_get_clean();
     }
