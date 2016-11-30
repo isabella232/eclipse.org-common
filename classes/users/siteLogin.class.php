@@ -45,8 +45,6 @@ class Sitelogin {
 
   private $fname = "";
 
-  private $gender = "";
-
   private $exipred_pass_token = FALSE;
 
   private $interests = "";
@@ -244,7 +242,6 @@ class Sitelogin {
       'interests' => "",
       'twitter_handle' => "",
       'country' => "",
-      'gender' => "",
       'newsletter_status' => "",
     );
 
@@ -260,7 +257,6 @@ class Sitelogin {
     $githubid = filter_var($this->Ldapconn->getGithubIDFromMail($this->Friend->getEmail()), FILTER_SANITIZE_STRING);
     $organization = filter_var($this->organization, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $country = filter_var($this->country, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
-    $gender = filter_var($this->gender, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $jobtitle = filter_var($this->jobtitle, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
     $website = filter_var($this->website, FILTER_SANITIZE_URL);
     $bio = filter_var($this->bio, FILTER_SANITIZE_STRING,FILTER_FLAG_ENCODE_AMP|FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
@@ -286,7 +282,6 @@ class Sitelogin {
         $return['jobtitle'] = $jobtitle;
         $return['website'] = $website;
         $return['bio'] = $bio;
-        $return['gender'] = $gender;
         $return['country'] = $country;
         $return['interests'] = $interests;
         $return['twitter_handle'] = $twitter_handle;
@@ -306,7 +301,6 @@ class Sitelogin {
           $return['fname'] = $fname;
           $return['lname'] = $lname;
           $return['organization'] = $organization;
-          $return['gender'] = $gender;
           $return['country'] = $country;
           $return['agree'] =  $agree;
           $return['takemeback'] = $takemeback;
@@ -389,22 +383,6 @@ class Sitelogin {
       $options .= '</optgroup>';
     }
     return $options;
-  }
-
-  public function showGender() {
-    $options = array(
-        'M' => 'Male',
-        'F' => 'Female',
-        'X' => 'Prefer not to say'
-    );
-    foreach ($options as $option_code => $option_name){
-      $checked = "";
-      if(!empty($this->gender) && $this->gender == $option_code) {
-        $checked = 'checked';
-      }
-      $buttons .= '<input type="radio" name="gender" value="' . $option_code . '" ' . $checked . '> ' . $option_name . '&nbsp;&nbsp';
-    }
-    return $buttons;
   }
 
   function verifyUserStatus() {
@@ -518,7 +496,6 @@ class Sitelogin {
 
         $mail .= "Organization: " . $this->organization. "\n\n";
         $mail .= "Country: " . $this->country. "\n\n";
-        $mail .= "Gender: " . $this->gender. "\n\n";
         $mail .= "Remote addr: " . $_SERVER['REMOTE_ADDR'] . "\n\n";
         $mail .= "Browser: " . $_SERVER['HTTP_USER_AGENT'] . "\n\n";
         $mail .= "Referer: " . $_SERVER['HTTP_REFERER'] . "\n\n";
@@ -577,10 +554,6 @@ class Sitelogin {
             $this->messages['create']['danger'][] = "- An error occurred while processing your request. (8730s)";
           }
 
-          if (empty($this->gender)) {
-            $this->messages['create']['danger'][] = "- You must select your gender.";
-          }
-
           if (empty($this->country)) {
             $this->messages['create']['danger'][] = "- You must select your country of residence.";
           }
@@ -599,12 +572,11 @@ class Sitelogin {
 
 
             $this->App->eclipse_sql("INSERT INTO users_profiles
-                (user_uid,user_mail,user_country,user_gender,user_org,user_status)
+                (user_uid,user_mail,user_country,user_org,user_status)
                 VALUES (
                   ". $this->App->returnQuotedString($this->App->sqlSanitize($this->t)) .",
                   ". $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) .",
                   ". $this->App->returnQuotedString($this->App->sqlSanitize($this->country)) .",
-                  ". $this->App->returnQuotedString($this->App->sqlSanitize($this->gender)) .",
                   ". $this->App->returnQuotedString($this->App->sqlSanitize($this->organization)) .",
                   0
                 )"
@@ -740,7 +712,7 @@ class Sitelogin {
       return FALSE;
     }
     $sql = "SELECT /* USE MASTER */
-        user_org as organization, user_jobtitle as jobtitle, user_bio as bio, user_interests as interests, user_website as website, user_twitter_handle as twitter_handle, user_country as country, user_gender as gender
+        user_org as organization, user_jobtitle as jobtitle, user_bio as bio, user_interests as interests, user_website as website, user_twitter_handle as twitter_handle, user_country as country
       FROM users_profiles
       WHERE  user_uid = " . $this->App->returnQuotedString($token) . "
       ORDER BY user_update DESC LIMIT 1";
@@ -769,7 +741,7 @@ class Sitelogin {
 
     if (empty($this->messages['profile']['danger'])) {
       $sql = "SELECT /* USE MASTER */
-        user_org as organization, user_jobtitle as jobtitle, user_bio as bio, user_interests as interests, user_website as website, user_twitter_handle as twitter_handle, user_country as country, user_gender as gender
+        user_org as organization, user_jobtitle as jobtitle, user_bio as bio, user_interests as interests, user_website as website, user_twitter_handle as twitter_handle, user_country as country
       FROM users_profiles
       WHERE  user_uid = " . $this->App->returnQuotedString($this->user_uid) . "
       ORDER BY user_update DESC LIMIT 1";
@@ -820,7 +792,6 @@ class Sitelogin {
       'user_interests' => $this->interests,
       'user_twitter_handle' => $this->twitter_handle,
       'user_country' => $this->country,
-      'user_gender' => $this->gender,
     );
 
     $possible_null_field = array(
@@ -842,10 +813,6 @@ class Sitelogin {
     if (empty($fields['user_country']) && !in_array($fields['user_country'], $this->getCountryList())) {
       $this->messages['profile']['danger'][] = 'You must enter a valid country<br>';
     }
-    if (empty($fields['user_gender']) && !in_array($fields['user_gender'], array('M','F','X'))) {
-      $this->messages['profile']['danger'][] = 'You must enter you gender<br>';
-    }
-
 
     if (!empty($this->messages['profile']['danger'])) {
       return FALSE;
@@ -1271,7 +1238,6 @@ class Sitelogin {
       'twitter_handle',
       'changed_employer',
       'country',
-      'gender',
       'newsletter_status',
    );
 
