@@ -209,8 +209,8 @@ class Cla {
         <input type="hidden" name="state" value="disable_unsigned_notification">
         <input type="hidden" name="form_name" value="cla-form">
         <ul class="list-inline margin-top-10 margin-bottom-0">
-          <li><a class="small btn btn-primary" href="http://www.eclipse.org/legal/clafaq.php">What is a CLA?</a></li>
-          <li><a class="small btn btn-primary" href="#open_tab_cla">Sign your CLA</a></li>
+          <li><a class="small btn btn-primary" href="http://www.eclipse.org/legal/clafaq.php">What is a ECA?</a></li>
+          <li><a class="small btn btn-primary" href="#open_tab_cla">Sign your ECA</a></li>
           <li><button class="small btn btn-primary">Disable this message</button></li>
         </ul>
       </form>';
@@ -618,14 +618,14 @@ class Cla {
         }
 
         // Create success message
-        $this->App->setSystemMessage('invalidate_cla','You have successfully invalidated your CLA.','success');
+        $this->App->setSystemMessage('invalidate_cla','You have successfully invalidated your ECA.','success');
         return TRUE;
       }
-      $this->App->setSystemMessage('invalidate_cla','We were unable to invalidate the CLA we have on record. (LDAP-02)','danger');
+      $this->App->setSystemMessage('invalidate_cla','We were unable to invalidate the ECA we have on record. (LDAP-02)','danger');
       return FALSE;
     }
 
-    $this->App->setSystemMessage('invalidate_cla','An attempt to invalidate the CLA failed because we were unable to find the CLA that matches. (LDAP-03)','danger');
+    $this->App->setSystemMessage('invalidate_cla','An attempt to invalidate the ECA failed because we were unable to find the ECA that matches. (LDAP-03)','danger');
     return FALSE;
   }
 
@@ -675,12 +675,12 @@ class Cla {
 
       // Submit the users LDAP group.
       $this->_actionLdapGroupRecord('CLA_SIGNED');
-      $this->App->setSystemMessage('submit_cla',"You successfully submitted the CLA!",'success');
+      $this->App->setSystemMessage('submit_cla',"You successfully submitted the ECA!",'success');
       $this->_setUserContributorSignedDocuments();
       return TRUE;
     }
 
-    $this->App->setSystemMessage('submit_cla',"Error, the CLA have not been submitted. (LDAP-03)",'danger');
+    $this->App->setSystemMessage('submit_cla',"Error, the ECA have not been submitted. (LDAP-03)",'danger');
     return FALSE;
   }
 
