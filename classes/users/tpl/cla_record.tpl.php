@@ -14,7 +14,7 @@
 <?php if (is_a($this, 'Cla') && $this->Friend->getUID()): ?>
   <br>
   <div class="alert alert-success" role="alert">
-    <strong>Congradulations!</strong> You've signed a ECA.
+    <strong>Congratulations!</strong> You've signed a ECA.
   </div>
   <div class="alert alert-info" role="alert">
     <p>The Eclipse Contributor Agreement that we have on record for
