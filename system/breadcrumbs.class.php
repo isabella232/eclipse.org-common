@@ -11,6 +11,7 @@
  * Denis Roy (Eclipse Foundation) - initial API and implementation
  * Christopher Guindon (Eclipse Foundation) - Updated first level and added
  * removeCrumb()
+ * Darrell Armstrong - Add 2nd and 3rd level crumbs
  * *****************************************************************************
  */
 if (!class_exists('MenuItem')) {
@@ -73,6 +74,22 @@ class Breadcrumb extends Menu {
   ) // Homepage
 ;
 
+  // Second level items and friendly names (taken from page title which shows in current crumb)
+  // newsletters set their own additional level of crumbs (in community)
+  private $SecondLevel = array(
+    "foundation" => "Eclipse Foundation",
+    "workinggroups" => "Eclipse Working Groups",
+    "elections" => "Elections",
+    "documents" => "Governance Documents",
+    "press-release" => "Press Releases"
+  );
+
+  // Third level items and friendly names
+  // omit the date as the main landing page includes the current report + archived
+  private $ThirdLevel = array(
+    "reports" => "Annual Report"
+  );
+
   function getCrumbList() {
     return $this->CrumbList;
   }
@@ -131,6 +148,19 @@ class Breadcrumb extends Menu {
         // /xtext/file.php => Home > Projects > xtext > $pageTitle
         $this->addCrumb("Projects", $this->www_prefix . "/projects/", "_self");
         $this->addCrumb($items[1], $this->www_prefix . "/" . $items[1], "_self");
+      }
+
+      // Add 2nd (and 3rd) level crumb, if needed and it is not the landing page (index)
+      if (count($items) >= 4){
+        if(isset($this->SecondLevel[$items[2]]) && !empty($items[count($items) - 1]) && $items[count($items) - 1] !== "index.php") {
+          $this->addCrumb($this->SecondLevel[$items[2]], $this->www_prefix . "/" . $items[1] . "/" . $items[2], "_self");
+        }
+
+        // 3rd level - Annual Reports (annual_report is the landing page for current report and where to return if browsing archived report)
+        if(isset($this->ThirdLevel[$items[3]]) && $items[count($items) - 1] !== "annual_report.php" && $items[count($items) -1] !== "index.php"){
+          $this->addCrumb($this->ThirdLevel[$items[3]],
+            $this->www_prefix . "/" . $items[1] . "/" . $items[2] . "/" .$items[3], "_self");
+        }
       }
 
       // Add current page
