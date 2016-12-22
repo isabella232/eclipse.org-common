@@ -133,16 +133,6 @@ class Breadcrumb extends Menu {
         $this->addCrumb($items[1], $this->www_prefix . "/" . $items[1], "_self");
       }
 
-      if ($items[2] == 'eclipse_newsletter') {
-        if (!empty($items[3])) {
-          $this->addCrumb("Eclipse Newsletter", "/community/eclipse_newsletter/", "_self");
-          // For articles
-          if (strpos($items[3], '20') !== FALSE) {
-            $this->addCrumb($items[4] . " " . $items[3], "/community/eclipse_newsletter/" . $items[3] . "/" . $items[4] . "/", "_self");
-          }
-        }
-      }
-
       // Add current page
       // AT this point, $pageTitle should be set as we are running in header()
       global $pageTitle;
