@@ -1075,17 +1075,6 @@ class Sitelogin {
       $this->messages['reset']['danger'][] = "<b>We were unable to determine your identity after several attempts. Subsequent inquiries will be ignored for our protection.  Please try later, or contact webmaster@eclipse.org for support.</b>  (8727s)";
     }
     else {
-      # Check to see if we're trying to reset the password of a valid account.
-      $this->t = $this->App->getAlphaCode(64);
-      $this->App->eclipse_sql("INSERT IGNORE INTO account_requests VALUES (" . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
-      '',
-      " . $this->App->returnQuotedString("RESET") . ",
-      " . $this->App->returnQuotedString("RESET") . ",
-      '',
-      " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
-      NOW(),
-      " . $this->App->returnQuotedString($this->t) . ")");
-
       if (!preg_match(SITELOGIN_EMAIL_REGEXP, $this->username)) {
         $this->messages['reset']['danger'][] = "<b>Your email address is not formatted correctly.</b><br />";
       }
@@ -1093,6 +1082,17 @@ class Sitelogin {
         $this->messages['reset']['danger'][] = "<b>We were unable to determine your identity with the information you've supplied.</b>  Perhaps you don't have an Eclipse.org account, or your account is under a different email address.(8x27s)";
       }
       else {
+        # Check to see if we're trying to reset the password of a valid account.
+        $this->t = $this->App->getAlphaCode(64);
+        $this->App->eclipse_sql("INSERT IGNORE INTO account_requests VALUES (" . $this->App->returnQuotedString($this->App->sqlSanitize($this->username)) . ",
+        '',
+        " . $this->App->returnQuotedString("RESET") . ",
+        " . $this->App->returnQuotedString("RESET") . ",
+        '',
+        " . $this->App->returnQuotedString($_SERVER['REMOTE_ADDR']) . ",
+        NOW(),
+        " . $this->App->returnQuotedString($this->t) . ")");
+
         # Send mail to dest
         $mail = "You (or someone pretending to be you) has requested a password reset from:\n";
         $mail .= "    " . $_SERVER['REMOTE_ADDR'] . "\n\n";
