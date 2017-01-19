@@ -11,7 +11,7 @@
  *******************************************************************************/
 ?>
 
-<div class="downloads-bar-ad">
+<div class="downloads-bar-ad" style="<?php print $variables['banner_styles']?>">
   <div class="container">
     <div class="row">
       <div class="col-lg-20 col-md-18 downloads-bar-ad-white-shape">
