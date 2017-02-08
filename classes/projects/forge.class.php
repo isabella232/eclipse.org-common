@@ -59,17 +59,27 @@ class Forge {
       'eclipse' => array(
         'id' => 'eclipse',
         'name' => 'Eclipse',
-        'url' => 'https://projects.eclipse.org'
+        'url' => 'https://projects.eclipse.org',
+        'hudson_domain' => array(
+          'hudson.eclipse.org',
+          'ci.eclipse.org'
+        )
       ),
       'locationtech' => array(
         'id' => 'locationtech',
         'name' => 'LocationTech',
-        'url' => 'https://www.locationtech.org'
+        'url' => 'https://www.locationtech.org',
+        'hudson_domain' => array(
+          'hudson.locationtech.org'
+        )
       ),
       'polarsys' => array(
         'id' => 'polarsys',
         'name' => 'PolarSys',
-        'url' => 'https://www.polarsys.org'
+        'url' => 'https://www.polarsys.org',
+        'hudson_domain' => array(
+          'hudson.polarsys.org'
+        )
       )
     );
 
@@ -160,6 +170,18 @@ class Forge {
       return $this->data['url'];
     }
     return "";
+  }
+
+  /**
+   * Get hudson url
+   *
+   * @return array
+   */
+  function getHudsonDomain() {
+    if (isset($this->data['hudson_domain'])) {
+      return $this->data['hudson_domain'];
+    }
+    return array();
   }
 
   /**
