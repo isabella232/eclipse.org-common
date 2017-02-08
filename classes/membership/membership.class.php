@@ -267,21 +267,26 @@ class Membership {
       N.title,
       N.nid,
       B.body_value as teaser,
+      TU.field_trainingurl_value as training_url,
       TD.field_trainingdesc_value as training,
+      CU.field_consultingurl_value as consulting_url,
       CTT.field_consultingdesc_value as consulting
     FROM node as N
-    INNER JOIN field_data_body as B on B.entity_id = N.nid and B.revision_id = N.vid
-    INNER JOIN field_data_field_trainingdesc as TD on TD.entity_id = N.nid and TD.revision_id = N.vid
-    INNER JOIN field_data_field_consultingdesc as CTT on CTT.entity_id = N.nid and CTT.revision_id = N.vid
+    LEFT JOIN field_data_body as B on B.entity_id = N.nid and B.revision_id = N.vid
+    LEFT JOIN field_data_field_trainingurl as TU on TU.entity_id = N.nid and TU.revision_id = N.vid
+    LEFT JOIN field_data_field_trainingdesc as TD on TD.entity_id = N.nid and TD.revision_id = N.vid
+    LEFT JOIN field_data_field_consultingurl as CU on CU.entity_id = N.nid and CU.revision_id = N.vid
+    LEFT JOIN field_data_field_consultingdesc as CTT on CTT.entity_id = N.nid and CTT.revision_id = N.vid
     WHERE N.status = 1 AND N.type = 'training' AND N.title =";
     $sql .= $this->App->returnQuotedString($this->App->sqlSanitize($this->profile['name']));
+    echo $sql;
     $result = $this->App->marketplace_sql($sql);
 
     while ($row = mysql_fetch_assoc($result)) {
       $row = $this->_mb_convert_encoding($row);
-      $row['teaser'] = $this->_ellipsis($row['teaser']);
-      $row['training'] = $this->_ellipsis($row['training']);
-      $row['consulting'] = $this->_ellipsis($row['consulting']);
+      $row['teaser'] = empty($row['teaser']) ? '' : $this->_ellipsis($row['teaser']);
+      $row['training'] = empty($row['training']) ? '' : $this->_ellipsis($row['training']);
+      $row['consulting'] = empty($row['consulting']) ? '' : $this->_ellipsis($row['consulting']);
       $return[] = $row;
     }
 
