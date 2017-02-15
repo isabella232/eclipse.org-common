@@ -229,14 +229,16 @@ class Membership {
       N.title,
       CTR.field_companyname_value as name,
       N.nid,
-      if(V.field_version_value IS NULL ,'',V.field_version_value) as version,
+      if(fv.field_version_value IS NULL ,'',MAX(fv.field_version_value)) as version,
       B.body_value as teaser
     FROM field_data_field_companyname as CTR
     INNER JOIN node as N on CTR.entity_id = N.nid
-    LEFT JOIN field_data_field_version as V on V.entity_id = N.nid and V.revision_id = N.vid
+    LEFT JOIN field_data_field_resource_listing_release as fr on fr.entity_id = N.nid and fr.revision_id = N.vid
+    LEFT JOIN field_revision_field_version as fv on fv.entity_id = fr.field_resource_listing_release_value and fv.revision_id = fr.field_resource_listing_release_revision_id
     INNER JOIN field_data_body as B on B.entity_id = N.nid and B.revision_id = N.vid
     WHERE N.status = 1 and CTR.field_companyname_value = ";
     $sql .= $this->App->returnQuotedString($this->App->sqlSanitize($this->profile['name']));
+    $sql .= " group by N.nid";
     $result = $this->App->marketplace_sql($sql);
 
     $return = array();
