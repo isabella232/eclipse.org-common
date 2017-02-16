@@ -31,8 +31,9 @@ class Subscriptions_base {
     $this->Sessions = $this->App->useSession();
     $this->Friend = $this->Sessions->getFriend();
 
-    // Check to see if we're on staging or on production
-    if ($this->App->getEclipseDomain() != 'www.eclipse.org') {
+    // Set debug mode if the domain contains the word .local or staging
+    $domain = $this->App->getEclipseDomain();
+    if (in_array($domain['shortname'], array('local','staging'))) {
       $this->_setDebugMode(TRUE);
     }
   }
