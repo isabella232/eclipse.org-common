@@ -246,7 +246,6 @@ class BaseTheme {
     // Set attributes on breadcrumbs
     $this->setAttributes('breadcrumbs', 'breadcrumb', 'id');
     $this->setAttributes('breadcrumbs', 'hidden-print');
-    $this->setAttributes('breadcrumbs_wrapper', "col-xs-24");
 
     // Set attributes on main content
     $this->setAttributes('main', 'main', 'role');
@@ -297,6 +296,33 @@ class BaseTheme {
    */
   protected function _hookSetApp(App $App) {
 
+  }
+
+  /**
+   * Get the HTML of the Share buttons
+   *
+   * @return string
+   */
+  public function getShareButtonsHTML() {
+    $display_sharethis = $this->getThemeVariables('sharethis');
+    if ($display_sharethis) {
+      return '<div class="sharethis-inline-share-buttons"></div>';
+    }
+    return "";
+  }
+
+  /**
+   * Get the JS of the Share buttons
+   * (This should go in the head of the html page)
+   *
+   * @return string
+   */
+  public function getShareButtonsJS() {
+    $display_sharethis = $this->getThemeVariables('sharethis');
+    if ($display_sharethis) {
+      return '<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58af133aa168200011ff98fe&product=inline-share-buttons"></script>';
+    }
+    return "";
   }
 
   /**
@@ -525,8 +551,9 @@ EOHTML;
     <section{$this->getAttributes('breadcrumbs')}>
       <div class="container">
         <h3 class="sr-only">Breadcrumbs</h3>
-        <div{$this->getAttributes('breadcrumbs_wrapper')}>
-          {$breadcrumb_html}
+        <div class="row">
+          <div class="col-sm-16 padding-left-30">{$breadcrumb_html}</div>
+          <div class="col-sm-8 margin-top-15">{$this->getShareButtonsHTML()}</div>
         </div>
         {$theme_breadcrumbs_html}
       </div>
@@ -945,6 +972,7 @@ EOHTML;
       ));
     }
 
+    $return .= $this->getShareButtonsJS();
     $return .= $this->getMetatagsHTML();
     $return .= $this->extra_headers;
     $return .= $App->ExtraHtmlHeaders;
