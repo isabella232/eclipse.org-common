@@ -59,7 +59,7 @@ class Session {
       'session_name' => 'ECLIPSESESSION',
       'env' => 'ECLIPSE_ENV',
       'htaccess' => '/home/data/httpd/friends.eclipse.org/html/.htaccess',
-      'login_page' => 'https://' . $domain['dev_domain'] . '/site_login/',
+      'login_page' => 'https://' . $domain['accounts'] . '/user/login',
     );
 
     # Set default config values.

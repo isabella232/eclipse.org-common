@@ -87,6 +87,7 @@ class EclipseEnv {
       'cookie' => '.eclipse.local',
       'domain' => 'www.eclipse.local:502' . $local_docker_port,
       'dev_domain' => 'dev.eclipse.local:51143',
+      'accounts' => 'accounts.eclipse.local:51243',
       'allowed_hosts' => array(
         'eclipse.local',
         'www.eclipse.local',
@@ -101,6 +102,7 @@ class EclipseEnv {
       'domain' => 'staging.eclipse.org',
       // We currently dont have a staging server for dev.eclipse.org
       'dev_domain' => 'dev.eclipse.org',
+      'accounts' => 'accounts-staging.eclipse.org',
       'allowed_hosts' => array(
         'staging.eclipse.org'
       ),
@@ -111,6 +113,7 @@ class EclipseEnv {
       'cookie' => '.eclipse.org',
       'domain' => 'www.eclipse.org',
       'dev_domain' => 'dev.eclipse.org',
+      'accounts' => 'accounts.eclipse.org',
       'allowed_hosts' => array(
         // Empty, since it's the default.
       ),
