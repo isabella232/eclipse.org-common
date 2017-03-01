@@ -1527,11 +1527,6 @@ EOHTML;
     );
 
     $variables['Working Groups'][] = array(
-      'url' => 'http://wiki.eclipse.org/Auto_IWG',
-      'caption' => 'Automotive'
-    );
-
-    $variables['Working Groups'][] = array(
       'url' => 'http://iot.eclipse.org',
       'caption' => 'Internet of Things'
     );
