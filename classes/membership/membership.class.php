@@ -279,7 +279,7 @@ class Membership {
     LEFT JOIN field_data_field_consultingdesc as CTT on CTT.entity_id = N.nid and CTT.revision_id = N.vid
     WHERE N.status = 1 AND N.type = 'training' AND N.title =";
     $sql .= $this->App->returnQuotedString($this->App->sqlSanitize($this->profile['name']));
-    echo $sql;
+
     $result = $this->App->marketplace_sql($sql);
 
     while ($row = mysql_fetch_assoc($result)) {
