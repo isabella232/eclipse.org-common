@@ -1864,7 +1864,8 @@ class App {
     $this->setDatabase("epic", "localhost", "dashboard", "draobhsad", "epic_demo");
     $this->setDatabase("conferences", "localhost", "dashboard", "draobhsad", "conferences_demo");
     $this->setDatabase("marketplace", "localhost", "dashboard", "draobhsad", "marketplace_demo");
-
+    $this->setDatabase("dashboard", "localhost", "dashboard", "draobhsad", "dashboard_demo");
+    
     // Production Databases
     $this->set("bugzilla_db_classfile_ro", 'dbconnection_bugs_ro.class.php');
     $this->set("bugzilla_db_class_ro", 'DBConnectionBugs');
