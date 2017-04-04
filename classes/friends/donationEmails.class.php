@@ -122,25 +122,16 @@ class DonationEmails {
     }
 
     $transaction_id = $this->Donation->get_donation_txn_id();
-    $amount = $this->Donation->get_donation_amount();
-    $uid = $this->Donation->Donor->get_donor_uid();
     $level = $this->Donation->get_donation_benefit_level();
 
-    if (empty($uid) && $level != 'donor') {
-      // We dont have an eclipse account, we need an extra
-      // step from the donor before we can apply benefits.
-      $this->_get_email_link_eclipse_account();
+    // Check if the donation is at the "donor" level
+    if ($level == 'donor') {
+      $this->_get_email_donor();
     }
-    else {
-      // Check if the donation is at the "donor" level
-      if ($level == 'donor') {
-        $this->_get_email_donor();
-      }
 
-      // Check if the donation is at the friend, best_friend or webmaster_idol level
-      if ($level == 'friend' || $level == 'best_friend' || $level == 'webmaster_idol') {
-        $this->_get_email_friend();
-      }
+    // Check if the donation is at the friend, best_friend or webmaster_idol level
+    if ($level == 'friend' || $level == 'best_friend' || $level == 'webmaster_idol') {
+      $this->_get_email_friend();
     }
 
     $EventLog = new EvtLog();
@@ -245,25 +236,6 @@ class DonationEmails {
    */
   private function _get_test_mode() {
     return $this->test_mode;
-  }
-
-  /**
-   * Email for linking an eclipse account with a donation
-   *
-   * This is needed for a donation from an e-mail that is
-   * not an eclipse account.
-   */
-  private function _get_email_link_eclipse_account(){
-    $this->email_content = $this->_get_email_greeting_string();
-    $this->email_content .= "Thank you for your donation! We are pleased to welcome you to the Friends of Eclipse program. To take full advantage of the program you will need to create an Eclipse account. This will allow you access to the Friends of Eclipse benefits." . PHP_EOL . PHP_EOL;
-    $domain = $this->App->getEclipseDomain();
-    $query = array(
-      'tid' => $this->Donation->get_donation_txn_id(),
-      'iid' => $this->Donation->get_donation_random_invoice_id(),
-    );
-    $query_string = http_build_query($query);
-    $this->email_content .= "To create your Eclipse account go to: https://" . $domain['domain']  . "/donate/link-account.php?" . $query_string  . PHP_EOL . PHP_EOL;
-    $this->email_content .= "Best Regards,\n\nMike Milinkovich\nExecutive Director\nEclipse Foundation" . PHP_EOL . PHP_EOL;
   }
 
   /**
