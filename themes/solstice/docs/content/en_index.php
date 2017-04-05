@@ -27,18 +27,16 @@ and powerful front-end framework for faster and easier web development.</p>
 </ul>
 
 <h2>Using Solstice</h2>
-<p>On a page using the eclipse.org-common $App Class:</p>
+<p>On a page using the eclipse.org-common $Theme Class, use this to make sure your page is always using the default theme:</p>
 <div class="editor" data-editor-lang="html" data-editor-no-focus="true">
 &lt;?php
-$App->generatePage(&apos;solstice&apos;, $Menu, NULL, $pageAuthor, $pageKeywords, $pageTitle, $html);
 
-// To make sure your page is always using the default theme:
-$App->generatePage(NULL, $Menu, NULL , $pageAuthor, $pageKeywords, $pageTitle, $html);
+$Theme->generatePage();
 
 </div>
 
 <h2 id="starterkit">Starterkit</h2>
-<p>The <a href="/eclipse.org-common/themes/solstice/docs/starterkit/">starterkit</a> includes all the files required to create a page with Solstice. The source code is available <a href="http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/tree/themes/solstice/docs/starterkit/">here</a>.</p>
+<p>The <a href="/eclipse.org-common/themes/solstice/docs/starterkit/">starterkit</a> includes all the files required to create a <strong>standard page</strong> and also a <strong>Press Release</strong> page with Solstice. The source code is available <a href="http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/tree/themes/solstice/docs/starterkit/">here</a>.</p>
 <p> <p><a href="/eclipse.org-common/themes/solstice/docs/starterkit/solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p></p>
 <br/>
 
