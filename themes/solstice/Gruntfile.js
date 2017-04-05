@@ -108,4 +108,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     // Task definition
     grunt.registerTask('default', ['watch']);
+    grunt.registerTask('init', ['copy','watch']);
 };
