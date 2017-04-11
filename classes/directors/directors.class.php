@@ -43,11 +43,11 @@ class Directors {
   private function _fetchBioFromFile($info = array()) {
     if (!empty($info)) {
       // Handle special cases where first or last name had multiple words
-      $info['FName'] = str_replace(' ', '_', $info['FName']);
-      $info['LName'] = str_replace(' ', '_', $info['LName']);
+      $formatted_name = str_replace(' ', '_', $info['FName'] . ' ' . $info['LName']);
+      // Replace periods in name
+      $formatted_name = str_replace('.', '', $formatted_name);
 
-      $full_name = $info['FName'] . '_' . $info['LName'];
-      if (file_exists($file = $_SERVER['DOCUMENT_ROOT'] . $this->path_to_boardbio . '/' . $full_name . '.php')) {
+      if (file_exists($file = $_SERVER['DOCUMENT_ROOT'] . $this->path_to_boardbio . '/' . $formatted_name . '.php')) {
         $content = file_get_contents($file);
       }
 
