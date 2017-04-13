@@ -16,23 +16,28 @@ class DownloadsBannerAd extends EclipseAds {
   public function __construct() {
     parent::__construct($source);
 
-    $campaign = "PROMO_CONVERGE2017_DOWNLOADS_PAG";
+    $campaign = "PROMO_FRANCE2017_DOWNLOADS_PAGE";
 
     $content['body'] ="";
     $content['banner_styles'] = "";
 
-    if (date("Y/m/d") >= "2017/03/07" && date("Y/m/d") < "2017/03/13") {
-      $content['body'] ="2 Weeks until Eclipse Converge and Devoxx US, in San Jose, CA, March 20-23, 2017";
+    if (date("Y/m/d") >= "2017/04/21" && date("Y/m/d") < "2017/05/06") {
+      $content['body'] ="Early registration prices end May 5! EclipseCon France 2017, June 21 - 22, Toulouse";
       $content['banner_styles'] = "background-color:#ce2227;";
     }
 
-    if (date("Y/m/d") >= "2017/03/13" && date("Y/m/d") < "2017/03/19") {
-      $content['body'] ="Only 1 Week left until Eclipse Converge and Devoxx US, in San Jose, CA, March 20-23, 2017";
+    if (date("Y/m/d") >= "2017/05/10" && date("Y/m/d") < "2017/05/24") {
+      $content['body'] ="Register now for EclipseCon France 2017, June 21-22, Toulouse";
       $content['banner_styles'] = "background-color:#3a7939;";
     }
 
-    if (date("Y/m/d") >= "2017/03/19" && date("Y/m/d") < "2017/03/23") {
-      $content['body'] ="TOMORROW! Eclipse Converge and Devoxx US, in San Jose, CA, March 20-23, 2017";
+    if (date("Y/m/d") >= "2017/06/07" && date("Y/m/d") < "2017/06/14") {
+      $content['body'] ="EclipseCon France: Two weeks left to register! June 21-22, Toulouse";
+      $content['banner_styles'] = "background-color:#F68B1F;";
+    }
+
+    if (date("Y/m/d") >= "2017/06/14" && date("Y/m/d") < "2017/06/21") {
+      $content['body'] ="Last week left to register for EclipseCon France! June 21-22, Toulouse";
       $content['banner_styles'] = "background-color:#F68B1F;";
     }
 
@@ -60,7 +65,10 @@ class DownloadsBannerAd extends EclipseAds {
   protected function _build($layout = "", $type = "") {
 
     // Check if the ad should be printed depending on the date
-    if ((date("Y/m/d") >= "2017/03/07" && date("Y/m/d") < "2017/03/23")) {
+    if ((date("Y/m/d") >= "2017/04/21" && date("Y/m/d") < "2017/05/06") ||
+        (date("Y/m/d") >= "2017/05/10" && date("Y/m/d") < "2017/05/24") ||
+        (date("Y/m/d") >= "2017/06/07" && date("Y/m/d") < "2017/06/14") ||
+        (date("Y/m/d") >= "2017/06/14" && date("Y/m/d") < "2017/06/21")) {
       $this->output = $this->ad->getHtml();
     }
   }
