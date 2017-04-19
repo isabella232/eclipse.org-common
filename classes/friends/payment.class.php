@@ -127,6 +127,9 @@ class Payment extends EclipseEnv {
    * Email IPN results to webdev@eclipse.org
    */
   protected function _email_ipn_post() {
+    // Bug 2442 - Stop sending IPN email notifications to webdev
+    return TRUE;
+
     ob_start();
     print '-------$_POST---------' . PHP_EOL;
     print_r($_POST) . PHP_EOL;
