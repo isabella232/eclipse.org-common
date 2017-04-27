@@ -321,6 +321,16 @@ class App {
   }
 
   /**
+   * Encodes special characters in a plain-text string for display as HTML.
+   *
+   * @param string $text
+   * @return string
+   */
+  function check_plain($text) {
+    return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+  }
+
+  /**
    * Returns the Webmaster object
    *
    * @return object
