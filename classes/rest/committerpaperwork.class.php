@@ -142,6 +142,16 @@ class CommitterPaperwork extends EclipseUSSBlob {
   }
 
   /**
+   * Start the committer provisioning process. (GET)
+   *
+   * @param string $username
+   * @param int $id
+   */
+  public function targetedActionStartProvisioning($username = NULL, $id = "", $body = "") {
+    return $this->post('committer/paperwork/' . $username . '/provisioning/' . $id, $body);
+  }
+
+  /**
    * Validate a username
    *
    * @param string $username
