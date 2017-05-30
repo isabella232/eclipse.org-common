@@ -49,50 +49,13 @@ class MpcFavorites extends EclipseUSSBlob{
   }
 
   /**
-   * Get mpc_favorite user blob.
-   *
-   * @return bool
-   */
-  public function fetchFavorite() {
-    return $this->getBlob($this->application_token, $this->application_key);
-  }
-
-  /**
-   * Convert base64 string to array
-   *
-   * Mpc stores a comas seperated list of nid.
-   * This function is used to convert the base64
-   * response body into an array.
-   *
-   * @return array
-   */
-  public function convertBodyIntoArray(){
-    return explode(',', str_replace(' ', '', base64_decode($this->getBody())));;
-  }
-
-  /**
    * Add Marketplace favorite(s)
    * @param array $nodes
    *
    * @return bool
    */
-  public function addFavorite($nodes = array()) {
-
-    $data = $this->convertBodyIntoArray();
-
-    foreach($nodes as $nid) {
-      $data[] = (string)trim($nid);
-    }
-
-    $data = array_filter($data);
-    // remove duplicates
-    $data = array_unique($data);
-    // create string
-    $data_str = implode(',', $data);
-    // base64 encode string
-    $data_str_base64 = base64_encode($data_str);
-
-    return $this->putBlob($this->application_token, $this->application_key, $data_str);
+  public function addFavorite($nid = '') {
+    return $this->put('marketplace/favorites/' . $nid);
   }
 
   /**
@@ -102,26 +65,18 @@ class MpcFavorites extends EclipseUSSBlob{
    *
    * @return bool
    */
-  public function removeFavorite($nodes = array()) {
+  public function removeFavorite($nid = '') {
+    return $this->delete('marketplace/favorites/' . $nid);
+  }
 
-    $data = $this->convertBodyIntoArray();
-
-    $new_data = array();
-    foreach($data as $key => $nid) {
-      if (!in_array($nid, $nodes) && !empty($nid)) {
-        $new_data[] = $nid;
-      }
-    }
-
-    // remove duplicates.
-    $new_data = array_filter($new_data);
-    $new_data = array_unique($new_data);
-    // create string.
-    $data_str = implode(',', $new_data);
-    // base64 encode string.
-    $data_str_base64 = base64_encode($data_str);
-
-    return $this->putBlob($this->application_token, $this->application_key, $data_str);
+  /**
+   * Rename user favorites
+   *
+   * @param string $name
+   * @return Response
+   */
+  public function renameFavoritelist($name = ""){
+    return $this->post('marketplace/favorites/rename_list', json_encode(array('list_name' => $name)));
   }
 
   /**
