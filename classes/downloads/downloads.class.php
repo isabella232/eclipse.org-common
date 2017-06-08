@@ -119,7 +119,7 @@ class Downloads extends DownloadsProject {
     $Project->setProjectType($this->projects['technology_communities']['title']);
     $Project->setDownloadUrl64Bit('http://iot.eclipse.org/projects');
     $Project->setLearnMoreUrl('http://iot.eclipse.org/');
-    $Project->setProjectsAttributes('container','class','col-xs-offset-4 col-sm-offset-0 col-md-offset-7 col-sm-offset-4');
+    $Project->setProjectsAttributes('container','class','col-xs-offset-4 col-md-offset-5 col-sm-offset-4');
     $Project->setProjectsAttributes('image','height','50');
     $this->newProject($Project);
 
@@ -131,6 +131,17 @@ class Downloads extends DownloadsProject {
     $Project->setProjectType($this->projects['technology_communities']['title']);
     $Project->setDownloadUrl64Bit('https://www.polarsys.org/polarsys-downloads');
     $Project->setLearnMoreUrl('https://www.polarsys.org');
+    $Project->setProjectsAttributes('image','height','50');
+    $this->newProject($Project);
+
+    // Technology Communities item
+    $Project = new DownloadsProject();
+    $Project->setTitle('LocationTech');
+    $Project->setDescription('Open source solutions for geospatial applications.');
+    $Project->setLogo('assets/public/images/logo-locationtech.png');
+    $Project->setProjectType($this->projects['technology_communities']['title']);
+    $Project->setDownloadUrl64Bit('https://www.locationtech.org/list-of-projects');
+    $Project->setLearnMoreUrl('https://www.locationtech.org/');
     $Project->setProjectsAttributes('image','height','50');
     $this->newProject($Project);
 
