@@ -244,7 +244,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
 
     // If there are no parameters passed this is still valid
     // but we can quit here
-    if (empty($data)) {
+    if (empty($data) || !isset($data['parameters'])) {
       return TRUE;
     }
 
