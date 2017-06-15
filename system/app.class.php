@@ -326,7 +326,7 @@ class App {
    * @param string $text
    * @return string
    */
-  function check_plain($text) {
+  function checkPlain($text) {
     return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
   }
 

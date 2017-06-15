@@ -1796,7 +1796,7 @@ EOHTML;
         $this->session_variables['user_ldap_uid'] = $Friend->getUID();
         $this->session_variables['name'] = $Friend->getFirstName();
         $this->session_variables['last_name'] = $Friend->getLastName();
-        $this->session_variables['full_name'] = $this->App->check_plain($this->session_variables['name'] . ' ' . $this->session_variables['last_name']);
+        $this->session_variables['full_name'] = $this->App->checkPlain($this->session_variables['name'] . ' ' . $this->session_variables['last_name']);
         $this->session_variables['create_account_link'] = 'Welcome, ' . $this->session_variables['full_name'];
         if (!empty($this->session_variables['user_ldap_uid'])){
            $this->session_variables['create_account_link'] = '<a href="https://www.eclipse.org/user/' . $this->session_variables['user_ldap_uid'] . '">Welcome, ' . $this->session_variables['full_name'] . '</a>';
