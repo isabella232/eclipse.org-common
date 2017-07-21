@@ -129,29 +129,44 @@ class DonationEmails {
       $this->_get_email_donor();
     }
 
-    // Check if the donation is at the friend, best_friend or webmaster_idol level
+    // Check if the donation is at the friend, best_friend or webmaster_idol
+    // level
     if ($level == 'friend' || $level == 'best_friend' || $level == 'webmaster_idol') {
       $this->_get_email_friend();
     }
 
     $EventLog = new EvtLog();
+    // Bug 519257 - Donations spam
+    $fields = array(
+      'LogAction' => "DONATION_EMAIL_SENT",
+      'PK1' => $this->_get_email_to(),
+      'uid' => $transaction_id
+    );
+    $evt_log_results = EvtLog::fetchLogRecord($fields);
     if (!empty($this->email_to) && !empty($this->email_content)) {
       if ($this->_get_test_mode()) {
-        $this->email_content .= PHP_EOL . PHP_EOL . '--TEST MODE--' .PHP_EOL . PHP_EOL;
+        $this->email_content .= PHP_EOL . PHP_EOL . '--TEST MODE--' . PHP_EOL . PHP_EOL;
         ob_start();
-        print 'This email is addressed to: ' . $this->_get_email_to() .PHP_EOL . PHP_EOL;
+        print 'This email is addressed to: ' . $this->_get_email_to() . PHP_EOL . PHP_EOL;
         print_r($this);
         $this->email_content .= ob_get_clean();
       }
-      mail($this->_get_email_to(),  "Thank You For Your Donation", $this->_get_email_content(), $this->_get_email_headers());
       $EventLog->setPK1($this->_get_email_to());
-      $EventLog->setLogAction("DONATION_EMAIL_SENT");
+      if (empty($evt_log_results)) {
+        mail($this->_get_email_to(), "Thank You For Your Donation", $this->_get_email_content(), $this->_get_email_headers());
+        $EventLog->setLogAction("DONATION_EMAIL_SENT");
+      }
+      else {
+        $EventLog->setLogAction("DONATION_EMAIL_ALREADY_SENT");
+      }
     }
     else {
       $EventLog->setPK1($level);
       $EventLog->setLogAction("DONATION_EMAIL_NOT_SENT");
     }
-    $EventLog->setLogTable("__paypal.class"); // To make browsing the log table easier
+
+    // To make browsing the log table easier
+    $EventLog->setLogTable("__paypal.class");
     $EventLog->setPK2($_SERVER['REMOTE_ADDR']);
     $EventLog->insertModLog($transaction_id);
     return $this->email_content;

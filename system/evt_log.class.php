@@ -38,6 +38,40 @@ if (!class_exists("EvtLog")) {
     var $uid = "";
     var $EvtDateTime = "";
 
+    /**
+     * Fetch Log Records
+     *
+     *  $fields = array('LogAction' => 'mail_invalid', 'uid' => 'mmisingname0mv');
+     *  print_r(EvtLog::fetchLogRecord($fields));
+     *
+     * @param array $fields
+     */
+    public static function fetchLogRecord($fields = array()) {
+      $App = new App();
+      $allowed_fields = array('LogID', 'LogTable', 'PK1', 'PK2', 'LogAction', 'uid', 'EvtDateTime');
+
+      $sql = "SELECT LogID, LogTable, PK1, PK2, LogAction, uid, EvtDateTime FROM SYS_EvtLog";
+      $conditions = array();
+      foreach ($allowed_fields as $field) {
+        if (isset($fields[$field]) && $fields[$field] != "") {
+          $conditions[] = $field . " = " . $App->returnQuotedString($App->sqlSanitize($fields[$field]));
+        }
+      }
+
+      if (!empty($conditions)) {
+        $sql .= ' WHERE ';
+        $sql .= implode(' and ', $conditions);
+      }
+
+      $sql .= " LIMIT 100";
+      $result = $App->eclipse_sql($sql);
+      $return = array();
+      while ($row = mysql_fetch_assoc($result)) {
+        $return[] = $row;
+      }
+      return $return;
+    }
+
     function getLogID() {
       return $this->LogID;
     }
