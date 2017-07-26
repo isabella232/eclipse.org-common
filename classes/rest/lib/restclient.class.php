@@ -375,7 +375,7 @@ class RestClient extends EclipseEnv {
    * @return Response $return
    */
   public function _getNextPage($data) {
-    if (!isset($data->error) && !empty($data->body) && $data) {
+    if ($data && isset($data->headers['Link']) && !isset($data->error) && !empty($data->body)) {
       $pages = $this->_getHeaderLink($data->headers['Link']);
       if (($pages['self'] !== $pages['last']) && !empty($pages['next'])){
         if ($data = $this->get($pages['next'])) {
