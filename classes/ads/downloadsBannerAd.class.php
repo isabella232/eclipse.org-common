@@ -21,23 +21,23 @@ class DownloadsBannerAd extends EclipseAds {
     $content['body'] ="";
     $content['banner_styles'] = "";
 
-    if (date("Y/m/d") >= "2017/04/21" && date("Y/m/d") < "2017/05/06") {
-      $content['body'] ="Early registration prices end May 5! EclipseCon France 2017, June 21 - 22, Toulouse";
+    if (date("Y/m/d") >= "2017/09/05" && date("Y/m/d") < "2017/09/19") {
+      $content['body'] ="Register now for EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
       $content['banner_styles'] = "background-color:#ce2227;";
     }
 
-    if (date("Y/m/d") >= "2017/05/10" && date("Y/m/d") < "2017/05/24") {
-      $content['body'] ="Register now for EclipseCon France 2017, June 21-22, Toulouse";
+    if (date("Y/m/d") >= "2017/09/19" && date("Y/m/d") < "2017/10/06") {
+      $content['body'] ="Register by October 5 to get the best price! EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
       $content['banner_styles'] = "background-color:#3a7939;";
     }
 
-    if (date("Y/m/d") >= "2017/06/07" && date("Y/m/d") < "2017/06/14") {
-      $content['body'] ="EclipseCon France: Two weeks left to register! June 21-22, Toulouse";
+    if (date("Y/m/d") >= "2017/10/10" && date("Y/m/d") < "2017/10/17") {
+      $content['body'] ="Two weeks left to register! EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
       $content['banner_styles'] = "background-color:#F68B1F;";
     }
 
-    if (date("Y/m/d") >= "2017/06/14" && date("Y/m/d") < "2017/06/21") {
-      $content['body'] ="Last week left to register for EclipseCon France! June 21-22, Toulouse";
+    if (date("Y/m/d") >= "2017/10/17" && date("Y/m/d") < "2017/10/24") {
+      $content['body'] ="One week to go! EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
       $content['banner_styles'] = "background-color:#F68B1F;";
     }
 
@@ -65,10 +65,8 @@ class DownloadsBannerAd extends EclipseAds {
   protected function _build($layout = "", $type = "") {
 
     // Check if the ad should be printed depending on the date
-    if ((date("Y/m/d") >= "2017/04/21" && date("Y/m/d") < "2017/05/06") ||
-        (date("Y/m/d") >= "2017/05/10" && date("Y/m/d") < "2017/05/24") ||
-        (date("Y/m/d") >= "2017/06/07" && date("Y/m/d") < "2017/06/14") ||
-        (date("Y/m/d") >= "2017/06/14" && date("Y/m/d") < "2017/06/21")) {
+    if ((date("Y/m/d") >= "2017/09/05" && date("Y/m/d") < "2017/10/06") ||
+        (date("Y/m/d") >= "2017/10/10" && date("Y/m/d") < "2017/10/24")) {
       $this->output = $this->ad->getHtml();
     }
   }
