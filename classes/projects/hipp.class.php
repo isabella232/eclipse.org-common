@@ -196,7 +196,7 @@ class Hipp {
 
     if ($_ProjectID != "") {
       $WHERE .= " WHERE SRV.ProjectID = " . $App->returnQuotedString($App->sqlSanitize($_ProjectID)) . "
-                  AND SRV.ServiceType = 'hipp'";
+                  AND SRV.ServiceType LIKE '_ipp'";
       $sql = "SELECT /*  hipp.class.php */
           SRV.ID,
           SRV.ProjectID,
