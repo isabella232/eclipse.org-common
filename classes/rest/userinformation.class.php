@@ -42,6 +42,42 @@ class UserInformation extends EclipseUSSBlob {
   }
 
   /**
+   * Retrieve a user's information by mail
+   *
+   * @param string $identifier
+   *
+   * @return array
+   */
+  public function retrieveUserByMail($identifier = "") {
+    if (empty($identifier)) {
+      return array();
+    }
+
+    $query = http_build_query(array('mail' => $identifier));
+    $response = $this->get("account/profile/?" . $query);
+    $this->unsetHeader('If-Match');
+    return $response;
+  }
+
+  /**
+   * Retrieve a user's information by UID
+   *
+   * @param string $identifier
+   *
+   * @return array
+   */
+  public function retrieveUserByUID($identifier = "") {
+    if (empty($identifier)) {
+      return array();
+    }
+
+    $query = http_build_query(array('uid' => $identifier));
+    $response = $this->get("account/profile/?" . $query);
+    $this->unsetHeader('If-Match');
+    return $response;
+  }
+
+  /**
    * Retrieve a user's projects
    *
    * @param string $identifier
