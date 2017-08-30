@@ -29,9 +29,9 @@ class PromotedPlugin extends EclipseAds {
   public function PromotedPlugin($source = "") {
     parent::__construct($source);
 
-    /* Note: Keeping the next block as a reference. 
+    /* Note: Keeping the next block as a reference.
              If we decide to add the promoted plugins back to display */
-    
+
     /*$Ad = new Ad();
     $Ad->setTitle('Java 9 Support (Beta)');
     $this->_setMarketplaceNodeId('2393593', $Ad);
@@ -47,7 +47,7 @@ class PromotedPlugin extends EclipseAds {
    * Custom implementation of _build()
    * @see EclipseAds::_build()
    */
-  protected function _build() {
+  protected function _build($layout = "", $type = "") {
     ob_start();
     include("tpl/promotedPlugin.tpl.php");
     $this->output = ob_get_clean();

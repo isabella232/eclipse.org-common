@@ -1337,7 +1337,7 @@ EOHTML;
     $link_logo = $this->getAttributes('link_logo_' . $id);
     $img_logo = $this->getAttributes('img_logo_' . $id);
     $return = "";
-    if (!empty($img_logo['src'])) {
+    if (!empty($img_logo)) {
       $att_id = str_replace('_', '-', 'logo-' . $id);
       $this->setAttributes($att_id, 'wrapper-' . $att_id);
       //$logo['white_link'] = '<a href="' . $base_url . '">' . $logo['white'] . '</a>';
@@ -2021,9 +2021,7 @@ EOHTML;
     if (empty($theme)) {
       $theme = $this->getTheme();
     }
-    $App = $this->_getApp();
-    $path = $App->getBasePath() . '/themes/' . $theme . '/';
-    return strstr($path, '/eclipse.org-common/');
+    return '/eclipse.org-common/themes/' . $theme . '/';
   }
 
   /**
