@@ -1,5 +1,6 @@
 <?php
-/*******************************************************************************
+/**
+ * *****************************************************************************
  * Copyright (c) 2014 Eclipse Foundation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,135 +8,352 @@
  * http://eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Christopher Guindon (Eclipse Foundation) - Initial implementation
- *******************************************************************************/
+ * Christopher Guindon (Eclipse Foundation) - Initial implementation
+ * *****************************************************************************
+ */
 
 class FeedParser {
 
-	private $url = "";
+  /**
+   * List of rss paths
+   *
+   * @var string
+   */
+  private $path = array();
 
-	private $count = 4;
+  /**
+   * Default display count
+   *
+   * @var integer
+   */
+  private $count = 4;
 
-	private $description = TRUE;
+  /**
+   * Flag to only display press_releases
+   *
+   * @var string
+   */
+  private $press_release = FALSE;
 
-	private $press_release = FALSE;
+  /**
+   * Array of news item
+   *
+   * @var array
+   */
+  private $items = array();
 
-	private $items = array();
+  /**
+   * View more link values
+   *
+   * @var string
+   */
+  private $view_more = array();
 
-	private $more = "";
+  /**
+   * Link to feedburner feed
+   *
+   * @var string
+   */
+  private $rss_link = "";
 
-	private $rssLink = "";
+  /**
+   * Default date_format
+   *
+   * @var string
+   */
+  private $date_format = "Y/m/d";
 
-	private $date_format = "Y/m/d";
+  /**
+   * Default news item limit
+   *
+   * @var integer
+   */
+  private $limit = 200;
 
-	private $limit = 200;
+  /**
+   * Set date format
+   *
+   * @param string $format
+   */
+  public function setDateFormat($format = "Y/m/d") {
+    $this->date_format = $format;
+    return TRUE;
+  }
 
-	public function setUrl($url) {
-	  $this->url = $url;
-	}
+  /**
+   * Get date format
+   *
+   * @return string
+   */
+  public function getDateFormat() {
+    return $this->date_format;
+  }
 
-	public function setRssLink($url) {
-		$this->rssLink = '<a href="' . $url . '" class="link-rss-feed  orange" title="Subscribe to our RSS-feed"><i class="fa fa-rss"></i> <span>Subscribe to our RSS-feed</span></a>';
-	}
-
-	public function setPressReleaseFlag($flag = FALSE){
-    $this->press_release = $flag;
-	}
-
-	public function setCount($count) {
-		if (is_int($count)) {
-			$this->count = $count;
-		}
-	}
-
-	public function setLimit($limit) {
-		if (is_int($limit)) {
-			$this->limit = $limit;
-		}
-	}
-
-	public function setPressRelease($press_release = FALSE) {
-		$this->press_release = ($press_release) ? TRUE : FALSE;
-	}
-
-	public function setDescription($show = TRUE) {
-		$this->description = ($show) ? TRUE : FALSE;
-	}
-
-	public function setMore($url, $caption = 'View all', $prefix = '> ') {
-		$this->more = $prefix . '<a href="' . $url . '">' . $caption . '</a>';
-	}
-
-	private function parse_feed() {
-
-		if (empty($this->url)) {
-			return FALSE;
-		}
-
-
-		if (file_exists($this->url)) {
-		  $feed = simplexml_load_file($this->url);
-		}
-
-		$feed_array = array();
-		$count = 0;
-    if(isset($feed) && $feed != FALSE) {
-			foreach($feed->channel->item as $item){
-
-				if ($count >= $this->count) {
-					break;
-				}
-
-				if ($this->press_release && $item->pressrelease != 1) {
-	        continue;
-				}
-
-				$date = strtotime((string) $item->pubDate);
-				$date = date($this->date_format, $date);
-
-				$description = (string) $item->description;
-				if (strlen($description) > $this->limit) {
-					$description = substr(strip_tags($description, "<a>"), 0, $this->limit);
-					$description = strip_tags($description, "<a>");
-					$description .= "...";
-				}
-
-				$item_array = array (
-				  'title' => (string) $item->title,
-					'description' => $description,
-					'link' => (string) $item->link,
-					'date' => $date,
-				);
-
-				array_push($feed_array, $item_array);
-				$count++;
-			}
+  /**
+   * Set path for RSS feed
+   *
+   * @param string $url
+   */
+  public function addPath($path = "") {
+    if (is_string($path)) {
+      $this->path[] = $path;
+      return TRUE;
     }
-		$this->items = $feed_array;
-	}
+    return FALSE;
+  }
 
-	public function output() {
-		$this->parse_feed();
-		$output = '<div class="news_item_header">' . $this->rssLink . '</div>';
-		if (!empty($this->items)) {
-			foreach ($this->items as $item) {
-				$output .= '<div class="news_item">';
-				$output .= '<div class="news_item_date">' .$item['date'] . '</div>';
-				$output .= '<div class="news_item_title">';
-				$output .= '<h3><a href="' . $item['link'] . '">' . $item['title'] . '</a></h3>';
-				$output .= '</div>';
-				if ($this->description) {
-					$output .= '<div class="news_item_description">' .$item['description'] . '</div>';
-				}
-				$output .= '</div>';
-			}
-			if (!empty($this->more) || !empty($this->rssLink)) {
-				$output .= '<div class="news_view_all">' . $this->more . $this->rssLink . '</div>';
-			}
-		}
-		else {
-			$output = '<p>This news feed is currently empty. Please try again later.</p>';
-		}
-		print $output;
-	}
+  /**
+   * Get path for RSS feed
+   *
+   * @return string
+   */
+  public function getPath() {
+    return $this->path;
+  }
+
+  /**
+   * Set RSS link
+   *
+   * @param string $url
+   */
+  public function setRssLink($url = "") {
+    if (is_string($url)) {
+      $this->rss_link = $url;
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get RSS link
+   *
+   * @param string $html
+   *
+   * @return string
+   */
+  public function getRssLink() {
+    return $this->rss_link;
+  }
+
+  /**
+   * Get RSS link
+   *
+   * @param string $html
+   *
+   * @return string
+   */
+  public function getRssLinkHTML() {
+    $url = $this->getRssLink();
+    if (empty($url)) {
+      return "";
+    }
+    return '<a href="' . $url . '" class="link-rss-feed  orange" title="Subscribe to our RSS-feed"><i class="fa fa-rss"></i> <span>Subscribe to our RSS-feed</span></a>';
+  }
+
+  /**
+   * Set Press Release Flag
+   *
+   * @param string $flag
+   */
+  public function setPressRelease($flag = FALSE) {
+    if (is_bool($flag)) {
+      $this->press_release = $flag;
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get Press Release Flag
+   *
+   * @return string
+   */
+  public function getPressRelease() {
+    return $this->press_release;
+  }
+
+  /**
+   * Set item count
+   *
+   * @param number $count
+   */
+  public function setCount($count = 4) {
+    if (is_numeric($count)) {
+      $this->count = $count;
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get item count
+   *
+   * @return number $count
+   */
+  public function getCount() {
+    return $this->count;
+  }
+
+  /**
+   * Set description limit
+   *
+   * @param number $limit
+   */
+  public function setLimit($limit = 200) {
+    if (is_numeric($limit)) {
+      $this->limit = $limit;
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get description limit
+   *
+   * @return number $limit
+   */
+  public function getLimit() {
+    return $this->limit;
+  }
+
+  /**
+   * Set view_more link
+   *
+   * @param string $url
+   * @param string $caption
+   * @param string $prefix
+   */
+  public function setViewMoreLink($url = "", $caption = 'View all', $prefix = '> ') {
+    if (is_string($url) && is_string($caption) && is_string($prefix)) {
+      $this->view_more = array(
+        'url' => $url,
+        'caption' => $caption,
+        'prefix' => $prefix
+      );
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get ViewMore link
+   *
+   * @return string
+   */
+  public function getViewMoreLink() {
+    $view_more = $this->view_more;
+
+    if (empty($view_more['url']) || empty($view_more['caption'])) {
+      return array();
+    }
+
+    if (!isset($view_more['prefix'])) {
+      $view_more['prefix'] = "";
+    }
+
+    return $view_more;
+  }
+
+  /**
+   * Get view_more link (HTML)
+   *
+   * @return string
+   */
+  public function getViewMoreLinkHTML() {
+    $view_more = $this->getViewMoreLink();
+    if (empty($view_more)) {
+      return "";
+    }
+    return $view_more['prefix'] . '<a href="' . $view_more['url'] . '">' . $view_more['caption'] . '</a>';
+  }
+
+  /**
+   * Html Output
+   *
+   * @return string
+   */
+  public function output() {
+    if (!$this->_parseFeeds()){
+      return '<p>This news feed is currently empty. Please try again later.</p>';
+    }
+
+    $output = '<div class="news_item_header">' . $this->getRssLinkHTML() . '</div>';
+    if (!empty($this->items)) {
+      foreach ($this->items as $item) {
+        $output .= '<div class="news_item">';
+        $output .= '<div class="news_item_date">' . $item['date'] . '</div>';
+        $output .= '<div class="news_item_title">';
+        $output .= '<h3><a href="' . $item['link'] . '">' . $item['title'] . '</a></h3>';
+        $output .= '</div>';
+        if ($this->getLimit() > 0) {
+          $output .= '<div class="news_item_description">' . $item['description'] . '</div>';
+        }
+        $output .= '</div>';
+      }
+
+      if (!empty($this->view_more) || !empty($this->rss_link)) {
+        $output .= '<div class="news_view_all">' . $this->getViewMoreLinkHTML() . $this->getRssLinkHTML() . '</div>';
+      }
+    }
+
+    return $output;
+  }
+
+  /**
+   * Parse the Feed
+   *
+   * @return boolean
+   */
+  private function _parseFeeds() {
+    $path = $this->getPath();
+    if (empty($path)) {
+      return FALSE;
+    }
+
+    $count = 0;
+    foreach ($path as $p) {
+      if (file_exists($p)) {
+        $feed = simplexml_load_file($p);
+      }
+
+      if (isset($feed) && $feed != FALSE) {
+        foreach ($feed->channel->item as $item) {
+          $feed_array = array();
+          if ($count >= $this->count) {
+            break;
+          }
+
+          if ($this->getPressRelease() && $item->pressrelease != 1) {
+            continue;
+          }
+
+          $date = strtotime((string) $item->pubDate);
+          $date = date($this->getDateFormat(), $date);
+
+          $description = (string) $item->description;
+          if (strlen($description) > $this->getLimit()) {
+            $description = substr(strip_tags($description, "<a>"), 0, $this->limit);
+            $description = strip_tags($description, "<a>");
+            $description .= "...";
+          }
+
+          $item_array = array(
+            'title' => (string) $item->title,
+            'description' => $description,
+            'link' => (string) $item->link,
+            'date' => $date
+          );
+
+          $this->items[] = $item_array;
+          $count++;
+        }
+      }
+    }
+
+    if (!empty($this->items)) {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
 }
