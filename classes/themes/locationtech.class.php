@@ -156,13 +156,14 @@ EOHTML;
    */
   public function getFooterRegion2() {
     return <<<EOHTML
-      <h2 class="block-title">Legal</h2>
-      <ul class="menu nav">
-        <li class="first leaf"><a href="https://www.eclipse.org/legal/copyright.php" title="">Copyright Agent</a></li>
-        <li class="leaf"><a href="https://www.eclipse.org/legal/privacy.php" title="">Privacy Policy</a></li>
-        <li class="leaf"><a href="https://www.eclipse.org/legal/termsofuse.php" title="">Terms of Use</a></li>
-        <li class="last leaf"><a href="https://www.eclipse.org/legal/" title="">Legal Resources</a></li>
-      </ul>
+      <h2 class="section-title">Legal</h2>
+      <ul class="nav">
+       <li><a href="//www.eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+       <li><a href="//www.eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+       <li><a href="//www.eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+       <li><a href="//www.eclipse.org/legal/epl-2.0/">Eclipse Public License</a></li>
+       <li><a href="//www.eclipse.org/legal/">Legal Resources</a></li>
+     </ul>
 EOHTML;
   }
 

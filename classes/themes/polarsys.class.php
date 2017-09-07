@@ -155,11 +155,11 @@ EOHTML;
     return <<<EOHTML
       <h2 class="section-title">Legal</h2>
       <ul class="nav">
-       <li class="link_privacy first"><a href="//www.eclipse.org/legal/privacy.php">Privacy Policy</a></li>
-       <li class="link_terms"><a href="//www.eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
-       <li class="link_copyright"><a href="//www.eclipse.org/legal/copyright.php">Copyright Agent</a></li>
-       <li class="link_epl"><a href="//www.eclipse.org/org/documents/epl-v10.php">Eclipse Public License</a></li>
-       <li class="link_legal last"><a href="//www.eclipse.org/legal/">Legal Resources</a></li>
+       <li><a href="//www.eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+       <li><a href="//www.eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+       <li><a href="//www.eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+       <li><a href="//www.eclipse.org/legal/epl-2.0/">Eclipse Public License</a></li>
+       <li><a href="//www.eclipse.org/legal/">Legal Resources</a></li>
      </ul>
 EOHTML;
   }
