@@ -22,5 +22,5 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
       <a class="<?php print $link['link_classes']; ?>" href="<?php print $link['url']; ?>" title="<?php print $link['text']; ?> Download"><?php print $link['text_prefix'] . ' ' . $link['text']; ?></a>
     <?php endforeach; ?>
   </p>
-  <p><a href="/downloads/eclipse-packages" class="grey-link">Download Packages</a></p>
+  <p><a href="/downloads/eclipse-packages" class="grey-link">Download Packages</a> | <a class="grey-link" href="/downloads/eclipse-packages/?show_instructions=TRUE#page-download" title="<?php print $link['text']; ?> Instructions">Need Help?</a></p>
 </div>
