@@ -47,17 +47,16 @@ $variables = array(
 );
 ?>
 
-<?php ob_start(); ?>
-<?php $Theme->setThemeVariables(array('header_nav' => $variables));?>
-<?php print $Theme->getHeaderNav();?>
-<?php $html = ob_end_flush();?>
 
 <h3 id="section-headernav">Header Nav</h3>
 <p>Custom header navigation for project pages.</p><p><strong>For more information:</strong><br/> <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=436108">Bug 436108</a> - Update navigation buttons for Documentation, Download, Getting Involved and Support for project pages.</p>
-<?php print $html;?>
+<?php
+  $Theme->setThemeVariables(array('header_nav' => $variables));
+  print $Theme->getHeaderNav();
+?>
 
 <h4>PHP Code</h4>
-<div class="editor" data-editor-lang="html" data-editor-no-focus="true">
+<pre>
 &lt;?php
   // Initialize $variables.
   $variables = array();
@@ -107,7 +106,7 @@ $variables = array(
 
   // Set Solstice theme variables (Array)
   $App->setThemeVariables($variables);
-</div>
+</pre>
 <h4>HTML Output</h4>
 
-<div class="editor" data-editor-lang="html" data-editor-no-focus="true"><?php print htmlentities($html); ?></div>
+<pre><?php print htmlentities($Theme->getHeaderNav()); ?></pre>

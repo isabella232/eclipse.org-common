@@ -48,14 +48,5 @@
   // Set Solstice theme variables (Array)
   $App->setThemeVariables($variables);
 
-  $App->AddExtraHtmlHeader('<link rel="stylesheet" type="text/css" href="//eclipse.org/orion/editor/releases/5.0/built-editor.css"/>');
-  $App->AddExtraHtmlHeader('<script src="//eclipse.org/orion/editor/releases/5.0/built-editor.min.js"></script>');
-  $App->AddExtraHtmlHeader('<script>
-  /*global require*/
-  require(["orion/editor/edit"], function(edit) {
-    edit({className: "editor"});
-  });
-</script>');
-
   $App->generatePage($theme, $Menu, NULL, $pageAuthor, $pageKeywords, $pageTitle, $html);
 

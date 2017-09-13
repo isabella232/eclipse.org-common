@@ -13,8 +13,8 @@
 <p id="back-to-top">
   <a class="visible-xs" href="#top">Back to the top</a>
 </p>
-<footer role="contentinfo" id="solstice-footer">
-  <div class="container">
+<footer<?php print $this->getAttributes('footer');?>>
+  <div<?php print $this->getAttributes('footer-container');?>>
     <div class="row">
       <section<?php print $this->getAttributes('footer1');?>>
         <?php print $this->getFooterRegion1();?>

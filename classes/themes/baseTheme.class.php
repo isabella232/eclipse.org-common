@@ -246,6 +246,7 @@ class BaseTheme {
     // Set attributes on breadcrumbs
     $this->setAttributes('breadcrumbs', 'breadcrumb', 'id');
     $this->setAttributes('breadcrumbs', 'hidden-print');
+    $this->setAttributes('breadcrumbs-container', 'container');
 
     // Set attributes on main content
     $this->setAttributes('main', 'main', 'role');
@@ -254,6 +255,10 @@ class BaseTheme {
     $this->setAttributes('main-container', 'novaContent', 'id');
 
     // Set attributes on footer
+    $this->setAttributes('footer', 'solstice-footer', 'id');
+    $this->setAttributes('footer', 'contentinfo', 'role');
+    $this->setAttributes('footer-container', 'container');
+
     $this->setAttributes('footer1', 'footer-eclipse-foundation', 'id');
     $this->setAttributes('footer2', 'footer-legal', 'id');
     $this->setAttributes('footer3', 'footer-useful-links', 'id');
@@ -549,7 +554,7 @@ EOHTML;
 
     return <<<EOHTML
     <section{$this->getAttributes('breadcrumbs')}>
-      <div class="container">
+      <div{$this->getAttributes('breadcrumbs-container')}>
         <h3 class="sr-only">Breadcrumbs</h3>
         <div class="row">
           <div class="col-sm-16 padding-left-30">{$breadcrumb_html}</div>
@@ -1311,11 +1316,12 @@ EOHTML;
       'default',
       'default-header',
       'default-footer',
+      'default-fluid',
       'barebone',
       'thin',
       'thin-header',
       'default-with-footer-min',
-      'thin-with-footer-min'
+      'thin-with-footer-min',
     );
     $this->layout = 'default';
     if (in_array($layout, $acceptable_layouts)) {
@@ -1961,6 +1967,39 @@ EOHTML;
         print $this->getThemeFile('menu');
         print $this->getThemeFile('body');
         print $this->getThemeFile('footer-min');
+        break;
+
+      case 'default-fluid':
+
+        // Reduce size of logo for fluid layout
+        $this->resetAttributes('header-left', 'class');
+        $this->setAttributes('header-left', 'col-sm-8 col-md-6 col-lg-4');
+
+       // Override main_container_classes for this layout
+        $this->resetAttributes('main-container', 'class');
+       // $this->setAttributes('main-container', 'container-fluid');
+        $this->setThemeVariables(array('main_container_classes' => 'container-fluid'));
+
+        // reset header container
+        $this->resetAttributes('header-container', 'class');
+        $this->setAttributes('header-container', 'container-fluid');
+
+        // reset toolbar container
+        $this->resetAttributes('toolbar-container', 'class');
+        $this->setAttributes('toolbar-container', 'container-fluid');
+
+        // reset breadcrumbs container
+        $this->resetAttributes('breadcrumbs-container', 'class');
+        $this->setAttributes('breadcrumbs-container', 'container-fluid');
+
+        // reset footer container
+        $this->resetAttributes('footer-container', 'class');
+        $this->setAttributes('footer-container', 'container-fluid');
+
+        print $this->getThemeFile('header');
+        print $this->getThemeFile('menu');
+        print $this->getThemeFile('body');
+        print $this->getThemeFile('footer');
         break;
 
       case 'default-header':

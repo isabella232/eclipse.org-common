@@ -28,12 +28,12 @@ and powerful front-end framework for faster and easier web development.</p>
 
 <h2>Using Solstice</h2>
 <p>On a page using the eclipse.org-common $Theme Class, use this to make sure your page is always using the default theme:</p>
-<div class="editor" data-editor-lang="html" data-editor-no-focus="true">
+<pre>
 &lt;?php
 
 $Theme->generatePage();
 
-</div>
+</pre>
 
 <h2 id="starterkit">Starterkit</h2>
 <p>The <a href="/eclipse.org-common/themes/solstice/docs/starterkit/">starterkit</a> includes all the files required to create a <strong>standard page</strong> and also a <strong>Press Release</strong> page with Solstice. The source code is available <a href="http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/tree/themes/solstice/docs/starterkit/">here</a>.</p>
@@ -42,7 +42,8 @@ $Theme->generatePage();
 
 <h2>Theme variables</h2>
 <p>It's now possible to alter the Solstice theme using <code>$App->setThemeVariables($variables);</code>.</p>
-<div class="editor" data-editor-lang="html" data-editor-no-focus="true">
+
+<pre>
 &lt;?php
 
   // Initialize $variables.
@@ -69,7 +70,7 @@ $Theme->generatePage();
 
   // Set Solstice theme variables (Array)
   $App->setThemeVariables($variables);
-</div>
+</pre>
 
 <h2>Templates</h2>
 <?php
@@ -84,6 +85,7 @@ $Theme->generatePage();
         <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=default-header">Header</a></li>
         <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=default-footer">Footer</a></li>
         <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=default">Full page</a></li>
+        <li><a href="/eclipse.org-common/themes/solstice/html_template/index.php?theme=<?php print $t;?>&layout=default-fluid">Fluid (Full page)</a></li>
       </ul>
     </div>
     <div class="col-md-8">
@@ -102,6 +104,22 @@ $Theme->generatePage();
   </div>
 <?php endforeach;?>
 <p>*A barebone HTML header &amp; footer to adapt the look to subsites, such as Bugzilla, Forums, Mailing lists &amp; events.eclipse.org.</p>
+<pre>
+  // List of available layout to chose from
+  $acceptable_layouts = array(
+    'default',
+    'default-header',
+    'default-footer',
+    'default-fluid',
+    'barebone',
+    'thin',
+    'thin-header',
+    'default-with-footer-min',
+    'thin-with-footer-min',
+  );
+  $Theme->setLayout($acceptable_layouts[0]);
+</pre>
+
 
 <h2>CSS</h2>
 <p><a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/classes.less">classes.less</a>

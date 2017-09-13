@@ -33,4 +33,4 @@
 <h3 id="section-stepbystep">Step by Step</h3>
 <?php print $html; ?>
 <h4>Code</h4>
-<div class="editor" data-editor-lang="html" data-editor-no-focus="true"><?php print htmlentities($html); ?></div>
+<pre><?php print htmlentities($html); ?></pre>

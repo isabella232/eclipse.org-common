@@ -1,13 +1,9 @@
-<?php ob_start(); ?>
-<?php print $Theme->getCfaButton();?>
-<?php $html = ob_end_flush();?>
-
 <h3 id="section-btncfa">Call For Action Button link</h3>
 <p>Update or replace the CFA buttonin the header of solstice.</p>
-<?php print $html;?>
+<?php print $Theme->getCfaButton();;?>
 
 <h4>PHP Code</h4>
-<div class="editor" data-editor-lang="html" data-editor-no-focus="true">
+<pre>
 &lt;?php
 
   $variables = array();
@@ -24,7 +20,7 @@
   // Set Solstice theme variables (Array)
   $App->setThemeVariables($variables);
 
-</div>
+</pre>
 <h4>HTML Output</h4>
 
-<div class="editor" data-editor-lang="html" data-editor-no-focus="true"><?php print htmlentities($html); ?></div>
+<pre><?php print htmlentities($Theme->getCfaButton()); ?></pre>
