@@ -281,7 +281,7 @@ class DonationEmails {
     $email = $this->_get_email_greeting_string();
     $email .= "Thank you for your donation. Your support is greatly appreciated and your donation will help make the Eclipse Community even better for millions of developers and users around the world." . PHP_EOL . PHP_EOL;
     $email .= "You’ve donated more than 35 USD, which means that you are now a Friend of Eclipse (FoE)! You will now be identified as a FoE with a Friend badge for your Eclipse Account and Bugzilla. Use this personalized link to login into your Eclipse Account to get access to the badge: https://" . $domain['domain'] . "/donate/link-account.php?" . $query_string . PHP_EOL . PHP_EOL;
-    $email .= "Finally, as a Friend, you also get 40% off print & 50% off ebooks at oreilly.com using the discount code " . $this->_get_email_code('OREILLY') . PHP_EOL . PHP_EOL;
+    //$email .= "Finally, as a Friend, you also get 40% off print & 50% off ebooks at oreilly.com using the discount code " . $this->_get_email_code('OREILLY') . PHP_EOL . PHP_EOL;
     $email .= $this->_get_email_footer_string();
     $this->email_content = $email;
   }
