@@ -100,7 +100,7 @@ class DonationEmails {
     if ($Donation->table_prefix == 'testing_') {
       $this->_set_test_mode(TRUE);
     }
-    $this->_set_email_headers('From: Eclipse Webmaster (automated) <webmaster@eclipse.org>'. PHP_EOL .'Bcc: donate@eclipse.org'. PHP_EOL .'Content-Type: text/plain; charset=UTF-8');
+    $this->_set_email_headers('From: Eclipse Webmaster (automated) <webmaster@eclipse.org>'. PHP_EOL .'Content-Type: text/plain; charset=UTF-8');
     $this->_set_email_foe_logo_link('https://dev.eclipse.org/site_login/myaccount.php');
     $this->_set_email_code('ECLIPSECON', 'FRIEND');
     $this->_set_email_code('OREILLY', 'PCBW');
