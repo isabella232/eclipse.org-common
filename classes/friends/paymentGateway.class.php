@@ -48,6 +48,16 @@ class PaymentGateway extends Payment {
   protected $gateway_notify_url = '';
 
   /**
+   * Location of the donation preprocess form for credit cards.
+   *
+   * This is the script that will redirect the user
+   * to the proper donation based off certain criteria.
+   *
+   * @var unknown
+   */
+  protected $gateway_credit_process_url = '';
+
+    /**
    * Location of the donation preprocess form.
    *
    * This is the script that will redirect the user
@@ -94,8 +104,10 @@ class PaymentGateway extends Payment {
   public function PaymentGateway()  {
     parent::__construct();
     $this->Donation = new Donation($this->_get_debug_mode());
+    $domain = $this->getEclipseEnv();
     $this->_set_gateway_process_url('https://'. $this->_get_prefix_domain() . '/donate/process.php');
     $this->_set_gateway_return_url('https://'. $this->_get_prefix_domain() . '/donate/credit.php');
+    $this->_set_gateway_credit_process_url('https://'. $domain['accounts'] . '/donate/process');
   }
 
   /**
@@ -107,6 +119,14 @@ class PaymentGateway extends Payment {
     return $this->gateway_process_url;
   }
 
+  /**
+   * Get gateway process url
+   *
+   * @return unknown
+   */
+  public function get_gateway_credit_process_url() {
+    return $this->gateway_credit_process_url;
+  }
   /**
    * Get gateway redirect value
    *
@@ -287,6 +307,17 @@ class PaymentGateway extends Payment {
  protected function _set_gateway_process_url($url = '') {
    if (filter_var($url, FILTER_VALIDATE_URL)) {
       $this->gateway_process_url = $url;
+    }
+  }
+
+  /**
+   * Set gateway process url
+   *
+   * @param string $url
+   */
+ protected function _set_gateway_credit_process_url($url = '') {
+   if (filter_var($url, FILTER_VALIDATE_URL)) {
+      $this->gateway_credit_process_url = $url;
     }
   }
 

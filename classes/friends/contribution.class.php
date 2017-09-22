@@ -137,7 +137,7 @@ class Contribution {
           " . $App->returnQuotedString($App->sqlSanitize($this->getCurrency())) . ",
           " . $App->returnQuotedString($App->sqlSanitize($this->getProcessId())) .
           ")";
-      $App->eclipse_sql($sql);
+      return $App->eclipse_sql($sql);
     }
     return $result;
   }
@@ -156,7 +156,7 @@ class Contribution {
           currency = " . $App->returnQuotedString($App->sqlSanitize($this->getCurrency())) . ",
           process_id = " . $App->returnQuotedString($App->sqlSanitize($this->getProcessId())) . "
           WHERE contribution_id = " . $App->returnQuotedString($App->sqlSanitize($this->getContributionID()));
-      $App->eclipse_sql($sql);
+      return $App->eclipse_sql($sql);
     }
     else {
       $result = -1;

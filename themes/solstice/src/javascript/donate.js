@@ -19,6 +19,7 @@
           $('.recognition-fields').slideUp(300);
         }
     });
+    
 
     // When the user click on a pre-defined donation amount
     $('.btn-square').click(function() {
@@ -43,7 +44,15 @@
       if (payment_type === "paypal") {
         $('input[name=subscription]').attr("disabled",false);
       }
+      var credit_process_url = $('input[name=credit_process_url]').val();
+      if (payment_type === "credit" && credit_process_url) {
+        $('#donation_default_eclipse_form').attr('action', credit_process_url);
+      }
       else{
+        var default_process_url = $('input[name=default_process_url]').val();
+        if (default_process_url) {
+          $('#donation_default_eclipse_form').attr('action', default_process_url);
+        }
         $('#subscription_default').prop('checked',true);
         $('input[name=subscription]').attr("disabled",true);
       }
