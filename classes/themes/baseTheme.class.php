@@ -189,6 +189,8 @@ class BaseTheme {
    */
   protected $theme_variables = array();
 
+  protected $toolbar_left_content = "";
+
   /**
    * Constructor
    */
@@ -1903,6 +1905,9 @@ EOHTML;
       $this->setAttributes('body', "no-breadcrumbs-with-promo");
     }
 
+    // Add the October Donation Campaign in the toolbar
+    $this->setToolbarLeftContent('October Donation Campaign <a href="/donate">Donate Now</a>');
+
     ob_start();
     switch ($this->getLayout()) {
       case 'barebone':
@@ -2026,6 +2031,7 @@ EOHTML;
         break;
 
     }
+
     return ob_flush();
   }
 
@@ -2099,6 +2105,35 @@ EOHTML;
     return $this->theme_variables;
   }
 
+  /**
+   * Set the toolbar left content div element
+   *
+   * @param string $text
+   */
+  public function setToolbarLeftContent($text){
+
+    // Set the proper attributes
+    $this->setAttributes('toolbar-left-content', 'text-left col-md-12 col-md-pull-12 row-toolbar-col toolbar-left-content');
+    $this->resetAttributes('toolbar-user-links', 'class');
+    $this->setAttributes('toolbar-user-links', 'col-md-12 col-md-push-12 row-toolbar-col');
+
+    // Add the text to the container
+    $left_content_attr = $this->getAttributes("toolbar-left-content");
+    if (!empty($text) && !empty($left_content_attr)) {
+      $this->toolbar_left_content = '<div' . $left_content_attr . '>
+            <span>' . $text . '</span></div>';
+    }
+  }
+
+  /**
+   * Get the toolbar left content div element
+   *
+   * @return string
+   */
+  public function getToolbarLeftContent(){
+    return $this->toolbar_left_content;
+  }
+
   public function getToolbarHtml() {
     if (!$this->getDisplayToolbar()) {
       return "";
@@ -2114,6 +2149,7 @@ EOHTML;
               {$this->getSessionVariables('logout')}
             </ul>
           </div>
+          {$this->getToolbarLeftContent()}
         </div>
       </div>
     </div>
