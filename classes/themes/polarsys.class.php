@@ -176,6 +176,7 @@ EOHTML;
         <li class="leaf"><a href="//polarsys.org/faq" title="Frequently Asked Questions">FAQ</a></li>
         <li class="leaf"><a href="//polarsys.org/news" title="">News and Events</a></li>
         <li class="last leaf"><a href="//polarsys.org/polarsys-newsletter" title="">Newsletter</a></li>
+        <li class="last leaf"><a href="https://status.eclipse.org">Service Status</a></li>
       </ul>
 EOHTML;
   }

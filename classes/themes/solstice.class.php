@@ -93,6 +93,7 @@ EOHTML;
       <li><a href="{$this->getBaseUrl()}projects">Community of Projects</a></li>
       <li><a href="{$this->getBaseUrl()}org/workinggroups/">Working Groups</a></li>
       <li><a href="{$this->getBaseUrl()}org/research/">Research@Eclipse</a></li>
+      <li><a href="https://status.eclipse.org">Service Status</a></li>
     </ul>
 
     <ul class="list-inline social-media">

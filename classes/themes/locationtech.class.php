@@ -179,7 +179,8 @@ EOHTML;
         <li class="leaf"><a href="https://locationtech.org/wiki" title="">Wiki</a></li>
         <li class="leaf"><a href="http://foss4g-na.org" title="">FOSS4G NA</a></li>
         <li class="leaf"><a href="http://tour.locationtech.org" title="">Tour</a></li>
-        <li class="last leaf"><a href="http://fedgeoday.org" title="">FedGeoDay</a></li>
+        <li class="leaf"><a href="http://fedgeoday.org" title="">FedGeoDay</a></li>
+        <li class="last leaf"><a href="https://status.eclipse.org">Service Status</a></li>
       </ul>
 EOHTML;
   }
