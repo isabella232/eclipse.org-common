@@ -31,7 +31,7 @@ class DownloadsBannerAd extends EclipseAds {
       $content['banner_styles'] = "background-color:#3a7939;";
     }
 
-    if (date("Y/m/d") >= "2017/10/10" && date("Y/m/d") < "2017/10/17") {
+    if (date("Y/m/d") >= "2017/10/06" && date("Y/m/d") < "2017/10/17") {
       $content['body'] ="Two weeks left to register! EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
       $content['banner_styles'] = "background-color:#F68B1F;";
     }
