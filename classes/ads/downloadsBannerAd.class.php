@@ -65,8 +65,7 @@ class DownloadsBannerAd extends EclipseAds {
   protected function _build($layout = "", $type = "") {
 
     // Check if the ad should be printed depending on the date
-    if ((date("Y/m/d") >= "2017/09/05" && date("Y/m/d") < "2017/10/06") ||
-        (date("Y/m/d") >= "2017/10/10" && date("Y/m/d") < "2017/10/24")) {
+    if ((date("Y/m/d") >= "2017/09/05" && date("Y/m/d") < "2017/10/24")) {
       $this->output = $this->ad->getHtml();
     }
   }
