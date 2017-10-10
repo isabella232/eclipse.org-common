@@ -229,7 +229,7 @@ class Membership {
       N.title,
       CTR.field_companyname_value as name,
       N.nid,
-      if(fv.field_version_value IS NULL ,'',MAX(fv.field_version_value)) as version,
+      CASE MAX(CAST(fv.field_version_value as INTEGER)) WHEN fv.field_version_value IS NULL THEN '' ELSE fv.field_version_value END as version,
       B.body_value as teaser
     FROM field_data_field_companyname as CTR
     INNER JOIN node as N on CTR.entity_id = N.nid
