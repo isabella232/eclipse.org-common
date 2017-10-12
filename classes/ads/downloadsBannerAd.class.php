@@ -14,7 +14,7 @@ require_once("eclipseAds.class.php");
 class DownloadsBannerAd extends EclipseAds {
 
   public function __construct() {
-    parent::__construct($source);
+    parent::__construct();
 
     $campaign = "PROMO_FRANCE2017_DOWNLOADS_PAGE";
 
