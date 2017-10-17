@@ -38,7 +38,7 @@ class EclipseUSSBlob extends RestClient{
 
     switch ($this->getEnvShortName()) {
       case 'local':
-        $this->setBaseUrl('https://api.eclipse.local:51243');
+        $this->setBaseUrl('https://api.php53.dev.docker');
         break;
       case 'staging':
         $this->setBaseUrl('https://api-staging.eclipse.org');

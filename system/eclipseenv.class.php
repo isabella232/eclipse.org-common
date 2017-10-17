@@ -80,14 +80,13 @@ class EclipseEnv {
    * @return array
    */
   public function getEclipseEnv(){
-    $local_docker_port = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? '43' : '80';
     // @todo: allowed_hosts is deprecated
     $server['dev'] = array(
       'shortname' => 'local',
       'cookie' => '.eclipse.local',
-      'domain' => 'www.eclipse.local:502' . $local_docker_port,
-      'dev_domain' => 'dev.eclipse.local:51143',
-      'accounts' => 'accounts.eclipse.local:51243',
+      'domain' => 'www.eclipse.php53.dev.docker',
+      'dev_domain' => 'dev_eclipse.php53.dev.docker',
+      'accounts' => 'accounts.php53.dev.docker',
       'allowed_hosts' => array(
         'eclipse.local',
         'www.eclipse.local',
