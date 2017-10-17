@@ -44,6 +44,9 @@
       if (payment_type === "paypal") {
         $('input[name=subscription]').attr("disabled",false);
       }
+      else {
+        $('input[name=subscription]').attr("disabled",true);
+      }
       var credit_process_url = $('input[name=credit_process_url]').val();
       if (payment_type === "credit" && credit_process_url) {
         $('#donation_default_eclipse_form').attr('action', credit_process_url);
@@ -54,7 +57,6 @@
           $('#donation_default_eclipse_form').attr('action', default_process_url);
         }
         $('#subscription_default').prop('checked',true);
-        $('input[name=subscription]').attr("disabled",true);
       }
     }
 
