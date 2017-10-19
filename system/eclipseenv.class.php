@@ -86,7 +86,7 @@ class EclipseEnv {
       'cookie' => '.eclipse.local',
       'domain' => 'www.eclipse.php53.dev.docker',
       'dev_domain' => 'dev_eclipse.php53.dev.docker',
-      'accounts' => 'accounts.php53.dev.docker',
+      'accounts' => 'accounts.php55.dev.docker',
       'allowed_hosts' => array(
         'eclipse.local',
         'www.eclipse.local',
