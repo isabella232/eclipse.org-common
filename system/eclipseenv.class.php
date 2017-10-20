@@ -118,7 +118,7 @@ class EclipseEnv {
       ),
     );
 
-    if (strpos($_SERVER['HTTP_HOST'], '.local') !== FALSE) {
+    if (strpos($_SERVER['HTTP_HOST'], '.docker') !== FALSE) {
       return $server['dev'];
     }
 
