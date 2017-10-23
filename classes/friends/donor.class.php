@@ -130,7 +130,7 @@ class Donor {
    * Get donor first name
    */
   public function get_donor_first_name() {
-    return ucfirst(strtolower($this->donor_first_name));
+    return ucwords(strtolower($this->donor_first_name));
   }
 
   /**
@@ -147,7 +147,7 @@ class Donor {
    * Get donor last name
    */
   public function get_donor_last_name() {
-    return ucfirst(strtolower($this->donor_last_name));
+    return ucwords(strtolower($this->donor_last_name));
   }
 
   /**
@@ -203,7 +203,7 @@ class Donor {
    */
   public function set_donor_first_name($name) {
     $name = filter_var($name, FILTER_SANITIZE_STRING);
-    $name = ucfirst(strtolower($name));
+    $name = ucwords(strtolower($name));
     if ($name != "") {
       $this->donor_first_name = $name;
     }
@@ -221,7 +221,7 @@ class Donor {
    */
   public function set_donor_last_name($name) {
     $name = filter_var($name, FILTER_SANITIZE_STRING);
-    $name = ucfirst(strtolower($name));
+    $name = ucwords(strtolower($name));
     if ($name != "") {
       $this->donor_last_name = $name;
     }

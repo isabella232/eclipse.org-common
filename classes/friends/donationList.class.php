@@ -245,7 +245,7 @@ class DonationList {
       foreach ($friendsContributions as $contributions) {
         $result = array();
         $result['Friend'] = $contributions->getFriendObject();
-        $name = ucfirst(strtolower($result['Friend']->getFirstName())) . ' ' . ucfirst(strtolower($result['Friend']->getLastName()));
+        $name = ucwords(strtolower($result['Friend']->getFirstName())) . ' ' . ucwords(strtolower($result['Friend']->getLastName()));
         if ($name == " ") {
           $name = 'Anonymous';
         }
