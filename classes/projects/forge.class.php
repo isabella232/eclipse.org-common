@@ -212,4 +212,63 @@ class Forge {
     return $this->getId() == 'eclipse';
   }
 
+  /**
+   * Validate if url is a valid CI url
+   *
+   * @param string $url
+   * @return boolean
+   */
+  public static function validateEclipseCIUrl($url) {
+    // get forge class from eclipse.org-common
+    $parsed_url = parse_url(strtolower($url));
+    $host_parts = explode('.', $parsed_url['host']);
+
+    // main domain name should be 2nd from last
+    if (count($host_parts) < 2) {
+      // the build link url is very unlikely to be valid
+      return FALSE;
+    }
+
+    $domain_name = $host_parts[count($host_parts) - 2];
+    // check host is in the list of accepted domains
+    $forge_list = self::getForges();
+    $hudson_domain = $forge_list[$domain_name]->getHudsonDomain();
+    if (!isset($forge_list[$domain_name]) && !in_array($parsed_url['host'], $hudson_domain)) {
+      return FALSE;
+    }
+
+    // Make sure the url starts with either hudon or ci.
+    if (substr($parsed_url['host'], 0, 5) !== 'hudson' && substr($parsed_url['host'], 0, 2) !== 'ci') {
+      return FALSE;
+    }
+
+    if (!isset($parsed_url['path'])) {
+      // no path specified
+      return FALSE;
+    }
+
+    // break the path into parts
+    $path_parts = explode('/', trim($parsed_url['path'], '/'));
+    if (empty($path_parts[0])) {
+      // first part is empty, parsed path had only contained '/'
+      return FALSE;
+    }
+
+    // check path size, should be 1 or 3 parts
+    if (count($path_parts) < 1 || count($path_parts) > 3) {
+      // path longer than expected
+      return FALSE;
+    }
+
+    if (count($path_parts) === 3) {
+      // some projects have hudson for first path part - should be project name
+      // 2nd part should be job if job specified (3rd part is build job name)
+      if ($path_parts[0] === 'hudson' || $path_parts[1] !== 'job') {
+        return FALSE;
+      }
+    }
+
+    return TRUE;
+  }
+
 }
