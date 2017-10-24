@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+
     // Initializing the configuration object
     grunt.initConfig({
         copy: {
@@ -17,13 +18,6 @@ module.exports = function(grunt) {
                     flatten: true,
                     src: ['bower_components/fontawesome/fonts/*'],
                     dest: 'public/fonts/',
-                    filter: 'isFile'
-                },
-                {
-                    expand: true,
-                    cwd: 'bower_components/solstice-assets/images/',
-                    src: ['**'],
-                    dest: 'public/images/',
                     filter: 'isFile'
                 },
                 ]
@@ -55,23 +49,27 @@ module.exports = function(grunt) {
                 separator: ';',
             },
             js_frontend: {
-                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/lib/solstice-cookies.js', './src/javascript/main.js', './src/javascript/donate.js'],
+                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './src/javascript/lib/solstice-cookies.js', './src/javascript/main.js', './src/javascript/donate.js'],
                 dest: './public/javascript/main.min.js',
             },
             js_barebone: {
-                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js', './src/javascript/main.js'],
+                src: ['./bower_components/jquery/dist/jquery.js', './bower_components/bootstrap/dist/js/bootstrap.js', './src/javascript/main.js'],
                 dest: './public/javascript/barebone.min.js',
             }
         },
         uglify: {
             options: {
-                mangle: false
+                mangle: false,
                 // Use if you want the names of your functions and variables
                 // unchanged.
+                
+                // will preserve all comments that start with a bang (!)
+                preserveComments:'some'
             },
             frontend: {
                 files: {
                     './public/javascript/main.min.js': './public/javascript/main.min.js',
+                    './public/javascript/barebone.min.js':'./public/javascript/barebone.min.js'
                 }
             },
         },
@@ -81,7 +79,6 @@ module.exports = function(grunt) {
                 // watched files
                 './bower_components/jquery/jquery.js',
                 './bower_components/bootstrap/dist/js/bootstrap.js',
-                './bower_components/bootstrapvalidator/dist/js/bootstrapValidator.min.js',
                 './src/javascript/main.js',
                 './src/javascript/donate.js',
                 './src/javascript/lib/solstice-cookies.js'],
@@ -98,7 +95,38 @@ module.exports = function(grunt) {
                 tasks: ['less'],
                 // tasks to run
             },
+            imgmin: {
+              files: [
+                './bower_components/solstice-assets/images/components/**/*.{png,jpg,gif}',
+                './bower_components/solstice-assets/images/forums/**/*.{png,jpg,gif}',
+                './bower_components/solstice-assets/images/hudson/**/*.{png,jpg,gif}',
+                './bower_components/solstice-assets/images/lists/**/*.{png,jpg,gif}',
+                './bower_components/solstice-assets/images/logo/**/*.{png,jpg,gif}',
+                './bower_components/solstice-assets/images/template/**/*.{png,jpg,gif}',
+              ],
+              tasks: ['imagemin:dynamic'],
+            }
+        },
+        imagemin: {
+          dynamic: {
+            files: [{
+                expand: true,
+                cwd: './bower_components/solstice-assets/images',
+                src: [
+                  'components/**/*.{png,jpg,gif}',
+                  'forums/**/*.{png,jpg,gif}',
+                  'hudson/**/*.{png,jpg,gif}',
+                  'lists/**/*.{png,jpg,gif}',
+                  'logo/**/*.{png,jpg,gif}',
+                  'template/**/*.{png,jpg,gif}',
+                ],
+                dest: 'public/images'
+            }],
+            options: {
+              optimizationLevel: 3
+          },
         }
+      }
     });
     // Plugin loading
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -106,7 +134,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
     // Task definition
     grunt.registerTask('default', ['watch']);
-    grunt.registerTask('init', ['copy','watch']);
+    grunt.registerTask('init', ['copy','imagemin','watch']);
+    grunt.registerTask('imgmin', ['imagemin']);
 };
+

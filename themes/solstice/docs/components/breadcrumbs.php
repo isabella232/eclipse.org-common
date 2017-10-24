@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-<section class="defaut-breadcrumbs hidden-print">
+<section class="default-breadcrumbs hidden-print">
   <div class="container">
     <ol class="breadcrumb">
       <li><a href="https://www.eclipse.org/">Home</a></li>
