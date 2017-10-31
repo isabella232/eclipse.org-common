@@ -1906,7 +1906,7 @@ EOHTML;
     }
 
     // Add the October Donation Campaign in the toolbar
-    $this->setToolbarLeftContent('October Donation Campaign <a href="/donate">Donate Now</a>');
+    $this->setToolbarLeftContent('Annual Donation Campaign <a href="/donate">Donate Now</a>');
 
     ob_start();
     switch ($this->getLayout()) {
