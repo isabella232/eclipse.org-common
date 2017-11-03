@@ -1905,9 +1905,6 @@ EOHTML;
       $this->setAttributes('body', "no-breadcrumbs-with-promo");
     }
 
-    // Add the October Donation Campaign in the toolbar
-    $this->setToolbarLeftContent('Annual Donation Campaign <a href="/donate">Donate Now</a>');
-
     ob_start();
     switch ($this->getLayout()) {
       case 'barebone':
