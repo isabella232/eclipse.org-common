@@ -196,12 +196,6 @@ class App {
    */
   private $projectGoogleAnalyticsCode = "";
 
-  /**
-   * Jquery Version
-   *
-   * @var string
-   */
-  private $jQueryVersion = FALSE;
 
   /**
    * Twitter script flag
@@ -1718,21 +1712,9 @@ class App {
    * @param string $version
    *
    * @return boolean
+   * @deprecated
    */
   function setjQueryVersion($version = FALSE) {
-    // Only set jQueryVersion if we have a copy on eclipse.org
-    $supported = array(
-      '1.4.4',
-      '1.5.1',
-      '1.5.2',
-      '1.7.2',
-      '1.9.1',
-      '2.0.0'
-    );
-    if (in_array($version, $supported)) {
-      $this->jQueryVersion = $version;
-      return TRUE;
-    }
     return FALSE;
   }
 
@@ -1740,19 +1722,9 @@ class App {
    * Return markup needed to load jQuery
    *
    * @return string|boolean
+   * @deprecated
    */
   function getjQuery() {
-    if ($this->jQueryVersion) {
-      $strn = <<<EOHTML
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/$this->jQueryVersion/jquery.min.js"></script>
-  <script type="text/javascript">
-  /* <![CDATA[ */
-  window.jQuery || document.write('<script src="/eclipse.org-common/lib/jquery/jquery-$this->jQueryVersion.min.js"><\/script>')
-  /* ]]> */
-  </script>
-EOHTML;
-      return $strn;
-    }
     return FALSE;
   }
 
