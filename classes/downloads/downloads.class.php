@@ -14,7 +14,7 @@
 if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 
 require_once(dirname(__FILE__) . "/DownloadsProject.class.php");
-require_once(dirname(__FILE__) . "/../../../membership/promo/promos.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/membership/promo/promos.php");
 require_once(dirname(__FILE__) . "/eclipseInstaller.php");
 require_once(dirname(__FILE__) . "/../ads/promotedDownloads.class.php");
 require_once(dirname(__FILE__) . "/../ads/downloadsBannerAd.class.php");
