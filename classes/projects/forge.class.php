@@ -218,9 +218,18 @@ class Forge {
    * @param string $url
    * @return boolean
    */
-  public static function validateEclipseCIUrl($url) {
+  public function isValidCIUrl($url = "") {
+    // Verify the syntax of the given URL
+    if (!filter_var($url, FILTER_VALIDATE_URL)) {
+      return FALSE;
+    }
+
     // get forge class from eclipse.org-common
     $parsed_url = parse_url(strtolower($url));
+    if (!isset($parsed_url['path'])) {
+      // no path specified
+      return FALSE;
+    }
     $host_parts = explode('.', $parsed_url['host']);
 
     // main domain name should be 2nd from last
@@ -229,21 +238,9 @@ class Forge {
       return FALSE;
     }
 
-    $domain_name = $host_parts[count($host_parts) - 2];
     // check host is in the list of accepted domains
-    $forge_list = self::getForges();
-    $hudson_domain = $forge_list[$domain_name]->getHudsonDomain();
-    if (!isset($forge_list[$domain_name]) && !in_array($parsed_url['host'], $hudson_domain)) {
-      return FALSE;
-    }
-
-    // Make sure the url starts with either hudon or ci.
-    if (substr($parsed_url['host'], 0, 5) !== 'hudson' && substr($parsed_url['host'], 0, 2) !== 'ci') {
-      return FALSE;
-    }
-
-    if (!isset($parsed_url['path'])) {
-      // no path specified
+    $hudson_domain = $this->getHudsonDomain();
+    if (!in_array($parsed_url['host'], $hudson_domain)) {
       return FALSE;
     }
 
