@@ -142,11 +142,9 @@ class App {
    * @var array
    */
   private $valid_themes = array(
-    "Nova",
     "solstice",
     "polarsys",
     "locationtech",
-    "Nova"
   );
 
   /**
@@ -975,9 +973,6 @@ class App {
    * @param unknown $Breadcrumb
    */
   function generatePage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL) {
-    if ($theme === "Nova") {
-      return $this->_generateNovaPage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL);
-    }
     $Theme = $this->getThemeClass($theme);
     $Theme->setNav($Nav);
     $Theme->setMenu($Menu);
@@ -987,69 +982,6 @@ class App {
     $Theme->setHtml($html);
     $Theme->setBreadcrumb($Breadcrumb);
     $Theme->generatePage();
-  }
-
-  private function _generateNovaPage($theme, $Menu, $Nav, $pageAuthor, $pageKeywords, $pageTitle, $html, $Breadcrumb = NULL) {
-    // Strip html tags from the page title.
-    $pageTitle = strip_tags($pageTitle);
-
-    // Breadcrumbs for the new solstice theme.
-    if ($Breadcrumb == NULL || !is_object($Breadcrumb)) {
-      require_once ('breadcrumbs.class.php');
-      $Breadcrumb = new Breadcrumb();
-    }
-
-    if ($pageTitle == "") {
-      $pageTitle = "eclipse.org page";
-    }
-
-    // page-specific RSS feed
-    if ($this->PageRSS != "") {
-      if ($this->PageRSSTitle != "") {
-        $this->PageRSSTitle = "Eclipse RSS Feed";
-      }
-      $this->ExtraHtmlHeaders .= '<link rel="alternate" title="' . $this->PageRSSTitle . '" href="' . $this->PageRSS . '" type="application/rss+xml"/>';
-    }
-
-    $extraHtmlHeaders = $this->ExtraHtmlHeaders;
-
-    include ($this->getHeaderPath($theme));
-
-    if ($Menu != NULL)
-      include ($this->getMenuPath($theme));
-
-    if ($Nav != NULL)
-      include ($this->getNavPath($theme));
-
-    echo $html;
-
-    $gaCode = $this->getGoogleAnalyticsTrackingCode();
-    if (!is_null($gaCode)) {
-      $gaCode = ($gaCode == "") ? 'UA-910670-2' : $gaCode;
-      // first lets insert the sitewide Analytics
-      $googleJavaScript = <<<EOHTML
-      <script type="text/javascript">
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '$gaCode']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-      </script>
-EOHTML;
-
-    }
-
-    if ($theme === "Nova" && isset($googleJavaScript)) {
-      echo $googleJavaScript;
-    }
-
-    include ($this->getFooterPath($theme));
   }
 
   /**
