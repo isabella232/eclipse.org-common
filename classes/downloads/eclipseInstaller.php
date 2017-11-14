@@ -31,7 +31,7 @@ class EclipseInstaller extends EclipseEnv {
   /**
    * Constructor
    */
-  function EclipseInstaller($release = NULL) {
+  function __construct($release = NULL) {
     parent::__construct();
     $this->_addPlaform('Mac OS X');
     $this->_addPlaform('Windows');

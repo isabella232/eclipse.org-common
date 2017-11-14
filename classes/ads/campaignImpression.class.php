@@ -53,7 +53,7 @@ class CampaignImpression {
    * @param string $_source
    * @param string $_remote_addr
    */
-  function CampaignImpression($_campaign_key, $_source, $_remote_addr) {
+  function __construct($_campaign_key, $_source, $_remote_addr) {
     $this->campaign_key = $_campaign_key;
     $this->source = $_source;
     $this->remote_addr = $_remote_addr;

@@ -30,7 +30,7 @@ class DonationList {
 
   private $test_mode = FALSE;
 
-  public function DonationList($test_mode = FALSE){
+  public function __construct($test_mode = FALSE){
     $this->App = new App();
     if ($test_mode == TRUE){
       $this->test_mode = TRUE;

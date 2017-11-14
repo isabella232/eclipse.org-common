@@ -26,7 +26,7 @@ class PromotedPlugin extends EclipseAds {
    * @param string $source
    *   The description of the location of the ad.
    */
-  public function PromotedPlugin($source = "") {
+  public function __construct($source = "") {
     parent::__construct($source);
 
     /* Note: Keeping the next block as a reference.

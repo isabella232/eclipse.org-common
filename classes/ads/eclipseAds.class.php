@@ -61,7 +61,7 @@ class EclipseAds{
    * Constructor
    * @param string $source
    */
-  public function EclipseAds($source = "") {
+  public function __construct($source = "") {
     if ($source != "") {
       $this->source =  $source;
     }

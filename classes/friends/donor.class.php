@@ -75,7 +75,7 @@ class Donor {
    */
   public $Friend = NULL;
 
-  public function Donor($test_mode)  {
+  public function __construct($test_mode)  {
     $Session = New Session();
     $Friend = $Session->getFriend();
     $fid = $Friend->getFriendID();

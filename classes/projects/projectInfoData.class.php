@@ -27,7 +27,7 @@ class ProjectInfoData implements Countable
 	private $projectshortname; // Same reason as $projectname
 	private $inherited = false;
 
-	function ProjectInfoData( $projectid )
+	function __construct( $projectid )
 	{
 		$App = new App();
 		$this->original_projectid = $projectid;
@@ -181,7 +181,7 @@ class ProjectInfoData implements Countable
 
 class ProjectInfoValues implements Countable {
 	private $rows;
-	function ProjectInfoValues( $projectinfo, $subrows ) {
+	function __construct( $projectinfo, $subrows ) {
 		$this->rows = $subrows;
 	}
 	function __get( $varname )

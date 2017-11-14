@@ -23,7 +23,7 @@ class FriendsContributions {
   private $contributionObject;
 
   # default constructor
-  function FriendsContributions($testmode = FALSE) {
+  function __construct($testmode = FALSE) {
     $this->friend_id     = "";
     $this->contribution_id  = "";
     $this->friendObject  = new Friend($testmode);

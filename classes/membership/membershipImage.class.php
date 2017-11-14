@@ -34,7 +34,7 @@ class MemberImage {
 
 
 	# default constructor
-	function MemberImage() {
+	function __construct() {
 		$this->DEBUG = 0;
 	    $this->details[0] = -1;
 	    $this->details[1] = -1;

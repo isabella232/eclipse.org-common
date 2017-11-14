@@ -283,7 +283,7 @@ class App {
   private $Messages = NULL;
 
   // Default constructor
-  function App() {
+  function __construct() {
 
     $this->databases = array();
 

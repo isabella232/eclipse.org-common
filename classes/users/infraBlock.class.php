@@ -31,7 +31,7 @@ class InfraBlock {
   /**
    * Constructor
    */
-  function InfraBlock() {
+  function __construct() {
 
     global $App;
     $this->App = $App;

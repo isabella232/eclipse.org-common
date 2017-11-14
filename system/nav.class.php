@@ -51,7 +51,7 @@ class Nav {
 
 
 	# Main constructor
-	function Nav() {
+	function __construct() {
 
 		$www_prefix = "";
 

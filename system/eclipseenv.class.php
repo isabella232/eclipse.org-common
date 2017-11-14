@@ -62,7 +62,7 @@ class EclipseEnv {
   /**
    * Constructor
    */
-  public function EclipseEnv(App $App = NULL) {
+  public function __construct(App $App = NULL) {
     if (is_null($App)) {
       require_once("app.class.php");
       $App = new App();

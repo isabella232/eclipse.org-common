@@ -101,7 +101,7 @@ class Donation {
 
   public $table_prefix = FALSE;
 
-  public function Donation($test_mode = FALSE)  {
+  public function __construct($test_mode = FALSE)  {
     if ($test_mode === TRUE){
       $this->table_prefix = 'testing_';
     }

@@ -101,7 +101,7 @@ class PaymentGateway extends Payment {
    */
   protected $gateway_url = '';
 
-  public function PaymentGateway()  {
+  public function __construct()  {
     parent::__construct();
     $this->Donation = new Donation($this->_get_debug_mode());
     $domain = $this->getEclipseEnv();

@@ -35,7 +35,7 @@ class Payment extends EclipseEnv {
   /**
    * Constructor
    */
-  public function Payment() {
+  public function __construct() {
      parent::__construct();
   }
 

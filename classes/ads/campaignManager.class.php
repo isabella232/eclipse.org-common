@@ -38,7 +38,7 @@ class CampaignManager extends Campaign{
   private $page_header_html = '';
 
 
-  public function CampaignManager() {
+  public function __construct() {
     parent::__construct();
 
     $Session = $this->App->useSession(true);

@@ -94,7 +94,7 @@ class DonationEmails {
    *
    * @param stdClass $Donation
    */
-  public function DonationEmails($Donation) {
+  public function __construct($Donation) {
     $this->App = new App();
     $this->Donation = $Donation;
     if ($Donation->table_prefix == 'testing_') {

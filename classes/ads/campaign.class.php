@@ -109,7 +109,7 @@ class Campaign{
   private $campaign_new_clicks = "";
 
 
-  public function Campaign() {
+  public function __construct() {
     $this->App = new App();
     // Require login for this page.
     $Session = $this->App->useSession(true);

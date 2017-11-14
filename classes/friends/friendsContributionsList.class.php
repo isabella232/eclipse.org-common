@@ -19,7 +19,7 @@ class FriendsContributionsList {
 
   private $table_prefix = "";
 
-  public function FriendsContributionsList($testmode = FALSE) {
+  public function __construct($testmode = FALSE) {
     if ($testmode === TRUE){
       $this->table_prefix = 'testing_';
     }

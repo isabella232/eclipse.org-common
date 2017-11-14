@@ -127,7 +127,7 @@ class Breadcrumb extends Menu {
   }
 
   // Main constructor
-  function Breadcrumb($page_title = "") {
+  function __construct($page_title = "") {
 
     $this->getWWW_prefix();
 

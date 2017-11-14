@@ -39,7 +39,7 @@ class ProjectCategory {
 
 
 	# default constructor
-	function projectCategory() {
+	function __construct() {
 		$this->project_id 		= "";
 		$this->category_id		= "";
 		$this->description 		= "";

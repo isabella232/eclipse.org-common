@@ -29,7 +29,7 @@ class AdReports {
 
   private $state = "";
 
-  public function AdReports() {
+  public function __construct() {
 
     $this->App = new App();
 

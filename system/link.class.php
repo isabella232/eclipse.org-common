@@ -22,14 +22,14 @@ class Link {
 	#
 	# HISTORY:
 	#
-	#*****************************************************************************	
-	
+	#*****************************************************************************
+
 	private $Text	= "";
 	private $URL	= "";
 	private $Target	= "";
 	private $Level = 0;
-	
-	
+
+
 	function getText() {
 		return $this->Text;
 	}
@@ -42,7 +42,7 @@ class Link {
 	function getLevel() {
 		return $this->Level;
 	}
-	
+
 	function setText($_Text) {
 		$this->Text = $_Text;
 	}
@@ -58,7 +58,7 @@ class Link {
 
 
 	# Main constructors
-	function Link($_Text, $_URL, $_Target, $_Level) {
+	function __construct($_Text, $_URL, $_Target, $_Level) {
 		$this->setText		($_Text);
 		$this->setURL		($_URL);
 		$this->setTarget	($_Target);

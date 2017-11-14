@@ -50,7 +50,7 @@ class Menu {
 	}
 
 	# Main constructor
-	function Menu() {
+	function __construct() {
 
 		$www_prefix = "";
 
