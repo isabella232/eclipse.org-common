@@ -871,9 +871,14 @@ EOHTML;
         break;
     }
 
+    // Bug 451203 - Google Analytics: Universal Analytics Upgrade
+    // As per Google's recommendations, we should put the GA script
+    // at the very beginning of the head tag.
+    $return = $this->getGoogleAnalytics() . PHP_EOL;
+
     $css = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css"/>';
 
-    $return = $css . PHP_EOL;
+    $return .= $css . PHP_EOL;
 
     // Add og:metatags if they haven't been set.
     // @todo: deprecated og functions in App().
@@ -1047,7 +1052,6 @@ EOHTML;
   public function getExtraJsFooter() {
     $App = $this->_getApp();
     $return = $App->ExtraJSFooter . PHP_EOL;
-    $return .= $this->getGoogleAnalytics() . PHP_EOL;
     return $return;
   }
 
@@ -1223,19 +1227,17 @@ EOHTML;
     }
 
     return <<<EOHTML
-      <script type="text/javascript">
+      <!-- Google Analytics -->
+        <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '$this->ga_code']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-      </script>
+        ga('create', '$this->ga_code', 'auto');
+        ga('send', 'pageview');
+        </script>
+      <!-- End Google Analytics -->
 EOHTML;
   }
 
