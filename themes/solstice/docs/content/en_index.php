@@ -120,6 +120,8 @@ $Theme->generatePage();
   $Theme->setLayout($acceptable_layouts[0]);
 </pre>
 
+<h2>Eclipse.org-common Classes</h2>
+<p> Visit our <a href="classes.php">PHP classes</a> page for some documentation and example of how to use the API from eclipse.org-common.</p>
 
 <h2>CSS</h2>
 <p><a href="https://github.com/chrisguindon/solstice-assets/blob/master/stylesheets/classes.less">classes.less</a>
