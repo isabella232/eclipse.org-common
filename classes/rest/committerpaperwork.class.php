@@ -152,6 +152,16 @@ class CommitterPaperwork extends EclipseUSSBlob {
   }
 
   /**
+   * Retire a committer from a specific project. (GET)
+   *
+   * @param string $username
+   * @param int $id
+   */
+  public function targetedActionRetireCommitter($username = NULL, $body = array()) {
+    return $this->post('committer/paperwork/' . $username . '/retire', json_encode($body));
+  }
+
+  /**
    * Validate a username
    *
    * @param string $username
