@@ -126,6 +126,41 @@ class BaseTheme {
    */
   protected $metatags = array();
 
+    /**
+   * Open Graph Protocol title
+   *
+   * @var string
+   */
+  private $MetaTitle = "";
+
+  /**
+   * Open Graph Protocol description
+   *
+   * @var string
+   */
+  private $MetaDescription = "";
+
+  /**
+   * Open Graph Protocol image
+   *
+   * @var string
+   */
+  private $MetaImage = "";
+
+  /**
+   * Open Graph Protocol image width
+   *
+   * @var string
+   */
+  private $MetaImageWidth = "";
+
+  /**
+   * Open Graph Protocol image height
+   *
+   * @var string
+   */
+  private $MetaImageHeight = "";
+
   /**
    *
    * @var Nav()
@@ -196,7 +231,7 @@ class BaseTheme {
    */
   function __construct($App = NULL) {
     $this->setApp($App);
-    $image_path = '//www.eclipse.org' . $this->getThemeUrl('solstice') . 'public/images/logo/';
+    $image_path = '//www.eclipse.org' . $this->getThemeUrl('solstice') . 'public/images/lgetMetao/';
 
     // Set default images
     $this->setAttributes('img_logo_default', $image_path . 'eclipse-426x100.png', 'src');
@@ -858,7 +893,7 @@ EOHTML;
    */
   public function getExtraHeaders() {
     $App = $this->_getApp();
-    $App->setOGTitle($this->getPageTitle());
+    $this->setMetaTitle($this->getPageTitle());
 
     $styles_name = 'styles';
     switch ($this->getTheme()) {
@@ -885,35 +920,35 @@ EOHTML;
     if (!$this->getMetatagByKey('og:description')) {
       $this->setMetatags('og:description', array(
         'property' => 'og:description',
-        'content' => $App->getOGDescription(),
+        'content' => $this->getMetaDescription(),
       ));
     }
 
     if (!$this->getMetatagByKey('og:image')) {
       $this->setMetatags('og:image', array(
         'property' => 'og:image',
-        'content' => $App->getOGImage(),
+        'content' => $this->getMetaImage(),
       ));
     }
 
     if (!$this->getMetatagByKey('og:title')) {
       $this->setMetatags('og:title', array(
         'property' => 'og:title',
-        'content' => $App->getOGTitle(),
+        'content' => $this->getMetaTitle(),
       ));
     }
 
     if (!$this->getMetatagByKey('og:image:width')) {
       $this->setMetatags('og:image:width', array(
         'property' => 'og:image:width',
-        'content' => $App->getOGImageWidth(),
+        'content' => $this->getMetaImageWidth(),
       ));
     }
 
     if (!$this->getMetatagByKey('og:image:height')) {
       $this->setMetatags('og:image:height', array(
         'property' => 'og:image:height',
-        'content' => $App->getOGImageHeight(),
+        'content' => $this->getMetaImageHeight(),
       ));
     }
 
@@ -923,14 +958,14 @@ EOHTML;
     if (!$this->getMetatagByKey('itemprop:name')) {
       $this->setMetatags('itemprop:name', array(
         'itemprop' => 'name',
-        'content' => $App->getOGTitle(),
+        'content' => $this->getMetaTitle(),
       ));
     }
 
     if (!$this->getMetatagByKey('itemprop:description')) {
       $this->setMetatags('itemprop:description', array(
         'itemprop' => 'description',
-        'content' => $App->getOGDescription(),
+        'content' => $this->getMetaDescription(),
       ));
     }
 
@@ -959,7 +994,7 @@ EOHTML;
     if (!$this->getMetatagByKey('twitter:title')) {
       $this->setMetatags('twitter:title', array(
         'name' => 'twitter:title',
-        'content' => $App->getOGTitle(),
+        'content' => $this->getMetaTitle(),
       ));
     }
 
@@ -973,7 +1008,7 @@ EOHTML;
     if (!$this->getMetatagByKey('twitter:description')) {
       $this->setMetatags('twitter:description', array(
         'name' => 'twitter:description',
-        'content' => $App->getOGDescription(),
+        'content' => $this->getMetaDescription(),
       ));
     }
 
@@ -2231,5 +2266,115 @@ EOHTML;
     );
 
     return "<script> var eclipse_org_common = ". json_encode($script_array) ."</script>";
+  }
+
+  /**
+   * Get $OGTitle output
+   *
+   * @return string
+   */
+  public function getMetaTitle() {
+    if (empty($this->MetaTitle)) {
+      $App = $this->_getApp();
+      return $App->getOGTitle();
+    }
+    return $this->MetaTitle;
+  }
+
+  /**
+   * Set $MetaTitle
+   *
+   * @param unknown $title
+   */
+  public function setMetaTitle($title) {
+    $this->MetaTitle = $title;
+  }
+
+  /**
+   * Get $MetaDescription output
+   *
+   * @return string
+   */
+  public function getMetaDescription() {
+    if (empty($this->MetaDescription)) {
+      $App = $this->_getApp();
+      return $App->getOGDescription();
+    }
+    return $this->MetaDescription;
+  }
+
+  /**
+   * Set $MetaDescription
+   *
+   * @param unknown $description
+   */
+  public function setMetaDescription($description) {
+    $this->MetaDescription = $description;
+  }
+
+  /**
+   * Get $MetaImage output
+   *
+   * @return string
+   */
+  public function getMetaImage() {
+    if (empty($this->MetaImage)) {
+      $App = $this->_getApp();
+      return $App->getOGImage();
+    }
+    return $this->MetaImage;
+  }
+
+  /**
+   * Set $MetaImage
+   *
+   * @param unknown $image
+   */
+  public function setMetaImage($image) {
+    $this->MetaImage = $image;
+  }
+
+  /**
+   * Get $MetaImageWidth output
+   */
+  public function getMetaImageWidth() {
+    if (empty($this->MetaImageWidth)) {
+      $App = $this->_getApp();
+      return $App->getOGImageWidth();
+    }
+    return $this->MetaImageWidth;
+  }
+
+  /**
+   * Set $MetaImageWidth
+   *
+   * @param string $width
+   */
+  public function setMetaImageWidth($width) {
+    if (is_numeric($width)) {
+      $this->MetaImageWidth = $width;
+    }
+  }
+
+  /**
+   * Get $MetaImageHeight output
+   */
+  public function getMetaImageHeight() {
+    if (empty($this->MetaImageHeight)) {
+      $App = $this->_getApp();
+      return $App->getOGImageHeight();
+    }
+    return $this->MetaImageHeight;
+  }
+
+  /**
+   * Set $MetaImageHeight
+   *
+   * @param string $height
+   */
+  public function setMetaImageHeight($height) {
+    if (is_numeric($height)) {
+      $this->MetaImageHeight = $height;
+    }
   }
 }
