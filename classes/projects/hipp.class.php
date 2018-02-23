@@ -73,13 +73,10 @@ class Hipp {
    */
   public function getControlLink($id, $shortname){
     $state = $this->getState();
-    $str = "<span id='" . $shortname . "_state' class='" . $state . "'>" . ucfirst($state) . " (" . $this->getServiceVersion() . ")</span> &#160; <span id='" . $shortname . "_instance'>";
+    $str = "<span id='" . $shortname . "_state' class='" . $state . "'>" . ucfirst($state) . "</span> &#160; <span id='" . $shortname . "_instance'>";
 
     # Examine Service status to determine control knobs to place
     if ($state == "running") {
-      # Add STOP button
-      $str .= '<a title="stop" href="#ct" data-action="stop" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-power-off"></i></a> &#160; ';
-
       # Add RESTART button
       $str .= '<a title="restart" href="#ct" data-action="restart" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-refresh"></i></a>';
     }
@@ -87,16 +84,6 @@ class Hipp {
     if ($state == "stopped") {
       # Add START button
       $str .= '<a title="start"  href="#ct" data-action="start" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-power-off"></i></a>';
-    }
-
-    # Upgrade available?
-    if($this->getServiceLatestVersion("hipp") != $this->getServiceVersion() && $this->getServiceLatestVersion("hipp") != "" && $this->getServiceVersion() != "") {
-
-      $str .= '<br /><a title="upgrade"  href="#ct" data-action="upgrade" data-projectid="' . $id . '" data-shortname="' . $shortname . '" class="hipp-control-action-link" ><i class="fa fa-download"></i> Upgrade to ' . $this->getServiceLatestVersion("hipp") . '</a>';
-      $readme = $this->getReadmeContents("hipp", $this->getServiceLatestVersion("hipp"));
-      if($readme != "") {
-        $str .= "<br /><span id='" . $shortname . "_readme'><a title='readme'  href='#ct' data-action='readme' data-projectid='" . $id . "' data-shortname='" . $shortname . "' class='hipp-control-action-link'><i class='fa fa-file-o'></i> README for " . $this->getServiceLatestVersion("hipp") . '</a></span>';
-      }
     }
 
     return $str . "</span>";
@@ -246,22 +233,4 @@ class Hipp {
     }
   }
 
-  /**
-   * getReadmeContents - Fetch README contents for a version
-   * @param string - Servicetype (HIPP), string Version (3.2.2)
-   * @return String
-   * @since 2015-02-26
-   * @author droy
-   */
-  function getReadmeContents($_ServiceType="hipp", $_version) {
-    $rValue = "";
-    if($_version != "") {
-      $_version = preg_replace($this->VersionRegexp, '', $_version);
-      $filename = $this->HIPPImagePath . "/hudson-" . $_version . ".README";
-      if(is_readable($filename)) {
-        $rValue = file_get_contents($filename);
-      }
-    }
-    return $rValue;
-  }
 }
