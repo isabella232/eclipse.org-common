@@ -38,6 +38,7 @@ class PromotedDownloads extends EclipseAds {
     $Ad->setType('empty');
     $this->newAd($Ad);
 
+
     // YATTA
     $Ad = new Ad();
     $Ad->setTitle('Yatta Launcher for Eclipse');
@@ -56,7 +57,7 @@ class PromotedDownloads extends EclipseAds {
    *
    * @param $type - This variable determines help to determine which template file to use
    */
-  protected function _build($layout = "", $type = "") {
+  protected function _build($layout = "", $type = "", $impression_id = "") {
     ob_start();
     // Layout A is default
     $tpl = "views/view.promotedDownloads.layout-a.tpl.php";

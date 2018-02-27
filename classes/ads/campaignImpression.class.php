@@ -1,14 +1,14 @@
 <?php
 /**
- * Copyright (c) 2010, 2014, 2015, 2018 Eclipse Foundation.
+ * Copyright (c) 2010, 2014, 2015, 2018 Eclipse Foundation and others.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *  Nathan Gervais (Eclipse Foundation) - Initial API + Implementation
- *  Christopher Guindon (Eclipse Foundation)
+ *    Nathan Gervais (Eclipse Foundation) - Initial API + Implementation
+ *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
  *
  * SPDX-License-Identifier: EPL-2.0
  */
@@ -28,30 +28,16 @@ class CampaignImpression {
    * The Eclipse campaign key
    * @var unknown
    */
-  private $campaign_key = 0;
-
-  /**
-   * The description of the page that will display the ad
-   * @var string
-   */
-  private $source = '';
-
-  /**
-   * The current UNIX timestamp
-   * @var string
-   */
-  private $timestamp = '';
+  private $campaign_key = '';
 
   /**
    * Constructor
    *
    * @param string $_campaign_key
-   * @param string $_source
+   * @param string $_source (deprecated)
    */
-  function __construct($_campaign_key, $_source) {
+  function __construct($_campaign_key, $_source = NULL) {
     $this->campaign_key = $_campaign_key;
-    $this->source = $_source;
-    $this->timestamp = date('Y-m-d H:i:s');
   }
 
   /**
@@ -61,23 +47,35 @@ class CampaignImpression {
     $App = new App();
 
     // We dont register ad impressions in devmode
-    if ($App->devmode == TRUE) return;
+    if ($App->devmode == TRUE) {
+      return FALSE;
+    }
 
     if (rand(0, 1000) < 1) {
       // 1 of every 1,000 hits (0.1%) will clean up
       $deleteSql = "DELETE LOW_PRIORITY FROM CampaignImpressions WHERE TimeImpressed < DATE_SUB(NOW(), INTERVAL 1 YEAR)";
       $App->eclipse_sql($deleteSql);
     }
-    $remote_addr = @gethostbyaddr($App->getRemoteIPAddress());
+
+    $url = parse_url($_SERVER['SCRIPT_URI']);
+    $host = (!empty($url['host'])) ? $App->returnQuotedString($App->sqlSanitize(preg_replace('#^www\.(.+\.)#i', '$1', $url['host']))) : 'NULL';
+    $source = (!empty($url['path'])) ? $App->returnQuotedString($App->sqlSanitize($url['path'])) : 'NULL';
+
+    $ImpressionClickID = $App->getAlphaCode(rand(32, 64));
+    $ip =  $App->anonymizeIP($App->getRemoteIPAddress());
+    $ip = (!empty($ip)) ? $App->returnQuotedString($App->sqlSanitize($ip)) : 'NULL';
+
     $sql = "INSERT DELAYED INTO CampaignImpressions
-        (CampaignKey, Source, HostName, TimeImpressed)
+        (ImpressionClickID, CampaignKey, Source, HostName, TimeImpressed, Host)
         VALUES (
+      " . $App->returnQuotedString($App->sqlSanitize($ImpressionClickID)) . ",
       " . $App->returnQuotedString($App->sqlSanitize($this->campaign_key)) . ",
-      " . $App->returnQuotedString($App->sqlSanitize($this->source)) . ",
-      " . $App->returnQuotedString($App->sqlSanitize($remote_addr)) . ",
-      " . $App->returnQuotedString($App->sqlSanitize($this->timestamp)) . ")";
+      " . $source . ",
+      " . $ip . ",
+      now(),
+      " . $host . ")";
 
     $result = $App->eclipse_sql($sql);
-    return TRUE;
+    return $ImpressionClickID;
   }
 }

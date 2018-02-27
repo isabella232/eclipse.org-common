@@ -315,6 +315,26 @@ class App {
   }
 
   /**
+   * Anonymize IP adress
+   *
+   * @param string $ip
+   *
+   * @return string|NULL
+   */
+  function anonymizeIP($ip = NULL) {
+    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+      $ip = explode('.', $ip, -1);
+      return implode('.', $ip) . ".0";
+    }
+
+    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+      $ip = explode(':', $ip, -1);
+      return implode(':', $ip) . ".0";
+    }
+    return NULL;
+  }
+
+  /**
    * Encodes special characters in a plain-text string for display as HTML.
    *
    * @param string $text

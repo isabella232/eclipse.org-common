@@ -1,13 +1,13 @@
 <?php
 /**
- * Copyright (c) 2018 Eclipse Foundation.
+ * Copyright (c) 2015, 2018 Eclipse Foundation and others.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *  Christopher Guindon (Eclipse Foundation) - initial API and implementation
+ *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
  *
  * SPDX-License-Identifier: EPL-2.0
  */
@@ -21,7 +21,7 @@ require_once("ad.class.php");
  * @subpackage ads
  * @author: Christopher Guindon <chris.guindon@eclipse.org>
  */
-class EclipseAds{
+class EclipseAds {
 
  /**
   * The selected ad to display
@@ -67,7 +67,7 @@ class EclipseAds{
    * The ad builder, this funciton is ussually overwritten in a parent class
    * @return string
    */
-  protected function _build($layout = "", $type = "") {
+  protected function _build($layout = "", $type = "", $impression_id = "") {
     return "";
   }
 
@@ -129,11 +129,12 @@ class EclipseAds{
         return "";
       }
       $campaign = $this->ad->getCampaign();
+      $impression_id = "";
       if (!empty($this->ad) && $campaign != "") {
-        $CampaignImpression = new CampaignImpression($campaign, $this->source);
-        $CampaignImpression->recordImpression();
+        $CampaignImpression = new CampaignImpression($campaign);
+        $impression_id = $CampaignImpression->recordImpression();
       }
-      $this->_build($layout, $this->ad->getType());
+      $this->_build($layout, $this->ad->getType(), $impression_id);
     }
     return $this->output;
   }
