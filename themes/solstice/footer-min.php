@@ -8,10 +8,10 @@
   <a class="visible-xs" href="#top">Back to the top</a>
 </p>
 <footer role="contentinfo" id="solstice-footer-min" class="footer-min">
-  <div class="container"">
+  <div class="container">
     <div class="row">
      <div class="col-sm-13">
-       <p>Copyright &copy; <?php print date('Y');?> The Eclipse Foundation. All Rights Reserved.</p>
+       <p>Copyright &copy; Eclipse Foundation, Inc. All Rights Reserved.</p>
      </div>
      <div class="col-sm-11">
        <ul class="list-inline" id="footer-legal-links">
