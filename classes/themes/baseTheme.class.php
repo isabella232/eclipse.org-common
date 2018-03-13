@@ -1569,6 +1569,11 @@ EOHTML;
       'caption' => 'Videos'
     );
 
+    $variables['Community'][] = array(
+      'url' => 'https://blogs.eclipse.org',
+      'caption' => 'Blogs'
+    );
+
     $variables['Participate'][] = array(
       'url' => 'https://bugs.eclipse.org/bugs/',
       'caption' => 'Report a Bug'
