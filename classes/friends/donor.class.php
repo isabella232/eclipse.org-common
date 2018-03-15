@@ -302,7 +302,7 @@ class Donor {
   /**
    * Shortcut for setting the donation transaction id
    *
-   * For paypal, this is the txn_id but for bitpay its the invoice id.
+   * For paypal, this is the txn_id.
    *
    * @param string $txn_id
    */

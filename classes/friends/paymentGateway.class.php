@@ -18,7 +18,7 @@ require_once("donationEmails.class.php");
  * Base class for gateway class
  *
  * We currently have two supported gateway classes.
- * They are paypal or bitpay.
+ * They are paypal.
  *
  * @author chrisguindon
  *
@@ -91,7 +91,7 @@ class PaymentGateway extends Payment {
   /**
    * Type of gateway
    *
-   * This should probably set to bitpay or paypal
+   * This should probably set to paypal
    * for now.
    */
   protected $gateway_type = "";
@@ -137,17 +137,6 @@ class PaymentGateway extends Payment {
       $this->_set_gateway_redirect();
     }
     return $this->gateway_redirect;
-  }
-
-  /**
-   * Set a client message for returning bitpay donation
-   */
-  public function get_gateway_bitpay_thank_you() {
-    $bitpay_return = $this->App->getHTTPParameter('bitpay_return', 'get');
-    if ($bitpay_return == 'donation') {
-      setcookie("thankyou_page[eclipse_donation]", TRUE, time() + (3600 * 24 * 360 * 10), '/', $this->_get_prefix_cookie());
-      $this->set_client_message( '<strong>Thank you for your donation!</strong>', 'success');
-    }
   }
 
   /**
@@ -357,7 +346,7 @@ class PaymentGateway extends Payment {
    * @param string $gateway_type
    */
   protected function _set_gateway_type($gateway_type = NULL){
-    $haystack = array('bitpay', 'paypal');
+    $haystack = array('paypal');
     if (in_array($gateway_type, $haystack)) {
       $this->gateway_type = $gateway_type;
       $this->Donation->set_donation_currency($gateway_type);

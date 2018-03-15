@@ -374,21 +374,17 @@ class Donation {
    * Set donation currency type
    */
   public function set_donation_currency($currency = '') {
-    $valid_currency = array('USD', 'BTC');
-    $valid_type = array('PAYPAL', 'BITPAY');
+    $valid_currency = array('USD');
+    $valid_type = array('PAYPAL');
     $currency = strtoupper($currency);
     if (in_array($currency, $valid_currency)) {
       $this->donation_currency = $currency;
     }
     // We might be passing $paymentGateway->gateway_type and
-    // we know that we only accept USD for paypal and BTC from bitcoin.
+    // we know that we only accept USD for paypal.
     elseif (in_array($currency, $valid_type)) {
       if ($currency == 'PAYPAL') {
          $this->donation_currency = 'USD';
-      }
-      // @todo: verify if will accept more currencies with bitpay.
-      elseif ($currency == 'BITPAY') {
-        $this->donation_currency = 'BTC';
       }
     }
   }
@@ -442,7 +438,6 @@ class Donation {
       'completed', // paypal payment_status
       'no_eclipse_id', // Completed but addionnal steps are required to link donation with eclipse_id.
       'new_donation_form', // This was created by the process.php script.
-      'confirmed' // bitpay payment status
     );
 
     if (in_array($status, $available_status)) {

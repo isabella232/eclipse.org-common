@@ -269,4 +269,3 @@ class Payment extends EclipseEnv {
 }
 
 require_once("gateway/paypal.class.php");
-require_once("gateway/bitpay.class.php");

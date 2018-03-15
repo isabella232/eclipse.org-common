@@ -46,7 +46,6 @@ $Paypal = new Paypal();
           <div class="row margin-bottom-5">
             <div class="col-sm-24">
               <label class="radio-inline"><input type="radio" name="type" value="paypal" checked="checked"> Paypal</label>
-              <label class="radio-inline"><input type="radio" name="type" value="bitpay"> Bitcoin</label>
             </div>
           </div>
 
