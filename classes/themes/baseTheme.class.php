@@ -904,6 +904,10 @@ EOHTML;
       case 'polarsys':
         $styles_name = 'polarsys';
         break;
+
+      case 'quicksilver':
+        $styles_name = 'quicksilver';
+        break;
     }
 
     // Bug 451203 - Google Analytics: Universal Analytics Upgrade
