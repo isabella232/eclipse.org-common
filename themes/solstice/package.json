@@ -1,8 +1,9 @@
 {
-  "name": "solstice",
-  "version": "0.0.1",
+  "name": "solstice-assets",
+  "version": "0.0.2",
+  "private": true,
   "description": "Solstice is a responsive theme for eclipse.org.",
-  "main": "Gruntfile.js",
+  "main": "Gruntfile.coffee",
   "author": "Christopher Guindon",
   "license": "EPL",
   "bugs": {

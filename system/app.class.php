@@ -145,6 +145,7 @@ class App {
     "solstice",
     "polarsys",
     "locationtech",
+    "quicksilver"
   );
 
   /**
@@ -1004,7 +1005,7 @@ class App {
    */
   function getThemeURL($_theme) {
     if (!$this->isValidTheme($_theme)) {
-      $_theme = "solstice";
+      $_theme = "quicksilver";
     }
     return "/eclipse.org-common/themes/" . $_theme;
   }
@@ -1020,11 +1021,12 @@ class App {
     $themes = array(
       'locationtech',
       'solstice',
-      'polarsys'
+      'polarsys',
+      'quicksilver'
     );
 
     if (!in_array($_theme, $themes)) {
-      $_theme = "solstice";
+      $_theme = "quicksilver";
     }
 
     require_once (realpath(dirname(__FILE__) . '/../classes/themes/' . $_theme . '.class.php'));
