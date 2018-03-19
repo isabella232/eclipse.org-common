@@ -26,10 +26,10 @@ class Solstice extends baseTheme {
     $this->setAttributes('main-menu-wrapper', 'col-sm-14 col-md-16 col-lg-19 reset');
     $this->setAttributes('header-right', 'col-sm-10 col-md-8 col-lg-5 hidden-print hidden-xs pull-right');
 
-    $this->setAttributes('footer1', 'col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print');
-    $this->setAttributes('footer2', 'col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print');
-    $this->setAttributes('footer3', 'col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print');
-    $this->setAttributes('footer4', 'col-sm-offset-1 col-xs-11 col-sm-7 col-md-6 col-md-offset-0 hidden-print');
+    $this->setAttributes('footer1', 'col-sm-6 hidden-print');
+    $this->setAttributes('footer2', 'col-sm-6 hidden-print');
+    $this->setAttributes('footer3', 'col-sm-6 hidden-print');
+    $this->setAttributes('footer4', 'col-sm-6 hidden-print');
   }
 
   /**
@@ -95,14 +95,6 @@ EOHTML;
       <li><a href="{$this->getBaseUrl()}org/research/">Research@Eclipse</a></li>
       <li><a href="https://status.eclipse.org">Service Status</a></li>
     </ul>
-
-    <ul class="list-inline social-media">
-      <li><a href="https://twitter.com/EclipseFdn"><i class="fa fa-twitter-square"></i></a></li>
-      <li><a href="https://plus.google.com/+Eclipse"><i class="fa fa-google-plus-square"></i></a></li>
-      <li><a href="https://www.facebook.com/eclipse.org"><i class="fa fa-facebook-square"></i> </a></li>
-      <li><a href="https://www.youtube.com/user/EclipseFdn"><i class="fa fa-youtube-square"></i></a></li>
-      <li><a href="https://www.linkedin.com/company/eclipse-foundation"><i class="fa fa-linkedin-square"></i></a></li>
-    </ul>
 EOHTML;
   }
 
@@ -111,9 +103,46 @@ EOHTML;
    */
   public function getFooterRegion5() {
     return <<<EOHTML
-      <div id="copyright" class="col-sm-offset-1 col-sm-14 col-md-24 col-md-offset-0">
-        <span class="hidden-print">{$this->getLogo('eclipse_white', $this->getEclipseUrl())}</span>
-        <p id="copyright-text">{$this->getCopyrightNotice()}</p>
+      <div class="col-sm-24 margin-top-20">
+        <div class="row">
+          <div id="copyright" class="col-md-16">
+            <p id="copyright-text">{$this->getCopyrightNotice()}</p>
+          </div>
+          <div class="col-md-8 social-media">
+            <ul class="list-inline">
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://twitter.com/EclipseFdn">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://plus.google.com/+Eclipse">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-google-plus fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://www.facebook.com/eclipse.org">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://www.youtube.com/user/EclipseFdn">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-youtube fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://www.linkedin.com/company/eclipse-foundation">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 EOHTML;
   }
