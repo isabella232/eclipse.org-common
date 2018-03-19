@@ -1017,7 +1017,7 @@ class App {
    *
    * @return BaseTheme
    */
-  function getThemeClass($_theme = "solstice") {
+  function getThemeClass($_theme = "quicksilver") {
     $themes = array(
       'locationtech',
       'solstice',

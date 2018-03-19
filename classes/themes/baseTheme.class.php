@@ -2397,4 +2397,53 @@ EOHTML;
       $this->MetaImageHeight = $height;
     }
   }
+
+  /**
+   * Get random promo ad
+   *
+   * @return string
+   */
+  public function getRandomPromo(){
+    include_once ($_SERVER['DOCUMENT_ROOT'] . "/membership/promo/promos.php");
+    if (!function_exists('chooseRandomPromo')) {
+      return '';
+    }
+
+    $ad_id = null;
+    if (isset($_GET['ad_id']) && ctype_digit($_GET['ad_id'])) {
+      $ad_id = $_GET['ad_id'];
+    }
+
+    return chooseRandomPromo($ad_id, TRUE);
+  }
+
+  /**
+   * Prevent page caching
+   *
+   * @return boolean
+   */
+  function preventCaching() {
+    $this->App->preventCaching();
+    return TRUE;
+  }
+
+  /**
+   * Fetch EF google banner ad
+   *
+   * @return string
+   */
+  function getGoogleBannerAd(){
+    return <<<EOHTML
+<script type="text/javascript">
+<!--
+google_ad_client = "pub-6797025590085056";
+/* 728x90, created 4/17/09 */
+google_ad_slot = "9174493316";
+google_ad_width = 468;
+google_ad_height = 60;
+//-->
+</script>
+ <script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+EOHTML;
+  }
 }
