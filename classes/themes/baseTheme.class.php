@@ -1033,7 +1033,18 @@ EOHTML;
       if ($App->PageRSSTitle != "") {
         $App->PageRSSTitle = "Eclipse RSS Feed";
       }
-      $return .= '<link rel="alternate" title="' . $App->PageRSSTitle . '" href="' . $App->PageRSS . '" type="application/rss+xml"/>';
+      $return .= '<link rel="alternate" title="' . $App->PageRSSTitle . '" href="' . $App->PageRSS . '" type="application/rss+xml"/>' . PHP_EOL;
+    }
+
+    // Load proper font for each theme
+    switch ($this->getTheme()) {
+      case 'solstice':
+      case 'polarsys':
+      case 'locationtech':
+        $return .= '<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,100" rel="stylesheet" type="text/css"/>';
+        break;
+      default:
+        $return .= '<link href="//fonts.googleapis.com/css?family=Libre+Franklin:400,700,300,600,100" rel="stylesheet" type="text/css"/>';
     }
 
     return $return. PHP_EOL;
@@ -1045,7 +1056,7 @@ EOHTML;
    * @param string $headers
    */
   public function setExtraHeaders($headers = "") {
-    $this->extra_headers = $headers;
+    $this->extra_headers .= $headers;
   }
 
   /**
