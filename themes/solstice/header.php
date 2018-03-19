@@ -18,7 +18,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="<?php print $this->getPageAuthor(); ?>"/>
     <meta name="keywords" content="<?php print $this->getPageKeywords(); ?>"/>
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,100" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="<?php print $this->getThemeUrl(); ?>public/images/favicon.ico"/>
     <title><?php print $this->getPageTitle(); ?></title>
     <?php print $this->getExtraHeaders();?>
