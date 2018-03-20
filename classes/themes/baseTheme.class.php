@@ -2403,7 +2403,7 @@ EOHTML;
    *
    * @return string
    */
-  public function getRandomPromo(){
+  public function getRandomPromo($frontpage = FALSE){
     include_once ($_SERVER['DOCUMENT_ROOT'] . "/membership/promo/promos.php");
     if (!function_exists('chooseRandomPromo')) {
       return '';
@@ -2414,7 +2414,7 @@ EOHTML;
       $ad_id = $_GET['ad_id'];
     }
 
-    return chooseRandomPromo($ad_id, TRUE);
+    return chooseRandomPromo($ad_id, $frontpage);
   }
 
   /**

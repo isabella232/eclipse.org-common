@@ -11,7 +11,7 @@
  *******************************************************************************/
 ?>
 <?php print $this->getToolbarHtml();?>
-<header role="banner"<?php print $this->getAttributes('header-wrapper');?>>
+<header<?php print $this->getAttributes('header-wrapper');?>>
   <div<?php print $this->getAttributes('header-container');?>>
     <div<?php print $this->getAttributes('header-row');?>>
       <?php print $this->getHeaderLeft();?>
