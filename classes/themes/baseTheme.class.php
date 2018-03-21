@@ -279,6 +279,9 @@ class BaseTheme {
     $this->setAttributes('main-menu', 'main-menu', 'id');
     $this->setAttributes('main-menu', 'navbar yamm');
     $this->setAttributes('main-menu-ul-navbar', 'nav navbar-nav');
+    $this->setAttributes('navbar-main-menu', 'navbar-main-menu', 'id');
+    $this->setAttributes('navbar-main-menu', 'navbar-collapse collapse');
+    $this->setAttributes('navbar-main-menu', 'nav navbar-nav');
 
     // Set attributes on breadcrumbs
     $this->setAttributes('breadcrumbs', 'breadcrumb', 'id');
@@ -1105,7 +1108,28 @@ EOHTML;
     return $return;
   }
 
-  public function getHeaderRight(){
+  /**
+   * Hook to alter header right
+   *
+   * Allow sub-themes to alter the layout
+   * before the header right is rendered.
+   */
+  protected function _getHeaderRight(){
+    return TRUE;
+  }
+
+  /**
+   * Get HeaderRight
+   *
+   * This section is usually reserved for the google search (solstice),
+   * and our Call for Action link.
+   *
+   * @return string
+   */
+  public function getHeaderRight() {
+    // Allow sub-themes to make changes before
+    // header right is printed
+    $this->_getHeaderRight();
     if (!$this->getDisplayHeaderRight()) {
       return "";
     }

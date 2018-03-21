@@ -21,6 +21,39 @@ class Quicksilver extends solstice {
   public function __construct($App = NULL) {
     parent::__construct($App);
     $this->setTheme('quicksilver');
+
+    $this->setDisplayGoogleSearch(FALSE);
+
+    $this->resetAttributes('header-left');
+    $this->resetAttributes('main-menu-wrapper');
+    $this->resetAttributes('header-right');
+
+    $this->setAttributes('header-left', 'col-sm-7 col-md-5');
+    $this->setAttributes('main-menu-wrapper', 'col-sm-24 col-md-14 reset');
+    $this->setAttributes('main-menu-wrapper-no-header-right', 'col-sm-24 col-md-19 reset');
+    $this->setAttributes('header-right', 'col-sm-7 col-md-5 text-right hidden-print hidden-xs pull-right');
+
+
+    $this->setAttributes('navbar-main-menu', 'float-right');
+  }
+
+  /**
+   * Implement BaseTheme::_getHeaderRight();
+   *
+   * Hide headerRight div if empty
+   *
+   * {@inheritDoc}
+   * @see BaseTheme::_getHeaderRight()
+   */
+  protected function _getHeaderRight(){
+    $google_search = $this->getGoogleSearch();
+    $cfa_button = $this->getCfaButton();
+    if (!$this->getDisplayHeaderRight() || (empty($google_search) && empty($cfa_button))) {
+      $this->setDisplayHeaderRight(FALSE);
+      $this->resetAttributes('main-menu-wrapper');
+      $this->setAttributes('main-menu-wrapper', 'col-sm-17 col-md-19 reset');
+      return "";
+    }
   }
 
 }

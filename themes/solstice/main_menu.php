@@ -12,7 +12,7 @@
 ?>
 <div<?php print $this->getAttributes('main-menu-wrapper');?>>
   <div<?php print $this->getAttributes('main-menu');?>>
-    <div id="navbar-collapse-1" class="navbar-collapse collapse">
+    <div<?php print $this->getAttributes('navbar-main-menu');?>>
       <ul<?php print $this->getAttributes('main-menu-ul-navbar');?>>
         <?php print $this->getMenu()?>
         <?php if ($this->getDisplayMore()) :?>
@@ -35,7 +35,7 @@
       </ul>
     </div>
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main-menu">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
