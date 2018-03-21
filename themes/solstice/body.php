@@ -11,7 +11,6 @@
  *******************************************************************************/
 ?>
 <?php print $this->getBreadcrumbHtml();?>
-<?php print $this->getPromoHtml();?>
 <main<?php print $this->getAttributes('main');?>>
   <div<?php print $this->getAttributes('main-container');?>>
     <?php print $this->getDeprecatedMessage();?>
