@@ -189,13 +189,6 @@ class BaseTheme {
   protected $page_title = "";
 
   /**
-   * Eclipse Promo HTML
-   *
-   * @var unknown
-   */
-  protected $promo_html = NULL;
-
-  /**
    *
    * @var Session()
    */
@@ -1777,46 +1770,6 @@ EOHTML;
   }
 
   /**
-   * Get $promo_html html output
-   *
-   * @return string
-   */
-  public function getPromoHtml() {
-    if (is_null($this->promo_html)) {
-      $this->setPromoHtml();
-    }
-    if (empty($this->promo_html)) {
-      return '';
-    }
-
-    return '<div class="container"><div class="col-md-24">' . $this->promo_html . '</div></div>';
-  }
-
-  /**
-   * Set $promo_html
-   *
-   * @param string $html
-   */
-  public function setPromoHtml($html = "") {
-    if (!empty($html) && is_string($html)) {
-      $this->promo_html = $html;
-      return TRUE;
-    }
-    $App = $this->_getApp();
-    $theme = $this->getTheme();
-    ob_start();
-    if ($App->Promotion == TRUE) {
-      if ($App->CustomPromotionPath != "") {
-        include ($App->CustomPromotionPath);
-      }
-      else {
-        include ($App->getPromotionPath($theme));
-      }
-    }
-    $this->promo_html = trim(ob_get_clean());
-  }
-
-  /**
    * Get $Session
    *
    * @return Session
@@ -1979,11 +1932,6 @@ EOHTML;
     $btn_cfa = $this->getThemeVariables('btn_cfa');
     if (!empty($btn_cfa['hide']) && $btn_cfa['hide'] === TRUE) {
       $this->setAttributes('body', 'hidden-cfa-button');
-    }
-
-    $promo_html = $this->getPromoHtml();
-    if (!empty($promo_html) && !empty($theme_variables['btn_cfa']['hide_breadcrumbs'])) {
-      $this->setAttributes('body', "no-breadcrumbs-with-promo");
     }
 
     ob_start();
