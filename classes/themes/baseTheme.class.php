@@ -477,6 +477,46 @@ class BaseTheme {
     return $this->attributes;
   }
 
+  /**
+   * Remove attributes
+   *
+   * @param string $element
+   * @param string $value
+   * @param string $type
+   */
+  public function removeAttributes($element = '', $value = "", $type = 'class') {
+
+    if (!is_string($element) || empty($element) || empty($value)) {
+      return FALSE;
+    }
+
+    $type = strtolower($type);
+
+    if ($type !== "class") {
+      $this->resetAttributes($element, $type);
+      return TRUE;
+    }
+
+    $number_value = count($value);
+    $value = explode(' ', $value);
+    $count = 0;
+    foreach ($value as $val) {
+      if (isset($this->attributes[$type][$element]) && in_array($val, $this->attributes[$type][$element])) {
+        $key = array_search ($val, $this->attributes['class'][$element]);
+        unset($this->attributes['class'][$element][$key]);
+        continue;
+      }
+      $count++;
+    }
+
+    // Check if we removed the value from the array
+    if ($count !== $number_value) {
+      return TRUE;
+    }
+    // Nothing happened
+    return FALSE;
+  }
+
   function getBareboneAssets() {
     $url = $this->getEclipseUrl() . $this->getThemeUrl("solstice") . "public/stylesheets/";
     $current_theme = $this->getTheme();

@@ -29,20 +29,32 @@ class Quicksilver extends solstice {
     $this->resetAttributes('header-right');
 
     $this->setAttributes('header-left', 'col-sm-5 col-md-4');
-    $this->setAttributes('main-menu-wrapper', 'col-sm-13 col-md-15 reset margin-top-10');
-    $this->setAttributes('main-menu-wrapper-no-header-right', 'col-sm-24 col-md-19 reset');
-    $this->setAttributes('header-right', 'col-sm-6 col-md-5 text-right hidden-print hidden-xs pull-right margin-top-10');
+    $this->setAttributes('main-menu-wrapper', 'col-sm-15 col-md-15 reset margin-top-10');
+    $this->setAttributes('main-menu-wrapper-no-header-right', 'col-sm-24 col-md-19 reset margin-top-10');
+    $this->setAttributes('header-right', 'col-sm-4 col-md-5 text-right hidden-print hidden-xs pull-right margin-top-10');
 
     $this->setAttributes('navbar-main-menu', 'float-right');
 
+    $this->setAlternateLayout();
+  }
+
+  public function setAlternateLayout($enable = FALSE) {
     $image_path = $this->getThemeUrl('solstice') . 'public/images/logo/';
+    $default_logo = 'eclipse-foundation-grey-orange.svg';
+    if ($enable) {
+      $default_logo = 'eclipse-foundation-white-orange.svg';
+      $this->setAttributes('body', 'alternate-layout');
+    }
+    else {
+      $this->removeAttributes('body', 'alternate-layout');
+    }
 
     // Set default images
-    $this->setAttributes('img_logo_default', $image_path . 'eclipse-foundation-white-orange.svg', 'src');
+    $this->setAttributes('img_logo_default', $image_path . $default_logo, 'src');
     $this->setAttributes('img_logo_default', 'Eclipse.org logo', 'alt');
     $this->setAttributes('img_logo_default', 'logo-eclipse-default img-responsive hidden-xs', 'class');
 
-    $this->setAttributes('img_logo_eclipse_default', $image_path . 'eclipse-foundation-white-orange.svg', 'src');
+    $this->setAttributes('img_logo_eclipse_default', $image_path . $default_logo, 'src');
     $this->setAttributes('img_logo_eclipse_default', 'Eclipse.org logo', 'alt');
     $this->setAttributes('img_logo_eclipse_default', 'img-responsive hidden-xs', 'class');
 
@@ -50,7 +62,7 @@ class Quicksilver extends solstice {
     $this->setAttributes('img_logo_eclipse_white', 'Eclipse.org black and white logo', 'alt');
     $this->setAttributes('img_logo_eclipse_white', 'logo-eclipse-white img-responsive');
 
-    $this->setAttributes('img_logo_mobile', $image_path . 'eclipse-foundation-white-orange.svg', 'src');
+    $this->setAttributes('img_logo_mobile', $image_path . $default_logo, 'src');
     $this->setAttributes('img_logo_mobile', 'Eclipse.org logo', 'alt');
     $this->setAttributes('img_logo_mobile', 'logo-eclipse-default-mobile img-responsive', 'class');
 
@@ -72,7 +84,7 @@ class Quicksilver extends solstice {
     if (!$this->getDisplayHeaderRight() || (empty($google_search) && empty($cfa_button))) {
       $this->setDisplayHeaderRight(FALSE);
       $this->resetAttributes('main-menu-wrapper');
-      $this->setAttributes('main-menu-wrapper', 'col-sm-17 col-md-19 reset');
+      $this->setAttributes('main-menu-wrapper', 'col-sm-19 col-md-20 reset margin-top-10');
       return "";
     }
   }
