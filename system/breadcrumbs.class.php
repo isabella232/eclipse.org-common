@@ -68,7 +68,7 @@ class Breadcrumb extends Menu {
     "resources" => "Resources",
     "screenshots" => "Screenshots",
     "site_login" => "My Account",
-    "users" => "Getting started",
+    "getting_started" => "Getting started",
     'webmaster' => "Webmaster",
     "" => ""
   ) // Homepage
