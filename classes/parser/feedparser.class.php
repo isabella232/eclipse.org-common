@@ -273,27 +273,22 @@ class FeedParser {
    * @return string
    */
   public function output() {
-    if (!$this->_parseFeeds()){
+    if (!$this->_parseFeeds()) {
       return '<p>This news feed is currently empty. Please try again later.</p>';
     }
 
-    $output = '<div class="news_item_header">' . $this->getRssLinkHTML() . '</div>';
+    $output = '';
     if (!empty($this->items)) {
+      $output = '<ul class="news-list-media list-unstyled">';
       foreach ($this->items as $item) {
-        $output .= '<div class="news_item">';
-        $output .= '<div class="news_item_date">' . $item['date'] . '</div>';
-        $output .= '<div class="news_item_title">';
-        $output .= '<h3><a href="' . $item['link'] . '">' . $item['title'] . '</a></h3>';
-        $output .= '</div>';
+        $output .= '<li><a href="' . $item['link'] . '" class="media media-link">';
+        $output .= '<p class="media-date">' . $item['date'] . '</p><h4 class="media-heading">' . $item['title'] . '</h4>';
         if ($this->getLimit() > 0) {
-          $output .= '<div class="news_item_description">' . $item['description'] . '</div>';
+          $output .= '<p class="media-text">' . $item['description'] . '</p>';
         }
-        $output .= '</div>';
+        $output .= ' </a></li>';
       }
-
-      if (!empty($this->view_more) || !empty($this->rss_link)) {
-        $output .= '<div class="news_view_all">' . $this->getViewMoreLinkHTML() . $this->getRssLinkHTML() . '</div>';
-      }
+      $output .= '</ul>';
     }
 
     return $output;
