@@ -577,12 +577,11 @@ class App {
         'www.eclipse.org',
         'eclipse.org',
         'staging.eclipse.org',
-        'eclipse.local',
-        'www.eclipse.local'
       );
+
       $http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
       // Force http://www.eclipse.org if the serve_name is not whitelisted.
-      if (in_array($_SERVER['SERVER_NAME'], $valid_domains)) {
+      if (in_array($_SERVER['SERVER_NAME'], $valid_domains) || strpos($_SERVER['SERVER_NAME'], '.dev.docker')) {
         $this->WWW_PREFIX = $http_protocol;
         $this->WWW_PREFIX .= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
       }
