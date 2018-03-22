@@ -1537,7 +1537,7 @@ EOHTML;
     $Menu = new Menu();
     $Menu->setMenuItemList(array());
     $Menu->addMenuItem("Download", $base_url . "downloads/", "_self");
-    $Menu->addMenuItem("Getting Started", $base_url . "users/", "_self");
+    $Menu->addMenuItem("Getting Started", $base_url . "getting_started/", "_self");
     $Menu->addMenuItem("Members", $base_url . "membership/", "_self");
     $Menu->addMenuItem("Projects", $base_url . "projects/", "_self");
     return $Menu;
