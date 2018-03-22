@@ -192,16 +192,9 @@ EOHTML;
     return <<<EOHTML
       <div id="footer-working-group-left" class="col-sm-10 col-xs-offset-1 col-md-11 col-md-offset-1 footer-working-group-col">
         {$this->getLogo('default', TRUE)}<br/>
-        <h2 class="section-title sr-only">Other</h2>
-        <ul class="list-inline social-media">
-          <li class="link_twitter first"><a href="//twitter.com/locationtech"><i class="fa fa-twitter-square"></i></a></li>
-          <li class="link_facebook last"><a href="//www.facebook.com/groups/401867609865450/"><i class="fa fa-facebook-square"></i></a></li>
-        </ul>
       </div>
       <div  id="footer-working-group-right" class="col-sm-10 col-xs-offset-1 col-sm-offset-3 col-md-11 col-md-offset-1 footer-working-group-col">
        <span class="hidden-print">{$this->getLogo('eclipse_white', $this->getEclipseUrl())}</span>
-        <p class="padding-top-15">LocationTech is a Working Group of The Eclipse Foundation.</p>
-        <p>{$this->getCopyrightNotice()}</p>
       </div>
 EOHTML;
   }
@@ -210,7 +203,32 @@ EOHTML;
    * Get Html of Footer Region 5
    */
   public function getFooterRegion5() {
-    return "";
+    return <<<EOHTML
+      <div class="col-sm-24 margin-top-20">
+        <div class="row">
+          <div id="copyright" class="col-md-16">
+            <p>LocationTech is a Working Group of The Eclipse Foundation.</p>
+            <p id="copyright-text">{$this->getCopyrightNotice()}</p>
+          </div>
+          <div class="col-md-8 social-media">
+            <ul class="list-inline">
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="//twitter.com/locationtech">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="//www.facebook.com/groups/401867609865450/">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+EOHTML;
   }
 
 }
