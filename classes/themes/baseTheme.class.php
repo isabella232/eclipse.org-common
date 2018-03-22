@@ -1156,16 +1156,6 @@ EOHTML;
   }
 
   /**
-   * Hook to alter header right
-   *
-   * Allow sub-themes to alter the layout
-   * before the header right is rendered.
-   */
-  protected function _getHeaderRight(){
-    return TRUE;
-  }
-
-  /**
    * Get HeaderRight
    *
    * This section is usually reserved for the google search (solstice),
@@ -1174,9 +1164,6 @@ EOHTML;
    * @return string
    */
   public function getHeaderRight() {
-    // Allow sub-themes to make changes before
-    // header right is printed
-    $this->_getHeaderRight();
     if (!$this->getDisplayHeaderRight()) {
       return "";
     }
@@ -1720,6 +1707,15 @@ EOHTML;
       'caption' => 'OpenMDM'
     );
     return $variables;
+  }
+
+  /**
+   * Get Menu Suffix
+   *
+   * @return string
+   */
+  protected function _getMenuSuffix(){
+    return "";
   }
 
   /**
