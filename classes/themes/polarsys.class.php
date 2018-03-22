@@ -189,20 +189,10 @@ EOHTML;
       <div id="footer-working-group-left" class="col-sm-10 col-xs-offset-1 col-md-11 col-md-offset-1 footer-working-group-col">
         {$this->getLogo('default', TRUE)}<br/>
         {$this->getLogo('polarsys_sectors', TRUE)}
-
-        <h2 class="section-title sr-only">Other</h2>
-        <ul class="list-inline social-media">
-          <li class="link_twitter first"><a href="//twitter.com/EclipseFdn"><i class="fa fa-twitter-square"></i></a></li>
-          <li class="link_google"><a href="//plus.google.com/+Eclipse"><i class="fa fa-google-plus-square"></i></a></li>
-          <li class="link_facebook"><a href="//www.facebook.com/eclipse.org"><i class="fa fa-facebook-square"></i></a></li>
-          <li class="link_youtube last"><a href="//www.youtube.com/user/EclipseFdn"><i class="fa fa-youtube-square"></i></a></li>
-        </ul>
       </div>
 
       <div  id="footer-working-group-right" class="col-sm-10 col-xs-offset-1 col-sm-offset-3 col-md-11 col-md-offset-1 footer-working-group-col">
         {$this->getLogo('eclipse_default', $this->getEclipseUrl())}
-        <p class="padding-top-15">PolarSys is a Working Group of The Eclipse Foundation.</p>
-        <p>{$this->getCopyrightNotice()}</p>
        </div>
 EOHTML;
   }
@@ -211,7 +201,50 @@ EOHTML;
    * Get Html of Footer Region 5
    */
   public function getFooterRegion5() {
-    return "";
+    return <<<EOHTML
+      <div class="col-sm-24 margin-top-20">
+        <div class="row">
+          <div id="copyright" class="col-md-16">
+            <p>PolarSys is a Working Group of The Eclipse Foundation.</p>
+            <p id="copyright-text">{$this->getCopyrightNotice()}</p>
+          </div>
+          <div class="col-md-8 social-media">
+            <ul class="list-inline">
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://twitter.com/EclipseFdn">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://plus.google.com/+Eclipse">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-google-plus fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://www.facebook.com/eclipse.org">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://www.youtube.com/user/EclipseFdn">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-youtube fa-stack-1x"></i>
+                </a>
+              </li>
+              <li>
+                <a class="social-media-link fa-stack fa-lg" href="https://www.linkedin.com/company/eclipse-foundation">
+                  <i class="fa fa-circle-thin fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+EOHTML;
   }
 
 }

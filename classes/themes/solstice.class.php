@@ -22,7 +22,7 @@ class Solstice extends baseTheme {
     $this->setTheme('solstice');
     parent::__construct($App);
 
-    $this->setAttributes('header-left', 'col-sm-8 col-md-6 col-lg-5');
+    $this->setAttributes('header-left', 'col-sm-5 col-md-4');
     $this->setAttributes('main-menu-wrapper', 'col-sm-14 col-md-16 col-lg-19 reset');
     $this->setAttributes('header-right', 'col-sm-10 col-md-8 col-lg-5 hidden-print hidden-xs pull-right');
 

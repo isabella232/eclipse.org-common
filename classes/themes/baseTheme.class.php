@@ -224,22 +224,22 @@ class BaseTheme {
    */
   function __construct($App = NULL) {
     $this->setApp($App);
-    $image_path = '//www.eclipse.org' . $this->getThemeUrl('solstice') . 'public/images/logo/';
+    $image_path = $this->getThemeUrl('solstice') . 'public/images/logo/';
 
     // Set default images
-    $this->setAttributes('img_logo_default', $image_path . 'eclipse-426x100.png', 'src');
+    $this->setAttributes('img_logo_default', $image_path . 'eclipse-foundation-grey-orange.svg', 'src');
     $this->setAttributes('img_logo_default', 'Eclipse.org logo', 'alt');
     $this->setAttributes('img_logo_default', 'logo-eclipse-default img-responsive hidden-xs', 'class');
 
-    $this->setAttributes('img_logo_eclipse_default', $image_path . 'eclipse-426x100.png', 'src');
+    $this->setAttributes('img_logo_eclipse_default', $image_path . 'eclipse-foundation-grey-orange.svg', 'src');
     $this->setAttributes('img_logo_eclipse_default', 'Eclipse.org logo', 'alt');
     $this->setAttributes('img_logo_eclipse_default', 'img-responsive hidden-xs', 'class');
 
-    $this->setAttributes('img_logo_eclipse_white', $image_path . 'eclipse-logo-bw-332x78.png', 'src');
+    $this->setAttributes('img_logo_eclipse_white', $image_path . 'eclipse-foundation-white.svg', 'src');
     $this->setAttributes('img_logo_eclipse_white', 'Eclipse.org black and white logo', 'alt');
     $this->setAttributes('img_logo_eclipse_white', 'logo-eclipse-white img-responsive');
 
-    $this->setAttributes('img_logo_mobile', $image_path . 'eclipse-800x188.png', 'src');
+    $this->setAttributes('img_logo_mobile', $image_path . 'eclipse-foundation-grey-orange.svg', 'src');
     $this->setAttributes('img_logo_mobile', 'Eclipse.org logo', 'alt');
     $this->setAttributes('img_logo_mobile', 'logo-eclipse-default-mobile img-responsive', 'class');
 
