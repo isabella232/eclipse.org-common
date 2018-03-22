@@ -22,8 +22,6 @@ class Quicksilver extends solstice {
     parent::__construct($App);
     $this->setTheme('quicksilver');
 
-    $this->setDisplayGoogleSearch(FALSE);
-
     $this->resetAttributes('header-left');
     $this->resetAttributes('main-menu-wrapper');
     $this->resetAttributes('header-right');
@@ -80,15 +78,53 @@ class Quicksilver extends solstice {
    * {@inheritDoc}
    * @see BaseTheme::_getHeaderRight()
    */
-  protected function _getHeaderRight(){
-    $google_search = $this->getGoogleSearch();
+  public function getHeaderRight(){
     $cfa_button = $this->getCfaButton();
-    if (!$this->getDisplayHeaderRight() || (empty($google_search) && empty($cfa_button))) {
+    if (!$this->getDisplayHeaderRight() || empty($cfa_button)) {
       $this->setDisplayHeaderRight(FALSE);
       $this->resetAttributes('main-menu-wrapper');
       $this->setAttributes('main-menu-wrapper', 'col-sm-19 col-md-20 reset margin-top-10');
       return "";
     }
+
+   return <<<EOHTML
+      <div{$this->getAttributes('header-right')}>
+        {$this->getCfaButton()}
+      </div>
+EOHTML;
+  }
+
+  /**
+   * Get Menu Suffix
+   *
+   * @return string
+   */
+  protected function _getMenuSuffix(){
+    $suffix_items = array();
+
+    $google_search = $this->getGoogleSearch();
+    if (!empty($google_search)) {
+      $suffix_items[] = <<<EOHTML
+      <li class="dropdown eclipse-more hidden-xs">
+        <a data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-search"></i> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li>
+            <!-- Content container to add padding -->
+            <div class="yamm-content">
+              <div class="row">
+                <div class="col-sm-24">
+                  <p><strong>Search</strong></p>
+                  {$this->getGoogleSearch()}
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+EOHTML;
+    }
+
+   return implode('',$suffix_items);
   }
 
   /**

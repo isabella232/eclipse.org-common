@@ -32,6 +32,10 @@
             </ul>
           </li>
         <?php endif;?>
+        <?php if ($this->getMenuSuffix()):?>
+          <?php print $this->getMenuSuffix(); ?>
+        <?php endif; ?>
+
       </ul>
     </div>
     <div class="navbar-header">
