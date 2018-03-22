@@ -274,9 +274,9 @@ class BaseTheme {
     $this->setAttributes('main-menu-ul-navbar', 'nav navbar-nav');
     $this->setAttributes('navbar-main-menu', 'navbar-main-menu', 'id');
     $this->setAttributes('navbar-main-menu', 'navbar-collapse collapse');
-    $this->setAttributes('navbar-main-menu', 'nav navbar-nav');
 
     // Set attributes on breadcrumbs
+    $this->setAttributes('breadcrumbs', 'default-breadcrumbs');
     $this->setAttributes('breadcrumbs', 'breadcrumb', 'id');
     $this->setAttributes('breadcrumbs', 'hidden-print');
     $this->setAttributes('breadcrumbs-container', 'container');
@@ -509,6 +509,11 @@ class BaseTheme {
       $count++;
     }
 
+    // Remove element if now empty
+    if (empty($this->attributes['class'][$element])) {
+      unset($this->attributes['class'][$element]);
+    }
+
     // Check if we removed the value from the array
     if ($count !== $number_value) {
       return TRUE;
@@ -597,14 +602,6 @@ EOHTML;
       return "";
     }
 
-    $theme_breadcrumbs_html = $this->getThemeVariables('breadcrumbs_html');
-    if (!empty($theme_breadcrumbs_html)) {
-      $this->setAttributes('breadcrumbs', 'large-breadcrumbs');
-    }
-    else {
-      $this->setAttributes('breadcrumbs', 'default-breadcrumbs');
-    }
-
     $Breadcrumb = $this->_getBreadcrumb();
     $crumb_list = $Breadcrumb->getCrumbList();
 
@@ -627,15 +624,20 @@ EOHTML;
     }
     $breadcrumb_html .= "</ol>";
 
+    $content_html = '<div class="col-sm-24">' . $breadcrumb_html . '</div>';
+    $sharethis_html = $this->getShareButtonsHTML();
+    if (!empty($sharethis_html)) {
+      $content_html = '<div class="col-sm-16">' . $breadcrumb_html . '</div>';
+      $content_html .= '<div class="col-sm-8 breadcrumbs-sharethis">' . $sharethis_html . '</div>';
+    }
+
     return <<<EOHTML
     <section{$this->getAttributes('breadcrumbs')}>
       <div{$this->getAttributes('breadcrumbs-container')}>
         <h3 class="sr-only">Breadcrumbs</h3>
         <div class="row">
-          <div class="col-sm-16 padding-left-30">{$breadcrumb_html}</div>
-          <div class="col-sm-8 margin-top-15">{$this->getShareButtonsHTML()}</div>
+          {$content_html}
         </div>
-        {$theme_breadcrumbs_html}
       </div>
     </section> <!-- /#breadcrumb -->
 EOHTML;

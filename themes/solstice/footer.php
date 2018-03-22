@@ -10,10 +10,10 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 ?>
-<?php print $this->getFooterPrexfix();?>
 <p id="back-to-top">
   <a class="visible-xs" href="#top">Back to the top</a>
 </p>
+<?php print $this->getFooterPrexfix();?>
 <footer<?php print $this->getAttributes('footer');?>>
   <div<?php print $this->getAttributes('footer-container');?>>
     <div class="row">

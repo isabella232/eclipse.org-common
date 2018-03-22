@@ -34,7 +34,8 @@ class Quicksilver extends solstice {
     $this->setAttributes('header-right', 'col-sm-4 col-md-5 text-right hidden-print hidden-xs pull-right margin-top-10');
 
     $this->setAttributes('navbar-main-menu', 'float-right');
-
+    $this->removeAttributes('main', 'no-promo');
+    $this->setAttributes('breadcrumbs', 'breadcrumbs-default-margin');
     $this->setAlternateLayout();
   }
 
@@ -68,6 +69,7 @@ class Quicksilver extends solstice {
 
     // Default theme js file
     $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/quicksilver.min.js', 'src');
+
   }
 
   /**
