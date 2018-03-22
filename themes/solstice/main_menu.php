@@ -32,8 +32,8 @@
             </ul>
           </li>
         <?php endif;?>
-        <?php if ($this->getMenuSuffix()):?>
-          <?php print $this->getMenuSuffix(); ?>
+        <?php if ($this->_getMenuSuffix()):?>
+          <?php print $this->_getMenuSuffix(); ?>
         <?php endif; ?>
 
       </ul>
