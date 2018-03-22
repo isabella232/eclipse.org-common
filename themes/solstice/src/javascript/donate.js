@@ -1,6 +1,12 @@
-
-
-// donate.js
+/*
+ *  donate.js
+ *  Various functionality for the Eclipse donation forms
+ *
+ *  Made by Christopher Guindon <chris.guindon@eclipse-foundation.org>
+ *  Eric Poirier <eric.poirier@eclipse-foundation.org>
+ *  
+ *  Under EPL-v2 License
+ */
 (function($, document) {
   
   $(document).ready(function() {

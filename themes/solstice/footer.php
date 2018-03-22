@@ -10,6 +10,7 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 ?>
+<?php print $this->getFooterPrexfix();?>
 <p id="back-to-top">
   <a class="visible-xs" href="#top">Back to the top</a>
 </p>
@@ -34,7 +35,7 @@
   </div>
 </footer>
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="<?php print $this->getThemeUrl('solstice')?>public/javascript/main.min.js?1500"></script>
+<script<?php print $this->getAttributes('script-theme-main-js');?>></script>
 <?php print $this->getExtraJsFooter();?>
 </body>
 </html>

@@ -31,11 +31,10 @@ module.exports = (grunt) ->
         './public/stylesheets/polarsys.min.css': './bower_components/solstice-assets/stylesheets/solstice/polarsys/styles.less'
         './public/stylesheets/polarsys-barebone.min.css': './bower_components/solstice-assets/stylesheets/solstice/polarsys/barebone.less'
     concat:
-      options: separator: ';'
       js_frontend:
         src: [
-          './bower_components/jquery/dist/jquery.js'
-          './bower_components/bootstrap/dist/js/bootstrap.js'
+          './bower_components/jquery/dist/jquery.min.js'
+          './bower_components/bootstrap/dist/js/bootstrap.min.js'
           './src/javascript/lib/solstice-cookies.js'
           './src/javascript/main.js'
           './src/javascript/donate.js'
@@ -48,12 +47,24 @@ module.exports = (grunt) ->
           './src/javascript/main.js'
         ]
         dest: './public/javascript/barebone.min.js'
+      js_quicksilver:
+        src: [
+          './bower_components/jquery/dist/jquery.min.js'
+          './bower_components/bootstrap/dist/js/bootstrap.min.js'
+          './node_modules/feather-icons/dist/feather.min.js'
+          './src/javascript/lib/solstice-cookies.js'
+          './src/javascript/main.js'
+          './src/javascript/donate.js'
+          './src/javascript/quicksilver.js'
+        ]
+        dest: './public/javascript/quicksilver.min.js'
     uglify:
       options:
         mangle: false
         preserveComments: 'some'
       frontend: files:
         './public/javascript/main.min.js': './public/javascript/main.min.js'
+        './public/javascript/quicksilver.min.js': './public/javascript/quicksilver.min.js'
         './public/javascript/barebone.min.js': './public/javascript/barebone.min.js'
     watch:
       all:
@@ -64,12 +75,14 @@ module.exports = (grunt) ->
           './bower_components/jquery/jquery.js'
           './bower_components/bootstrap/dist/js/bootstrap.js'
           './src/javascript/main.js'
+          './src/javascript/quicksilver.js'
           './src/javascript/donate.js'
           './src/javascript/lib/solstice-cookies.js'
         ]
         tasks: [
           'concat:js_barebone'
           'concat:js_frontend'
+          'concat:js_quicksilver'
           'uglify:frontend'
         ]
       less:

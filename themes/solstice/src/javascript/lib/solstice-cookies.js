@@ -1,5 +1,11 @@
-
-// solstice-cookies.js
+/*
+ *  solstice-cookies.js
+ *  Various functionality for the Eclipse donation forms
+ *
+ *  Made by Eric Poirier <eric.poirier@eclipse-foundation.org>
+ *  
+ *  Under EPL-v2 License
+ */
 
 /**
  * Create or Update a cookie
