@@ -53,6 +53,9 @@ class Quicksilver extends solstice {
     $this->setAttributes('img_logo_mobile', $image_path . 'eclipse-foundation-white-orange.svg', 'src');
     $this->setAttributes('img_logo_mobile', 'Eclipse.org logo', 'alt');
     $this->setAttributes('img_logo_mobile', 'logo-eclipse-default-mobile img-responsive', 'class');
+
+    // Default theme js file
+    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/quicksilver.min.js', 'src');
   }
 
   /**
@@ -74,4 +77,29 @@ class Quicksilver extends solstice {
     }
   }
 
+  /**
+   * Implement BaseTheme::getFooterPrexfix()
+   *
+   * {@inheritDoc}
+   * @see BaseTheme::getFooterPrexfix()
+   */
+  public function getFooterPrexfix() {
+    return <<<EOHTML
+    <!-- Sign Up to our Newsletter -->
+    <div class="featured-footer featured-footer-newsletter">
+      <div class="container">
+        <p><i data-feather="mail" stroke-width="1"></i></p>
+        <h2>Sign up to our Newsletter</h2>
+        <p>A fresh new issue delivered monthly</p>
+        <form action="https://www.eclipse.org/donate/process.php" method="post" target="_blank">
+          <div class="form-group">
+            <input type="hidden" name="type" value="newsletter">
+            <input type="email" value="" name="email" class="textfield-underline form-control" id="mce-EMAIL" placeholder="Email">
+          </div>
+          <input type="submit" value="Subscribe" name="subscribe" class="button btn btn-warning">
+        </form>
+      </div>
+    </div>
+EOHTML;
+  }
 }

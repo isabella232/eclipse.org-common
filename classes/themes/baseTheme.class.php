@@ -297,6 +297,8 @@ class BaseTheme {
     $this->setAttributes('footer3', 'footer-useful-links', 'id');
     $this->setAttributes('footer4', 'footer-other', 'id');
 
+    // Default theme js file
+    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js', 'src');
   }
 
   /**
@@ -1053,6 +1055,16 @@ EOHTML;
    */
   public function setExtraHeaders($headers = "") {
     $this->extra_headers .= $headers;
+  }
+
+  /**
+   * Get Html of Footer prexix
+   *
+   * This is a way for sub-themes to inject
+   * html before the footer.
+   */
+  public function getFooterPrexfix() {
+    return "";
   }
 
   /**
