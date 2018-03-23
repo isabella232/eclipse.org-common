@@ -286,6 +286,11 @@ class BaseTheme {
     $this->setAttributes('main', 'no-promo');
     $this->setAttributes('main-container', 'novaContent');
     $this->setAttributes('main-container', 'novaContent', 'id');
+    $this->setAttributes('main-container-content', "col-sm-24");
+
+    // Set attributes on main sidebar
+    $this->setAttributes('main-sidebar', 'main-sidebar','id');
+    $this->setAttributes('main-sidebar', 'col-sm-4 col-sm-pull-20');
 
     // Set attributes on footer
     $this->setAttributes('footer', 'solstice-footer', 'id');
@@ -1719,6 +1724,15 @@ EOHTML;
   }
 
   /**
+   * Set attributes for nav
+   */
+  protected function _setAttributesForNav() {
+    $this->resetAttributes('main-container-content');
+    $this->setAttributes('main-container-content', "col-md-20 col-sm-push-4");
+    $this->setAttributes('main_container_classes', 'background-image-none');
+  }
+
+  /**
    * Get Navigation variables
    *
    * @return array
@@ -1733,8 +1747,8 @@ EOHTML;
       'html_block' => ''
     );
     if ($this->Nav instanceof Nav) {
+      $this->_setAttributesForNav();
       // add faux class to #novaContent
-      $this->setAttributes('main_container_classes', 'background-image-none');
       $variables['link_count'] = $this->Nav->getLinkCount();
       $variables['html_block'] = $this->Nav->getHTMLBlock();
       for ($i = 0; $i < $variables['link_count']; $i++) {

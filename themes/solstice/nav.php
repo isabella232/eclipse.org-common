@@ -15,7 +15,7 @@ $navigation = $this->getNav();
 if (!empty($navigation['#items'])) :
 ?>
   <!-- nav -->
-  <aside id="leftcol" class="col-md-4">
+  <aside<?php print $this->getAttributes('main-sidebar');?>>
     <?php print $this->getThemeVariables('leftnav_html');?>
     <ul id="leftnav" class="ul-left-nav fa-ul hidden-print">
       <?php foreach ($navigation['#items'] as $link) :?>
@@ -29,7 +29,7 @@ if (!empty($navigation['#items'])) :
             </li>
           <?php else: ?>
             <li>
-              <i class="fa fa-angle-double-right orange fa-fw"></i>
+              <i class="fa fa-caret-right fa-fw"></i>
               <a class="nolink" href="#"><?php print $link->getText() ?></a>
             </li>
           <?php endif; ?>
@@ -43,7 +43,7 @@ if (!empty($navigation['#items'])) :
             </li>
           <?php else:?>
             <li>
-              <i class="fa fa-angle-double-right orange fa-fw"></i>
+              <i class="fa fa-caret-right fa-fw"></i>
               <a href="<?php print $link->getURL() ?>" target="<?php print ($link->getTarget() == "_blank") ? "_blank" : "_self" ?>">
                 <?php print $link->getText() ?>
               </a>

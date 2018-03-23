@@ -25,6 +25,7 @@ class Quicksilver extends solstice {
     $this->resetAttributes('header-left');
     $this->resetAttributes('main-menu-wrapper');
     $this->resetAttributes('header-right');
+    $this->resetAttributes('main-sidebar');
 
     $this->setAttributes('header-left', 'col-sm-5 col-md-4');
     $this->setAttributes('main-menu-wrapper', 'col-sm-15 col-md-15 reset margin-top-10');
@@ -35,6 +36,10 @@ class Quicksilver extends solstice {
     $this->removeAttributes('main', 'no-promo');
     $this->setAttributes('breadcrumbs', 'breadcrumbs-default-margin');
     $this->setAlternateLayout();
+
+    // Set attributes on main sidebar
+    $this->setAttributes('main-sidebar', 'main-sidebar','id');
+    $this->setAttributes('main-sidebar', 'col-md-6 main-sidebar-default-margin');
   }
 
   public function setAlternateLayout($enable = FALSE) {
@@ -151,5 +156,14 @@ EOHTML;
       </div>
     </div>
 EOHTML;
+  }
+
+  /**
+   * Set attributes for nav
+   */
+  protected function _setAttributesForNav() {
+    $this->resetAttributes('main-container-content');
+    $this->setAttributes('main-container-content', "col-md-18");
+    $this->setAttributes('main_container_classes', 'background-image-none');
   }
 }
