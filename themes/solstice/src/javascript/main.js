@@ -27,7 +27,7 @@
       }
     }
     // add a class if left column is non-existant.
-    if ($("#leftcol").length == 0) {
+    if ($('#main-sidebar').length == 0) {
       $("#midcolumn").attr("class", "no-left-nav");
       if (href_hash) {
         window.location.hash = href_hash;
