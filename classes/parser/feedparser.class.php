@@ -325,10 +325,9 @@ class FeedParser {
           $date = strtotime((string) $item->pubDate);
           $date = date($this->getDateFormat(), $date);
 
-          $description = (string) $item->description;
+          $description = (string) strip_tags($item->description);
           if (strlen($description) > $this->getLimit()) {
-            $description = substr(strip_tags($description, "<a>"), 0, $this->limit);
-            $description = strip_tags($description, "<a>");
+            $description = substr($description, 0, $this->limit);
             $description .= "...";
           }
 
