@@ -291,6 +291,7 @@ class BaseTheme {
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar','id');
     $this->setAttributes('main-sidebar', 'col-sm-4 col-sm-pull-20');
+    $this->setAttributes('main-sidebar-html-block', 'main-sidebar-html-block');
 
     // Set attributes on footer
     $this->setAttributes('footer', 'solstice-footer', 'id');
@@ -1747,12 +1748,16 @@ EOHTML;
       'html_block' => ''
     );
     if ($this->Nav instanceof Nav) {
-      $this->_setAttributesForNav();
       // add faux class to #novaContent
       $variables['link_count'] = $this->Nav->getLinkCount();
       $variables['html_block'] = $this->Nav->getHTMLBlock();
       for ($i = 0; $i < $variables['link_count']; $i++) {
         $variables['#items'][] = $this->Nav->getLinkAt($i);
+      }
+
+      // Change main-container attributes if Nav is not empty
+      if (!empty($variables['#items'])) {
+        $this->_setAttributesForNav();
       }
     }
 

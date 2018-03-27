@@ -53,6 +53,10 @@ if (!empty($navigation['#items'])) :
         <?php endif;?>
       <?php endforeach; ?>
     </ul>
-    <?php print $navigation['html_block']; ?>
+    <?php if (!empty( $navigation['html_block'])) :?>
+      <div<?php print $this->getAttributes('main-sidebar-html-block');?>>
+        <?php print $navigation['html_block']; ?>
+      </div>
+    <?php endif;?>
   </aside>
 <?php endif;?>
