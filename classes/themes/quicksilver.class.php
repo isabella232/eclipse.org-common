@@ -38,8 +38,7 @@ class Quicksilver extends solstice {
     $this->setAlternateLayout();
 
     // Set attributes on main sidebar
-    $this->setAttributes('main-sidebar', 'main-sidebar','id');
-    $this->setAttributes('main-sidebar', 'col-md-6 main-sidebar-default-margin');
+    $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
   }
 
   public function setAlternateLayout($enable = FALSE) {
@@ -156,14 +155,5 @@ EOHTML;
       </div>
     </div>
 EOHTML;
-  }
-
-  /**
-   * Set attributes for nav
-   */
-  protected function _setAttributesForNav() {
-    $this->resetAttributes('main-container-content');
-    $this->setAttributes('main-container-content', "col-md-18");
-    $this->setAttributes('main_container_classes', 'background-image-none');
   }
 }

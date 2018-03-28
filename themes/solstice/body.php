@@ -9,21 +9,11 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
-$nav = $this->getThemeFile('nav');
-
 ?>
+
 <?php print $this->getBreadcrumbHtml();?>
 <main<?php print $this->getAttributes('main');?>>
   <div<?php print $this->getAttributes('main-container');?>>
-    <div class="row">
-      <div<?php print $this->getAttributes('main-container-content');?>>
-        <?php print $this->getDeprecatedMessage();?>
-        <?php print $this->getHeaderNav();?>
-        <?php print $this->getSystemMessages();?>
-        <?php print $this->getThemeVariables('main_container_html');?>
-        <?php print $this->getHtml();?>
-      </div>
-      <?php print $nav;?>
-    </div>
+    <?php print $this->getHtml();?>
   </div>
 </main> <!-- /#main-content-container-row -->

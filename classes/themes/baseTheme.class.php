@@ -286,11 +286,9 @@ class BaseTheme {
     $this->setAttributes('main', 'no-promo');
     $this->setAttributes('main-container', 'novaContent');
     $this->setAttributes('main-container', 'novaContent', 'id');
-    $this->setAttributes('main-container-content', "col-sm-24");
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar','id');
-    $this->setAttributes('main-sidebar', 'col-sm-4 col-sm-pull-20');
     $this->setAttributes('main-sidebar-html-block', 'main-sidebar-html-block');
 
     // Set attributes on footer
@@ -699,6 +697,7 @@ EOHTML;
         $btn['btn_cfa']['class'] = 'btn btn-huge btn-info';
         $theme_variables = $this->setThemeVariables($btn);
         $btn_cfa = $theme_variables['btn_cfa'];
+        $this->setAttributes('main-container', 'legacy-page');
       }
     }
 
@@ -786,9 +785,9 @@ EOHTML;
     $App = $this->_getApp();
     if ($App->getOutDated()) {
       $classes[] = "deprecated";
-      $deprecated = '<div class="col-md-24"><div class="alert alert-danger" role="alert">';
+      $deprecated = '<div class="alert alert-danger" role="alert">';
       $deprecated .= $App->getOutDatedMessage();
-      $deprecated .= '</div></div>';
+      $deprecated .= '</div>';
     }
     return $deprecated;
   }
@@ -1411,7 +1410,18 @@ EOHTML;
    * Get page $html
    */
   public function getHtml() {
-    return $this->html;
+    $nav = $this->getThemeFile('nav');
+    $html = $this->getDeprecatedMessage() . $this->getHeaderNav() . $this->getSystemMessages() . $this->getThemeVariables('main_container_html') . $this->html;
+    if (!empty($this->attributes['class']['main-container']) && in_array('container-full', $this->attributes['class']['main-container'])) {
+      return $html;
+    }
+
+    if (!empty($nav)) {
+       $nav = '<div class="col-md-6">' . $nav . '</div>';
+       return '<div class="row"><div class="col-md-18">' . $html . '</div>' . $nav . '</div>';
+    }
+
+    return  $html;
   }
 
   /**
@@ -1724,14 +1734,6 @@ EOHTML;
     return "";
   }
 
-  /**
-   * Set attributes for nav
-   */
-  protected function _setAttributesForNav() {
-    $this->resetAttributes('main-container-content');
-    $this->setAttributes('main-container-content', "col-md-20 col-sm-push-4");
-    $this->setAttributes('main_container_classes', 'background-image-none');
-  }
 
   /**
    * Get Navigation variables
@@ -1753,11 +1755,6 @@ EOHTML;
       $variables['html_block'] = $this->Nav->getHTMLBlock();
       for ($i = 0; $i < $variables['link_count']; $i++) {
         $variables['#items'][] = $this->Nav->getLinkAt($i);
-      }
-
-      // Change main-container attributes if Nav is not empty
-      if (!empty($variables['#items'])) {
-        $this->_setAttributesForNav();
       }
     }
 
