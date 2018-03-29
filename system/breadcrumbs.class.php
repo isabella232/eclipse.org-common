@@ -132,7 +132,7 @@ class Breadcrumb extends Menu {
     $this->getWWW_prefix();
 
     // Default: Home
-    $this->addCrumb("Home", $this->protocol . "www.eclipse.org/", "_self");
+    $this->addCrumb("Home", "/", "_self");
 
     if (isset($_SERVER['REQUEST_URI'])) {
       // http://www.eclipse.org/newsgroups/test.php
