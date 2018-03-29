@@ -57,6 +57,13 @@ class BaseTheme {
   protected $display_header_right = TRUE;
 
   /**
+   * Display header title
+   *
+   * @var bool
+   */
+  protected $display_header_title = FALSE;
+
+  /**
    * More menu flag
    *
    * @var bool
@@ -851,6 +858,25 @@ EOHTML;
   }
 
   /**
+   * Get $display_header_right
+   */
+  public function getDisplayHeaderTitle() {
+    return $this->display_header_title;
+  }
+
+  /**
+   * Set $display_header_title
+   *
+   * @param bool $display
+   */
+  public function setDisplayHeaderTitle($display = TRUE) {
+    if ($display !== FALSE) {
+      $display = TRUE;
+    }
+    $this->display_header_title = $display;
+  }
+
+  /**
    * Get $display_toolbar
    */
   public function getDisplayToolbar() {
@@ -1410,18 +1436,30 @@ EOHTML;
    * Get page $html
    */
   public function getHtml() {
-    $nav = $this->getThemeFile('nav');
-    $html = $this->getDeprecatedMessage() . $this->getHeaderNav() . $this->getSystemMessages() . $this->getThemeVariables('main_container_html') . $this->html;
+    $html = "";
+    $body = $this->getDeprecatedMessage() . $this->getHeaderNav() . $this->getSystemMessages() . $this->getThemeVariables('main_container_html') . $this->html;
+
+    if ($this->getDisplayHeaderTitle()) {
+      $this->removeAttributes('breadcrumbs', 'breadcrumbs-default-margin');
+      $this->setAttributes('main-sidebar', 'hidden-sm hidden-xs');
+      $html = '<div class="main-page-title"><div class="container"><div class="col-sm-18 reset"><h1>' . $this->getPageTitle() . '</h1></div><div class="col-sm-6">' . $this->getThemeFile('nav') . '</div></div></div>';
+
+      $this->removeAttributes('main-sidebar', 'hidden-sm hidden-xs');
+      $this->setAttributes('main-sidebar', 'hidden-md hidden-lg');
+      return $html . '<div' . $this->getAttributes('main-container') . '><div class="row"><div class="col-md-18">' . $body . '</div><div class="col-md-6">' . $this->getThemeFile('nav') . '</div></div></div>';
+    }
+
+    $html = '<div' . $this->getAttributes('main-container') . '>';
     if (!empty($this->attributes['class']['main-container']) && in_array('container-full', $this->attributes['class']['main-container'])) {
-      return $html;
+      return $html . $body . '</div>';
     }
 
+    $nav = $this->getThemeFile('nav');
     if (!empty($nav)) {
-       $nav = '<div class="col-md-6">' . $nav . '</div>';
-       return '<div class="row"><div class="col-md-18">' . $html . '</div>' . $nav . '</div>';
+      return $html . '<div class="row"><div class="col-md-18">' . $body . '</div><div class="col-md-6">' . $nav . '</div></div>';
     }
 
-    return  $html;
+    return  $html . $body . '</div>';
   }
 
   /**
