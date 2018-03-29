@@ -9,11 +9,12 @@
  * Contributors:
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
+
+// Making sure the proper breadcrumb class is set before initializing the breadcrumb html
+$body = $this->getHtml();
 ?>
 
 <?php print $this->getBreadcrumbHtml();?>
 <main<?php print $this->getAttributes('main');?>>
-  <div<?php print $this->getAttributes('main-container');?>>
-    <?php print $this->getHtml();?>
-  </div>
+  <?php print $body?>
 </main> <!-- /#main-content-container-row -->
