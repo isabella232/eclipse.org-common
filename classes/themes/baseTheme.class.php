@@ -280,7 +280,7 @@ class BaseTheme {
     $this->setAttributes('main-menu', 'navbar yamm');
     $this->setAttributes('main-menu-ul-navbar', 'nav navbar-nav');
     $this->setAttributes('navbar-main-menu', 'navbar-main-menu', 'id');
-    $this->setAttributes('navbar-main-menu', 'navbar-collapse collapse');
+    $this->setAttributes('navbar-main-menu', 'navbar-collapse collapse reset');
 
     // Set attributes on breadcrumbs
     $this->setAttributes('breadcrumbs', 'default-breadcrumbs');
@@ -1436,30 +1436,58 @@ EOHTML;
    * Get page $html
    */
   public function getHtml() {
-    $html = "";
-    $body = $this->getDeprecatedMessage() . $this->getHeaderNav() . $this->getSystemMessages() . $this->getThemeVariables('main_container_html') . $this->html;
 
+    // Define the body content
+    $body = $this->getDeprecatedMessage();
+    $body .= $this->getHeaderNav();
+    $body .= $this->getSystemMessages();
+    $body .= $this->getThemeVariables('main_container_html');
+    $body .= $this->html;
+
+    // If Title is in the Header
+    $html_page_title = "";
     if ($this->getDisplayHeaderTitle()) {
+      // Remove attributes of breadcrumbs
       $this->removeAttributes('breadcrumbs', 'breadcrumbs-default-margin');
-      $this->setAttributes('main-sidebar', 'hidden-sm hidden-xs');
-      $html = '<div class="main-page-title"><div class="container"><div class="col-sm-18 reset"><h1>' . $this->getPageTitle() . '</h1></div><div class="col-sm-6">' . $this->getThemeFile('nav') . '</div></div></div>';
 
+      // Set attributes for sidebar
+      $this->setAttributes('main-sidebar', 'hidden-sm hidden-xs');
+
+      // Define Main page Title
+      $html_page_title = '<div class="main-page-title"><div class="container">';
+      $html_page_title .= '<div class="' . ($nav = $this->getThemeFile('nav') ? 'col-sm-18' : 'col-sm-24') . ' reset">';
+      $html_page_title .= '<h1>' . $this->getPageTitle() . '</h1>';
+      $html_page_title .= '</div>';
+      if ($nav = $this->getThemeFile('nav')) {
+        $html_page_title .= '<div class="col-md-6">' . $nav . '</div>';
+      }
+      $html_page_title .= '</div></div>';
+
+      // Reset attributes for sidebar that will be in the body
       $this->removeAttributes('main-sidebar', 'hidden-sm hidden-xs');
       $this->setAttributes('main-sidebar', 'hidden-md hidden-lg');
-      return $html . '<div' . $this->getAttributes('main-container') . '><div class="row"><div class="col-md-18">' . $body . '</div><div class="col-md-6">' . $this->getThemeFile('nav') . '</div></div></div>';
     }
 
-    $html = '<div' . $this->getAttributes('main-container') . '>';
-    if (!empty($this->attributes['class']['main-container']) && in_array('container-full', $this->attributes['class']['main-container'])) {
-      return $html . $body . '</div>';
+    // set a different body if there's a sidebar
+    if ($nav = $this->getThemeFile('nav')) {
+      $body_content = $body;
+      $body = '<div class="row">';
+      $body .= '<div class="col-md-18">' . $body_content . '</div>';
+      $body .= '<div class="col-md-6">' . $nav . '</div>';
+      $body .= '</div>';
     }
 
-    $nav = $this->getThemeFile('nav');
-    if (!empty($nav)) {
-      return $html . '<div class="row"><div class="col-md-18">' . $body . '</div><div class="col-md-6">' . $nav . '</div></div>';
-    }
+    // Define the html
+    return <<<EOHTML
+      {$this->getBreadcrumbHtml()}
+      <main{$this->getAttributes('main')}>
+        {$html_page_title}
+        <div{$this->getAttributes('main-container')}>
+          {$body}
+        </div>
+      </main>
+EOHTML;
 
-    return  $html . $body . '</div>';
   }
 
   /**
@@ -2072,7 +2100,7 @@ EOHTML;
         $this->setDisplayHeaderRight(FALSE);
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
-        print $this->getThemeFile('body');
+        print $this->getHtml();
         print $this->getThemeFile('footer');
         break;
 
@@ -2100,7 +2128,7 @@ EOHTML;
         $this->setDisplayHeaderRight(FALSE);
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
-        print $this->getThemeFile('body');
+        print $this->getHtml();
         print $this->getThemeFile('footer-min');
         break;
 
@@ -2133,7 +2161,7 @@ EOHTML;
 
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
-        print $this->getThemeFile('body');
+        print $this->getHtml();
         print $this->getThemeFile('footer');
         break;
 
@@ -2145,14 +2173,14 @@ EOHTML;
       case 'default-with-footer-min':
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
-        print $this->getThemeFile('body');
+        print $this->getHtml();
         print $this->getThemeFile('footer-min');
         break;
 
       case 'default':
         print $this->getThemeFile('header');
         print $this->getThemeFile('menu');
-        print $this->getThemeFile('body');
+        print $this->getHtml();
         print $this->getThemeFile('footer');
         break;
 
