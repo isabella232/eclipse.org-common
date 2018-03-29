@@ -755,7 +755,7 @@ EOHTML;
    */
   protected function _getCfaButtonDefault() {
     $default['class'] = 'btn btn-huge btn-warning';
-    $default['href'] = '//www.eclipse.org/downloads/';
+    $default['href'] = '/downloads/';
     $default['text'] = '<i class="fa fa-download"></i> Download';
     return $default;
   }
