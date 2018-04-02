@@ -110,7 +110,7 @@ EOHTML;
     if (!empty($google_search)) {
       $suffix_items[] = <<<EOHTML
       <li class="dropdown eclipse-more hidden-xs">
-        <a data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-search"></i> <b class="caret"></b></a>
+        <a data-toggle="dropdown" class="dropdown-toggle" role="button"><i class="fa fa-search"></i> <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li>
             <!-- Content container to add padding -->
