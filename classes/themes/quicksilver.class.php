@@ -42,10 +42,10 @@ class Quicksilver extends solstice {
   }
 
   public function setAlternateLayout($enable = FALSE) {
-    $image_path = $this->getThemeUrl('solstice') . 'public/images/logo/';
-    $default_logo = 'eclipse-foundation-grey-orange.svg';
+   $image_path = $this->getThemeUrl('solstice') . 'public/images/logo/';
+   $default_logo = 'eclipse-foundation-white-orange.svg';
     if ($enable) {
-      $default_logo = 'eclipse-foundation-white-orange.svg';
+      $default_logo = 'eclipse-foundation-grey-orange.svg';
       $this->setAttributes('body', 'alternate-layout');
     }
     else {
