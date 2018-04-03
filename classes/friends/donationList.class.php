@@ -149,13 +149,13 @@ class DonationList {
           <td style="text-align:left">
         <?php
           if ($_start >= $_pageValue) {
-                      ?><a href="<?=$previous;?>"><< Previous Page</a><?php
+                      ?><a href="<?php print $previous;?>">&lt;&lt; Previous Page</a><?php
           }
         ?>&nbsp;</td>
           <td style="text-align:right">
         <?php
           if (($_start + $_pageValue) < $_pageCount) {
-                      ?><a href="<?=$next;?>">Next Page >></a><?php
+                      ?><a href="<?php print $next;?>">Next Page &gt;&gt;</a><?php
           }
         ?>
           </td>
