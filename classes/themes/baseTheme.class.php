@@ -1647,9 +1647,8 @@ EOHTML;
     }
     $Menu = new Menu();
     $Menu->setMenuItemList(array());
-    $Menu->addMenuItem("Download", $base_url . "downloads/", "_self");
-    $Menu->addMenuItem("Getting Started", $base_url . "getting_started/", "_self");
     $Menu->addMenuItem("Members", $base_url . "membership/", "_self");
+    $Menu->addMenuItem("Working Groups", $base_url . "org/workinggroups/", "_self");
     $Menu->addMenuItem("Projects", $base_url . "projects/", "_self");
     return $Menu;
   }
@@ -1754,40 +1753,36 @@ EOHTML;
       'caption' => 'IRC'
     );
 
-    $variables['Participate'][] = array(
+    $variables['Eclipse IDE'][] = array(
+      'url' => $base_url . 'downloads',
+      'caption' => 'Download'
+    );
+
+    $variables['Eclipse IDE'][] = array(
+      'url' => 'https://help.eclipse.org',
+      'caption' => 'Documentation'
+    );
+
+    $variables['Eclipse IDE'][] = array(
+      'url' => $base_url . 'getting_started',
+      'caption' => 'Getting Started / Support'
+    );
+
+    $variables['Eclipse IDE'][] = array(
       'url' => $base_url . 'contribute/',
       'caption' => 'How to Contribute'
     );
 
-    $variables['Working Groups'][] = array(
-      'url' => 'http://iot.eclipse.org',
-      'caption' => 'Internet of Things'
+    $variables['Eclipse IDE'][] = array(
+      'url' => $base_url . 'ide/',
+      'caption' => 'IDE and Tools'
     );
 
-    $variables['Working Groups'][] = array(
-      'url' => 'http://locationtech.org',
-      'caption' => 'LocationTech'
+    $variables['Eclipse IDE'][] = array(
+      'url' => 'https://www.eclipse.org/forums/index.php/f/89/',
+      'caption' => 'Newcomer Forum'
     );
 
-    $variables['Working Groups'][] = array(
-      'url' => 'http://lts.eclipse.org',
-      'caption' => 'Long-Term Support'
-    );
-
-    $variables['Working Groups'][] = array(
-      'url' => 'http://polarsys.org',
-      'caption' => 'PolarSys'
-    );
-
-    $variables['Working Groups'][] = array(
-      'url' => 'http://science.eclipse.org',
-      'caption' => 'Science'
-    );
-
-    $variables['Working Groups'][] = array(
-      'url' => 'http://www.openmdm.org',
-      'caption' => 'OpenMDM'
-    );
     return $variables;
   }
 
