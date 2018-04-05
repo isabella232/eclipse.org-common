@@ -10,8 +10,8 @@
  *    Christopher Guindon (Eclipse Foundation) - Initial implementation
  *******************************************************************************/
 ?>
-<?php print $this->getToolbarHtml();?>
 <header<?php print $this->getAttributes('header-wrapper');?>>
+  <?php print $this->getToolbarHtml();?>
   <div<?php print $this->getAttributes('header-container');?>>
     <div<?php print $this->getAttributes('header-row');?>>
       <?php print $this->getHeaderLeft();?>
@@ -19,4 +19,5 @@
       <?php print $this->getThemeFile('main_menu');?>
     </div>
   </div>
+  <?php print $this->getExtraHeaderHtml(); ?>
 </header>
