@@ -51,6 +51,7 @@ module.exports = (grunt) ->
         src: [
           './bower_components/jquery/dist/jquery.min.js'
           './bower_components/bootstrap/dist/js/bootstrap.min.js'
+          './bower_components/matchHeight/dist/jquery.matchHeight-min.js'
           './node_modules/feather-icons/dist/feather.min.js'
           './src/javascript/lib/solstice-cookies.js'
           './src/javascript/main.js'

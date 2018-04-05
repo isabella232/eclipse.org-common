@@ -7,4 +7,6 @@
  */
 (function($, document) {
   feather.replace();
+  $('.featured-highlights-item').matchHeight();
+  $('.news-list-media .media-link').matchHeight({byRow: false});
 })(jQuery, document);
