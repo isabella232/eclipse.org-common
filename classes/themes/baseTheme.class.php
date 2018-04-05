@@ -93,6 +93,11 @@ class BaseTheme {
   protected $extra_headers = "";
 
   /**
+   * Extra header html for #header-wrapper element
+   */
+  protected $extra_header_html = "";
+
+  /**
    * Google analytics code
    *
    * @var string
@@ -264,6 +269,7 @@ class BaseTheme {
 
     // Set attributes for header
     $this->setAttributes('header-wrapper', 'header-wrapper', 'id');
+    $this->setAttributes('header-wrapper', 'header-wrapper');
     $this->setAttributes('header-container', 'container');
     $this->setAttributes('header-row', 'header-row', 'id');
     $this->setAttributes('header-row', 'row');
@@ -1184,6 +1190,24 @@ EOHTML;
     $App = $this->_getApp();
     $return = $App->ExtraJSFooter . PHP_EOL;
     return $return;
+  }
+
+  /**
+   * Get extra html for the #header-wrapper element
+   */
+  public function getExtraHeaderHtml() {
+    return $this->extra_header_html;
+  }
+
+  /**
+   * Set extra html for the #header-wrapper element
+   *
+   * @param string $html
+   */
+  public function setExtraHeaderHtml($html) {
+    if (!empty($html)) {
+      $this->extra_header_html .= $html;
+    }
   }
 
   /**
