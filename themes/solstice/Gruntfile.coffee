@@ -22,6 +22,7 @@ module.exports = (grunt) ->
       files:
         './public/stylesheets/styles.min.css': './bower_components/solstice-assets/stylesheets/solstice/styles.less'
         './public/stylesheets/quicksilver.min.css': './bower_components/solstice-assets/stylesheets/quicksilver/styles.less'
+        './public/stylesheets/jakarta.min.css': './bower_components/solstice-assets/stylesheets/quicksilver/jakarta/styles.less'
         './public/stylesheets/barebone.min.css': './bower_components/solstice-assets/stylesheets/solstice/_barebone/styles.less'
         './public/stylesheets/barebone-footer.min.css': './bower_components/solstice-assets/stylesheets/solstice/_barebone/footer.less'
         './public/stylesheets/forums.min.css': './bower_components/solstice-assets/stylesheets/solstice/forums.less'

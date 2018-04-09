@@ -1021,7 +1021,8 @@ class App {
       'locationtech',
       'solstice',
       'polarsys',
-      'quicksilver'
+      'quicksilver',
+      'jakarta'
     );
 
     if (!in_array($_theme, $themes)) {
