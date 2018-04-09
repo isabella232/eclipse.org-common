@@ -140,7 +140,7 @@ EOHTML;
   public function getFooterPrexfix() {
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
-    <div class="featured-footer featured-footer-newsletter">
+    <div class="featured-footer featured-footer-newsletter background-secondary">
       <div class="container">
         <p><i data-feather="mail" stroke-width="1"></i></p>
         <h2>Sign up to our Newsletter</h2>

@@ -985,6 +985,10 @@ EOHTML;
       case 'quicksilver':
         $styles_name = 'quicksilver';
         break;
+
+      case 'jakarta':
+        $styles_name = 'jakarta';
+        break;
     }
 
     // Bug 451203 - Google Analytics: Universal Analytics Upgrade
