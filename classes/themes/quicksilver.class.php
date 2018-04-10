@@ -36,6 +36,7 @@ class Quicksilver extends solstice {
     $this->removeAttributes('main', 'no-promo');
     $this->setAttributes('breadcrumbs', 'breadcrumbs-default-margin');
     $this->setAlternateLayout();
+    $this->removeAttributes('img_logo_default', 'img-responsive', 'class');
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
@@ -54,20 +55,9 @@ class Quicksilver extends solstice {
 
     // Set default images
     $this->setAttributes('img_logo_default', $image_path . $default_logo, 'src');
-    $this->setAttributes('img_logo_default', 'Eclipse.org logo', 'alt');
-    $this->setAttributes('img_logo_default', 'logo-eclipse-default img-responsive hidden-xs', 'class');
-
     $this->setAttributes('img_logo_eclipse_default', $image_path . $default_logo, 'src');
-    $this->setAttributes('img_logo_eclipse_default', 'Eclipse.org logo', 'alt');
-    $this->setAttributes('img_logo_eclipse_default', 'img-responsive hidden-xs', 'class');
-
     $this->setAttributes('img_logo_eclipse_white', $image_path . 'eclipse-foundation-white.svg', 'src');
-    $this->setAttributes('img_logo_eclipse_white', 'Eclipse.org black and white logo', 'alt');
-    $this->setAttributes('img_logo_eclipse_white', 'logo-eclipse-white img-responsive');
-
     $this->setAttributes('img_logo_mobile', $image_path . $default_logo, 'src');
-    $this->setAttributes('img_logo_mobile', 'Eclipse.org logo', 'alt');
-    $this->setAttributes('img_logo_mobile', 'logo-eclipse-default-mobile img-responsive', 'class');
 
     // Default theme js file
     $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/quicksilver.min.js', 'src');
