@@ -970,7 +970,7 @@ EOHTML;
    */
   public function getExtraHeaders() {
     $App = $this->_getApp();
-    $this->setMetaTitle($this->getPageTitle());
+    $this->setMetaTitle($this->getPageTitle() . ' | The Eclipse Foundation');
 
     $styles_name = 'styles';
     switch ($this->getTheme()) {

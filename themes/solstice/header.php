@@ -19,7 +19,7 @@
     <meta name="author" content="<?php print $this->getPageAuthor(); ?>"/>
     <meta name="keywords" content="<?php print $this->getPageKeywords(); ?>"/>
     <link rel="shortcut icon" href="<?php print $this->getThemeUrl(); ?>public/images/favicon.ico"/>
-    <title><?php print $this->getPageTitle(); ?></title>
+    <title><?php print $this->getPageTitle(); ?> | The Eclipse Foundation</title>
     <?php print $this->getExtraHeaders();?>
     <?php print $this->getScriptSettings(); ?>
   </head>
