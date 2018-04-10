@@ -229,6 +229,13 @@ class BaseTheme {
    */
   protected $theme_variables = array();
 
+  /**
+   * Text for <title> tag
+   *
+   * @var string
+   */
+  protected $title = "";
+
   protected $toolbar_left_content = "";
 
   /**
@@ -1212,6 +1219,29 @@ EOHTML;
     if (!empty($html)) {
       $this->extra_header_html .= $html;
     }
+  }
+
+  /**
+   * Set title
+   *
+   * @param string $title
+   */
+  public function setTitle($title) {
+    if (!empty($title) && is_string($title)) {
+      $this->title = $title;
+    }
+  }
+
+  /**
+   * Get title
+   *
+   * @return string
+   */
+  public function getTitle() {
+    if (empty($this->title)) {
+      return $this->getPageTitle();
+    }
+    return $this->title;
   }
 
   /**
