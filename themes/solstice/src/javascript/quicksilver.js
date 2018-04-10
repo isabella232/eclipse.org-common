@@ -8,6 +8,7 @@
 (function($, document) {
   feather.replace();
   $('.featured-highlights-item').matchHeight();
+  $('.featured-story-block').matchHeight();
   $('.news-list-media .media-link').matchHeight({byRow: false});
 
   // Focus on the Google search bar when dropdown menu is being shown
