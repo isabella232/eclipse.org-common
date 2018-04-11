@@ -39,7 +39,7 @@ class Solstice extends baseTheme {
     return <<<EOHTML
     <h2 class="section-title">Eclipse Foundation</h2>
     <ul class="nav">
-    <li><a href="{$this->getBaseUrl()}org/">About us</a></li>
+    <li><a href="{$this->getBaseUrl()}org/">About Us</a></li>
     <li><a href="{$this->getBaseUrl()}org/foundation/contact.php">Contact Us</a></li>
     <li><a href="{$this->getBaseUrl()}donate">Donate</a></li>
       <li><a href="{$this->getBaseUrl()}org/documents/">Governance</a></li>
