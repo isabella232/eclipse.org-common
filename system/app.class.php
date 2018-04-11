@@ -160,7 +160,7 @@ class App {
    *
    * @var string
    */
-  private $OGDescription = "Eclipse is probably best known as a Java IDE, but it is more: it is an IDE framework, a tools framework, an open source project, a community, an eco-system, and a foundation.";
+  private $OGDescription = "The Eclipse Foundation - home to a global community, the Eclipse IDE, Jakarta EE and over 350 open source projects, including runtimes, tools and frameworks.";
 
   /**
    * Open Graph Protocol image
