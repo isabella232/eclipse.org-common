@@ -15,4 +15,12 @@
   $('.eclipse-search').on('shown.bs.dropdown', function () {
     $('.gsc-input').focus();
   });
+  
+  // Hide search on ESC key.
+  // @todo: Find a way to make it work when focus is on an input field.
+  $(document).bind('keydown', '27', function (e) {
+    $('.eclipse-search a').dropdown("toggle");
+  });
+
 })(jQuery, document);
+
