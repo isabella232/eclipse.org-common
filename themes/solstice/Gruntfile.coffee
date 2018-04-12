@@ -20,7 +20,7 @@ module.exports = (grunt) ->
     less: development:
       options: compress: true
       files:
-        './public/stylesheets/styles.min.css': './bower_components/solstice-assets/stylesheets/solstice/styles.less'
+        './public/stylesheets/eclipse-ide.min.css': './bower_components/solstice-assets/stylesheets/quicksilver/eclipse-ide/styles.less'
         './public/stylesheets/quicksilver.min.css': './bower_components/solstice-assets/stylesheets/quicksilver/styles.less'
         './public/stylesheets/jakarta.min.css': './bower_components/solstice-assets/stylesheets/quicksilver/jakarta/styles.less'
         './public/stylesheets/barebone.min.css': './bower_components/solstice-assets/stylesheets/solstice/_barebone/styles.less'
@@ -31,6 +31,7 @@ module.exports = (grunt) ->
         './public/stylesheets/locationtech-barebone.min.css': './bower_components/solstice-assets/stylesheets/solstice/locationtech/barebone.less'
         './public/stylesheets/polarsys.min.css': './bower_components/solstice-assets/stylesheets/solstice/polarsys/styles.less'
         './public/stylesheets/polarsys-barebone.min.css': './bower_components/solstice-assets/stylesheets/solstice/polarsys/barebone.less'
+        # './public/stylesheets/styles.min.css': './bower_components/solstice-assets/stylesheets/solstice/styles.less' Deprecated
     concat:
       js_frontend:
         src: [

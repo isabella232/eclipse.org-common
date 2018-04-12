@@ -39,6 +39,9 @@ class Quicksilver extends solstice {
     $this->removeAttributes('img_logo_default', 'img-responsive', 'class');
     $this->setAttributes('img_logo_default', '140', 'width');
 
+    // Featured footer
+    $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
+
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
   }
@@ -131,7 +134,7 @@ EOHTML;
   public function getFooterPrexfix() {
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
-    <div class="featured-footer featured-footer-newsletter background-secondary">
+    <div{$this->getAttributes('featured-footer')}>
       <div class="container">
         <p><i data-feather="mail" stroke-width="1"></i></p>
         <h2>Sign up to our Newsletter</h2>
