@@ -142,10 +142,9 @@ class App {
    * @var array
    */
   private $valid_themes = array(
-    "solstice",
     "polarsys",
     "locationtech",
-    "quicksilver"
+    "solstice"
   );
 
   /**
@@ -1003,8 +1002,9 @@ class App {
    * @return string
    */
   function getThemeURL($_theme) {
+    $_theme = strtolower($_theme);
     if (!$this->isValidTheme($_theme)) {
-      $_theme = "quicksilver";
+      $_theme = "solstice";
     }
     return "/eclipse.org-common/themes/" . $_theme;
   }
@@ -1019,11 +1019,15 @@ class App {
   function getThemeClass($_theme = "quicksilver") {
     $themes = array(
       'locationtech',
-      'solstice',
+      'eclipse_ide',
       'polarsys',
       'quicksilver',
       'jakarta'
     );
+
+    if ($_theme === 'solstice') {
+      $_theme = 'eclipse_ide';
+    }
 
     if (!in_array($_theme, $themes)) {
       $_theme = "quicksilver";
