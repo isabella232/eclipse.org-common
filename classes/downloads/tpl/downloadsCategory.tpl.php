@@ -12,7 +12,7 @@
 ?>
 
 <!-- RUNTIMES PLATFORM -->
-<div id="runtime-platforms" class="downloads-section">
+<div id="<?php print strtolower(str_replace(" ", "-", $category['title'])); ?>" class="downloads-section">
   <div class="container">
     <h2><span class="downloads-title"><?php print $category['title']; ?></span></h2>
     <div class="row downloads-content-padding">

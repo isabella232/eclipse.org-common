@@ -77,7 +77,7 @@ class Downloads extends DownloadsProject {
     $Project->setProjectType($this->projects['runtime_platforms']['title']);
     $Project->setDownloadUrl64Bit('https://www.eclipse.org/jetty/download.html');
     $Project->setLearnMoreUrl('http://www.eclipse.org/jetty/');
-    $Project->setProjectsAttributes('container','style','margin-left:9.7%;');
+    $Project->setProjectsAttributes('container','class','jetty-spacing');
     $this->newProject($Project);
 
     // Runtime Platforms item
