@@ -1293,19 +1293,21 @@ EOHTML;
     $html = "";
     $html .= '<div class="header_nav">';
     $html .= '<div class="col-xs-24 col-md-10 vcenter">';
-    $logo = '<img src="' . $header_nav['logo']['src'] . '" alt="' . $header_nav['logo']['alt'] . '" class="img-responsive  header_nav_logo"/>';
+    if (!empty($header_nav['logo']['src'])) {
+      $logo = '<img src="' . $header_nav['logo']['src'] . '" alt="' . $header_nav['logo']['alt'] . '" class="img-responsive  header_nav_logo"/>';
 
-    if (!empty($header_nav['logo']['url'])) {
-      $html .= '<a href="' . $header_nav['logo']['url'] . '" title="' . $header_nav['logo']['alt'] . '" target="' . $header_nav['logo']['target'] . '">';
-      $html .= $logo;
-      $html .= '</a>';
-    }
-    else {
-      $html .= $logo;
+      if (!empty($header_nav['logo']['url'])) {
+        $html .= '<a href="' . $header_nav['logo']['url'] . '" title="' . $header_nav['logo']['alt'] . '" target="' . $header_nav['logo']['target'] . '">';
+        $html .= $logo;
+        $html .= '</a>';
+      }
+      else {
+        $html .= $logo;
+      }
     }
 
     $html .= '</div>';
-    $html .= '<div class="col-xs-24 col-md-offset-2 col-md-12 vcenter">';
+    $html .= '<div class="col-xs-24 col-md-14 vcenter">';
     $html .= '<ul class="clearfix">';
 
     foreach ($header_nav['links'] as $l) {
@@ -1371,7 +1373,7 @@ EOHTML;
   private function _getHeaderNavDefaultLogo() {
     $h = $this->getThemeVariables('header_nav');
 
-    if (!is_array($h) || empty($h['logo']) || !is_array($h['logo'])) {
+    if (!is_array($h) || empty($h)) {
       return FALSE;
     }
 
@@ -1387,14 +1389,16 @@ EOHTML;
       )
     );
 
-    foreach ($h['logo'] as &$logo) {
-      $logo = $this->is_var($logo);
-    }
+    if (!empty($h['logo'])) {
+      foreach ($h['logo'] as &$logo) {
+        $logo = $this->is_var($logo);
+      }
 
-    $h['logo'] = array_merge($default['logo'], $h['logo']);
+      $h['logo'] = array_merge($default['logo'], $h['logo']);
 
-    if (empty($h['logo']['src']) || empty($h['links']) || !is_array($h['links'])) {
-      return FALSE;
+      if (empty($h['logo']['src']) || empty($h['links']) || !is_array($h['links'])) {
+        return FALSE;
+      }
     }
 
     foreach ($h['links'] as $l) {
