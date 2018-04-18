@@ -1022,10 +1022,13 @@ class App {
       'eclipse_ide',
       'polarsys',
       'quicksilver',
-      'jakarta'
+      'jakarta',
+      'nova'
     );
 
-    if ($_theme === 'solstice') {
+    $_theme = strtolower($_theme);
+
+    if ($_theme === 'solstice' || $_theme === 'nova') {
       $_theme = 'eclipse_ide';
     }
 
