@@ -18,7 +18,7 @@
         <p><?php print $variables['body']; ?></p>
       </div>
       <div class="col-lg-4 col-md-6 downloads-bar-ad-white-content">
-        <a class="btn btn-default" href="/go/<?php print $variables['button_url']; ?>"><?php print $variables['button_text']; ?></a>
+        <a class="btn btn-primary" href="/go/<?php print $variables['button_url']; ?>"><?php print $variables['button_text']; ?></a>
       </div>
     </div>
   </div>

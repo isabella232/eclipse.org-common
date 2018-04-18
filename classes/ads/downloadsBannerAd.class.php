@@ -16,29 +16,20 @@ class DownloadsBannerAd extends EclipseAds {
   public function __construct() {
     parent::__construct();
 
-    $campaign = "PROMO_FRANCE2017_DOWNLOADS_PAGE";
-
+    $campaign = "";
     $content['body'] ="";
     $content['banner_styles'] = "";
 
-    if (date("Y/m/d") >= "2017/09/05" && date("Y/m/d") < "2017/09/19") {
-      $content['body'] ="Register now for EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
-      $content['banner_styles'] = "background-color:#ce2227;";
+    if ((time() >= strtotime("2018/02/26") && time() < strtotime("2018/04/05")) || (time() >= strtotime("2018/04/30") && time() < strtotime("2018/05/11"))) {
+      $content['body'] ="Register now for FOSS4G NA 2018 ~ St. Louis, Missouri ~ May 14 - 17, 2018";
+      $content['banner_styles'] = "background-color:#1c5476;";
+      $campaign = "PROMO_F4G2018_DOWNLOADS_PAGE";
     }
 
-    if (date("Y/m/d") >= "2017/09/19" && date("Y/m/d") < "2017/10/06") {
-      $content['body'] ="Register by October 5 to get the best price! EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
-      $content['banner_styles'] = "background-color:#3a7939;";
-    }
-
-    if (date("Y/m/d") >= "2017/10/06" && date("Y/m/d") < "2017/10/17") {
-      $content['body'] ="Two weeks left to register! EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
-      $content['banner_styles'] = "background-color:#F68B1F;";
-    }
-
-    if (date("Y/m/d") >= "2017/10/17" && date("Y/m/d") < "2017/10/24") {
-      $content['body'] ="One week to go! EclipseCon Europe | October 24 - 26, 2017 | Ludwigsburg, Germany";
-      $content['banner_styles'] = "background-color:#F68B1F;";
+    if ((time() >= strtotime("2018/04/16") && time() < strtotime("2018/04/30")) || (time() >= strtotime("2018/05/14") && time() < strtotime("2018/06/13"))) {
+      $content['body'] ="Register now for EclipseCon France 2018 ~ Toulouse, France ~ June 13 - 14, 2018";
+      $content['banner_styles'] = "background-color:#cc2028;";
+      $campaign = "PROMO_ECF2018_DOWNLOADS_PAGE";
     }
 
     $content['button_text'] = "Register Today!";
@@ -65,7 +56,11 @@ class DownloadsBannerAd extends EclipseAds {
   protected function _build($layout = "", $type = "") {
 
     // Check if the ad should be printed depending on the date
-    if ((date("Y/m/d") >= "2017/09/05" && date("Y/m/d") < "2017/10/24")) {
+    if ((time() >= strtotime("2018/02/26") && time() < strtotime("2018/04/05")) || (time() >= strtotime("2018/04/30") && time() < strtotime("2018/05/11"))) {
+      $this->output = $this->ad->getHtml();
+    }
+
+    if ((time() >= strtotime("2018/04/16") && time() < strtotime("2018/04/30")) || (time() >= strtotime("2018/05/14") && time() < strtotime("2018/06/13"))) {
       $this->output = $this->ad->getHtml();
     }
   }
