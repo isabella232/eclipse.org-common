@@ -326,6 +326,13 @@ class BaseTheme {
   }
 
   /**
+   * Set alternate layout
+   */
+  public function setAlternateLayout($enable = FALSE) {
+
+  }
+
+  /**
    * Get $App
    *
    * @return App()
@@ -576,7 +583,13 @@ class BaseTheme {
   function getBareboneAssets() {
     $url = $this->getEclipseUrl() . $this->getThemeUrl("solstice") . "public/stylesheets/";
     $current_theme = $this->getTheme();
-    if ($current_theme !== "solstice") {
+
+    $themes = array(
+      'locationtech',
+      'polarsys'
+    );
+
+    if (in_array($current_theme, $themes)) {
       $url .= $current_theme . '-';
     }
     $url .= 'barebone.min.css';
@@ -2171,6 +2184,7 @@ EOHTML;
         $this->setAttributes('main-menu-wrapper', 'col-sm-16 col-md-18 col-lg-20');
         $this->setAttributes('main-menu-ul-navbar', 'navbar-right');
         $this->setDisplayHeaderRight(FALSE);
+        $this->setAlternateLayout(TRUE);
         print $this->getBareboneAssets();
         print $this->getThemeFile('menu');
         break;

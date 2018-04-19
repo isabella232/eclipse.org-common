@@ -1,3 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2014, 2015, 2016, 2018 Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ *
+ * Contributors:
+ *   Christopher Guindon (Eclipse Foundation) - Initial implementation
+ *   Eric Poirier (Eclipse Foundation)
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
+?>
 
 <style>
 hr{
@@ -11,9 +26,9 @@ and powerful front-end framework for faster and easier web development.</p>
 <p>We support most UI components from <a href="https://wiki.eclipse.org/Nova">Nova</a>. We’re hoping that the transition won’t be too hard for most pages.</p>
 <h2>What's included with Solstice?</h2>
 <ul>
-  <li><a href="http://getbootstrap.com/">Bootstrap</a> v3.3.1</li>
-  <li><a href="http://bootstrapvalidator.com/">BootstrapValidator</a> v0.4.5</li>
-  <li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> v4.2.0 </li>
+  <li><a href="http://getbootstrap.com/">Bootstrap</a> v3.3.7</li>
+  <li><a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> v4.7.0 </li>
+  <li><a href="https://feathericons.com/">Feather</a> v4.7.0 </li>
   <li><a href="http://jquery.com/">jQuery</a> v2.1.1</li>
   <li><a href="https://github.com/chrisguindon/solstice-assets">Solstice Assets</a> (Less files &amp; images)</li>
   <li><a href="http://geedmo.github.io/yamm3/">Yamm3</a> (Yet another megamenu for Bootstrap 3)</li>
@@ -22,9 +37,24 @@ and powerful front-end framework for faster and easier web development.</p>
 <h2>Getting Started</h2>
 <ul>
   <li><a href="https://www.youtube.com/watch?v=AbSC3506sz0&feature=youtu.be">Committer and Contributor Hangout Series -- Eclipse Website Refresh</a></li>
-  <li>Read the documentation for <a href="http://getbootstrap.com/css/">Bootstrap</a>, <a href="http://bootstrapvalidator.com/">BootstrapValidator</a> &amp; <a href="http://jquery.com/">jQuery</a></li>
-  <li><a href="http://wiki.eclipse.org/Using_Phoenix">How to use Phonix</a></li>
+  <li>Read the documentation for <a href="http://getbootstrap.com/css/">Bootstrap</a> &amp; <a href="http://jquery.com/">jQuery</a></li>
+  <li><a href="http://wiki.eclipse.org/Using_Phoenix">How to use Phoenix</a></li>
 </ul>
+
+<h2>Initiate a theme</h2>
+<p>These are the possible parameter values you can pass into $App->getThemeClass():</p>
+<ul>
+  <li>NULL (default theme)</li>
+  <li>solstice</li>
+  <li>eclipse_ide</li>
+  <li>quicksilver</li>
+</ul>
+<p>Example:</p>
+<pre>
+&lt;?php
+
+$Theme = $App->getThemeClass("quicksilver");
+</pre>
 
 <h2>Using Solstice</h2>
 <p>On a page using the eclipse.org-common $Theme Class, use this to make sure your page is always using the default theme:</p>
@@ -74,7 +104,7 @@ $Theme->generatePage();
 
 <h2>Templates</h2>
 <?php
-  $themes = array('solstice', 'polarsys', 'locationtech');
+  $themes = array('default','eclipse_ide', 'polarsys', 'locationtech');
 ?>
 <?php foreach ($themes as $t) :?>
     <h3><?php print ucfirst($t);?></h3>
@@ -135,11 +165,10 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
   <li><a href="#section-block-box">Block-box</a></li>
   <li><a href="#section-breadcrumbs">Breadcrumbs</a></li>
   <li><a href="#section-btncfa">Call For Action Button link</a></li>
-  <li><a href="#section-discover-search">Discover Search</a></li>
   <li><a href="#section-dragdrop">Marketplace Drag and Drop install</a></li>
   <li><a href="#section-headernav">Header Nav</a></li>
   <li><a href="#section-headerrow">Header Row</a></li>
-  <li><a href="#section-highlight">Highlight</a></li>
+  <li><a href="#section-highlight">Block Highlight</a></li>
   <li><a href="#section-landing-well">Landing well</a></li>
   <li><a href="#section-news-list">News list</a></li>
   <li><a href="#section-stepbystep">Step by Step</a></li>
@@ -150,11 +179,10 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
 <?php include('components/block-box.php');?><hr/>
 <?php include('components/breadcrumbs.php');?><hr/>
 <?php include('components/btn-cfa.php');?><hr/>
-<?php include('components/discover-search.php');?><hr/>
 <?php include('components/dragdrop.php');?><hr/>
 <?php include('components/header-nav.php');?><hr/>
 <?php include('components/headerrow.php');?><hr/>
-<?php include('components/hightlight.php');?><hr/>
+<?php include('components/highlight.php');?><hr/>
 <?php include('components/landing-well.php');?><hr/>
 <?php include('components/news-list.php');?><hr/>
 <?php include('components/step-by-step.php');?><hr/>

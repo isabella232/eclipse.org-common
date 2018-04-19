@@ -82,13 +82,43 @@ class Quicksilver extends solstice {
     if (!$this->getDisplayHeaderRight() || empty($cfa_button)) {
       $this->setDisplayHeaderRight(FALSE);
       $this->resetAttributes('main-menu-wrapper');
-      $this->setAttributes('main-menu-wrapper', 'col-sm-19 col-md-20 reset margin-top-10');
+      $this->setAttributes('main-menu-wrapper', 'col-sm-19 col-md-20 reset');
+
+      if (strtolower($this->getLayout()) !== 'barebone') {
+        $this->setAttributes('main-menu-wrapper', 'margin-top-10');
+      }
       return "";
     }
 
    return <<<EOHTML
       <div{$this->getAttributes('header-right')}>
         {$this->getCfaButton()}
+      </div>
+EOHTML;
+  }
+
+  /**
+   * Implement BaseTheme::getHeaderLeft();
+   *
+   * Reset header left classes for thin layout
+   *
+   * {@inheritDoc}
+   * @see BaseTheme::getHeaderLeft()
+   */
+  public function getHeaderLeft(){
+    $layout_types = array(
+      'thin',
+      'thin-header',
+      'thin-with-footer-min'
+    );
+    $cfa_button = $this->getCfaButton();
+    if (in_array($this->getLayout(), $layout_types) && (!$this->getDisplayHeaderRight() || empty($cfa_button))) {
+      $this->resetAttributes('header-left', 'class');
+      $this->setAttributes('header-left', 'col-sm-5 col-md-4');
+    }
+    return <<<EOHTML
+      <div{$this->getAttributes('header-left')}>
+        {$this->getLogo('default', TRUE)}
       </div>
 EOHTML;
   }
