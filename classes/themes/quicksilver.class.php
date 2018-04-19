@@ -37,8 +37,8 @@ class Quicksilver extends solstice {
     $this->setAttributes('breadcrumbs', 'breadcrumbs-default-margin');
     $this->setAlternateLayout();
     $this->removeAttributes('img_logo_default', 'img-responsive', 'class');
-    $this->setAttributes('img_logo_default', '140', 'width');
-    $this->setAttributes('img_logo_mobile', '140', 'width');
+    $this->setAttributes('img_logo_default', '160', 'width');
+    $this->setAttributes('img_logo_mobile', '160', 'width');
 
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
