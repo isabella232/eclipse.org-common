@@ -166,7 +166,7 @@ class App {
    *
    * @var string
    */
-  private $OGImage = "https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-200x200.png";
+  private $OGImage = "https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-foundation-200x200.png";
 
   /**
    * Open Graph Protocol image width

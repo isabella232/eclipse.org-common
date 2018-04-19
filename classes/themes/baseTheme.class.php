@@ -1048,7 +1048,7 @@ EOHTML;
       ));
     }
 
-    $image = 'https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-400x400.png';
+    $image = 'https://www.eclipse.org/eclipse.org-common/themes/solstice/public/images/logo/eclipse-foundation-400x400.png';
 
     // Schema.org markup for Google+
     if (!$this->getMetatagByKey('itemprop:name')) {
