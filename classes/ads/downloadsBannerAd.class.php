@@ -1,14 +1,17 @@
 <?php
-/*******************************************************************************
- * Copyright(c) 2016 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2016, 2018 Eclipse Foundation and others.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Eric Poirier(Eclipse Foundation)
- *******************************************************************************/
+ *   Eric Poirier (Eclipse Foundation) - initial API and implementation
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
 require_once("eclipseAds.class.php");
 
 class DownloadsBannerAd extends EclipseAds {
@@ -22,13 +25,11 @@ class DownloadsBannerAd extends EclipseAds {
 
     if ((time() >= strtotime("2018/02/26") && time() < strtotime("2018/04/05")) || (time() >= strtotime("2018/04/30") && time() < strtotime("2018/05/11"))) {
       $content['body'] ="Register now for FOSS4G NA 2018 ~ St. Louis, Missouri ~ May 14 - 17, 2018";
-      $content['banner_styles'] = "background-color:#1c5476;";
       $campaign = "PROMO_F4G2018_DOWNLOADS_PAGE";
     }
 
     if ((time() >= strtotime("2018/04/16") && time() < strtotime("2018/04/30")) || (time() >= strtotime("2018/05/14") && time() < strtotime("2018/06/13"))) {
       $content['body'] ="Register now for EclipseCon France 2018 ~ Toulouse, France ~ June 13 - 14, 2018";
-      $content['banner_styles'] = "background-color:#cc2028;";
       $campaign = "PROMO_ECF2018_DOWNLOADS_PAGE";
     }
 

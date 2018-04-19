@@ -1,17 +1,19 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2016 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2016, 2018 Eclipse Foundation and others.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Eric Poirier (Eclipse Foundation) - initial API and implementation
- *******************************************************************************/
+ *   Eric Poirier (Eclipse Foundation) - initial API and implementation
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
 ?>
 
-<div class="downloads-bar-ad" style="<?php print $variables['banner_styles']?>">
+<div class="downloads-bar-ad">
   <div class="container">
     <div class="row">
       <div class="col-lg-20 col-md-18 downloads-bar-ad-white-shape">
