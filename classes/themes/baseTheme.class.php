@@ -243,7 +243,7 @@ class BaseTheme {
    */
   function __construct($App = NULL) {
     $this->setApp($App);
-    $image_path = $this->getThemeUrl('solstice') . 'public/images/logo/';
+    $image_path = '//www.eclipse.org' . $this->getThemeUrl('solstice') . 'public/images/logo/';
 
     // Set default images
     $this->setAttributes('img_logo_default', $image_path . 'eclipse-foundation-grey-orange.svg', 'src');
