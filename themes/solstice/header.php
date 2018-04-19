@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="<?php print $this->getPageAuthor(); ?>"/>
     <meta name="keywords" content="<?php print $this->getPageKeywords(); ?>"/>
-    <link rel="shortcut icon" href="<?php print $this->getThemeUrl(); ?>public/images/favicon.ico"/>
+    <link rel="shortcut icon" href="/eclipse.org-common/themes/solstice/public/images/favicon.ico"/>
     <title><?php print $this->getTitle(); ?> | The Eclipse Foundation</title>
     <?php print $this->getExtraHeaders();?>
     <?php print $this->getScriptSettings(); ?>
