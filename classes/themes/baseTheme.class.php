@@ -368,24 +368,51 @@ class BaseTheme {
    * @return string
    */
   public function getShareButtonsHTML() {
-    $display_sharethis = $this->getThemeVariables('sharethis');
-    if ($display_sharethis) {
-      return '<div class="sharethis-inline-share-buttons"></div>';
+    $display_buttons = $this->getThemeVariables('sharethis');
+    $page_title = $this->getPageTitle();
+
+    if (!$display_buttons || empty($page_title)) {
+      return "";
     }
-    return "";
+
+    // Create Twitter button
+    $buttons['twitter'] = '<a class="share-button share-button-twitter" href="#" onclick="
+    window.open(
+      \'https://twitter.com/intent/tweet?text='. $this->getPageTitle() .' - '. $this->App->getCurrentURL() .'\',
+      \'twitter-share-dialog\',
+      \'width=626,height=436\');
+    return false;"><i class="fa fa-twitter"></i></a>';
+
+    // Create Facebook button
+    $buttons['facebook'] = '<a class="share-button share-button-facebook" href="#" onclick="
+    window.open(
+      \'https://www.facebook.com/sharer/sharer.php?u=\'+encodeURIComponent(location.href),
+      \'facebook-share-dialog\',
+      \'width=626,height=436\');
+    return false;"><i class="fa fa-facebook"></i></a>';
+
+    // Create Mail button
+    $buttons['mail'] = '<a class="share-button share-button-mail" href="mailto:?subject=' . str_replace(' ', '%20', $this->getPageTitle()) . '"><i class="fa fa-envelope"></i></a>';
+
+    $html = '<ul class="list-inline margin-bottom-0 text-right">';
+    foreach ($buttons as $button) {
+      $html .= "<li>" . $button . "</li>";
+    }
+    $html .= "</ul>";
+
+    return $html;
+
   }
 
   /**
    * Get the JS of the Share buttons
    * (This should go in the head of the html page)
    *
+   * @deprecated
+   *
    * @return string
    */
   public function getShareButtonsJS() {
-    $display_sharethis = $this->getThemeVariables('sharethis');
-    if ($display_sharethis) {
-      return '<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=58af133aa168200011ff98fe&product=inline-share-buttons"></script>';
-    }
     return "";
   }
 
@@ -652,7 +679,7 @@ EOHTML;
     $sharethis_html = $this->getShareButtonsHTML();
     if (!empty($sharethis_html)) {
       $content_html = '<div class="col-sm-16">' . $breadcrumb_html . '</div>';
-      $content_html .= '<div class="col-sm-8 breadcrumbs-sharethis">' . $sharethis_html . '</div>';
+      $content_html .= '<div class="col-sm-8 padding-top-5">' . $sharethis_html . '</div>';
     }
 
     return <<<EOHTML
@@ -1115,7 +1142,6 @@ EOHTML;
       ));
     }
 
-    $return .= $this->getShareButtonsJS();
     $return .= $this->getMetatagsHTML();
     $return .= $this->extra_headers;
     $return .= $App->ExtraHtmlHeaders;
