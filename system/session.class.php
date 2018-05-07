@@ -12,7 +12,6 @@
  *******************************************************************************/
 require_once(realpath(dirname(__FILE__) . "/../classes/friends/friend.class.php"));
 require_once("app.class.php");
-
 if (!class_exists("EvtLog")) {
   require_once("evt_log.class.php");
 }

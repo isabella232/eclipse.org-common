@@ -16,6 +16,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php print $this->getGoogleTagManager();?>
     <meta name="author" content="<?php print $this->getPageAuthor(); ?>"/>
     <meta name="keywords" content="<?php print $this->getPageKeywords(); ?>"/>
     <link rel="shortcut icon" href="/eclipse.org-common/themes/solstice/public/images/favicon.ico"/>
@@ -24,5 +25,6 @@
     <?php print $this->getScriptSettings(); ?>
   </head>
   <body<?php print $this->getAttributes('body');?>>
+    <?php print $this->getGoogleTagManagerNoScript();?>
     <a class="sr-only" href="#content">Skip to main content</a>
     <?php print $this->getHeaderTop(); ?>

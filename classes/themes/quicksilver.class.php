@@ -63,10 +63,6 @@ class Quicksilver extends solstice {
     $this->setAttributes('img_logo_eclipse_default', $image_path . $default_logo, 'src');
     $this->setAttributes('img_logo_eclipse_white', $image_path . 'eclipse-foundation-white.svg', 'src');
     $this->setAttributes('img_logo_mobile', $image_path . $default_logo, 'src');
-
-    // Default theme js file
-    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/quicksilver.min.js', 'src');
-
   }
 
   /**

@@ -98,13 +98,6 @@ class BaseTheme {
   protected $extra_header_html = "";
 
   /**
-   * Google analytics code
-   *
-   * @var string
-   */
-  protected $ga_code = "";
-
-  /**
    * Page HTML content
    *
    * @var string
@@ -324,6 +317,50 @@ class BaseTheme {
     // Default theme js file
     $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js', 'src');
   }
+
+  /**
+   * Verify if consent was given to use cookies
+   *
+   * @return boolean
+   */
+  public function hasCookieConsent() {
+    if (isset($_COOKIE['eclipse_cookieconsent_status']) && $_COOKIE['eclipse_cookieconsent_status'] === 'allow') {
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get Google Tag Manager
+   *
+   * Insert this code as high in the <head> of the page as possible.
+   *
+   * @return string
+   */
+  public function getGoogleTagManager(){
+    return "<!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5WLCZXC');</script>
+    <!-- End Google Tag Manager -->";
+  }
+
+  /**
+   * Get Google Tag Manager (noscript)
+   *
+   * Insert this code immediately after the opening <body> tag
+   *
+   * @return string
+   */
+  public function getGoogleTagManagerNoScript(){
+    return '<!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5WLCZXC"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->';
+  }
+
 
   /**
    * Set alternate layout
@@ -1042,14 +1079,7 @@ EOHTML;
         break;
     }
 
-    // Bug 451203 - Google Analytics: Universal Analytics Upgrade
-    // As per Google's recommendations, we should put the GA script
-    // at the very beginning of the head tag.
-    $return = $this->getGoogleAnalytics() . PHP_EOL;
-
-    $css = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css"/>';
-
-    $return .= $css . PHP_EOL;
+    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v1.0"/>' . PHP_EOL;
 
     // Add og:metatags if they haven't been set.
     // @todo: deprecated og functions in App().
@@ -1460,42 +1490,21 @@ EOHTML;
    * Get Google Analytics JS code
    *
    * @return string
+   * @deprecated
    */
   public function getGoogleAnalytics() {
-    if (empty($this->ga_code) && !is_null($this->ga_code)) {
-      $this->setGoogleAnalytics();
-    }
-
-    if (is_null($this->ga_code)) {
-      return "";
-    }
-
-    return <<<EOHTML
-      <!-- Google Analytics -->
-        <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-        ga('create', '$this->ga_code', 'auto');
-        ga('send', 'pageview');
-        </script>
-      <!-- End Google Analytics -->
-EOHTML;
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
+    return "";
   }
 
   /**
    * Set google analytics id code
    *
    * @param string $code
+   * @deprecated
    */
   public function setGoogleAnalytics($code = "") {
-    $App = $this->_getApp();
-    if (empty($code)) {
-      $code = $App->getGoogleAnalyticsTrackingCode();
-    }
-    $this->ga_code = $code;
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
   }
 
   /**
@@ -1505,6 +1514,11 @@ EOHTML;
     if (!$this->getDisplayGoogleSearch()) {
       return "";
     }
+
+    if (!$this->hasCookieConsent()) {
+      return '';
+    }
+
     $domain = $this->App->getEclipseDomain();
     return <<<EOHTML
     <div class="row"><div class="col-md-24">
@@ -2060,27 +2074,31 @@ EOHTML;
         'name' => '',
         'last_name' => ''
       );
-      $Session = $this->_getSession();
-      $Friend = $Session->getFriend();
+
       $this->session_variables['create_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/user/register"><i class="fa fa-user fa-fw"></i> Create account</a>';
       $this->session_variables['my_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/user/login/' . $this->_getTakeMeBack() . '"><i class="fa fa-sign-in fa-fw"></i> Log in</a>';
       $this->session_variables['logout'] = '';
 
-      if ($Session->isLoggedIn()) {
-        $this->session_variables['user_ldap_uid'] = $Friend->getUID();
-        $this->session_variables['name'] = $Friend->getFirstName();
-        $this->session_variables['last_name'] = $Friend->getLastName();
-        $this->session_variables['full_name'] = $this->App->checkPlain($this->session_variables['name'] . ' ' . $this->session_variables['last_name']);
-        $this->session_variables['create_account_link'] = 'Welcome, ' . $this->session_variables['full_name'];
-        if (!empty($this->session_variables['user_ldap_uid'])){
-           $this->session_variables['create_account_link'] = '<a href="https://www.eclipse.org/user/' . $this->session_variables['user_ldap_uid'] . '">Welcome, ' . $this->session_variables['full_name'] . '</a>';
+      if ($this->hasCookieConsent()) {
+        $Session = $this->_getSession();
+        $Friend = $Session->getFriend();
+        if ($Session->isLoggedIn()) {
+          $this->session_variables['user_ldap_uid'] = $Friend->getUID();
+          $this->session_variables['name'] = $Friend->getFirstName();
+          $this->session_variables['last_name'] = $Friend->getLastName();
+          $this->session_variables['full_name'] = $this->App->checkPlain($this->session_variables['name'] . ' ' . $this->session_variables['last_name']);
+          $this->session_variables['create_account_link'] = 'Welcome, ' . $this->session_variables['full_name'];
+          if (!empty($this->session_variables['user_ldap_uid'])){
+             $this->session_variables['create_account_link'] = '<a href="https://www.eclipse.org/user/' . $this->session_variables['user_ldap_uid'] . '">Welcome, ' . $this->session_variables['full_name'] . '</a>';
+          }
+          $this->session_variables['my_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/user/edit" class="" data-tab-destination="tab-profile"><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
+          // Adding <li> with logout because we only display
+          // two options if the user is not logged in.
+          $this->session_variables['logout'] = '<li><a href="' . $this->getBaseUrlLogin() . '/user/logout"><i class="fa fa-power-off fa-fw"></i> Log out</a></li>';
         }
-        $this->session_variables['my_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/user/edit" class="" data-tab-destination="tab-profile"><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
-        // Adding <li> with logout because we only display
-        // two options if the user is not logged in.
-        $this->session_variables['logout'] = '<li><a href="' . $this->getBaseUrlLogin() . '/user/logout"><i class="fa fa-power-off fa-fw"></i> Log out</a></li>';
       }
     }
+
     if (!empty($this->session_variables[$id])) {
       return $this->session_variables[$id];
     }
@@ -2095,6 +2113,10 @@ EOHTML;
   public function getSystemMessages() {
     // System messages
     $variables['sys_messages'] = "";
+
+    if (!$this->hasCookieConsent()) {
+       return $variables['sys_messages'];
+    }
     $App = $this->_getApp();
     if ($sys_messages = $App->getSystemMessage()) {
       $main_container_classes = $this->getAttributes('main_container_classes', 'class');
@@ -2290,8 +2312,7 @@ EOHTML;
         break;
 
     }
-
-    return ob_flush();
+    return ob_end_flush();
   }
 
   /**

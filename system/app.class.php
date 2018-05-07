@@ -189,20 +189,6 @@ class App {
    */
   private $doctype = '';
 
-  /**
-   * Google analytics id code
-   *
-   * @var string
-   */
-  private $projectGoogleAnalyticsCode = "";
-
-
-  /**
-   * Twitter script flag
-   *
-   * @var bool
-   */
-  private $twitterScriptInserted = FALSE;
 
   /**
    * Variables to customize solstice
@@ -757,7 +743,6 @@ class App {
    * Sets the headers to prevent caching for the different browsers.
    */
   function preventCaching() {
-    session_start();
     header("Cache-Control: no-store, no-cache, private, must-revalidate, max-age=0, max-stale=0");
     header("Cache-Control: post-check=0, pre-check=0", FALSE);
     header("Pragma: no-cache");
@@ -1724,6 +1709,7 @@ class App {
    * @deprecated
    */
   function setjQueryVersion($version = FALSE) {
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
     return FALSE;
   }
 
@@ -1734,6 +1720,7 @@ class App {
    * @deprecated
    */
   function getjQuery() {
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
     return FALSE;
   }
 
@@ -1741,17 +1728,12 @@ class App {
    * Return The Eclipse Foundation Twitter and Facebook badge
    *
    * @return string
+   *
+   * @deprecated
    */
   function getSocialBadge() {
-    $protocol = $this->getHTTPPrefix();
-    $strn = <<<EOHTML
-    <script type="text/javascript">
-    /* <![CDATA[ */
-    document.write('<div id=\"badge_facebook\"><iframe src=\"$protocol:\/\/www.facebook.com\/plugins\/like.php?href=http:\/\/www.facebook.com\/pages\/Eclipse\/259655700571&amp;layout=button_count&amp;show_faces=false&amp;width=90&amp;action=like\" frameborder=\"0\" scrolling=\"no\"><\/iframe><\/div><div id=\"badge_twitter\"><a href=\"https:\/\/twitter.com\/EclipseFdn\" class=\"twitter-follow-button\" data-show-count=\"false\">Follow @EclipseFdn<\/a><script type=\"text\/javascript\">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"\/\/platform.twitter.com\/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");<\/script><\/div>');
-    /* ]]> */
-    </script>
-EOHTML;
-    return $strn;
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
+    return '';
   }
 
   /**
@@ -1760,13 +1742,7 @@ EOHTML;
    * @param unknown $_twitterhandle
    */
   function getTwitterFollowWidget($_twitterhandle) {
-    $output = '';
-    $output = '<a href="https://twitter.com/' . $_twitterhandle . '" class="twitter-follow-button" data-show-count="false">Follow @' . $_twitterhandle . '</a>';
-    // Only include the script once per page
-    if ($this->twitterScriptInserted == FALSE) {
-      $this->twitterScriptInserted = TRUE;
-      $output .= "<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
-    }
+    $output = '<a href="https://twitter.com/' . $_twitterhandle . '" class="twitter-follow-button btn btn-info btn-sm"><i class="fa fa-twitter"></i> Follow @' . $_twitterhandle . '</a>';
     return $output;
 
   }
@@ -1789,23 +1765,22 @@ EOHTML;
    * from the page.
    *
    * @param string/NULL $gaUniqueID
+   *
+   * @deprecated
    */
   function setGoogleAnalyticsTrackingCode($code = 'UA-910670-2') {
-    if (!is_null($this->projectGoogleAnalyticsCode)) {
-      $this->projectGoogleAnalyticsCode = $code;
-    }
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
   }
 
   /**
    * Get Google Analytics Tracking code
    *
    * @param string/NULL $gaUniqueID
+   * @deprecated
    */
   function getGoogleAnalyticsTrackingCode() {
-    if (empty($this->projectGoogleAnalyticsCode) && !is_null($this->projectGoogleAnalyticsCode)) {
-      $this->setGoogleAnalyticsTrackingCode();
-    }
-    return $this->projectGoogleAnalyticsCode;
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
+    return 'UA-910670-2';
   }
 
   /**
