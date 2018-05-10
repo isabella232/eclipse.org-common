@@ -96,7 +96,7 @@ $Theme->generatePage();
   <?php print htmlentities('<script src="//www.eclipse.org/eclipse.org-common/themes/solstice/public/javascript/vendor/cookieconsent/default.min.js"></script>');?>
   </pre>
 
-  <h3>Validating consent</h3>
+  <h3>Validating Consent</h3>
   <p class="fw-700">If you include widgets from a 3rd party website, you might need to validate consent before you can include it:</p>
     <br/>
   <pre>
