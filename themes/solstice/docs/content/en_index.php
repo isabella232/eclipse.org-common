@@ -60,11 +60,53 @@ $Theme = $App->getThemeClass("quicksilver");
 <p>On a page using the eclipse.org-common $Theme Class, use this to make sure your page is always using the default theme:</p>
 <pre>
 &lt;?php
-
 $Theme->generatePage();
-
 </pre>
 
+<div class="alert alert-warning">
+  <h2 id="gdpr">General Data Protection Regulation (GDPR)</h2>
+
+  <p>The General Data Protection Regulation (GDPR), a new regulation in EU law on data protection and privacy
+  for all individuals within the European Union becomes enforceable on 25 May 2018.</p>
+
+  <h3>Web Analytics Tools</h3>
+  <p>We will not allow committers or project leads to collect user data or track user activity on
+  Eclipse Foundation-owned domains, since that data may be shared with the third-party companies who employ them --
+  an action for which our users have not given explicit consent.</p>
+
+  <p>Using project-specific Web Analytics Tools will be prohibited as of May 24.
+  The Eclipse Foundation has its own Google Analytics code, which is included with the unmodified Quicksilver theme.</p>
+
+  <h3>Google Analytics</h3>
+  <p class="fw-700">Projects who are not using our unmodified Quicksilver theme can still include the Eclipse Foundation Google Analytics code
+  by inserting the following code snippet in the <head> of each page:</p>
+  <br/>
+  <pre>
+  <?php print htmlentities($Theme->getGoogleTagManager());?>
+  </pre>
+
+  <h3>Cookie Consent Banner</h3>
+
+  <p class="fw-700">If you are not using the Eclipse Foundation look and feel, you can still load our
+  cookie consent banner, which include a link to the Eclipse Foundation Private Policy, by adding the following
+  code snippet in the &lt;head&gt; of each page:</p>
+  <br/>
+  <pre>
+  <?php print htmlentities('<link rel="stylesheet" type="text/css" href="//www.eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/vendor/cookieconsent/cookieconsent.min.css" />'). PHP_EOL; ?>
+  <?php print htmlentities('<script src="//www.eclipse.org/eclipse.org-common/themes/solstice/public/javascript/vendor/cookieconsent/default.min.js"></script>');?>
+  </pre>
+
+  <h3>Validating consent</h3>
+  <p class="fw-700">If you include widgets from a 3rd party website, you might need to validate consent before you can include it:</p>
+    <br/>
+  <pre>
+  &lt;?php
+  if ($Theme->hasCookieConsent()) {
+    //Insert widgets from a 3rd party
+  }
+  </pre>
+
+</div>
 <h2 id="starterkit">Starterkit</h2>
 <p>The <a href="/eclipse.org-common/themes/solstice/docs/starterkit/">starterkit</a> includes all the files required to create a <strong>standard page</strong> and also a <strong>Press Release</strong> page with Solstice. The source code is available <a href="http://git.eclipse.org/c/www.eclipse.org/eclipse.org-common.git/tree/themes/solstice/docs/starterkit/">here</a>.</p>
 <p> <p><a href="/eclipse.org-common/themes/solstice/docs/starterkit/solstice-starterkit.zip" class="btn btn-warning">Download Starterkit</a></p></p>

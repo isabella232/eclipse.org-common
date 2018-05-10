@@ -25,6 +25,6 @@
     <?php print $this->getScriptSettings(); ?>
   </head>
   <body<?php print $this->getAttributes('body');?>>
-    <?php print $this->getGoogleTagManagerNoScript();?>
+    <?php //print $this->getGoogleTagManagerNoScript();?>
     <a class="sr-only" href="#content">Skip to main content</a>
     <?php print $this->getHeaderTop(); ?>
