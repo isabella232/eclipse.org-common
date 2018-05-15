@@ -159,20 +159,38 @@ EOHTML;
    * @see BaseTheme::getFooterPrexfix()
    */
   public function getFooterPrexfix() {
+    $main_container_col = "col-sm-24";
+    $promo_html = "";
+
+    include_once ($_SERVER['DOCUMENT_ROOT'] . "/membership/promo/promos.php");
+    if (function_exists('getFoundationPromos') && function_exists('buildStrategicAd')) {
+      $foundation_promo = getFoundationPromos();
+      if (!empty($foundation_promo)) {
+        $main_container_col = "col-sm-10 col-sm-offset-3 margin-bottom-20";
+        $foundation_promo = reset($foundation_promo);
+        $promo_html = '<div class="col-sm-8">' . buildStrategicAd($foundation_promo) . '</div>';
+      }
+    }
+
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
     <div{$this->getAttributes('featured-footer')}>
       <div class="container">
-        <p><i data-feather="mail" stroke-width="1"></i></p>
-        <h2>Sign up to our Newsletter</h2>
-        <p>A fresh new issue delivered monthly</p>
-        <form action="https://www.eclipse.org/donate/process.php" method="post" target="_blank">
-          <div class="form-group">
-            <input type="hidden" name="type" value="newsletter">
-            <input type="email" value="" name="email" class="textfield-underline form-control" id="mce-EMAIL" placeholder="Email">
+        <div class="row">
+          <div class="{$main_container_col}">
+            <p><i data-feather="mail" stroke-width="1"></i></p>
+            <h2>Sign up to our Newsletter</h2>
+            <p>A fresh new issue delivered monthly</p>
+            <form action="https://eclipsecon.us6.list-manage.com/subscribe/post" method="post" target="_blank">
+              <div class="form-group">
+                <input type="hidden" name="u" value="eaf9e1f06f194eadc66788a85">
+                <input type="hidden" name="id" value="46e57eacf1">
+              </div>
+              <input type="submit" value="Subscribe" name="subscribe" class="button btn btn-warning">
+            </form>
           </div>
-          <input type="submit" value="Subscribe" name="subscribe" class="button btn btn-warning">
-        </form>
+          {$promo_html}
+        </div>
       </div>
     </div>
 EOHTML;
