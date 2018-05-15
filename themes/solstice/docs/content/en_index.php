@@ -84,6 +84,13 @@ $Theme->generatePage();
   <pre>
   <?php print htmlentities($Theme->getGoogleTagManager());?>
   </pre>
+  <br/>
+  <p class="fw-700">Projects who are using our unmodified Quicksilver theme can use the following code:</p>
+  <br/>
+  <pre>
+  &lt;?php
+  $Theme->getGoogleTagManager();
+  </pre>
 
   <h3>Cookie Consent Banner</h3>
 
