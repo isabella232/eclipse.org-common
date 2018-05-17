@@ -83,7 +83,7 @@ class EclipseEnv {
     // @todo: allowed_hosts is deprecated
     $server['dev'] = array(
       'shortname' => 'local',
-      'cookie' => '.eclipse.local',
+      'cookie' => '.dev.docker',
       'domain' => 'www.eclipse.php53.dev.docker',
       'dev_domain' => 'dev_eclipse.php53.dev.docker',
       'accounts' => 'accounts.php55.dev.docker',

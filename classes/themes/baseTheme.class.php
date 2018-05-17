@@ -324,10 +324,7 @@ class BaseTheme {
    * @return boolean
    */
   public function hasCookieConsent() {
-    if (isset($_COOKIE['eclipse_cookieconsent_status']) && $_COOKIE['eclipse_cookieconsent_status'] === 'allow') {
-      return TRUE;
-    }
-    return FALSE;
+    return $this->App->hasCookieConsent();
   }
 
   /**

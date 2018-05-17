@@ -28,8 +28,6 @@ class Session {
 
   private $updated_at = "";
 
-  private $is_persistent = 0;
-
   private $Friend = NULL;
 
   private $data = "";
@@ -52,8 +50,7 @@ class Session {
   public function __construct($persistent=0, $configs = array()) {
    $this->App = new App();
    $domain = $this->App->getEclipseDomain();
-
-    $default = array(
+   $default = array(
       'domain' => $domain['cookie'] ,
       'session_name' => 'ECLIPSESESSION',
       'env' => 'ECLIPSE_ENV',
@@ -70,7 +67,6 @@ class Session {
     }
 
     $this->validate();
-    $this->setIsPersistent($persistent);
   }
 
   function getGID() {
@@ -101,7 +97,10 @@ class Session {
   }
 
   function getIsPersistent() {
-    return $this->is_persistent == NULL ? 0 : $this->is_persistent;
+    if ($this->hasCookieConsent()) {
+      return 1;
+    }
+    return 0;
   }
 
   function getLoginPageURL() {
@@ -111,6 +110,17 @@ class Session {
   function getIsLoggedIn() {
     return $this->getGID() !== "";
   }
+
+  /**
+   * Verify if consent was given to use cookies
+   *
+   * @return boolean
+   */
+  public function hasCookieConsent() {
+    $App = new App();
+    return $App->hasCookieConsent();
+  }
+
 
   function setGID($_gid) {
     $this->gid = $_gid;
@@ -138,8 +148,13 @@ class Session {
     $this->data = serialize($_data);
   }
 
+  /**
+   * Set is_persistent
+   *
+   * @deprecated
+   */
   function setIsPersistent($_is_persistent) {
-    $this->is_persistent = $_is_persistent;
+    trigger_error("Deprecated function called.", E_USER_NOTICE);
   }
 
   /**
@@ -150,13 +165,7 @@ class Session {
   function validate() {
     $cookie = (isset($_COOKIE[$this->session_name]) ? $_COOKIE[$this->session_name] : "");
     $rValue = FALSE;
-    if ((!$this->load($cookie))) {
-      # Failed - no such session, or session no match.  Need to relogin
-      # Bug 257675
-      # setcookie($this->session_name, "", time() - 3600, "/", $this->domain);
-      $rValue = FALSE;
-    }
-    else {
+    if ($this->load($cookie)) {
       # TODO: update session?
       $rValue = TRUE;
       $this->maintenance();
@@ -181,8 +190,8 @@ class Session {
     # Should these also be in session() ?
     setcookie("TAKEMEBACK", "", 0, "/", ".eclipse.org");
     setcookie("fud_session_2015", "", 0, "/forums/", ".eclipse.org");
-    setcookie($this->session_name, "", time() - 3600, "/", $this->domain, 1, TRUE);
-    setcookie($this->env, "", time() - 3600, "/", $this->domain, 0, TRUE);
+    setcookie($this->session_name, "", 0, "/", $this->domain, 1, TRUE);
+    setcookie($this->env, "", 0, "/", $this->domain, 0, TRUE);
 
     if (!$App->devmode) {
       # Log this event
@@ -250,25 +259,37 @@ class Session {
           fclose($fh);
         }
       }
-
-      $cookie_time = 0;
-      if ($this->getIsPersistent()) {
-        $cookie_time = time()+3600*24*365;
-      }
-
-      setcookie($this->session_name, $this->getGID(), $cookie_time, "/", $this->domain, 1, TRUE);
-
-      # 422767 Session broken between http and https
-      # Set to "S" for Secure.  We could eventually append more environment data, separated by semicolons and such
-      setcookie($this->env, "S", $cookie_time, "/", $this->domain, 0, TRUE);
-
+      $this->setEclipseSessionCookies();
     }
+  }
+
+  /**
+   * Set Eclipse Session Cookies
+   *
+   * @return boolean
+   */
+  public function setEclipseSessionCookies(){
+    $gid = $this->getGID();
+    if (empty($gid)) {
+      return FALSE;
+    }
+
+    $cookie_time = 0;
+    if ($this->getIsPersistent()) {
+      $cookie_time = time()+3600*24*7;
+    }
+
+    setcookie($this->session_name, $this->getGID(), $cookie_time, "/", $this->domain, 1, TRUE);
+    # 422767 Session broken between http and https
+    # Set to "S" for Secure.  We could eventually append more environment data, separated by semicolons and such
+    setcookie($this->env, "S", $cookie_time, "/", $this->domain, 0, TRUE);
+    return TRUE;
   }
 
   function load($_gid) {
     # need to have a bugzilla ID to log in
     $rValue = FALSE;
-    if ($_gid != "") {
+    if (!empty($_gid)) {
       $App = new App();
       $sql = "SELECT /* USE MASTER */ gid, bugzilla_id, subnet, updated_at, data,  is_persistent
         FROM sessions
@@ -284,11 +305,11 @@ class Session {
         $this->setSubnet($myrow['subnet']);
         $this->setUpdatedAt($myrow['updated_at']);
         $this->data = $myrow['data'];
-        $this->setIsPersistent($myrow['is_persistent']);
 
         # touch this session
-        $sql = "UPDATE sessions SET updated_at = NOW() WHERE gid = '" . $App->sqlSanitize($_gid, NULL) . "'";
+        $sql = "UPDATE sessions SET updated_at = NOW(), is_persistent = '" . $App->sqlSanitize($this->getIsPersistent(), NULL) . "' WHERE gid = '" . $App->sqlSanitize($_gid, NULL) . "'";
         $App->eclipse_sql($sql);
+        $this->setEclipseSessionCookies();
       }
     }
     return $rValue;
@@ -297,9 +318,9 @@ class Session {
   function maintenance() {
     $App = new App();
 
-    $sql = "DELETE FROM sessions
-      WHERE (updated_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND is_persistent = 0)
-      OR updated_at < DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+    // Sessions are re-generated by visiting accounts.eclipse.org
+    //
+    $sql = "DELETE FROM sessions WHERE updated_at < DATE_SUB(NOW(), INTERVAL 8 DAY)";
 
     $App->eclipse_sql($sql);
 
