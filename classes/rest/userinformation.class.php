@@ -36,7 +36,7 @@ class UserInformation extends EclipseUSSBlob {
     if (empty($identifier)) {
       return array();
     }
-    $response = $this->get("account/profile/" . $identifier);
+    $response = $this->get("foundation/profile/" . $identifier);
     $this->unsetHeader('If-Match');
     return $response;
   }
@@ -54,7 +54,7 @@ class UserInformation extends EclipseUSSBlob {
     }
 
     $query = http_build_query(array('mail' => $identifier));
-    $response = $this->get("account/profile/?" . $query);
+    $response = $this->get("foundation/profile/?" . $query);
     $this->unsetHeader('If-Match');
     return $response;
   }
@@ -72,7 +72,7 @@ class UserInformation extends EclipseUSSBlob {
     }
 
     $query = http_build_query(array('uid' => $identifier));
-    $response = $this->get("account/profile/?" . $query);
+    $response = $this->get("foundation/profile/?" . $query);
     $this->unsetHeader('If-Match');
     return $response;
   }
@@ -88,7 +88,7 @@ class UserInformation extends EclipseUSSBlob {
     if (empty($identifier)) {
       return array();
     }
-    $response = $this->get('account/profile/' . $identifier. '/projects');
+    $response = $this->get('foundation/profile/' . $identifier. '/projects');
     $this->unsetHeader('If-Match');
     return $response;
   }

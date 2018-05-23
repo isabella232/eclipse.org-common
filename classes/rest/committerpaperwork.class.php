@@ -42,7 +42,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param array $data
    */
   public function createCommitterPaperwork($username = NULL, $data = array()) {
-    return $this->post('committer/paperwork/' . $username, json_encode($data));
+    return $this->post('foundation/paperwork/' . $username, json_encode($data));
   }
 
   /**
@@ -52,7 +52,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param unknown $id
    */
   public function deleteCommitterPaperwork($username = "", $id = "", $etag = "") {
-    $response = $this->delete('committer/paperwork/' . $username . '/' . $id);
+    $response = $this->delete('foundation/paperwork/' . $username . '/' . $id);
     $this->unsetHeader('If-Match');
     return $response;
   }
@@ -71,7 +71,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
       ));
     }
 
-    $response = $this->get('committer/paperwork/' . $username . '/' . $id);
+    $response = $this->get('foundation/paperwork/' . $username . '/' . $id);
     if (isset($response->code) && $response->code == 200) {
       $data = json_decode($response->body);
       $this->data[$data->id] = $data;
@@ -94,7 +94,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
       'If-Match' => '"' . $etag . '"',
     ));
 
-    $response = $this->put('committer/paperwork/' . $username . '/' . $id, json_encode($data));
+    $response = $this->put('foundation/paperwork/' . $username . '/' . $id, json_encode($data));
     $this->unsetHeader('If-Match');
     return $response;
   }
@@ -109,7 +109,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
    */
   public function indexCommitterPaperwork($username = NULL, $params = array()) {
 
-    $url = 'committer/paperwork';
+    $url = 'foundation/paperwork';
     if (!is_null($username) && is_string($username)) {
       $url .= '/' . $username;
     }
@@ -148,7 +148,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param int $id
    */
   public function targetedActionStartProvisioning($username = NULL, $id = "", $body = array()) {
-    return $this->post('committer/paperwork/' . $username . '/provisioning/' . $id, json_encode($body));
+    return $this->post('foundation/paperwork/' . $username . '/provisioning/' . $id, json_encode($body));
   }
 
   /**
@@ -158,7 +158,7 @@ class CommitterPaperwork extends EclipseUSSBlob {
    * @param int $id
    */
   public function targetedActionRetireCommitter($username = NULL, $body = array()) {
-    return $this->post('committer/paperwork/' . $username . '/retire', json_encode($body));
+    return $this->post('foundation/paperwork/' . $username . '/retire', json_encode($body));
   }
 
   /**
