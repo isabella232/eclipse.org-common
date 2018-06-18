@@ -237,8 +237,10 @@ colors, font-weight &amp; font size and offsets to remove the margin after the b
 <?php include('components/step-by-step.php');?><hr/>
 <?php include('components/timeline.php');?><hr/>
 <?php include('components/toolbar-menu.php');?><hr/>
+<?php include('components/eclipsefdn-videos.php');?><hr/>
 
 <h2 id="bootstrap">Bootstrap example</h2>
 <?php include('bootstrap/carousel.php');?><hr/>
+
 
 
