@@ -1869,6 +1869,11 @@ EOHTML;
       'caption' => 'IRC'
     );
 
+    $variables['Participate'][] = array(
+      'url' => 'https://www.eclipse.org/org/research/',
+      'caption' => 'Research'
+    );
+
     $variables['Eclipse IDE'][] = array(
       'url' => $base_url . 'downloads',
       'caption' => 'Download'
