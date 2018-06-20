@@ -1080,6 +1080,13 @@ EOHTML;
 
     // Add og:metatags if they haven't been set.
     // @todo: deprecated og functions in App().
+    if (!$this->getMetatagByKey('description')) {
+      $this->setMetatags('description', array(
+        'name' => 'description',
+        'content' => $this->getMetaDescription(),
+      ));
+    }
+
     if (!$this->getMetatagByKey('og:description')) {
       $this->setMetatags('og:description', array(
         'property' => 'og:description',
