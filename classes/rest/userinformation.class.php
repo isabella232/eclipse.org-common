@@ -92,4 +92,19 @@ class UserInformation extends EclipseUSSBlob {
     $this->unsetHeader('If-Match');
     return $response;
   }
+
+  /**
+   * Trigger an user deletion process
+   *
+   * @param string $identifier
+   *
+   * @return array|Response
+   */
+  public function targetedActionDeleteUser($identifier){
+    if (empty($identifier)) {
+      return array();
+    }
+    $response = $this->post('account/profile/' . $identifier. '/user_delete_request');
+    return $response;
+  }
 }
