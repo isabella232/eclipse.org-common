@@ -41,6 +41,14 @@ mix.scripts([
   'public/javascript/vendor/cookieconsent/default.min.js'
 );
 
+// Copy eclipsefdn videos file
+mix.less('node_modules/eclipsefdn-solstice-assets/less/_components/eclipsefdn-video.less', 'public/stylesheets/eclipsefdn-video.min.css');
+mix.scripts([
+  'node_modules/eclipsefdn-solstice-assets/js/eclipsefdn.videos.js'
+], 
+'public/javascript/eclipsefdn.videos.min.js'
+);
+
 // JavaScript
 mix.scripts([
     'node_modules/jquery/dist/jquery.min.js',

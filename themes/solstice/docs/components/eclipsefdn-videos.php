@@ -13,17 +13,17 @@
  */
 ?>
 
-<h2>EclipseFdn Videos</h2>
+<h2 id="embedding-youtube-videos">Embedding Youtube videos</h2>
 
             <div class="row">
               <div class="col-sm-12">
-                <h3>What is the EclipseFdn Videos plugin?</h3>
+                <h3>What is the Embedding Youtube videos plugin?</h3>
                 <p>By inserting an <code>&lt;a&gt;</code> tag containing a video link in your HTML page,
                 the EclipseFdn Videos plugin will convert that tag into the iframe video if the user
                 agreed to use cookies.</p>
                 <p><strong>Note:</strong> This plugin only supports Youtube videos for now.</p>
                 <h3>Usage</h3>
-                <p><strong>HTML</strong></p>
+                <p><strong>With Solstice</strong></p>
                 <pre>&lt;a class="eclipsefdn-video" href="https://www.youtube.com/watch?v=cnSMhgKApOg"&gt;&lt;/a&gt;
 
 &lt;!--
@@ -45,6 +45,11 @@
     }
   });
 &lt;/script&gt;
+</pre>
+                <p><strong>Without Solstice</strong></p>
+                <p>If you are not using the Eclipse Foundation look and feel, you can still load our Embedding Youtube videos plugin by adding the following code snippet in the &lt;head&gt; of each page:</p>
+                <pre>&lt;script src="//www.eclipse.org/eclipse.org-common/themes/solstice/public/javascript/vendor/eclipsefdnvideos/eclipsefdn.videos.min.js"&gt;&lt;/script&gt;
+&lt;link href="//www.eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/eclipsefdn-video.min.css" rel="stylesheet" type="text/css"&gt;
 </pre>
                 <p><strong>Parameters</strong></p>
                 <table class="table table-bordered">
