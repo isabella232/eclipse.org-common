@@ -42,6 +42,7 @@ class Quicksilver extends solstice {
 
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
+    $this->setAttributes('featured-footer', "background-image:url('https://www.eclipse.org/photon/public/images/photon-home-bg.jpg');",'style');
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
@@ -175,19 +176,15 @@ EOHTML;
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
     <div{$this->getAttributes('featured-footer')}>
-      <div class="container">
+      <div class="container featured-photon">
         <div class="row">
           <div class="{$main_container_col}">
-            <p><i data-feather="mail" stroke-width="1"></i></p>
-            <h2>Sign up to our Newsletter</h2>
-            <p>A fresh new issue delivered monthly</p>
-            <form action="https://eclipsecon.us6.list-manage.com/subscribe/post" method="post" target="_blank">
-              <div class="form-group">
-                <input type="hidden" name="u" value="eaf9e1f06f194eadc66788a85">
-                <input type="hidden" name="id" value="46e57eacf1">
-              </div>
-              <input type="submit" value="Subscribe" name="subscribe" class="button btn btn-warning">
-            </form>
+            <p>Now available</p>
+            <h2>
+              <span style="font-weight:bold;">ECLIPSE</span><br>
+              <span style="font-size:70px;font-weight:bold;color:#cda034;">PHOTON</span>
+            </h2>
+            <p><a class="btn btn-primary" href="https://www.eclipse.org/photon">Learn More</a></p>
           </div>
           {$promo_html}
         </div>

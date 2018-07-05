@@ -481,6 +481,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       'width',
       'src',
       'title',
+      'style'
     );
 
     // If type is null, we shall return the string with both class and id.
@@ -542,6 +543,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       'width',
       'src',
       'title',
+      'style'
     );
 
     $type = strtolower($type);
