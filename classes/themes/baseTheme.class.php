@@ -2089,32 +2089,41 @@ EOHTML;
    */
   public function getSessionVariables($id = "") {
     if (empty($this->session_variables)) {
-      $this->session_variables['session'] = array(
-        'Friend' => NULL,
-        'name' => '',
-        'last_name' => ''
+      // Define the default toolbar links
+      $toolbar_links = array(
+        'user_login' => '<li><a class="toolbar-link" href="' . $this->getBaseUrlLogin() . '/user/login/' . $this->_getTakeMeBack() . '"><i class="fa fa-sign-in"></i> Log in</a></li>',
+        'manage_cookies' => '<a class="toolbar-link toolbar-manage-cookies dropdown-toggle"><i class="fa fa-wrench"></i> Manage Cookies</a>',
+        'dropdown' => '',
+        'logout' => ''
       );
 
-      $this->session_variables['create_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/user/register"><i class="fa fa-user fa-fw"></i> Create account</a>';
-      $this->session_variables['my_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/user/login/' . $this->_getTakeMeBack() . '"><i class="fa fa-sign-in fa-fw"></i> Log in</a>';
-      $this->session_variables['logout'] = '';
+      // Add the default toolbar links to the session variables
+      $this->session_variables = $toolbar_links;
 
       if ($this->hasCookieConsent()) {
+
+        // Get the user session and reset the session_variables
         $Session = $this->_getSession();
+
+        // Add the toolbar links back to the session variables
+        $this->session_variables = $toolbar_links;
+
+        // Get friends
         $Friend = $Session->getFriend();
+
         if ($Session->isLoggedIn()) {
-          $this->session_variables['user_ldap_uid'] = $Friend->getUID();
-          $this->session_variables['name'] = $Friend->getFirstName();
-          $this->session_variables['last_name'] = $Friend->getLastName();
-          $this->session_variables['full_name'] = $this->App->checkPlain($this->session_variables['name'] . ' ' . $this->session_variables['last_name']);
-          $this->session_variables['create_account_link'] = 'Welcome, ' . $this->session_variables['full_name'];
-          if (!empty($this->session_variables['user_ldap_uid'])){
-             $this->session_variables['create_account_link'] = '<a href="https://www.eclipse.org/user/' . $this->session_variables['user_ldap_uid'] . '">Welcome, ' . $this->session_variables['full_name'] . '</a>';
+          $this->session_variables['user_login'] = "";
+          $user_name = 'Anonymous';
+          if (!$first_name = $Friend->getFirstName() && !$last_name = $Friend->getLastName()) {
+            $user_name = $Friend->getFirstName() . ' ' . $Friend->getLastName();
           }
-          $this->session_variables['my_account_link'] = '<a href="' . $this->getBaseUrlLogin() . '/user/edit" class="" data-tab-destination="tab-profile"><i class="fa fa-edit fa-fw"></i> Edit my account</a>';
+          $this->session_variables['dropdown'] = 'Welcome, ' . $user_name;
+          $this->session_variables['manage_account'] = '<a href="https://www.eclipse.org/user/' . $Friend->getUID() . '"><i class="fa fa-user"></i> View Profile</a>';
+          $this->session_variables['view_account'] = '<a href="' . $this->getBaseUrlLogin() . '/user/edit" class="" data-tab-destination="tab-profile"><i class="fa fa-edit"></i> Edit Profile</a>';
+          $this->session_variables['manage_cookies'] = '<a class="toolbar-manage-cookies dropdown-toggle"><i class="fa fa-wrench"></i> Manage Cookies</a>';
           // Adding <li> with logout because we only display
           // two options if the user is not logged in.
-          $this->session_variables['logout'] = '<li><a href="' . $this->getBaseUrlLogin() . '/user/logout"><i class="fa fa-power-off fa-fw"></i> Log out</a></li>';
+          $this->session_variables['logout'] = '<li class="divider"></li><li><a href="' . $this->getBaseUrlLogin() . '/user/logout"><i class="fa fa-sign-out"></i> Log out</a></li>';
         }
       }
     }
@@ -2438,16 +2447,30 @@ EOHTML;
     if (!$this->getDisplayToolbar()) {
       return "";
     }
+
+    $more_links = '<li>'. $this->getSessionVariables('manage_cookies') .'</li>';
+    $dropdown = $this->getSessionVariables('dropdown');
+    if (!empty($dropdown)) {
+      $more_links = '<li class="dropdown">
+                <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'. $this->getSessionVariables('dropdown') .' <span class="caret"></span></a>
+                <ul class="dropdown-menu toolbar-dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li>'. $this->getSessionVariables('manage_account') .'</li>
+                  <li>'. $this->getSessionVariables('view_account') .'</li>
+                  <li class="divider"></li>
+                  <li>'. $this->getSessionVariables('manage_cookies') .'</li>
+                  '.$this->getSessionVariables('logout').'
+                </ul>
+              </li>';
+    }
+
     return <<<EOHTML
     <div{$this->getAttributes("toolbar-container-wrapper")}>
       <div{$this->getAttributes("toolbar-container")}>
         <div{$this->getAttributes("toolbar-row")}>
           <div{$this->getAttributes("toolbar-user-links")}>
             <ul class="list-inline">
-              <li>{$this->getSessionVariables('create_account_link')}</li>
-              <li>{$this->getSessionVariables('my_account_link')}</li>
-              {$this->getSessionVariables('logout')}
-            </ul>
+              {$this->getSessionVariables('user_login')}
+              {$more_links}
           </div>
           {$this->getToolbarLeftContent()}
         </div>
