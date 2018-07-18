@@ -1921,7 +1921,7 @@ EOHTML;
    *
    * @return string
    */
-  protected function _getMenuSuffix(){
+  public function getMenuSuffix(){
     return "";
   }
 

@@ -125,7 +125,7 @@ EOHTML;
    *
    * @return string
    */
-  protected function _getMenuSuffix(){
+  public function getMenuSuffix(){
     $suffix_items = array();
 
     $google_search = $this->getGoogleSearch();
