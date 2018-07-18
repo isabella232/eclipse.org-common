@@ -1917,6 +1917,15 @@ EOHTML;
   }
 
   /**
+   * Get Menu Prefix
+   *
+   * @return string
+   */
+  public function getMainMenuPrefix() {
+    return "";
+  }
+
+  /**
    * Get Menu Suffix
    *
    * @return string

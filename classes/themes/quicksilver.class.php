@@ -28,11 +28,9 @@ class Quicksilver extends solstice {
     $this->resetAttributes('main-sidebar');
 
     $this->setAttributes('header-left', 'col-sm-5 col-md-4');
-    $this->setAttributes('main-menu-wrapper', 'col-sm-15 col-md-15 reset margin-top-10');
+    $this->setAttributes('main-menu-wrapper', 'col-sm-19 col-md-20 margin-top-10');
     $this->setAttributes('main-menu-wrapper-no-header-right', 'col-sm-24 col-md-19 reset margin-top-10');
-    $this->setAttributes('header-right', 'col-sm-4 col-md-5 text-right hidden-print hidden-xs pull-right margin-top-10');
 
-    $this->setAttributes('navbar-main-menu', 'float-right');
     $this->removeAttributes('main', 'no-promo');
     $this->setAttributes('breadcrumbs', 'breadcrumbs-default-margin');
     $this->setAlternateLayout();
@@ -46,6 +44,10 @@ class Quicksilver extends solstice {
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
+
+    $this->setAttributes('btn-call-for-action', 'float-right hidden-xs');
+    $this->setAttributes('main-menu', 'float-sm-right');
+    $this->removeAttributes('navbar-main-menu', 'reset');
   }
 
   public function setAlternateLayout($enable = FALSE) {
@@ -72,26 +74,10 @@ class Quicksilver extends solstice {
    * Hide headerRight div if empty
    *
    * {@inheritDoc}
-   * @see BaseTheme::_getHeaderRight()
+   * @see BaseTheme::getHeaderRight()
    */
   public function getHeaderRight(){
-    $cfa_button = $this->getCfaButton();
-    if (!$this->getDisplayHeaderRight() || empty($cfa_button)) {
-      $this->setDisplayHeaderRight(FALSE);
-      $this->resetAttributes('main-menu-wrapper');
-      $this->setAttributes('main-menu-wrapper', 'col-sm-19 col-md-20 reset');
-
-      if (strtolower($this->getLayout()) !== 'barebone') {
-        $this->setAttributes('main-menu-wrapper', 'margin-top-10');
-      }
-      return "";
-    }
-
-   return <<<EOHTML
-      <div{$this->getAttributes('header-right')}>
-        {$this->getCfaButton()}
-      </div>
-EOHTML;
+   return "";
   }
 
   /**
@@ -118,6 +104,15 @@ EOHTML;
         {$this->getLogo('default', TRUE)}
       </div>
 EOHTML;
+  }
+
+  /**
+   * Get Menu Prefix
+   *
+   * @return string
+   */
+  public function getMainMenuPrefix() {
+    return $this->getCfaButton();
   }
 
   /**

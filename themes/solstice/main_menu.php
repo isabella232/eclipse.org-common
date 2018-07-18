@@ -11,6 +11,9 @@
  *******************************************************************************/
 ?>
 <div<?php print $this->getAttributes('main-menu-wrapper');?>>
+  <?php if ($this->getMainMenuPrefix()):?>
+    <?php print $this->getMainMenuPrefix(); ?>
+  <?php endif; ?>
   <div<?php print $this->getAttributes('main-menu');?>>
     <div<?php print $this->getAttributes('navbar-main-menu');?>>
       <ul<?php print $this->getAttributes('main-menu-ul-navbar');?>>
