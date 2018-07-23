@@ -1,16 +1,19 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2014, 2016 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2018 Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Eric Poirier (Eclipse Foundation) - Initial implementation
- *******************************************************************************/
-?>
+ *   Eric Poirier (Eclipse Foundation) - initial API and implementation
+ *   Christopher Guindon (Eclipse Foundation)
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
 
+?>
 <!-- RUNTIMES PLATFORM -->
 <div id="<?php print strtolower(str_replace(" ", "-", $category['title'])); ?>" class="downloads-section">
   <div class="container">
@@ -20,7 +23,9 @@
       <?php if ($key == 'tool_platforms') :?>
         <!-- Installer -->
         <div class="col-md-10th col-sm-24">
-          <?php print $this->Installer->output('64bit'); ?>
+          <div class="downloads-installer">
+            <?php print $this->Installer->output('64bit'); ?>
+          </div>
         </div>
       <?php endif;?>
 

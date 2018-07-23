@@ -1,20 +1,22 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2015, 2016 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2018 Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
- *    Eric Poirier (Eclipse Foundation)
- *******************************************************************************/
+ *   Christopher Guindon (Eclipse Foundation)  - initial API and implementation
+ *   Eric Poirier (Eclipse Foundation)
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
 
 //if name of the file requested is the same as the current file, the script will exit directly.
 if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 
-require_once(dirname(__FILE__) . "/../../system/eclipseenv.class.php");
+require_once(realpath(dirname(__FILE__) . "/../../system/eclipseenv.class.php"));
 
 class EclipseInstaller extends EclipseEnv {
 
@@ -28,24 +30,33 @@ class EclipseInstaller extends EclipseEnv {
 
   private $download_links = array();
 
+  private $allow_toggle = TRUE;
+
   /**
    * Constructor
    */
-  function __construct($release = NULL) {
+  function __construct($release = 'latest') {
     parent::__construct();
     $this->_addPlaform('Mac OS X');
     $this->_addPlaform('Windows');
     $this->_addPlaform('Linux');
 
-    if (!is_null($release)) {
-      // Let's load the json feed to get the links for this release.
-      $this->_loadJson($release);
+    // Let's load the json feed to get the links for this release.
+    $this->_loadJson($release);
+    // Build the array containing all the download links
+    $this->setDownloadLinks();
 
-      // Build the array containing all the download links
-      $this->setDownloadLinks();
+  }
+
+  public function setAllowToggle($bool = TRUE) {
+    if (is_bool($bool)) {
+      $this->allow_toggle = $bool;
     }
   }
 
+  public function getAllowToggle() {
+    return $this->allow_toggle;
+  }
   /**
    * Add a link to the Eclipse Installer
    *
@@ -87,17 +98,16 @@ class EclipseInstaller extends EclipseEnv {
     if (!empty($os)) {
       $os_client = $os;
     }
-
     $installer_links = $this->getInstallerArray($version, $os_client);
-
     if (!empty($layout)) {
       switch ($layout) {
         case 'layout_a':
-          $tpl = "view/eclipseInstallerLayoutA.php";
+          $tpl = "views/view.installer-a.php";
           break;
         case 'layout_b':
           $download_count = $this->total_download_count;
-          $tpl = "view/eclipseInstallerLayoutB.php";
+           $installer_links = $this->getInstallerArray();
+          $tpl = "views/view.installer-b.php";
           break;
       }
       ob_start();
@@ -191,6 +201,19 @@ class EclipseInstaller extends EclipseEnv {
         }
     }
     return $links;
+  }
+
+  public function getInstallerInstructions(){
+    $class = 'collapse';
+    if (!$this->getAllowToggle()) {
+      $class .= ' in';
+    }
+    $html = '<div id="collapseEinstaller1">';
+    $html .= '<div class="' . $class . '" id="collapseEinstaller">';
+    $html .= '<div class="well">';
+    ob_start();
+    include('views/view.installer-instructions.php');
+    return $html . ob_get_clean() . '</div></div></div>';
   }
 
   /**
@@ -334,21 +357,28 @@ class EclipseInstaller extends EclipseEnv {
 
   /**
    * Load jSON data from file.
+   *
    * @param unknown $release
    */
   private function _loadJson($release) {
     $url = '/home/data/httpd/writable/community/eclipse_installer.json';
-    $json_data =  json_decode(file_get_contents($url), TRUE);
+    $json_data = json_decode(file_get_contents($url), TRUE);
+    $installer = array();
     foreach ($json_data as $data) {
-      if (strtolower($data['release_title']) == strtolower($release)) {
-        $this->json_data = $data;
-        $this->_addLinksFromJson();
-        if (!empty($this->json_data['total_download_count'])) {
-          $this->total_download_count = $this->json_data['total_download_count'];
-        }
+      if ((strtolower($data['release_title']) == strtolower($release)) || ($release === 'latest' && $data['latest_release'] === TRUE)) {
+        $installer = $data;
         break;
       }
     }
+    if (empty($installer) && !empty($json_data[0])) {
+      $installer = $json_data[0];
+    }
+    if (!empty($installer)) {
+      $this->json_data = $installer;
+      $this->_addLinksFromJson();
+      if (!empty($this->json_data['total_download_count'])) {
+        $this->total_download_count = $this->json_data['total_download_count'];
+      }
+    }
   }
-
 }

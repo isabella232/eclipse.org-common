@@ -1,21 +1,26 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2015,2016 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2018 Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Eric Poirier (Eclipse Foundation) - Initial implementation
- *    Christopher Guindon (Eclipse Foundation)
- *******************************************************************************/
+ *   Christopher Guindon (Eclipse Foundation)  - initial API and implementation
+ *   Eric Poirier (Eclipse Foundation)
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
 ?>
-<p class="float-right padding-top-25">
-  <a class="btn btn-warning btn-sm" data-target="#collapseEinstaller" class="solstice-collapse orange" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseEinstaller">
-    <i class="fa fa-times"></i> Hide
-  </a>
-</p>
+
+<?php if ($this->getAllowToggle()) :?>
+  <p class="float-right padding-top-25">
+    <a class="btn btn-warning btn-sm" data-target="#collapseEinstaller" class="solstice-collapse orange" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseEinstaller">
+      <i class="fa fa-times"></i> Hide
+    </a>
+  </p>
+<?php endif;?>
 <h1>5 Steps to Install Eclipse</h1>
 
 <p class="lead">
@@ -23,7 +28,7 @@ We've recently introduced the Eclipse Installer, a new and more efficient way
 to install Eclipse. It is a proper installer (no zip files), with a
 self-extracting download that leads you through the installation process. For
 those who prefer not to use the Installer, the packages and zip files are still
-available on our <a href="/downloads/eclipse-packages/">package download</a> page.</p>
+available on our <a href="/downloads/packages/">package download</a> page.</p>
 <hr>
 <h2>1. Download the Eclipse Installer</h2>
 <?php if (!empty($platforms)) :?>
@@ -39,7 +44,7 @@ available on our <a href="/downloads/eclipse-packages/">package download</a> pag
   <?php endforeach;?>
   </div>
 <?php else:?>
-  <p>Download Eclipse Installer from <a href="/downloads">http://www.eclipse.org/downloads</a></p>
+  <p>Download Eclipse Installer from <a href="//eclipse.org/downloads">http://www.eclipse.org/downloads</a></p>
 <?php endif;?>
 <!--
 <img class="img-responsive" src="assets/public/images/installer-instructions-01.png" alt="Screenshot of Eclipse Installer's web page.">
@@ -71,8 +76,10 @@ You can search for the package you want to install or scroll through the list.</
 <p>Once the installation is complete you can now launch Eclipse.
 The Eclipse Installer has done it's work. Happy coding.</p>
 <img class="img-responsive" src="/downloads/assets/public/images/installer-instructions-05.png" alt="Screenshot of the Launch window.">
+<?php if ($this->getAllowToggle()) :?>
 <p class="text-right padding-top-25">
   <a class="btn btn-warning btn-sm" data-target="#collapseEinstaller" class="solstice-collapse orange" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseEinstaller">
     <i class="fa fa-times"></i> Hide
   </a>
 </p>
+<?php endif;?>

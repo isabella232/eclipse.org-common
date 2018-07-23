@@ -1,23 +1,26 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2016 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2018 Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Eric Poirier (Eclipse Foundation) - initial API and implementation
- *******************************************************************************/
+ * Eric Poirier (Eclipse Foundation) - initial API and implementation
+ * Christopher Guindon (Eclipse Foundation)
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
 
 //if name of the file requested is the same as the current file, the script will exit directly.
 if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 
-require_once(dirname(__FILE__) . "/DownloadsProject.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/membership/promo/promos.php");
-require_once(dirname(__FILE__) . "/eclipseInstaller.php");
-require_once(dirname(__FILE__) . "/../ads/promotedDownloads.class.php");
-require_once(dirname(__FILE__) . "/../ads/downloadsBannerAd.class.php");
+require_once("DownloadsProject.class.php");
+require_once("eclipseInstaller.php");
+require_once("promotedDownloads.class.php");
+require_once(realpath(dirname(__FILE__) . "/../ads/promotions.class.php"));
+require_once(realpath(dirname(__FILE__) . "/../ads/downloadsBannerAd.class.php"));
 
 class Downloads extends DownloadsProject {
 
@@ -37,7 +40,7 @@ class Downloads extends DownloadsProject {
 
   public function __construct() {
 
-    $this->Installer = new EclipseInstaller('photon/R');
+    $this->Installer = new EclipseInstaller();
     $this->Installer->setInstallerLayout('layout_a');
 
     $this->PromotedDownloads = New PromotedDownloads();
@@ -220,8 +223,7 @@ class Downloads extends DownloadsProject {
    * @return string
    */
   public function getPromoAd() {
-    $adNo = (isset($_GET['adNo'])) ? $_GET['adNo'] : '';
-    $promo = chooseDownloadAd($adNo);
+    $promo = Promotions::output();
     return $promo;
   }
 
@@ -235,7 +237,7 @@ class Downloads extends DownloadsProject {
   private function _projectsOutput($projects) {
     ob_start();
     foreach ($projects as $project) {
-      include 'tpl/downloadsProjects.tpl.php';
+      include 'views/view.projects.php';
     }
     return ob_get_clean();
   }
@@ -248,7 +250,7 @@ class Downloads extends DownloadsProject {
   public function getAllDownloadsProjects() {
     ob_start();
     foreach ($this->projects as $key =>$category) {
-      include 'tpl/downloadsCategory.tpl.php';
+      include 'views/view.category.php';
     }
     return ob_get_clean();
   }

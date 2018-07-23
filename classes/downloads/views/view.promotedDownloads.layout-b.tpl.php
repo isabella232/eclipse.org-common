@@ -1,14 +1,18 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2015 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2018 Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Eric Poirier (Eclipse Foundation) - initial API and implementation
- *******************************************************************************/
+ *   Eric Poirier (Eclipse Foundation) - initial API and implementation
+ *   Christopher Guindon (Eclipse Foundation)
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
+
 if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 ?>
 
@@ -23,8 +27,8 @@ if (basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
     </div>
 
     <div class="col-sm-8 download">
-      <div class="col-sm-9 downloadLink-icon"><i class="fa fa-download"></i></div>
-        <div class="col-sm-15 downloadLink-content">
+      <div class="col-sm-6 downloadLink-icon"><i class="fa fa-download"></i></div>
+        <div class="col-xs-24 col-sm-18 downloadLink-content">
           <div class="text-center">
             <p>
               <a class="orange" href="//eclipse.org/go/<?php print $this->ad->getCampaign();?>" title="<?php print $this->ad->getTitle();?>">

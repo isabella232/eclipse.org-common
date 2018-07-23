@@ -1,14 +1,16 @@
 <?php
-/*******************************************************************************
- * Copyright (c) 2015 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * Copyright (c) 2018 Eclipse Foundation.
+ *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * Contributors:
- *    Christopher Guindon (Eclipse Foundation) - initial API and implementation
- *******************************************************************************/
+ *  Christopher Guindon (Eclipse Foundation) - initial API and implementation
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ */
 
 require_once("ad.class.php");
 
@@ -140,6 +142,6 @@ class EclipseAds{
       }
       $this->_build($layout, $this->ad->getType());
     }
-    print $this->output;
+    return $this->output;
   }
 }

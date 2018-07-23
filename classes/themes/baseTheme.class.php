@@ -2673,17 +2673,8 @@ EOHTML;
    * @return string
    */
   public function getRandomPromo($frontpage = FALSE){
-    include_once ($_SERVER['DOCUMENT_ROOT'] . "/membership/promo/promos.php");
-    if (!function_exists('chooseRandomPromo')) {
-      return '';
-    }
-
-    $ad_id = null;
-    if (isset($_GET['ad_id']) && ctype_digit($_GET['ad_id'])) {
-      $ad_id = $_GET['ad_id'];
-    }
-
-    return chooseRandomPromo($ad_id, $frontpage);
+    include_once(realpath(dirname(__FILE__) . '/../ads/promotions.class.php'));
+    return Promotions::output();
   }
 
   /**

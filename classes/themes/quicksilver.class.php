@@ -158,16 +158,13 @@ EOHTML;
     $main_container_col = "col-sm-24";
     $promo_html = "";
 
-    $promo_path = $_SERVER['DOCUMENT_ROOT'] . "/membership/promo/promos.php";
-    if (file_exists($promo_path)) {
+    $promo_path = realpath(dirname(__FILE__) . "/../ads/promotions.class.php");
+    if ($promo_path) {
       include_once ($promo_path);
-      if (function_exists('getFoundationPromos') && function_exists('buildStrategicAd')) {
-        $foundation_promo = getFoundationPromos();
-        if (!empty($foundation_promo)) {
-          $main_container_col = "col-sm-10 col-sm-offset-3 margin-bottom-20";
-          $foundation_promo = reset($foundation_promo);
-          $promo_html = '<div class="col-sm-8">' . buildStrategicAd($foundation_promo) . '</div>';
-        }
+      $foundation_promo = Promotions::output(array('foundation'));
+      if (!empty($foundation_promo)) {
+        $main_container_col = "col-sm-10 col-sm-offset-3 margin-bottom-20";
+        $promo_html = '<div class="col-sm-8">' . $foundation_promo . '</div>';
       }
     }
 
