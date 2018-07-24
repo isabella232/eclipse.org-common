@@ -742,9 +742,11 @@ class EditMembership extends Membership{
       case IMAGETYPE_GIF:  $image = imagecreatefromgif($_tmp_name); break;
       case IMAGETYPE_JPEG:  $image = imagecreatefromjpeg($_tmp_name); break;
       case IMAGETYPE_PNG:
+        imagealphablending($logo_resize, FALSE);
+        imagesavealpha($logo_resize, TRUE);
         $image = imagecreatefrompng($_tmp_name);
-        $white = imagecolorallocate($logo_resize, 255, 255, 255);
-        imagefilledrectangle($logo_resize, 0, 0, $new_width, $new_height, $white);
+        $transparent = imagecolorallocatealpha($logo_resize, 255, 255, 255, 127);
+        imagefilledrectangle($logo_resize, 0, 0, $new_width, $new_height, $transparent);
         break;
     }
     imagecopyresampled($logo_resize, $image, 0, 0, 0, 0, $new_width, $new_height, $_width, $_height);
