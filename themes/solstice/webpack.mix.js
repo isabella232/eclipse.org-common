@@ -66,5 +66,4 @@ mix.scripts([
 mix.scripts([
     'node_modules/jquery/dist/jquery.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
-    'node_modules/eclipsefdn-solstice-assets/js/solstice.js'
 ], 'public/javascript/barebone.min.js');
