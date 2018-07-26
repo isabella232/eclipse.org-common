@@ -75,7 +75,7 @@ class EclipseInstaller extends EclipseEnv {
     $platform_array = array(
       'platform' => $platform,
       'count' =>$count,
-      'link_classes' => "btn btn-warning",
+      'link_classes' => "btn btn-warning margin-bottom-5",
       'url' => $url,
       'text' => $text,
       'text_prefix' => 'Download',
@@ -98,15 +98,16 @@ class EclipseInstaller extends EclipseEnv {
     if (!empty($os)) {
       $os_client = $os;
     }
-    $installer_links = $this->getInstallerArray($version, $os_client);
+
     if (!empty($layout)) {
       switch ($layout) {
         case 'layout_a':
+          $installer_links = $this->getInstallerArray($version, $os_client);
           $tpl = "views/view.installer-a.php";
           break;
         case 'layout_b':
           $download_count = $this->total_download_count;
-           $installer_links = $this->getInstallerArray();
+          $installer_links = $this->getInstallerArray();
           $tpl = "views/view.installer-b.php";
           break;
       }
