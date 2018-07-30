@@ -123,7 +123,8 @@ class Membership {
       ORGI.large_mime as large_mime
     FROM organizations as ORG
     LEFT JOIN OrganizationInformation as ORGI on ORGI.OrganizationID = ORG.organization_id
-    WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')";
+    WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')
+    and ORG.organization_id NOT IN (1322, 1324, 1325)";
 
     if (!is_null($this->id)) {
       $sql .= " and ORG.organization_id = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
