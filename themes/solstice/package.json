@@ -5,7 +5,7 @@
   "private": true,
   "author": "Christopher Guindon",
   "license": "EPL-2.0",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "bugs": {
     "url": "https://bugs.eclipse.org/bugs/buglist.cgi?component=Website&list_id=8318814&product=Community&resolution=---"
   },
@@ -21,6 +21,6 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "eclipsefdn-solstice-assets": "0.0.27"
+    "eclipsefdn-solstice-assets": "0.0.33"
   }
 }
