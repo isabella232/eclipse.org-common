@@ -18,21 +18,8 @@ class DownloadsBannerAd extends EclipseAds {
 
   public function __construct() {
     parent::__construct();
-
-    $campaign = "";
-    $content['body'] ="";
-    $content['banner_styles'] = "";
-
-    if ((time() >= strtotime("2018/02/26") && time() < strtotime("2018/04/05")) || (time() >= strtotime("2018/04/30") && time() < strtotime("2018/05/11"))) {
-      $content['body'] ="Register now for FOSS4G NA 2018 ~ St. Louis, Missouri ~ May 14 - 17, 2018";
-      $campaign = "PROMO_F4G2018_DOWNLOADS_PAGE";
-    }
-
-    if ((time() >= strtotime("2018/04/16") && time() < strtotime("2018/04/30")) || (time() >= strtotime("2018/05/14") && time() < strtotime("2018/06/13"))) {
-      $content['body'] ="Register now for EclipseCon France 2018 ~ Toulouse, France ~ June 13 - 14, 2018";
-      $campaign = "PROMO_ECF2018_DOWNLOADS_PAGE";
-    }
-
+    $campaign = "PROMO_ECE2018_DOWNLOADS_PAGE";
+    $content['body'] = "Register now for EclipseCon Europe 2018 ~ Ludwigsburg, Germany ~ October 23 - 25, 2018";
     $content['button_text'] = "Register Today!";
     $content['button_url'] = $campaign;
 
@@ -57,11 +44,7 @@ class DownloadsBannerAd extends EclipseAds {
   protected function _build($layout = "", $type = "") {
 
     // Check if the ad should be printed depending on the date
-    if ((time() >= strtotime("2018/02/26") && time() < strtotime("2018/04/05")) || (time() >= strtotime("2018/04/30") && time() < strtotime("2018/05/11"))) {
-      $this->output = $this->ad->getHtml();
-    }
-
-    if ((time() >= strtotime("2018/04/16") && time() < strtotime("2018/04/30")) || (time() >= strtotime("2018/05/14") && time() < strtotime("2018/06/13"))) {
+    if (time() < strtotime("23 October 2018")) {
       $this->output = $this->ad->getHtml();
     }
   }
