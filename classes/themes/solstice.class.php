@@ -30,6 +30,34 @@ class Solstice extends baseTheme {
     $this->setAttributes('footer2', 'col-sm-6 hidden-print');
     $this->setAttributes('footer3', 'col-sm-6 hidden-print');
     $this->setAttributes('footer4', 'col-sm-6 hidden-print');
+
+    // Footer links
+    $this->setFooterLinks("about_us", "About Us", $this->getBaseUrl() . "org/", "region_1", 1);
+    $this->setFooterLinks("contact_us", "Contact Us", $this->getBaseUrl() . "org/foundation/contact.php", "region_1", 2);
+    $this->setFooterLinks("donate", "Donate", $this->getBaseUrl() . "donate", "region_1", 3);
+    $this->setFooterLinks("governance", "Governance", $this->getBaseUrl() . "org/documents/", "region_1", 4);
+    $this->setFooterLinks("logo_and_artwork", "Logo and Artwork", $this->getBaseUrl() . "artwork/", "region_1", 5);
+    $this->setFooterLinks("board_of_directors", "Board of Directors", $this->getBaseUrl() . "org/foundation/directors.php", "region_1", 6);
+
+    $this->setFooterLinks("privary_policy", "Privacy Policy", $this->getBaseUrl() . "legal/privacy.php", "region_2", 1);
+    $this->setFooterLinks("terms_of_use", "Terms of Use", $this->getBaseUrl() . "legal/termsofuse.php", "region_2", 2);
+    $this->setFooterLinks("copyright_agent", "Copyright Agent", $this->getBaseUrl() . "legal/copyright.php", "region_2", 3);
+    $this->setFooterLinks("epl", "Eclipse Public License", $this->getBaseUrl() . "legal/epl-2.0/", "region_2", 4);
+    $this->setFooterLinks("legal_resources", "Legal Resources", $this->getBaseUrl() . "legal/", "region_2", 5);
+
+    $this->setFooterLinks("report_a_bug", "Report a Bug", "https://bugs.eclipse.org/bugs/", "region_3", 1);
+    $this->setFooterLinks("documentation", "Documentation", "//help.eclipse.org/", "region_3", 2);
+    $this->setFooterLinks("contribute", "How to Contribute", $this->getBaseUrl() . "contribute/", "region_3", 3);
+    $this->setFooterLinks("mailing_lists", "Mailing Lists", $this->getBaseUrl() . "mail/", "region_3", 4);
+    $this->setFooterLinks("forums", "Forums", $this->getBaseUrl() . "forums/", "region_3", 5);
+    $this->setFooterLinks("marketplace", "Marketplace", "//marketplace.eclipse.org", "region_3", 6);
+
+    $this->setFooterLinks("ide_and_tools", "IDE and Tools", $this->getBaseUrl() . "ide/", "region_4", 1);
+    $this->setFooterLinks("projects", "Community of Projects", $this->getBaseUrl() . "projects", "region_4", 2);
+    $this->setFooterLinks("working_groups", "Working Groups", $this->getBaseUrl() . "org/workinggroups/", "region_4", 3);
+    $this->setFooterLinks("research", "Research@Eclipse", $this->getBaseUrl() . "org/research/", "region_4", 4);
+    $this->setFooterLinks("service_status", "Service Status", "https://status.eclipse.org", "region_4", 5);
+
   }
 
   /**
@@ -38,14 +66,7 @@ class Solstice extends baseTheme {
   public function getFooterRegion1() {
     return <<<EOHTML
     <h2 class="section-title">Eclipse Foundation</h2>
-    <ul class="nav">
-    <li><a href="{$this->getBaseUrl()}org/">About Us</a></li>
-    <li><a href="{$this->getBaseUrl()}org/foundation/contact.php">Contact Us</a></li>
-    <li><a href="{$this->getBaseUrl()}donate">Donate</a></li>
-      <li><a href="{$this->getBaseUrl()}org/documents/">Governance</a></li>
-      <li><a href="{$this->getBaseUrl()}artwork/">Logo and Artwork</a></li>
-      <li><a href="{$this->getBaseUrl()}org/foundation/directors.php">Board of Directors</a></li>
-    </ul>
+    {$this->getFooterLinks('region_1')}
 EOHTML;
   }
 
@@ -55,13 +76,7 @@ EOHTML;
   public function getFooterRegion2() {
     return <<<EOHTML
     <h2 class="section-title">Legal</h2>
-    <ul class="nav">
-      <li><a href="{$this->getBaseUrl()}legal/privacy.php">Privacy Policy</a></li>
-      <li><a href="{$this->getBaseUrl()}legal/termsofuse.php">Terms of Use</a></li>
-      <li><a href="{$this->getBaseUrl()}legal/copyright.php">Copyright Agent</a></li>
-      <li><a href="{$this->getBaseUrl()}legal/epl-2.0/">Eclipse Public License</a></li>
-      <li><a href="{$this->getBaseUrl()}legal/">Legal Resources </a></li>
-    </ul>
+    {$this->getFooterLinks('region_2')}
 EOHTML;
   }
 
@@ -71,14 +86,7 @@ EOHTML;
   public function getFooterRegion3() {
     return <<<EOHTML
     <h2 class="section-title">Useful Links</h2>
-    <ul class="nav">
-      <li><a href="https://bugs.eclipse.org/bugs/">Report a Bug</a></li>
-      <li><a href="//help.eclipse.org/">Documentation</a></li>
-      <li><a href="{$this->getBaseUrl()}contribute/">How to Contribute</a></li>
-      <li><a href="{$this->getBaseUrl()}mail/">Mailing Lists</a></li>
-      <li><a href="{$this->getBaseUrl()}forums/">Forums</a></li>
-      <li><a href="//marketplace.eclipse.org">Marketplace</a></li>
-    </ul>
+    {$this->getFooterLinks('region_3')}
 EOHTML;
   }
 
@@ -88,13 +96,7 @@ EOHTML;
   public function getFooterRegion4() {
     return <<<EOHTML
     <h2 class="section-title">Other</h2>
-    <ul class="nav">
-      <li><a href="{$this->getBaseUrl()}ide/">IDE and Tools</a></li>
-      <li><a href="{$this->getBaseUrl()}projects">Community of Projects</a></li>
-      <li><a href="{$this->getBaseUrl()}org/workinggroups/">Working Groups</a></li>
-      <li><a href="{$this->getBaseUrl()}org/research/">Research@Eclipse</a></li>
-      <li><a href="https://status.eclipse.org">Service Status</a></li>
-    </ul>
+    {$this->getFooterLinks('region_4')}
 EOHTML;
   }
 

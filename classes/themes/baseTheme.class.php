@@ -105,6 +105,13 @@ class BaseTheme {
   protected $extra_header_html = "";
 
   /**
+   * Links for the footer
+   *
+   * @var array
+   */
+  protected $footer_links = array();
+
+  /**
    * Page HTML content
    *
    * @var string
@@ -1283,6 +1290,85 @@ EOHTML;
    */
   public function setExtraHeaders($headers = "") {
     $this->extra_headers .= $headers;
+  }
+
+  /**
+   * Get links for the footer
+   *
+   * @param string $region
+   *
+   * @return string
+   */
+  public function getFooterLinks($region) {
+
+    $accepted_regions = array("region_1", "region_2", "region_3", "region_4", "region_5");
+
+    if (empty($region) || !in_array($region, $accepted_regions)) {
+      return "";
+    }
+
+    if (!function_exists("sortByWeight")) {
+      function sortByWeight($a, $b) {
+        $a = $a['weight'];
+        $b = $b['weight'];
+        if ($a == $b) return 0;
+        return ($a < $b) ? -1 : 1;
+      }
+    }
+    usort($this->footer_links, "sortByWeight");
+
+    $footer_links = '';
+    foreach ($this->footer_links as $footer_link) {
+      if ($footer_link['region'] !== $region) {
+        continue;
+      }
+      $footer_links .= '<li><a href="'. $footer_link['url'] .'">'. $footer_link['title'] .'</a></li>';
+    }
+
+    return '<ul class="nav">' . $footer_links . '</ul>';
+  }
+
+  /**
+   * Set Links for the footer
+   *
+   * @param string $title
+   * @param string $url
+   * @param string $region
+   * @param int $weight
+   */
+  public function setFooterLinks($element = "", $title = "", $url = "", $region = "", $weight = 0) {
+
+    $accepted_regions = array("region_1", "region_2", "region_3", "region_4", "region_5");
+
+    if (empty($element) || empty($title) || empty($url) || empty($region) || !in_array($region, $accepted_regions) || !is_numeric($weight)) {
+      return FALSE;
+    }
+
+    $this->footer_links[$element] = array(
+        'title' => $title,
+        'url' => $url,
+        'region' => $region,
+        'weight' => $weight
+    );
+  }
+
+  /**
+   * Remove Footer links
+   *
+   * @param string $element
+   */
+  public function removeFooterLinks($element) {
+
+    if (empty($element)) {
+      return FALSE;
+    }
+
+    foreach ($this->footer_links as $key => $footer_link) {
+      if ($key !== $element) {
+        continue;
+      }
+      unset($this->footer_links[$element]);
+    }
   }
 
   /**
