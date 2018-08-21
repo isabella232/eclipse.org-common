@@ -124,7 +124,7 @@ class Membership {
     FROM organizations as ORG
     LEFT JOIN OrganizationInformation as ORGI on ORGI.OrganizationID = ORG.organization_id
     WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')
-    and ORG.organization_id NOT IN (1322, 1324, 1325)";
+    and ORG.organization_id NOT IN (1322, 1324, 1325, 1328)";
 
     if (!is_null($this->id)) {
       $sql .= " and ORG.organization_id = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
