@@ -34,6 +34,7 @@ mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/table.less', 'pu
 // Copy cookieconsent files
 mix.copy('node_modules/cookieconsent/build/cookieconsent.min.css', 'public/stylesheets/vendor/cookieconsent/cookieconsent.min.css');
 mix.copy('node_modules/cookieconsent/src/cookieconsent.js', 'public/javascript/vendor/cookieconsent/cookieconsent.min.js');
+
 mix.scripts([
     'node_modules/cookieconsent/src/cookieconsent.js',
     'node_modules/eclipsefdn-solstice-assets/js/solstice.cookieconsent.js'
@@ -64,6 +65,6 @@ mix.scripts([
 ], 'public/javascript/main.min.js');
 
 mix.scripts([
-    'node_modules/jquery/dist/jquery.js',
+    'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
 ], 'public/javascript/barebone.min.js');
