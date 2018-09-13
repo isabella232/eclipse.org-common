@@ -13,7 +13,9 @@
 <p id="back-to-top">
   <a class="visible-xs" href="#top">Back to the top</a>
 </p>
-<?php print $this->getFooterPrexfix();?>
+<?php if($this->getDisplayFooterPrefix()): ?>
+  <?php print $this->getFooterPrexfix();?>
+<?php endif; ?>
 <footer<?php print $this->getAttributes('footer');?>>
   <div<?php print $this->getAttributes('footer-container');?>>
     <div class="row">

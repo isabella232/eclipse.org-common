@@ -50,6 +50,13 @@ class BaseTheme {
   protected $Breadcrumb = NULL;
 
   /**
+   * Display footer prefix
+   *
+   * @var bool
+   */
+  protected $display_footer_prefix = TRUE;
+
+  /**
    * Display header right html
    *
    * @var bool
@@ -906,6 +913,35 @@ EOHTML;
       $display = TRUE;
     }
     $this->display_more = $display;
+  }
+
+  /**
+   * Get $display_footer_prefix
+   *
+   * @return bool
+   */
+  public function getDisplayFooterPrefix() {
+    return $this->display_footer_prefix;
+  }
+
+  /**
+   * Set $display_footer_prefix
+   *
+   * @param bool $display
+   */
+  public function setDisplayFooterPrefix($display = TRUE) {
+    if ($display !== FALSE) {
+      $display = TRUE;
+    }
+
+    // Remove the footer offset class when we hide the footer prefix
+    if ($display === FALSE) {
+      $main_container_classes = str_replace(' footer-offset', '', $this->getThemeVariables('main_container_classes'));
+      $App = $this->_getApp();
+      $App->setThemeVariables(array('main_container_classes' => $main_container_classes));
+      $this->resetAttributes('main-container', 'class');
+    }
+    $this->display_footer_prefix = $display;
   }
 
   /**
