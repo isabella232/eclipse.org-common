@@ -24,32 +24,60 @@
                 <p><strong>Note:</strong> This plugin only supports Youtube videos for now.</p>
                 <h3>Usage</h3>
                 <p><strong>With Solstice</strong></p>
-                <pre>&lt;a class="eclipsefdn-video" href="https://www.youtube.com/watch?v=cnSMhgKApOg"&gt;&lt;/a&gt;
+                <pre>&lt;head&gt;
+  &lt;script&gt;
+    // Use defaults
+    eclipseFdnVideos.replace();
 
-&lt;!--
-&lt;a&gt; will be replaced with:
-&lt;div class="eclipsefdn-video embed-responsive embed-responsive-16by9" style="height:312.1875px;"&gt;&lt;iframe src="https://www.youtube.com/embed/cnSMhgKApOg"&gt;&lt;/iframe>&lt;/div&gt;
---&gt;
+    // Customize
+    eclipseFdnVideos.replace({
+      selector: ".eclipsefdn-video",
+      resolution: "16by9",
+      cookie: {
+        name: "eclipse_cookieconsent_status",
+        value: "allow"
+      }
+    });
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a class="eclipsefdn-video" href="https://www.youtube.com/watch?v=cnSMhgKApOg"&gt;&lt;/a&gt;
 
-&lt;script&gt;
-  // Use defaults
-  eclipseFdnVideos.replace();
-
-  // Customize
-  eclipseFdnVideos.replace({
-    selector: ".eclipsefdn-video",
-    resolution: "16by9",
-    cookie: {
-      name: "eclipse_cookieconsent_status",
-      value: "allow"
-    }
-  });
-&lt;/script&gt;
+  &lt;!--
+  &lt;a&gt; will be replaced with:
+  &lt;div class="eclipsefdn-video embed-responsive embed-responsive-16by9" style="height:312.1875px;"&gt;&lt;iframe src="https://www.youtube.com/embed/cnSMhgKApOg"&gt;&lt;/iframe>&lt;/div&gt;
+  --&gt;
+&lt;/body&gt;
 </pre>
                 <p><strong>Without Solstice</strong></p>
-                <p>If you are not using the Eclipse Foundation look and feel, you can still load our Embedding Youtube videos plugin by adding the following code snippet in the &lt;head&gt; of each page:</p>
-                <pre>&lt;script src="//www.eclipse.org/eclipse.org-common/themes/solstice/public/javascript/vendor/eclipsefdnvideos/eclipsefdn.videos.min.js"&gt;&lt;/script&gt;
-&lt;link href="//www.eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/eclipsefdn-video.min.css" rel="stylesheet" type="text/css"&gt;
+                <p>If you are not using the Eclipse Foundation look and feel, you can still load our Embedding Youtube videos plugin like the following example:</p>
+                <pre>&lt;head&gt;
+  &lt;script src="//www.eclipse.org/eclipse.org-common/themes/solstice/public/javascript/eclipsefdn.videos.min.js"&gt;&lt;/script&gt;
+  &lt;link href="//www.eclipse.org/eclipse.org-common/themes/solstice/public/stylesheets/eclipsefdn-video.min.css" rel="stylesheet" type="text/css"&gt;
+
+  &lt;script&gt;
+    // Use defaults
+    eclipseFdnVideos.replace();
+
+    // Customize
+    eclipseFdnVideos.replace({
+      selector: ".eclipsefdn-video",
+      resolution: "16by9",
+      cookie: {
+        name: "eclipse_cookieconsent_status",
+        value: "allow"
+      }
+    });
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a class="eclipsefdn-video" href="https://www.youtube.com/watch?v=cnSMhgKApOg"&gt;&lt;/a&gt;
+
+  &lt;!--
+  &lt;a&gt; will be replaced with:
+  &lt;div class="eclipsefdn-video embed-responsive embed-responsive-16by9" style="height:312.1875px;"&gt;&lt;iframe src="https://www.youtube.com/embed/cnSMhgKApOg"&gt;&lt;/iframe>&lt;/div&gt;
+  --&gt;
+&lt;/body&gt;
 </pre>
                 <p><strong>Parameters</strong></p>
                 <table class="table table-bordered">
