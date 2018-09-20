@@ -40,7 +40,7 @@ class Quicksilver extends solstice {
 
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
-    $this->setAttributes('featured-footer', "background-image:url('https://www.eclipse.org/photon/public/images/photon-home-bg.jpg');",'style');
+    $this->setAttributes('featured-footer', "background-color:#333;background-image:url(https://www.eclipse.org/photon/public/images/photon-circle-faded.png);background-repeat:no-repeat;background-attachment:fixed;background-position:center;",'style');
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
@@ -171,19 +171,15 @@ EOHTML;
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
     <div{$this->getAttributes('featured-footer')}>
-      <div class="container">
+      <div class="container featured-photon">
         <div class="row">
           <div class="{$main_container_col}">
-            <p><i data-feather="mail" stroke-width="1"></i></p>
-            <h2>Sign up to our Newsletter</h2>
-            <p>A fresh new issue delivered monthly</p>
-            <form action="https://eclipsecon.us6.list-manage.com/subscribe/post" method="post" target="_blank">
-              <div class="form-group">
-                <input type="hidden" name="u" value="eaf9e1f06f194eadc66788a85">
-                <input type="hidden" name="id" value="46e57eacf1">
-              </div>
-              <input type="submit" value="Subscribe" name="subscribe" class="button btn btn-warning">
-            </form>
+            <h2><span style="color:#cda034;font-weight:400;">Eclipse Photon |</span> 2018-09 Edition</h2>
+            <p class="margin-bottom-30" style="font-size:20px;">Now available!</p>
+            <ul class="list-inline">
+              <li><a class="btn btn-primary padding-10" style="background-color:#cda034;border:none;width:200px;" href="/downloads">Download</a></li>
+              <li><a class="btn btn-primary padding-10" style="background-color:#f9f9f9;border:none;color:#cda034;width:200px;" href="/eclipse/news/4.9/">New & Noteworthy</a></li>
+            </ul>
           </div>
           {$promo_html}
         </div>
