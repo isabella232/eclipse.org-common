@@ -174,7 +174,7 @@ EOHTML;
       <div class="container featured-photon">
         <div class="row">
           <div class="{$main_container_col}">
-            <h2><span style="color:#cda034;font-weight:400;">Eclipse Photon |</span> 2018-09 Edition</h2>
+            <h2><span style="color:#cda034;font-weight:400;">Eclipse SimRel |</span> 2018-09 Edition</h2>
             <p class="margin-bottom-30" style="font-size:20px;">Now available!</p>
             <ul class="list-inline">
               <li><a class="btn btn-primary padding-10" style="background-color:#cda034;border:none;width:200px;" href="/downloads/packages/installer">Download</a></li>
