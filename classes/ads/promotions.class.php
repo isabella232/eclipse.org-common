@@ -71,7 +71,7 @@ class Promotions {
       'memberID' => 655,
       'memberName' => 'CA',
       'type' => 'strategic',
-      'weight' => 11
+      'weight' => 12
     );
 
     // Strategic Member Ads
@@ -80,7 +80,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/oepe_ad_200x200.jpg',
       'memberName' => 'Oracle',
       'type' => 'strat_ad',
-      'weight' => 11
+      'weight' => 12
     );
 
     $promos[] = array(
@@ -88,14 +88,14 @@ class Promotions {
       'imageurl' => '/membership/promo/images/ibm200x200-ibm_cloud.jpg',
       'memberName' => 'IBM',
       'type' => 'strat_ad',
-      'weight' => 11
+      'weight' => 12
     );
     $promos[] = array(
       'url' => 'PROMO_SAP',
       'imageurl' => '/membership/promo/images/sap200x200.jpg',
       'memberName' => 'SAP',
       'type' => 'strat_ad',
-      'weight' => 11
+      'weight' => 12
     );
 
     $promos[] = array(
@@ -103,7 +103,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Sirius_ad_200.png',
       'memberName' => 'Obeo',
       'type' => 'strat_ad',
-      'weight' => 7.5
+      'weight' => 8.5
     );
 
     $promos[] = array(
@@ -111,7 +111,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/PapyrusCEA.gif',
       'memberName' => 'CEA',
       'type' => 'strat_ad',
-      'weight' => 7.5
+      'weight' => 8
     );
 
     $promos[] = array(
@@ -119,7 +119,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/payara.png',
       'memberName' => 'PAYARA',
       'type' => 'strat_ad',
-      'weight' => 7.5
+      'weight' => 8
     );
 
     $promos[] = array(
@@ -127,15 +127,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Tomitribe-TCPP-banner-200x200.jpg',
       'memberName' => 'TOMITRIBE',
       'type' => 'strat_ad',
-      'weight' => 7.5
-    );
-
-    $promos[] = array(
-      'url' => 'PROMO_GENUITEC',
-      'imageurl' => '/membership/promo/images/genuitec-eclipse-can-do-that.gif',
-      'memberName' => 'Genuitec',
-      'type' => 'strat_ad',
-      'weight' => 6.5
+      'weight' => 8
     );
 
     if (!empty($filter)) {
