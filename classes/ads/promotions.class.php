@@ -56,7 +56,7 @@ class Promotions {
 
     $promos[] = array(
       'url' => 'PAID_YATTA_2',
-      'imageurl' => '/membership/promo/images/Yatta-Eclipse-Banner-Ad-2.png',
+      'imageurl' => '/membership/promo/images/Yatta-Eclipse-Banner-Ad-2.gif',
       'memberName' => 'YATTA',
       'type' => 'paid',
       'weight' => 6.5
