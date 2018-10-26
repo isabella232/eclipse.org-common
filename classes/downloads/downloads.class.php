@@ -89,7 +89,7 @@ class Downloads extends DownloadsProject {
     $Project->setDescription('Eclipse Equinox is an implementation of the OSGi core framework specification.');
     $Project->setLogo('assets/public/images/logo-equinox.png');
     $Project->setProjectType($this->projects['runtime_platforms']['title']);
-    $Project->setDownloadUrl64Bit('http://projects.eclipse.org/projects/rt.equinox/downloads');
+    $Project->setDownloadUrl64Bit('http://download.eclipse.org/equinox/');
     $Project->setLearnMoreUrl('http://www.eclipse.org/equinox/');
     $Project->setProjectsAttributes('image','height','50');
     $this->newProject($Project);
