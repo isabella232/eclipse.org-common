@@ -177,8 +177,8 @@ EOHTML;
             <h2><span style="color:#cda034;font-weight:400;">Eclipse SimRel |</span> 2018-09 Edition</h2>
             <p class="margin-bottom-30" style="font-size:20px;">Latest desktop IDE packages now available!</p>
             <ul class="list-inline">
-              <li><a class="btn btn-primary padding-10" style="background-color:#cda034;border:none;width:200px;" href="/downloads/packages/installer">Download</a></li>
-              <li><a class="btn btn-primary padding-10" style="background-color:#f9f9f9;border:none;color:#cda034;width:200px;" href="/eclipse/news/4.9/">New & Noteworthy</a></li>
+              <li><a class="btn btn-primary padding-10" style="background-color:#cda034;border:none;width:200px;" href="https://www.eclipse.org/downloads/packages/installer">Download</a></li>
+              <li><a class="btn btn-primary padding-10" style="background-color:#f9f9f9;border:none;color:#cda034;width:200px;" href="https://www.eclipse.org/eclipse/news/4.9/">New & Noteworthy</a></li>
             </ul>
           </div>
           {$promo_html}
