@@ -87,6 +87,7 @@ class EclipseEnv {
       'domain' => 'www.eclipse.php53.dev.docker',
       'dev_domain' => 'dev_eclipse.php53.dev.docker',
       'accounts' => 'accounts.php55.dev.docker',
+      'api' => 'api.php55.dev.docker',
       'allowed_hosts' => array(
         'eclipse.local',
         'www.eclipse.local',
@@ -102,6 +103,7 @@ class EclipseEnv {
       // We currently dont have a staging server for dev.eclipse.org
       'dev_domain' => 'dev.eclipse.org',
       'accounts' => 'accounts-staging.eclipse.org',
+      'api' => 'api-staging.eclipse.org',
       'allowed_hosts' => array(
         'staging.eclipse.org'
       ),
@@ -113,6 +115,7 @@ class EclipseEnv {
       'domain' => 'www.eclipse.org',
       'dev_domain' => 'dev.eclipse.org',
       'accounts' => 'accounts.eclipse.org',
+      'api' => 'api.eclipse.org',
       'allowed_hosts' => array(
         // Empty, since it's the default.
       ),
