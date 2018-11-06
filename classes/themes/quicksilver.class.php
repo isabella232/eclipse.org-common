@@ -40,7 +40,7 @@ class Quicksilver extends solstice {
 
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
-    $this->setAttributes('featured-footer', "background-color:#333;background-image:url(https://www.eclipse.org/photon/public/images/photon-circle-faded.png);background-repeat:no-repeat;background-attachment:fixed;background-position:center;",'style');
+    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://www.eclipse.org/home/images/banner_image_survey.jpg);background-repeat:no-repeat;background-position:center;",'style');
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
@@ -171,15 +171,13 @@ EOHTML;
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
     <div{$this->getAttributes('featured-footer')}>
-      <div class="container featured-photon">
+      <div class="container">
         <div class="row">
           <div class="{$main_container_col}">
-            <h2><span style="color:#cda034;font-weight:400;">Eclipse SimRel |</span> 2018-09 Edition</h2>
-            <p class="margin-bottom-30" style="font-size:20px;">Latest desktop IDE packages now available!</p>
-            <ul class="list-inline">
-              <li><a class="btn btn-primary padding-10" style="background-color:#cda034;border:none;width:200px;" href="https://www.eclipse.org/downloads/packages/installer">Download</a></li>
-              <li><a class="btn btn-primary padding-10" style="background-color:#f9f9f9;border:none;color:#cda034;width:200px;" href="https://www.eclipse.org/eclipse/news/4.9/">New & Noteworthy</a></li>
-            </ul>
+            <h2 style="font-weight:400;">We Want to Hear from You!<br>
+            2018 Eclipse Foundation Brand Survey</h2>
+            <p style="font-size:18px;">Runs until December 14, 2018</p>
+            <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>
           </div>
           {$promo_html}
         </div>
