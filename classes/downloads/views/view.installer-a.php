@@ -18,7 +18,7 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 
 <div class="text-center">
   <span class="downloads-logo vertical-align"><img height="50" alt="Eclipse" src="/downloads/assets/public/images/logo-eclipse.png"></span>
-  <h3>Get Eclipse <strong>SimRel&nbsp;2018&#x2011;09</strong></h3>
+  <h3>Get Eclipse <strong>IDE&nbsp;2018&#x2011;09</strong></h3>
   <p>Install your favourite desktop IDE packages.</p>
   <p>
     <?php foreach ($installer_links['links'] as $link): ?>
