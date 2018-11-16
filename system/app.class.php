@@ -1,18 +1,19 @@
 <?php
 /**
- * *****************************************************************************
- * Copyright (c) 2006-2014 Eclipse Foundation and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ *********************************************************************
+ * Copyright (c) 2006-2018 Eclipse Foundation and others.
  *
+ * This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0/
+ * 
  * Contributors:
  * Denis Roy (Eclipse Foundation)- initial API and implementation
  * Karl Matthias (Eclipse Foundation) - Database access management
  * Christopher Guindon (Eclipse Foundation)
- * *****************************************************************************
- */
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ **********************************************************************/
 
 class App {
 
@@ -1797,6 +1798,26 @@ class App {
   function getGoogleAnalyticsTrackingCode() {
     trigger_error("Deprecated function called.", E_USER_NOTICE);
     return 'UA-910670-2';
+  }
+
+  /**
+   * @author droy
+   * @since 2018-11-09
+   * @param bool ignoreForwardedFor
+   * @return string Client IP address
+   *
+   */
+  function getClientRealIP($ignoreForwardedFor=false) {
+    $remote_addr = $_SERVER['REMOTE_ADDR'];
+
+    # If the request comes from a reverse proxy, take the last element in the list
+    if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && !$ignoreForwardedFor) {
+      $IPs = array_values(array_filter(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])));
+      if(preg_match('/^\d+\.\d+\.\d+\.\d+$/', trim(end($IPs)))) {
+        $remote_addr = trim(end($IPs));
+      }
+    }
+    return $remote_addr;
   }
 
   /**
