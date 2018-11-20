@@ -2507,6 +2507,7 @@ EOHTML;
             <ul class="list-inline">
               {$this->getSessionVariables('user_login')}
               {$more_links}
+            </ul>
           </div>
           {$this->getToolbarLeftContent()}
         </div>
