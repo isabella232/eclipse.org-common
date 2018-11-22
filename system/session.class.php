@@ -312,6 +312,7 @@ class Session {
 
   function getClientSubnet() {
     # return class-c subnet
+    $App = new App();
     return substr($App->getRemoteIPAddress(), 0, strrpos($App->getRemoteIPAddress(), ".")) . ".0";
   }
 
