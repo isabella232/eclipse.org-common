@@ -167,7 +167,7 @@ class DonationEmails {
 
     // To make browsing the log table easier
     $EventLog->setLogTable("__paypal.class");
-    $EventLog->setPK2($_SERVER['REMOTE_ADDR']);
+    $EventLog->setPK2($this->App->getRemoteIPAddress());
     $EventLog->insertModLog($transaction_id);
     return $this->email_content;
   }

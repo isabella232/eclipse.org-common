@@ -49,7 +49,7 @@ class InfraBlock {
    */
   public function isBlocked(){
     $rvalue = FALSE;
-    $subnet = $_SERVER['REMOTE_ADDR'];
+    $subnet = $this->App->getRemoteIPAddress();
     //test if we have something that looks like an ip
     if ( preg_match('/[1-9]{1,3}\.(([0-9]{1,3}\.?){3})/', $subnet )) {
       if ($this->IsCommitter) {

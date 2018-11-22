@@ -192,7 +192,7 @@ class Payment extends EclipseEnv {
     else {
      $EvtLog->setPK1("Unknown");
     }
-    $ip = $_SERVER['REMOTE_ADDR'];
+    $ip = $this->App->getRemoteIPAddress();
     $EvtLog->setPK2($ip);
     $EvtLog->setLogAction($action);
     if ($this->donor_email) {

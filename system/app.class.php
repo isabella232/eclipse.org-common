@@ -1,20 +1,20 @@
 <?php
 /**
- *********************************************************************
+ * ********************************************************************
  * Copyright (c) 2006-2018 Eclipse Foundation and others.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
- * 
+ *
  * Contributors:
  * Denis Roy (Eclipse Foundation)- initial API and implementation
  * Karl Matthias (Eclipse Foundation) - Database access management
  * Christopher Guindon (Eclipse Foundation)
  *
  * SPDX-License-Identifier: EPL-2.0
- **********************************************************************/
-
+ * ********************************************************************
+ */
 class App {
 
   /**
@@ -708,15 +708,17 @@ class App {
    *
    * @return string
    */
-  function getRemoteIPAddress() {
-    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-      return $_SERVER['HTTP_CLIENT_IP'];
-    }
-    else
-      if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+  function getRemoteIPAddress($ignore_forwarded_for = FALSE) {
+    $remote_addr = $_SERVER['REMOTE_ADDR'];
+
+    # If the request comes from a reverse proxy, take the last element in the list
+    if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && !$ignore_forwarded_for) {
+      $IPs = array_values(array_filter(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])));
+      if(preg_match('/^\d+\.\d+\.\d+\.\d+$/', trim(end($IPs)))) {
+        $remote_addr = trim(end($IPs));
       }
-    return $_SERVER['REMOTE_ADDR'];
+    }
+    return $remote_addr;
   }
 
   /**
@@ -1804,20 +1806,12 @@ class App {
    * @author droy
    * @since 2018-11-09
    * @param bool ignoreForwardedFor
-   * @return string Client IP address
    *
+   * @deprecated
+   * @return string Client IP address
    */
-  function getClientRealIP($ignoreForwardedFor=false) {
-    $remote_addr = $_SERVER['REMOTE_ADDR'];
-
-    # If the request comes from a reverse proxy, take the last element in the list
-    if(!empty($_SERVER['HTTP_X_FORWARDED_FOR']) && !$ignoreForwardedFor) {
-      $IPs = array_values(array_filter(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])));
-      if(preg_match('/^\d+\.\d+\.\d+\.\d+$/', trim(end($IPs)))) {
-        $remote_addr = trim(end($IPs));
-      }
-    }
-    return $remote_addr;
+  function getClientRealIP($ignore_forwarded_for = FALSE) {
+    return $this->getRemoteIPAddress($ignore_forwarded_for);
   }
 
   /**
@@ -1828,19 +1822,6 @@ class App {
   function setPromotionPath($_path) {
     $this->CustomPromotionPath = $_SERVER['DOCUMENT_ROOT'] . $_path;
   }
-
-  /**
-   * Use reCAPTCHA service
-   *
-   * @param bool $ssl
-   *
-   * @return Captcha
-   */
-  public function useCaptcha($ssl = true) {
-    include_once ($this->getBasePath() . '/classes/captcha/captcha.class.php');
-    return new Captcha($ssl);
-  }
-
   /**
    * Record a database record
    *
@@ -1886,7 +1867,7 @@ class App {
     $this->setDatabase("conferences", "localhost", "dashboard", "draobhsad", "conferences_demo");
     $this->setDatabase("marketplace", "localhost", "dashboard", "draobhsad", "marketplace_demo");
     $this->setDatabase("dashboard", "localhost", "dashboard", "draobhsad", "dashboard_demo");
-    
+
     // Production Databases
     $this->set("bugzilla_db_classfile_ro", 'dbconnection_bugs_ro.class.php');
     $this->set("bugzilla_db_class_ro", 'DBConnectionBugs');

@@ -37,12 +37,6 @@ class CampaignImpression {
   private $source = '';
 
   /**
-   * The remote address of the user that will view the ad
-   * @var string
-   */
-  private $remote_addr = '';
-
-  /**
    * The current UNIX timestamp
    * @var string
    */
@@ -53,12 +47,10 @@ class CampaignImpression {
    *
    * @param string $_campaign_key
    * @param string $_source
-   * @param string $_remote_addr
    */
-  function __construct($_campaign_key, $_source, $_remote_addr) {
+  function __construct($_campaign_key, $_source) {
     $this->campaign_key = $_campaign_key;
     $this->source = $_source;
-    $this->remote_addr = $_remote_addr;
     $this->timestamp = date('Y-m-d H:i:s');
   }
 
@@ -76,13 +68,13 @@ class CampaignImpression {
       $deleteSql = "DELETE LOW_PRIORITY FROM CampaignImpressions WHERE TimeImpressed < DATE_SUB(NOW(), INTERVAL 1 YEAR)";
       $App->eclipse_sql($deleteSql);
     }
-
+    $remote_addr = @gethostbyaddr($App->getRemoteIPAddress());
     $sql = "INSERT DELAYED INTO CampaignImpressions
         (CampaignKey, Source, HostName, TimeImpressed)
         VALUES (
       " . $App->returnQuotedString($App->sqlSanitize($this->campaign_key)) . ",
       " . $App->returnQuotedString($App->sqlSanitize($this->source)) . ",
-      " . $App->returnQuotedString($App->sqlSanitize($this->remote_addr)) . ",
+      " . $App->returnQuotedString($App->sqlSanitize($remote_addr)) . ",
       " . $App->returnQuotedString($App->sqlSanitize($this->timestamp)) . ")";
 
     $result = $App->eclipse_sql($sql);

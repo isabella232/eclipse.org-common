@@ -48,12 +48,6 @@ class EclipseAds{
   protected $source = "";
 
   /**
-   * The remote address of the user that will view the ad
-   * @var string
-   */
-  protected $remote_addr = "";
-
-  /**
    * The total weight of all ads
    * @var int
    */
@@ -67,7 +61,6 @@ class EclipseAds{
     if ($source != "") {
       $this->source =  $source;
     }
-    $this->remote_addr = @gethostbyaddr($_SERVER['REMOTE_ADDR']);
   }
 
   /**
@@ -137,7 +130,7 @@ class EclipseAds{
       }
       $campaign = $this->ad->getCampaign();
       if (!empty($this->ad) && $campaign != "") {
-        $CampaignImpression = new CampaignImpression($campaign, $this->source, $this->remote_addr);
+        $CampaignImpression = new CampaignImpression($campaign, $this->source);
         $CampaignImpression->recordImpression();
       }
       $this->_build($layout, $this->ad->getType());

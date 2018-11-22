@@ -195,7 +195,7 @@ class Session {
       $EvtLog = new EvtLog();
       $EvtLog->setLogTable("sessions");
       $EvtLog->setPK1($Friend->getBugzillaID());
-      $EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
+      $EvtLog->setPK2($App->getRemoteIPAddress());
       $EvtLog->setLogAction("DELETE");
       $EvtLog->insertModLog("apache");
     }
@@ -243,7 +243,7 @@ class Session {
         $EvtLog = new EvtLog();
         $EvtLog->setLogTable("sessions");
         $EvtLog->setPK1($Friend->getBugzillaID());
-        $EvtLog->setPK2($_SERVER['REMOTE_ADDR']);
+        $EvtLog->setPK2($App->getRemoteIPAddress());
         $EvtLog->setLogAction("INSERT");
         $EvtLog->insertModLog("apache");
       }
@@ -312,7 +312,7 @@ class Session {
 
   function getClientSubnet() {
     # return class-c subnet
-    return substr($_SERVER['REMOTE_ADDR'], 0, strrpos($_SERVER['REMOTE_ADDR'], ".")) . ".0";
+    return substr($App->getRemoteIPAddress(), 0, strrpos($App->getRemoteIPAddress(), ".")) . ".0";
   }
 
   function redirectToLogin() {
