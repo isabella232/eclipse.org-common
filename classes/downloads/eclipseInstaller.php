@@ -32,6 +32,8 @@ class EclipseInstaller extends EclipseEnv {
 
   private $allow_toggle = TRUE;
 
+  private $release_title = "";
+
   /**
    * Constructor
    */
@@ -99,6 +101,8 @@ class EclipseInstaller extends EclipseEnv {
       $os_client = $os;
     }
 
+    $release_title = $this->getReleaseShortName(TRUE) . '&nbsp;' . $this->getReleaseType();
+
     if (!empty($layout)) {
       switch ($layout) {
         case 'layout_a':
@@ -154,6 +158,63 @@ class EclipseInstaller extends EclipseEnv {
    */
   public function setDownloadLinks() {
     $this->download_links = $this->getPlatform();
+  }
+
+  /**
+   * Set the release title
+   *
+   * @param string $title
+   */
+  public function setReleaseTitle($title) {
+    if (!empty($title)) {
+      $this->release_title = $title;
+    }
+  }
+
+  /**
+   * Get the release title
+   *
+   * @return string
+   */
+  public function getReleaseTitle() {
+    return $this->release_title;
+  }
+
+  /**
+   * Get the release short name
+   *
+   * @param bool $non_breaking_string
+   *
+   * @return string
+   */
+  public function getReleaseShortName($non_breaking_string = FALSE) {
+
+    if ($release_title = $this->getReleaseTitle()) {
+      $release_title = explode('/', $release_title);
+      $short_name = $release_title[0];
+
+      if ($non_breaking_string) {
+        $short_name = str_replace('-', '&#8209;', $short_name);
+      }
+      return $short_name;
+    }
+
+    return "";
+  }
+
+  /**
+   * Get the release type
+   *
+   * @return string
+   */
+  public function getReleaseType() {
+
+    if ($release_title = $this->getReleaseTitle()) {
+      $release_title = explode('/', $release_title);
+      return $release_title[1];
+    }
+
+    return "";
   }
 
   /**
@@ -379,6 +440,9 @@ class EclipseInstaller extends EclipseEnv {
       $this->_addLinksFromJson();
       if (!empty($this->json_data['total_download_count'])) {
         $this->total_download_count = $this->json_data['total_download_count'];
+      }
+      if (!empty($this->json_data['release_title'])) {
+        $this->setReleaseTitle($this->json_data['release_title']);
       }
     }
   }

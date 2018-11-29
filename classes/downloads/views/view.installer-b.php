@@ -18,7 +18,7 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 <div class="eclipse-installer content">
   <div class="row">
     <div class="col-md-16">
-      <h2>Try the Eclipse <strong>Installer</strong></h2>
+      <h2>Try the Eclipse <strong>Installer <small class="white"><?php print $release_title; ?></small></strong></h2>
       <p>The easiest way to install and update your Eclipse Development Environment.</p>
       <ul class="list-inline margin-bottom-0">
         <?php if ($this->getAllowToggle()) :?>
