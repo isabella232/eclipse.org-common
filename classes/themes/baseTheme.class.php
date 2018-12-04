@@ -1114,7 +1114,7 @@ EOHTML;
         break;
     }
 
-    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v1.2"/>' . PHP_EOL;
+    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v1.3"/>' . PHP_EOL;
 
     // Add og:metatags if they haven't been set.
     // @todo: deprecated og functions in App().
