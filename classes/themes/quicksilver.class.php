@@ -40,7 +40,12 @@ class Quicksilver extends solstice {
 
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
-    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://www.eclipse.org/home/images/banner_image_survey.jpg);background-repeat:no-repeat;background-position:center;",'style');
+
+    $featured_footer_bg_img = "https://www.eclipse.org/home/images/banner_image_survey.jpg";
+    if(time() >= strtotime("14 December 2018") && time() < strtotime("1 February 2019")) {
+      $featured_footer_bg_img = "https://eclipse.org/home/images/background_eclipselandingpage.jpg";
+    }
+    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(". $featured_footer_bg_img .");background-repeat:no-repeat;background-position:center;",'style');
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
@@ -168,16 +173,33 @@ EOHTML;
       }
     }
 
+    $content = '<h2 style="font-weight:400;">We Want to Hear from You!<br>
+            2018 Eclipse Foundation Brand Survey</h2>
+            <p style="font-size:18px;">Runs until December 14, 2018</p>
+            <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
+
+    if(time() >= strtotime("14 December 2018") && time() < strtotime("1 February 2019")) {
+      $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
+        'query' => array(
+          'utm_source' => "eclipse_foundation",
+          'utm_medium' => "featured_footer",
+          'utm_campaign' => "eclipse_ide_2018_12",
+        ),
+        'absolute' => TRUE
+      ));
+      $content = '<p style="font-size:16px;" class="white">Now available</p>
+            <h2 style="font-size:52px;" class="white"><strong>Eclipse IDE 2018-12</strong></h2>
+            <p style="font-size:16px;" class="white">Get the latest version of the Eclipse IDE!</p>
+            <p><a class="btn btn-primary btn-lg" href="'. $btn_url .'">Download</a></p>';
+    }
+
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
     <div{$this->getAttributes('featured-footer')}>
       <div class="container">
         <div class="row">
           <div class="{$main_container_col}">
-            <h2 style="font-weight:400;">We Want to Hear from You!<br>
-            2018 Eclipse Foundation Brand Survey</h2>
-            <p style="font-size:18px;">Runs until December 14, 2018</p>
-            <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>
+            {$content}
           </div>
           {$promo_html}
         </div>

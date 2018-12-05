@@ -768,6 +768,27 @@ EOHTML;
   }
 
   /**
+   * Build a url based on a path and a set of options
+   *
+   * @param string $path
+   * @param array $options
+   *
+   * @return string
+   */
+  public function buildUrl($path = "", $options = array()) {
+
+    if (!empty($options['absolute']) && !filter_var($path, FILTER_VALIDATE_URL)) {
+      return $path;
+    }
+
+    if (!empty($options['query'])) {
+      $path .= (strpos($path, '?') !== FALSE ? '&' : '?') . http_build_query($options['query']);
+    }
+
+    return $path;
+  }
+
+  /**
    * Get Call For Action Button Html
    *
    * @return string
