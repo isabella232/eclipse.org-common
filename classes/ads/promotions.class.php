@@ -43,7 +43,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/froglogic.gif',
       'memberName' => 'FrogLogic',
       'type' => 'paid',
-      'weight' => 6.5
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -51,15 +51,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Yatta-Eclipse-Banner-Ad-1.png',
       'memberName' => 'YATTA',
       'type' => 'paid',
-      'weight' => 6.5
-    );
-
-    $promos[] = array(
-      'url' => 'PAID_YATTA_2',
-      'imageurl' => '/membership/promo/images/Yatta-Eclipse-Banner-Ad-2.gif',
-      'memberName' => 'YATTA',
-      'type' => 'paid',
-      'weight' => 6.5
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -67,7 +59,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/cloudbees-200x200.jpg',
       'memberName' => 'Itemis',
       'type' => 'strat_ad',
-      'weight' => 6.5
+      'weight' => 7
     );
 
     /**
@@ -79,7 +71,7 @@ class Promotions {
       'memberID' => 655,
       'memberName' => 'CA',
       'type' => 'strategic',
-      'weight' => 10.5
+      'weight' => 11
     );
 
     // Strategic Member Ads
@@ -88,7 +80,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/oepe_ad_200x200.jpg',
       'memberName' => 'Oracle',
       'type' => 'strat_ad',
-      'weight' => 10.5
+      'weight' => 11
     );
 
     $promos[] = array(
@@ -96,14 +88,14 @@ class Promotions {
       'imageurl' => '/membership/promo/images/ibm200x200-ibm_cloud.jpg',
       'memberName' => 'IBM',
       'type' => 'strat_ad',
-      'weight' => 10.5
+      'weight' => 11
     );
     $promos[] = array(
       'url' => 'PROMO_SAP',
       'imageurl' => '/membership/promo/images/sap200x200.jpg',
       'memberName' => 'SAP',
       'type' => 'strat_ad',
-      'weight' => 10.5
+      'weight' => 11
     );
 
     $promos[] = array(
@@ -111,7 +103,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Sirius_ad_200.png',
       'memberName' => 'Obeo',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 8.75
     );
 
     $promos[] = array(
@@ -119,7 +111,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/PapyrusCEA.gif',
       'memberName' => 'CEA',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 8.75
     );
 
     $promos[] = array(
@@ -127,7 +119,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/payara.png',
       'memberName' => 'PAYARA',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 8.75
     );
 
     $promos[] = array(
@@ -135,7 +127,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Tomitribe-TCPP-banner-200x200.jpg',
       'memberName' => 'TOMITRIBE',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 8.75
     );
 
     if (!empty($filter)) {
