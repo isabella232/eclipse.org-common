@@ -44,7 +44,7 @@ class Breadcrumb extends Menu {
     "donate" => "Donate",
     "downloads" => "Downloads",
     "eclipse4" => "Eclipse SDK 4.x",
-    "eclipseide" => "EclipseIDE",
+    "eclipseide" => "Eclipse IDE",
     "errors" => "Errors",
     "europa" => "Europa",
     "friends" => "Friends of Eclipse",
