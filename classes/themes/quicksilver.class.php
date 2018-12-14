@@ -42,7 +42,7 @@ class Quicksilver extends solstice {
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
 
     $featured_footer_bg_img = "https://www.eclipse.org/home/images/banner_image_survey.jpg";
-    if(time() >= strtotime("19 December 2018") && time() < strtotime("1 February 2019")) {
+    if(time() >= strtotime("14 December 2018") && time() < strtotime("1 February 2019")) {
       $featured_footer_bg_img = "https://eclipse.org/home/images/background_eclipselandingpage.jpg";
     }
     $this->setAttributes('featured-footer', "background-size:cover;background-image:url(". $featured_footer_bg_img .");background-repeat:no-repeat;background-position:center;",'style');
@@ -178,7 +178,7 @@ EOHTML;
             <p style="font-size:18px;">Runs until December 14, 2018</p>
             <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
 
-    if(time() >= strtotime("19 December 2018") && time() < strtotime("1 February 2019")) {
+    if(time() >= strtotime("14 December 2018") && time() < strtotime("1 February 2019")) {
       $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
         'query' => array(
           'utm_source' => "eclipse_foundation",
@@ -187,10 +187,10 @@ EOHTML;
         ),
         'absolute' => TRUE
       ));
-      $content = '<p style="font-size:16px;" class="white">Now available</p>
+      $content = '<p style="font-size:16px;" class="white">Coming December 19, 2018</p>
             <h2 style="font-size:52px;" class="white"><strong>Eclipse IDE 2018-12</strong></h2>
             <p style="font-size:16px;" class="white">Get the latest version of the Eclipse IDE!</p>
-            <p><a class="btn btn-primary btn-lg" href="'. $btn_url .'">Download</a></p>';
+            <p><a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Learn More</a></p>';
     }
 
     return <<<EOHTML
