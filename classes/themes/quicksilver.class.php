@@ -189,7 +189,6 @@ EOHTML;
       ));
       $content = '<p style="font-size:16px;" class="white">Coming December 19, 2018</p>
             <h2 style="font-size:52px;" class="white"><strong>Eclipse IDE 2018-12</strong></h2>
-            <p style="font-size:16px;" class="white">Get the latest version of the Eclipse IDE!</p>
             <p><a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Learn More</a></p>';
     }
 
