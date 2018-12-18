@@ -178,7 +178,13 @@ EOHTML;
             <p style="font-size:18px;">Runs until December 14, 2018</p>
             <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
 
-    if(time() >= strtotime("17 December 2018") && time() < strtotime("1 February 2019")) {
+    if(time() >= strtotime("17 December 2018") && time() < strtotime("19 December 2018 10:00")) {
+      $content = '<p style="font-size:16px;" class="white">Coming December 19, 2018</p>
+            <h2 style="font-size:52px;" class="white"><strong>Eclipse IDE 2018-12</strong></h2>
+            <p><a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Learn More</a></p>';
+    }
+
+    if(time() >= strtotime("19 December 2018 10:00") && time() < strtotime("1 February 2019")) {
       $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
         'query' => array(
           'utm_source' => "eclipse_foundation",
@@ -187,9 +193,10 @@ EOHTML;
         ),
         'absolute' => TRUE
       ));
-      $content = '<p style="font-size:16px;" class="white">Coming December 19, 2018</p>
+      $content = '<p style="font-size:16px;" class="white">Now Available</p>
             <h2 style="font-size:52px;" class="white"><strong>Eclipse IDE 2018-12</strong></h2>
-            <p><a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Learn More</a></p>';
+            <p class="white">Get the latest version of the Eclipse IDE!</p>
+            <p><a class="btn btn-primary btn-lg" href="'. $btn_url .'">Download</a></p>';
     }
 
     return <<<EOHTML
