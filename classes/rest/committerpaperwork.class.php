@@ -263,7 +263,8 @@ class CommitterPaperwork extends EclipseUSSBlob {
       'election_nid',
       'election_status',
       'committer_paperwork_nid',
-      'committer_paperwork_status'
+      'committer_paperwork_status',
+      'spec_project_working_group'
     );
 
     $string_fields = array(
