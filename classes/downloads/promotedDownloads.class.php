@@ -34,19 +34,8 @@ class PromotedDownloads extends EclipseAds {
     $Ad->setImage("EMPTY");
     $Ad->setCampaign('EMPTY');
     $Ad->setUrl("https://");
-    $Ad->setWeight(60);
+    $Ad->setWeight(80);
     $Ad->setType('empty');
-    $this->newAd($Ad);
-
-    // JREBEL
-    $Ad = new Ad();
-    $Ad->setTitle('JRebel for Eclipse IDE');
-    $Ad->setBody('See Java Code Changes Instantly. Save Time. Reduce Stress. Finish Projects Faster!');
-    $Ad->setImage('/downloads/images/JRebel-42x42-dark.png');
-    $Ad->setCampaign('PROMO_DOWNLOAD_JREBEL');
-    $Ad->setUrl("https://www.eclipse.org/go/" . $Ad->getCampaign());
-    $Ad->setWeight(20);
-    $Ad->setType('default');
     $this->newAd($Ad);
 
     // YATTA
