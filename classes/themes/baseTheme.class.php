@@ -1946,6 +1946,11 @@ EOHTML;
     );
 
     $variables['Eclipse IDE'][] = array(
+      'url' => $base_url . 'eclipseide',
+      'caption' => 'Learn More'
+    );
+
+    $variables['Eclipse IDE'][] = array(
       'url' => 'https://help.eclipse.org',
       'caption' => 'Documentation'
     );
