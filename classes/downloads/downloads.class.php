@@ -74,6 +74,16 @@ class Downloads extends DownloadsProject {
 
     // Runtime Platforms item
     $Project = new DownloadsProject();
+    $Project->setTitle('GlassFish');
+    $Project->setDescription('Eclipse GlassFish provides a complete application server which serves as the reference implementation for the Jakarta EE specification.');
+    $Project->setLogo('assets/public/images/logo-glassfish.png');
+    $Project->setProjectType($this->projects['runtime_platforms']['title']);
+    $Project->setDownloadUrl64Bit('https://projects.eclipse.org/projects/ee4j.glassfish/downloads');
+    $Project->setLearnMoreUrl('https://projects.eclipse.org/projects/ee4j.glassfish');
+    $this->newProject($Project);
+
+    // Runtime Platforms item
+    $Project = new DownloadsProject();
     $Project->setTitle('Jetty');
     $Project->setDescription('Eclipse Jetty provides a web server and javax.servlet container.');
     $Project->setLogo('assets/public/images/logo-jetty.png');
@@ -112,16 +122,6 @@ class Downloads extends DownloadsProject {
     $Project->setProjectType($this->projects['runtime_platforms']['title']);
     $Project->setDownloadUrl64Bit('https://www.eclipse.org/rap/downloads/');
     $Project->setLearnMoreUrl('http://www.eclipse.org/rap/');
-    $this->newProject($Project);
-
-    // Runtime Platforms item
-    $Project = new DownloadsProject();
-    $Project->setTitle('GlassFish');
-    $Project->setDescription('Eclipse GlassFish provides a complete application server which serves as the reference implementation for the Jakarta EE specification.');
-    $Project->setLogo('assets/public/images/logo-glassfish.png');
-    $Project->setProjectType($this->projects['runtime_platforms']['title']);
-    $Project->setDownloadUrl64Bit('https://projects.eclipse.org/projects/ee4j.glassfish/downloads');
-    $Project->setLearnMoreUrl('https://projects.eclipse.org/projects/ee4j.glassfish');
     $this->newProject($Project);
 
     // Technology Communities item
