@@ -42,7 +42,7 @@ class Quicksilver extends solstice {
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
 
     $featured_footer_bg_img = "https://www.eclipse.org/home/images/banner_image_survey.jpg";
-    if(time() >= strtotime("17 December 2018") && time() < strtotime("1 February 2019")) {
+    if(time() >= strtotime("17 December 2018")) {
       $featured_footer_bg_img = "https://eclipse.org/home/images/background_eclipselandingpage.jpg";
     }
     $this->setAttributes('featured-footer', "background-size:cover;background-image:url(". $featured_footer_bg_img .");background-repeat:no-repeat;background-position:center;",'style');
@@ -184,7 +184,7 @@ EOHTML;
             <p><a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Learn More</a></p>';
     }
 
-    if(time() >= strtotime("19 December 2018 10:00") && time() < strtotime("1 February 2019")) {
+    if(time() >= strtotime("19 December 2018 10:00")) {
       $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
         'query' => array(
           'utm_source' => "eclipse_foundation",
