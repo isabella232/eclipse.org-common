@@ -39,13 +39,13 @@ class Quicksilver extends solstice {
     $this->setAttributes('img_logo_mobile', '160', 'width');
 
     // Featured footer
-    $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter background-secondary');
+    $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
     $featured_footer_bg_img = "https://www.eclipse.org/home/images/banner_image_survey.jpg";
     if(time() >= strtotime("17 December 2018")) {
-      $featured_footer_bg_img = "https://eclipse.org/home/images/background_eclipselandingpage.jpg";
+      $featured_footer_bg_img = "https://eclipse.org/home/images/whisp.png";
     }
-    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(". $featured_footer_bg_img .");background-repeat:no-repeat;background-position:center;",'style');
+    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(". $featured_footer_bg_img .");background-repeat:no-repeat;background-position:center;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
@@ -178,13 +178,12 @@ EOHTML;
             <p style="font-size:18px;">Runs until December 14, 2018</p>
             <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
 
-    if(time() >= strtotime("17 December 2018") && time() < strtotime("19 December 2018 10:00")) {
-      $content = '<p style="font-size:16px;" class="white">Coming December 19, 2018</p>
-            <h2 style="font-size:52px;" class="white"><strong>Eclipse IDE 2018-12</strong></h2>
-            <p><a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Learn More</a></p>';
+    if(time() >= strtotime("11 February 2019") && time() < strtotime("8 March 2019 10:00")) {
+      $content = '<h2><strong>The 2019 IoT Developer Survey is here! Complete it today!</strong></h2>
+            <p><a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/H6VJWDJ">Click Here</a></p>';
     }
 
-    if(time() >= strtotime("19 December 2018 10:00")) {
+    if(time() >= strtotime("8 March 2019 10:00")) {
       $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
         'query' => array(
           'utm_source' => "eclipse_foundation",

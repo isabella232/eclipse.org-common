@@ -554,26 +554,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     );
 
     $type = strtolower($type);
-    $value = explode(' ', $value);
-    foreach ($value as $val) {
-      if (in_array($type, $allowed_type) && is_string($element) && !empty($element) && !empty($val)) {
-        switch ($type) {
-          case 'class':
-            // Append classes instead of overriting them.
-            // This way we can set multiple classes for differents contexts.
-            if (!isset($this->attributes[$type][$element]) || !in_array($val, $this->attributes[$type][$element])) {
-              $this->attributes['class'][$element][] = $val;
-            }
-            break;
+    if (!in_array($type, $allowed_type) || !is_string($element) || empty($element) || empty($value)) {
+      return $this->attributes;
+    }
 
-          // For everything else, we only keep the last value set.
-          default:
-            $this->attributes[$type][$element] = array(
-              $val
-            );
-            break;
+    switch ($type) {
+      case 'class':
+        $value = explode(' ', $value);
+        foreach ($value as $val) {
+          // Append classes instead of overriting them.
+          // This way we can set multiple classes for differents contexts.
+          if (!isset($this->attributes[$type][$element]) || !in_array($val, $this->attributes[$type][$element])) {
+            $this->attributes['class'][$element][] = $val;
+          }
         }
-      }
+        break;
+
+      // For everything else, we only keep the last value set.
+      default:
+        $this->attributes[$type][$element] = array(
+          $value
+        );
+        break;
     }
     return $this->attributes;
   }
