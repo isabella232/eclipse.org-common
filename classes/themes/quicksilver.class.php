@@ -179,7 +179,7 @@ EOHTML;
             <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
 
     if(time() >= strtotime("11 February 2019") && time() < strtotime("8 March 2019 10:00")) {
-      $content = '<h2><strong>The 2019 IoT Developer Survey is here! Complete it today!</strong></h2>
+      $content = '<h2 style="color:#4c4d4e;"><strong>The 2019 IoT Developer Survey is here! Complete it today!</strong></h2>
             <p><a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/H6VJWDJ">Click Here</a></p>';
     }
 
