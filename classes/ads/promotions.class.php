@@ -56,7 +56,7 @@ class Promotions {
 
     $promos[] = array(
       'url' => 'PAID_CLOUDBEES',
-      'imageurl' => '/membership/promo/images/cloudbees-200x200.jpg',
+      'imageurl' => '/membership/promo/images/cloudbees-200x200-2.jpg',
       'memberName' => 'Itemis',
       'type' => 'strat_ad',
       'weight' => 7.5
