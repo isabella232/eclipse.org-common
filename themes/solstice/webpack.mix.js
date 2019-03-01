@@ -12,7 +12,7 @@
 */
 
 let mix = require('laravel-mix');
-mix.options({uglify: {uglifyOptions: {compress: true, mangle: false, output: {comments: '/^!/'}}}});
+mix.options({uglify: {uglifyOptions: {compress: true, output: {comments: true}}}});
 mix.setPublicPath('public');
 mix.setResourceRoot('../');
 
@@ -33,7 +33,7 @@ mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/table.less', 'pu
 
 // Copy cookieconsent files
 mix.copy('node_modules/cookieconsent/build/cookieconsent.min.css', 'public/stylesheets/vendor/cookieconsent/cookieconsent.min.css');
-mix.copy('node_modules/cookieconsent/src/cookieconsent.js', 'public/javascript/vendor/cookieconsent/cookieconsent.min.js');
+mix.copy('node_modules/cookieconsent/build/cookieconsent.min.js', 'public/javascript/vendor/cookieconsent/cookieconsent.min.js');
 
 mix.scripts([
     'node_modules/cookieconsent/src/cookieconsent.js',
