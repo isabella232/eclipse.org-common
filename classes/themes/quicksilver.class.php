@@ -42,8 +42,8 @@ class Quicksilver extends solstice {
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
     $featured_footer_bg_img = "https://www.eclipse.org/home/images/banner_image_survey.jpg";
-    if(time() >= strtotime("17 December 2018")) {
-      $featured_footer_bg_img = "https://eclipse.org/home/images/whisp.png";
+    if(time() >= strtotime("4 March 2019") && time() < strtotime("24 March 2019")) {
+      $featured_footer_bg_img = "https://eclipse.org/home/images/banner_jakarta_dev_survey_footer.jpg";
     }
     $this->setAttributes('featured-footer', "background-size:cover;background-image:url(". $featured_footer_bg_img .");background-repeat:no-repeat;background-position:center;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
 
@@ -178,12 +178,12 @@ EOHTML;
             <p style="font-size:18px;">Runs until December 14, 2018</p>
             <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
 
-    if(time() >= strtotime("11 February 2019") && time() < strtotime("8 March 2019 10:00")) {
-      $content = '<h2 style="color:#4c4d4e;"><strong>The 2019 IoT Developer Survey is here! Complete it today!</strong></h2>
-            <p><a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/H6VJWDJ">Click Here</a></p>';
+    if(time() >= strtotime("4 March 2019") && time() < strtotime("24 March 2019 10:00")) {
+      $content = '<h2 style="color:#4c4d4e;"><strong>The 2019 Jakarta EE 2019 <br>Developer Survey is now available</strong></h2>
+            <p><a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/fdnbanner">Take the Survey</a></p>';
     }
 
-    if(time() >= strtotime("8 March 2019 10:00")) {
+    if(time() >= strtotime("24 March 2019 10:00")) {
       $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
         'query' => array(
           'utm_source' => "eclipse_foundation",
