@@ -179,7 +179,7 @@ EOHTML;
             <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
 
     if(time() >= strtotime("4 March 2019") && time() < strtotime("24 March 2019 10:00")) {
-      $content = '<h2 style="color:#4c4d4e;"><strong>The 2019 Jakarta EE 2019 <br>Developer Survey is now available</strong></h2>
+      $content = '<h2 style="color:#4c4d4e;"><strong>The Jakarta EE 2019 <br>Developer Survey is now available</strong></h2>
             <p><a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/fdnbanner">Take the Survey</a></p>';
     }
 
