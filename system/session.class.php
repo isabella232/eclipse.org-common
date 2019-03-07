@@ -281,8 +281,8 @@ class Session {
       $App = new App();
       $sql = "SELECT /* USE MASTER */ gid, bugzilla_id, subnet, updated_at, data,  is_persistent
         FROM sessions
-        WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid, NULL));
-        # " AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
+        WHERE gid = " . $App->returnQuotedString($App->sqlSanitize($_gid, NULL)) . "
+        AND subnet = " . $App->returnQuotedString($this->getClientSubnet());
 
       $result = $App->eclipse_sql($sql);
       if ($result && mysql_num_rows($result) > 0) {
