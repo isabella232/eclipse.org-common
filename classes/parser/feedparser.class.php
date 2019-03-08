@@ -29,6 +29,13 @@ class FeedParser {
   private $count = 4;
 
   /**
+   * Feed object
+   *
+   * @var object
+   */
+  private $feeds = array();
+
+  /**
    * Flag to only display press_releases
    *
    * @var string
@@ -97,6 +104,7 @@ class FeedParser {
   public function addPath($path = "") {
     if (is_string($path)) {
       $this->path[] = $path;
+      $this->_setFeeds($path);
       return TRUE;
     }
     return FALSE;
@@ -192,6 +200,18 @@ class FeedParser {
    */
   public function getCount() {
     return $this->count;
+  }
+
+  /**
+   * Get page number
+   *
+   * @return string
+   */
+  public function getPage() {
+    if (!empty($_GET['page']) && is_numeric($_GET['page'])) {
+      return $_GET['page'];
+    }
+    return 1;
   }
 
   /**
@@ -295,26 +315,115 @@ class FeedParser {
   }
 
   /**
+   * Get the Next page link
+   *
+   * @return string
+   */
+  public function getPagination() {
+
+    $feeds = $this->_getFeeds();
+    if (empty($feeds)) {
+      return "";
+    }
+
+    // Count all the items of all feeds
+    $feed_items = 0;
+    foreach ($feeds as $feed) {
+      $feed_items += count($feed->channel->item);
+    }
+
+    // If the feed contains less items than the maximum allowed,
+    // we don't need pagination
+    if ($feed_items < $this->getCount()) {
+      return "";
+    }
+
+    $current_page = $this->getPage();
+    if (empty($current_page)) {
+      $current_page = 1;
+    }
+
+    $url_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) . '?';
+
+    $url_queries = array(
+      'page' => 1
+    );
+
+    $links = array();
+
+    // Add the previous page link if needed
+    $previous_page = $current_page - 1;
+    if ($previous_page > 1) {
+      $url_queries['page'] = $previous_page;
+      $links[] = '<li><a aria-label="Previous" href="' . $url_path . http_build_query($url_queries) . '"><span aria-hidden="true">&laquo;</span></a></li>';
+    }
+
+    // Get the number of pages
+    $number_of_pages = ceil($feed_items / $this->count);
+
+    // Put the current page at the center of the pagination items
+    $start_pagination = $current_page - 5;
+
+    // Or make it the first item if its within the first 5 items
+    if ($start_pagination <= 0) {
+      $start_pagination = 1;
+    }
+
+    // Add the numerical links
+    for ($i = $start_pagination; $i <= $start_pagination + 9; $i++) {
+      $active = "";
+      if ($current_page == $i) {
+        $active = ' class="active"';
+      }
+      $url_queries['page'] = $i;
+      $links[] = '<li'. $active .'><a aria-label="Previous" href="' . $url_path . http_build_query($url_queries) . '">' . $i . '</a></li>';
+
+      if ($i >= $number_of_pages) {
+        break;
+      }
+    }
+
+    // Add the next page link if needed
+    $next_page = $current_page + 1;
+    if (!empty($feed_items) && $next_page <= $number_of_pages) {
+      $url_queries['page'] = $next_page;
+      $links[] = '<li><a aria-label="Next" href="' . $url_path . http_build_query($url_queries). '"><span aria-hidden="true">&raquo;</span></a></li>';
+    }
+
+    return '<nav aria-label="Page navigation"><ul class="pagination">' . implode($links) . '</ul></nav>';
+  }
+
+  /**
    * Parse the Feed
    *
    * @return boolean
    */
   private function _parseFeeds() {
-    $path = $this->getPath();
-    if (empty($path)) {
+    $feeds = $this->_getFeeds();
+    if (empty($feeds)) {
       return FALSE;
     }
 
     $count = 0;
-    foreach ($path as $p) {
-      if (file_exists($p)) {
-        $feed = simplexml_load_file($p);
+    foreach ($feeds as $feed) {
+
+      $start_range = 0;
+      $page = $this->getPage();
+      if (!empty($page) && $page > 1) {
+        $start_range = ($page - 1) * $this->count;
       }
 
       if (isset($feed) && $feed != FALSE) {
         foreach ($feed->channel->item as $item) {
-          $feed_array = array();
-          if ($count >= $this->count) {
+
+          // Skip the items that are part of the previous page
+          if ($count < $start_range) {
+            $count++;
+            continue;
+          }
+
+          // Break if we have enough feed items in the array
+          if (count($this->items) >= $this->count) {
             break;
           }
 
@@ -339,7 +448,6 @@ class FeedParser {
           );
 
           $this->items[] = $item_array;
-          $count++;
         }
       }
     }
@@ -348,6 +456,32 @@ class FeedParser {
       return TRUE;
     }
     return FALSE;
+  }
+
+  /**
+   * Set the feeds based on the path
+   */
+  private function _setFeeds($path = "") {
+
+    if (empty($path)) {
+      return FALSE;
+    }
+
+    $feed = simplexml_load_file($path);
+    if (empty($feed)) {
+      return FALSE;
+    }
+
+    $this->feeds[] = $feed;
+  }
+
+  /**
+   * Get the feeds
+   *
+   * @return array
+   */
+  private function _getFeeds() {
+    return $this->feeds;
   }
 
 }
