@@ -36,6 +36,13 @@ class FeedParser {
   private $feeds = array();
 
   /**
+   * Flag to match height on items
+   *
+   * @var bool
+   */
+  private $match_height = FALSE;
+
+  /**
    * Flag to only display press_releases
    *
    * @var string
@@ -255,6 +262,12 @@ class FeedParser {
     return FALSE;
   }
 
+  public function setMatchHeight($match_height) {
+    if (is_bool($match_height)) {
+      $this->match_height = $match_height;
+    }
+  }
+
   /**
    * Get ViewMore link
    *
@@ -301,7 +314,12 @@ class FeedParser {
     if (!empty($this->items)) {
       $output = '<ul class="news-list-media list-unstyled">';
       foreach ($this->items as $item) {
-        $output .= '<li><a href="' . $item['link'] . '" class="media media-link">';
+        $link = '<li><a href="' . $item['link'] . '" class="media media-link">';
+        if ($this->match_height) {
+          $link = '<li><a href="' . $item['link'] . '" class="media media-link match-height-item">';
+        }
+
+        $output .= $link;
         $output .= '<p class="media-date">' . $item['date'] . '</p><h4 class="media-heading">' . $item['title'] . '</h4>';
         if ($this->getLimit() > 0) {
           $output .= '<p class="media-text">' . $item['description'] . '</p>';

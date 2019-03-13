@@ -329,7 +329,7 @@ class BaseTheme {
     $this->setAttributes('footer4', 'footer-other', 'id');
 
     // Default theme js file
-    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js?var=1.2', 'src');
+    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js?var=1.3', 'src');
   }
 
   /**
