@@ -41,11 +41,12 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    $featured_footer_bg_img = "https://www.eclipse.org/home/images/banner_image_survey.jpg";
-    if(time() >= strtotime("4 March 2019") && time() < strtotime("24 March 2019")) {
-      $featured_footer_bg_img = "https://eclipse.org/home/images/banner_jakarta_dev_survey_footer.jpg";
+    if(time() >= strtotime("4 March 2019") && time() < strtotime("20 March 2019 10:00")) {
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/banner_jakarta_dev_survey_footer.jpg);background-repeat:no-repeat;background-position:center;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
     }
-    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(". $featured_footer_bg_img .");background-repeat:no-repeat;background-position:center;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
+    else {
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-03-bg.png);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
+    }
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
@@ -178,26 +179,26 @@ EOHTML;
             <p style="font-size:18px;">Runs until December 14, 2018</p>
             <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
 
-    if(time() >= strtotime("4 March 2019") && time() < strtotime("24 March 2019 10:00")) {
+    if(time() >= strtotime("4 March 2019") && time() < strtotime("20 March 2019 10:00")) {
       $content = '<h2 style="color:#4c4d4e;"><strong>The Jakarta EE 2019 <br>Developer Survey is now available</strong></h2>
             <p><a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/fdnbanner">Take the Survey</a></p>';
     }
 
-    if(time() >= strtotime("24 March 2019 10:00")) {
+    if(time() >= strtotime("20 March 2019 10:00")) {
       $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
         'query' => array(
           'utm_source' => "eclipse_foundation",
           'utm_medium' => "featured_footer",
-          'utm_campaign' => "eclipse_ide_2018_12",
+          'utm_campaign' => "eclipse_ide_2019_03",
         ),
         'absolute' => TRUE
       ));
       $content = '<p style="font-size:16px;" class="white">Now Available</p>
-            <h2 style="font-size:52px;" class="white"><strong>Eclipse IDE 2018-12</strong></h2>
-            <p class="white">Get the latest version of the Eclipse IDE!</p>
+            <h2 style="font-size:52px;"><strong>Eclipse IDE 2019-03</strong></h2>
+            <p>Get the latest version of the Eclipse IDE 2019-03</p>
             <ul class="list-inline">
               <li><a class="btn btn-primary" href="'. $btn_url .'">Download</a></li>
-              <li><a class="btn btn-simple" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
+              <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
             </ul>';
     }
 
