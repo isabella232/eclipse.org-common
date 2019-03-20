@@ -33,7 +33,6 @@ class Eclipse_ide extends Quicksilver {
 
 
     $this->removeAttributes('featured-footer', 'background-secondary');
-    $this->setAttributes('featured-footer', 'background-tertiary');
 
   }
 }
