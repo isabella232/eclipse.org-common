@@ -195,7 +195,7 @@ EOHTML;
       ));
       $content = '<p style="font-size:16px;" class="white">Now Available</p>
             <h2 style="font-size:52px;"><strong>Eclipse IDE 2019-03</strong></h2>
-            <p>Get the latest version of the Eclipse IDE 2019-03</p>
+            <p>Get the latest version of the Eclipse IDE.</p>
             <ul class="list-inline">
               <li><a class="btn btn-primary" href="'. $btn_url .'">Download</a></li>
               <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
