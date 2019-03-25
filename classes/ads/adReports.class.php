@@ -89,7 +89,7 @@ class AdReports {
    * This function creates a new temporary impressions table
    * */
   private function _fetchImpressions() {
-    $sql = "SELECT
+    $sql = "SELECT /* USE MASTER */
             campaignKey,
             count(*) as impressions,
             str_to_date(concat(yearweek(TimeImpressed), ' Sunday'), '%X%V %W') as date
@@ -112,7 +112,7 @@ class AdReports {
    * This function creates a new temporary Clicks table
    * */
   private function _fetchClicks() {
-    $sql = "SELECT
+    $sql = "SELECT /* USE MASTER */
               campaignKey,
               count(*) as clicks,
               str_to_date(concat(yearweek(TimeClicked), ' Sunday'), '%X%V %W') as date
