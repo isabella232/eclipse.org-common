@@ -56,8 +56,8 @@ class Solstice extends baseTheme {
     $this->setFooterLinks("projects", "Community of Projects", $this->getBaseUrl() . "projects", "region_4", 2);
     $this->setFooterLinks("working_groups", "Working Groups", $this->getBaseUrl() . "org/workinggroups/", "region_4", 3);
     $this->setFooterLinks("research", "Research@Eclipse", $this->getBaseUrl() . "org/research/", "region_4", 4);
-    $this->setFooterLinks("service_status", "Service Status", "https://status.eclipse.org", "region_4", 5);
-
+    $this->setFooterLinks("security", "Report a Vulnerability", $this->getBaseUrl() . "security/", "region_4", 5);
+    $this->setFooterLinks("service_status", "Service Status", "https://status.eclipse.org", "region_4", 6);
   }
 
   /**
