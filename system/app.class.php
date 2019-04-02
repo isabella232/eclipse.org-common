@@ -226,6 +226,14 @@ class App {
    */
   private $OutDatedMsg = "";
 
+
+  /**
+   * Prevent caching flag
+   *
+   * @var bool
+   */
+  private $prevent_caching = FALSE;
+
   /**
    * Development mode flag
    *
@@ -260,6 +268,13 @@ class App {
    * Messages variable
    */
   private $Messages = NULL;
+
+  /**
+   * Sessions()
+   *
+   * @var unknown
+   */
+  private $Session = NULL;
 
   // Default constructor
   function __construct() {
@@ -762,10 +777,22 @@ class App {
     if (session_id() == '') {
       session_start();
     }
-    header("Cache-Control: no-store, no-cache, private, must-revalidate, max-age=0, max-stale=0");
-    header("Cache-Control: post-check=0, pre-check=0", FALSE);
-    header("Pragma: no-cache");
-    header("Expires: 0");
+    $this->prevent_caching = TRUE;
+  }
+
+  /**
+   * Get Prevent Caching Flag
+   *
+   * @return boolean
+   */
+  function getPreventCaching() {
+    $Session = $this->useSession();
+    $gid = $Session->getGID();
+    if (!empty($gid)) {
+      return TRUE;
+    }
+
+    return (is_bool($this->prevent_caching)) ? $this->prevent_caching : FALSE;
   }
 
   /**
@@ -1457,11 +1484,15 @@ class App {
    */
   function useSession($required = "") {
     require_once ($this->getBasePath() . "/system/session.class.php");
-    $ssn = new Session(); // constructor calls validate
-    if ($ssn->getGID() == "" && $required == "required") {
-      $ssn->redirectToLogin();
+    if ($this->Session instanceof Session) {
+      return $this->Session;
     }
-    return $ssn;
+
+    $this->Session = new Session(); // constructor calls validate
+    if ($this->Session->getGID() == "" && $required == "required") {
+      $this->Session->redirectToLogin();
+    }
+    return $this->Session;
   }
 
   /**

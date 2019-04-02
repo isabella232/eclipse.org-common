@@ -40,6 +40,8 @@ class Session {
 
   private $login_page = "";
 
+  private $cookies_sent = FALSE;
+
   /**
    * Default constructor
    *
@@ -258,10 +260,10 @@ class Session {
    */
   public function setEclipseSessionCookies(){
     $gid = $this->getGID();
-    if (empty($gid)) {
+    if (empty($gid) || $this->cookies_sent) {
       return FALSE;
     }
-
+    $this->cookies_sent = TRUE;
     $cookie_time = 0;
     if ($this->getIsPersistent()) {
       $cookie_time = time()+3600*24*7;

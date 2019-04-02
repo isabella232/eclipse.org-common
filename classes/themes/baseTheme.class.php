@@ -2367,6 +2367,23 @@ EOHTML;
       $this->setAttributes('body', 'hidden-cfa-button');
     }
 
+    // Generate caching headers
+    if ($this->App->getPreventCaching()) {
+      $ts = gmdate("D, d M Y H:i:s") . " GMT";
+      header("Cache-Control: no-cache, must-revalidate");
+      header("Pragma: no-cache");
+      header("Last-Modified: ". $ts);
+      header("Expires:" . $ts);
+    }
+    else{
+      // 15 minute caching for html php pages
+      $caching_seconds = 900;
+      $ts = gmdate("D, d M Y H:i:s", time() + $caching_seconds) . " GMT";
+      header("Expires:" . $ts);
+      header("Pragma: cache");
+      header("Cache-Control: max-age=" . $caching_seconds);
+    }
+
     ob_start();
     switch ($this->getLayout()) {
       case 'barebone':
