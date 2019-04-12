@@ -262,10 +262,24 @@ class FeedParser {
     return FALSE;
   }
 
+  /**
+   * Set Match Height
+   *
+   * @param bool $match_height
+   */
   public function setMatchHeight($match_height) {
     if (is_bool($match_height)) {
       $this->match_height = $match_height;
     }
+  }
+
+  /**
+   * Get Match Height
+   *
+   * @return bool
+   */
+  public function getMatchHeight() {
+    return $this->match_height;
   }
 
   /**
@@ -312,21 +326,17 @@ class FeedParser {
 
     $output = '';
     if (!empty($this->items)) {
-      $output = '<ul class="news-list-media list-unstyled">';
+      $output .= '<div class="block-summary">';
       foreach ($this->items as $item) {
-        $link = '<li><a href="' . $item['link'] . '" class="media media-link">';
-        if ($this->match_height) {
-          $link = '<li><a href="' . $item['link'] . '" class="media media-link match-height-item">';
-        }
-
-        $output .= $link;
-        $output .= '<p class="media-date">' . $item['date'] . '</p><h4 class="media-heading">' . $item['title'] . '</h4>';
+        $output .= '<div class="block-summary-item '. ($this->getMatchHeight() ? 'match-height-item' : "") .'">';
+        $output .= '<p>' . $item['date'] . '</p>';
+        $output .= '<h4><a href="'. $item['link'] .'">' . $item['title'] . '</a></h4>';
         if ($this->getLimit() > 0) {
-          $output .= '<p class="media-text">' . $item['description'] . '</p>';
+          $output .= '<p>' . $item['description'] . '</p>';
         }
-        $output .= ' </a></li>';
+        $output .= '</div>';
       }
-      $output .= '</ul>';
+      $output .= '</div>';
     }
 
     return $output;

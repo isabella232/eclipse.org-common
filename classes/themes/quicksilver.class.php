@@ -42,10 +42,10 @@ class Quicksilver extends solstice {
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
     if(time() >= strtotime("17 April 2019 9:00") && time() < strtotime("7 May 2019")) {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/iot-survey-bg.jpg);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/iot-survey-bg.jpg);border-bottom:1px solid #ccc;",'style');
     }
     else {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-03-bg.png);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-03-bg.png);border-bottom:1px solid #ccc;",'style');
     }
 
     // Set attributes on main sidebar
@@ -182,7 +182,7 @@ EOHTML;
         ),
         'absolute' => TRUE
       ));
-      $content = '<p style="font-size:16px;" class="white">Now Available</p>
+      $content = '<p style="font-size:16px;">Now Available</p>
             <h2 style="font-size:52px;"><strong>Eclipse IDE 2019-03</strong></h2>
             <p>Get the latest version of the Eclipse IDE.</p>
             <ul class="list-inline">
