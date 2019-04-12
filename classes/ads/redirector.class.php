@@ -108,10 +108,12 @@ class Redirector {
    * @return boolean
    */
   public function setImpressionId($impression_click_id = "") {
-    if (!empty($impression_click_id)) {
+    if (ctype_alnum($impression_click_id) && (strlen($impression_click_id) >= 32 && strlen($impression_click_id) <= 64)) {
       $this->impression_click_id = $impression_click_id;
       return TRUE;
     }
+
+    $this->impression_click_id = NULL;
     return FALSE;
   }
 
@@ -184,7 +186,6 @@ class Redirector {
     $subtag = (!empty($subtag)) ? $App->returnQuotedString($App->sqlSanitize($subtag)) : 'NULL';
 
    // Make sure we have a valid impression Id
-    $this->_validateImpressionId();
     $impression_click_id = $this->getImpressionId();
     $impression_click_id = (!empty($impression_click_id)) ? $App->returnQuotedString($App->sqlSanitize($impression_click_id)) : 'NULL';
 
@@ -227,25 +228,5 @@ class Redirector {
     exit();
   }
 
-  /**
-   * Validate ImpressionId
-   *
-   * @return boolean
-   */
-  protected function _validateImpressionId() {
-    $impression_click_id = $this->getImpressionId();
-    if (empty($impression_click_id)) {
-      $this->impression_click_id = NULL;
-      return FALSE;
-    }
-    $App = new App();
-    $sql = "SELECT ImpressionClickID FROM CampaignImpressions WHERE ImpressionClickID = " . $App->returnQuotedString($App->sqlSanitize($impression_click_id));
-    $result = $App->eclipse_sql($sql);
-    if ($row = mysql_fetch_assoc($result)) {
-      return TRUE;
-    }
-    $this->impression_click_id = NULL;
-    return FALSE;
-  }
 
 }
