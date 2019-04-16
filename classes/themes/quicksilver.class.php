@@ -41,8 +41,8 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    if(time() >= strtotime("4 March 2019") && time() < strtotime("20 March 2019 10:00")) {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/banner_jakarta_dev_survey_footer.jpg);background-repeat:no-repeat;background-position:center;clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
+    if(time() >= strtotime("17 April 2019 9:00") && time() < strtotime("7 Mai 2019")) {
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.php53.dev.docker/home/images/iot-survey-bg.jpg);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
     }
     else {
       $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-03-bg.png);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
@@ -174,18 +174,7 @@ EOHTML;
       }
     }
 
-    $content = '<h2 style="font-weight:400;">We Want to Hear from You!<br>
-            2018 Eclipse Foundation Brand Survey</h2>
-            <p style="font-size:18px;">Runs until December 14, 2018</p>
-            <p><a class="btn btn-primary" href="https://bit.ly/2yS61ap">Take the Survey!</a></p>';
-
-    if(time() >= strtotime("4 March 2019") && time() < strtotime("20 March 2019 10:00")) {
-      $content = '<h2 style="color:#4c4d4e;"><strong>The Jakarta EE 2019 <br>Developer Survey is now available</strong></h2>
-            <p><a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/fdnbanner">Take the Survey</a></p>';
-    }
-
-    if(time() >= strtotime("20 March 2019 10:00")) {
-      $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
+    $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
         'query' => array(
           'utm_source' => "eclipse_foundation",
           'utm_medium' => "featured_footer",
@@ -200,6 +189,10 @@ EOHTML;
               <li><a class="btn btn-primary" href="'. $btn_url .'">Download</a></li>
               <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
             </ul>';
+
+    if(time() >= strtotime("17 April 2019 9:00") && time() < strtotime("7 Mai 2019")) {
+      $content = '<h2><strong>Explore our 5th annual <br> IoT Developer Survey Results!</strong></h2>
+          <a class="btn btn-primary btn-lg" href="https://iot.eclipse.org/resources/iot-developer-survey/iot-developer-survey-2019.pdf">See the Results</a>';
     }
 
     return <<<EOHTML
