@@ -41,8 +41,8 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    if(time() >= strtotime("17 April 2019 9:00") && time() < strtotime("7 Mai 2019")) {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.php53.dev.docker/home/images/iot-survey-bg.jpg);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
+    if(time() >= strtotime("17 April 2019 9:00") && time() < strtotime("7 May 2019")) {
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/iot-survey-bg.jpg);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
     }
     else {
       $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-03-bg.png);clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);-webkit-clip-path:polygon(0 8%,100% 0,100% 100%,0 100%);border-bottom:1px solid #ccc;",'style');
@@ -190,9 +190,9 @@ EOHTML;
               <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
             </ul>';
 
-    if(time() >= strtotime("17 April 2019 9:00") && time() < strtotime("7 Mai 2019")) {
+    if(time() >= strtotime("17 April 2019 9:00") && time() < strtotime("7 May 2019")) {
       $content = '<h2><strong>Explore our 5th annual <br> IoT Developer Survey Results!</strong></h2>
-          <a class="btn btn-primary btn-lg" href="https://iot.eclipse.org/resources/iot-developer-survey/iot-developer-survey-2019.pdf">See the Results</a>';
+          <a class="btn btn-primary btn-lg" href="https://iot.eclipse.org/iot-developer-surveys/">See the Results</a>';
     }
 
     return <<<EOHTML
