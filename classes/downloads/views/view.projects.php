@@ -15,7 +15,7 @@
 ?>
 <!-- Downloads-item -->
 <div class="<?php print $project->getProjectsAttributes('container','class'); ?>" style="<?php print $project->getProjectsAttributes('container','style'); ?>">
-  <span class="downloads-logo vertical-align"><img height="<?php print $project->getProjectsAttributes('image','height'); ?>" alt="<?php print $project->getTitle(); ?>" src="<?php print $project->getLogo(); ?>"></span>
+  <span class="downloads-logo vertical-align"><img height="<?php print $project->getProjectsAttributes('image','height'); ?>" alt="<?php print $project->getTitle(); ?>" src="<?php print $project->getLogo(); ?>?version=1"></span>
   <p><?php print $project->getDescription(); ?></p>
   <p class="visible-xs visible-sm"><a href="<?php print $project->getDownloadUrl64Bit(); ?>" class="btn btn-warning btn-xs">Get it</a></p>
   <p class="visible-xs visible-sm downloads-items-hover-box-links"><a href="<?php print $project->getLearnMoreUrl(); ?>">Learn More</a></p>
