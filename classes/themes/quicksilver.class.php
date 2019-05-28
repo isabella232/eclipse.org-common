@@ -41,8 +41,8 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    if(time() >= strtotime("14 May 2019 8:00") && time() < strtotime("25 June 2019")) {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/banner_jakarta_dev_survey_footer_02.jpg);border-bottom:1px solid #ccc;",'style');
+    if(time() >= strtotime("27 May 2019 8:00") && time() < strtotime("25 June 2019")) {
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/ece-2019-footer-banner.jpg);border-bottom:1px solid #ccc;",'style');
     }
     else {
       $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-03-bg.png);border-bottom:1px solid #ccc;",'style');
@@ -190,9 +190,10 @@ EOHTML;
               <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
             </ul>';
 
-    if(time() >= strtotime("14 May 2019 8:00") && time() < strtotime("25 June 2019")) {
-      $content = '<h2><strong>The 2019 Jakarta EE Developer Survey results are out!</strong></h2>
-          <a class="btn btn-primary btn-lg" href="https://jakarta.ee/documents/insights/2019-jakarta-ee-developer-survey.pdf">See the report!</a>';
+    if(time() >= strtotime("27 May 2019 8:00") && time() < strtotime("25 June 2019")) {
+      $content = '<h2><strong>EclipseCon Europe 2019 Call for Papers is now open!</strong></h2>
+                  <p>The early-bird deadline is July 1 and final submission is July 15.</p>
+          <a class="btn btn-primary btn-lg" href="https://www.eclipsecon.org/europe2019/cfp">Submit your talk</a>';
     }
 
     return <<<EOHTML
