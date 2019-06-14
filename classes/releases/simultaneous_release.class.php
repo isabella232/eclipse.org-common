@@ -27,6 +27,16 @@ class SimultaneousRelease {
       return array();
     }
 
+    if (!function_exists("sortByProjectName")) {
+      function sortByProjectName($a, $b) {
+        $a = $a['project_name'];
+        $b = $b['project_name'];
+        if ($a == $b) return 0;
+        return ($a < $b) ? -1 : 1;
+      }
+    }
+    uasort($projects, 'sortByProjectName');
+
     $links = array();
     foreach ($projects as $project) {
       if (empty($project['project_name']) || empty($project['new_and_noteworthy_url']) || !filter_var($project['new_and_noteworthy_url'], FILTER_VALIDATE_URL)) {
