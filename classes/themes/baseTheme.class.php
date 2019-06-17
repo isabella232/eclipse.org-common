@@ -2266,6 +2266,7 @@ EOHTML;
           $user_name = 'Anonymous';
           if (!$first_name = $Friend->getFirstName() && !$last_name = $Friend->getLastName()) {
             $user_name = $Friend->getFirstName() . ' ' . $Friend->getLastName();
+            $user_name = htmlspecialchars($user_name, ENT_QUOTES, 'UTF-8');
           }
           $this->session_variables['dropdown'] = 'Welcome, ' . $user_name;
           $this->session_variables['manage_account'] = '<a href="https://www.eclipse.org/user/' . $Friend->getUID() . '"><i class="fa fa-user"></i> View Profile</a>';

@@ -134,11 +134,11 @@ class Friend {
   }
 
   function setFirstName($_first_name) {
-    $this->first_name = $_first_name;
+    $this->first_name = preg_replace('/[<>]/', '', $_first_name);
   }
 
   function setLastName($_last_name) {
-    $this->last_name = $_last_name;
+    $this->last_name = preg_replace('/[<>]/', '', $_last_name);
   }
 
   function setDateJoined($_date_joined) {
