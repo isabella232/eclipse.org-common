@@ -45,7 +45,7 @@ class Quicksilver extends solstice {
       $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/ece-2019-footer-banner.jpg);border-bottom:1px solid #ccc;",'style');
     }
     else {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-06-bg.png);border-bottom:1px solid #ccc;",'style');
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-06-bg.jpg);border-bottom:1px solid #ccc;",'style');
     }
 
     // Set attributes on main sidebar
