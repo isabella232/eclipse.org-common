@@ -41,11 +41,11 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    if(time() >= strtotime("27 May 2019 8:00") && time() < strtotime("25 June 2019")) {
+    if(time() >= strtotime("26 June 2019 8:00")) {
       $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/ece-2019-footer-banner.jpg);border-bottom:1px solid #ccc;",'style');
     }
     else {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-03-bg.png);border-bottom:1px solid #ccc;",'style');
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-06-bg.png);border-bottom:1px solid #ccc;",'style');
     }
 
     // Set attributes on main sidebar
@@ -178,19 +178,19 @@ EOHTML;
         'query' => array(
           'utm_source' => "eclipse_foundation",
           'utm_medium' => "featured_footer",
-          'utm_campaign' => "eclipse_ide_2019_03",
+          'utm_campaign' => "eclipse_ide_2019_06",
         ),
         'absolute' => TRUE
       ));
       $content = '<p style="font-size:16px;">Now Available</p>
-            <h2 style="font-size:52px;"><strong>Eclipse IDE 2019-03</strong></h2>
+            <h2 style="font-size:52px;"><strong>Eclipse IDE 2019-06</strong></h2>
             <p>Get the latest version of the Eclipse IDE.</p>
             <ul class="list-inline">
               <li><a class="btn btn-primary" href="'. $btn_url .'">Download</a></li>
               <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
             </ul>';
 
-    if(time() >= strtotime("27 May 2019 8:00") && time() < strtotime("25 June 2019")) {
+    if(time() >= strtotime("26 June 2019 8:00")) {
       $content = '<h2><strong>EclipseCon Europe 2019 Call for Papers is now open!</strong></h2>
                   <p>The early-bird deadline is July 1 and final submission is July 15.</p>
           <a class="btn btn-primary btn-lg" href="https://www.eclipsecon.org/europe2019/cfp">Submit your talk</a>';
