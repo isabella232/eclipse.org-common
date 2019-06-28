@@ -44,8 +44,7 @@ class Membership {
   private $member_name = "";
 
   function __construct(){
-    global $App;
-    $this->App = $App;
+    $this->App = new App();
     $this->members = array(
       'strategic' => array(
         'content_class' => 'tab-pane active',
