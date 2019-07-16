@@ -41,8 +41,8 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    if(time() >= strtotime("26 June 2019 8:00")) {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/ece-2019-footer-banner.jpg);border-bottom:1px solid #ccc;",'style');
+    if(time() >= strtotime("15 July 2019 8:00") && time() < strtotime("31 July 2019 8:00")) {
+      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/ebook-banner.jpg);border-bottom:1px solid #ccc;",'style');
     }
     else {
       $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-06-bg.jpg);border-bottom:1px solid #ccc;",'style');
@@ -190,10 +190,10 @@ EOHTML;
               <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
             </ul>';
 
-    if(time() >= strtotime("26 June 2019 8:00")) {
-      $content = '<h2><strong>EclipseCon Europe 2019 Call for Papers is now open!</strong></h2>
-                  <p>The early-bird deadline is July 1 and final submission is July 15.</p>
-          <a class="btn btn-primary btn-lg" href="https://www.eclipsecon.org/europe2019/cfp">Submit your talk</a>';
+    if(time() >= strtotime("15 July 2019 8:00") && time() < strtotime("31 July 2019 8:00")) {
+      $content = '<h2><strong>New eBook: The Business Value of Open Source</strong></h2>
+                  <p>Fuel your company\'s digital transformation with the help of our free eBook!</p>
+          <a class="btn btn-primary btn-lg" href="http://bit.ly/2l9NHoW">Download now</a>';
     }
 
     return <<<EOHTML
