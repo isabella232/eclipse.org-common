@@ -342,6 +342,27 @@ class BaseTheme {
   }
 
   /**
+   * Get a featured story from the provided xml file
+   *
+   * @param $xml_file
+   *
+   * @return array
+   */
+  public function getFeaturedStory($xml_file) {
+    $App = $this->_getApp();
+    require_once($App->getBasePath() . '/classes/ads/featuredStory.class.php');
+    $FeaturedStory = new FeaturedStory();
+    if ($FeaturedStory instanceof FeaturedStory) {
+      $FeaturedStory->setXmlData('featured-story.xml');
+      $featured_story = $FeaturedStory->getFeaturedStory();
+      if (!empty($featured_story)) {
+        return $featured_story;
+      }
+    }
+    return array();
+  }
+
+  /**
    * Get Google Tag Manager
    *
    * Insert this code as high in the <head> of the page as possible.
