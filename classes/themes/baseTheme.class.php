@@ -353,9 +353,12 @@ class BaseTheme {
     require_once($App->getBasePath() . '/classes/ads/featuredStory.class.php');
     $FeaturedStory = new FeaturedStory();
     if ($FeaturedStory instanceof FeaturedStory) {
-      $FeaturedStory->setXmlData('featured-story.xml');
+      $FeaturedStory->setXmlData($xml_file);
       $featured_story = $FeaturedStory->getFeaturedStory();
       if (!empty($featured_story)) {
+        if (!empty($featured_story['bg_image'])) {
+          $this->setExtraHeaders('<style>.featured-story-block-content:before {background-image:url(//www.eclipse.org/home/' . $featured_story['bg_image'] . ');}</style>');
+        }
         return $featured_story;
       }
     }
