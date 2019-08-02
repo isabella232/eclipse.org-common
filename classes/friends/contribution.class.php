@@ -16,7 +16,7 @@ class Contribution {
 
   private $friend_id = "";
 
-  private $contribution_id = "";
+  private $contribution_id = NULL;
 
   private $date_expired = NULL;
 
@@ -119,7 +119,6 @@ class Contribution {
       # insert
       $sql = "INSERT INTO " . $this->table_prefix . "friends_contributions (
           friend_id,
-          contribution_id,
           date_expired,
           amount,
           message,
@@ -129,7 +128,6 @@ class Contribution {
         )
           VALUES (
           " . $App->returnQuotedString($App->sqlSanitize($this->getFriendID())) . ",
-          " . $App->returnQuotedString($App->sqlSanitize($this->getContributionID())) . ",
           " . $default_date_expired . ",
           " . $App->returnQuotedString($App->sqlSanitize($this->getAmount())) . ",
           " . $App->returnQuotedString($App->sqlSanitize($this->getMessage())) . ",
