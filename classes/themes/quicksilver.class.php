@@ -174,27 +174,7 @@ EOHTML;
       }
     }
 
-    $btn_url = $this->buildUrl("https://www.eclipse.org/go/PROMO_ECLIPSEIDE_FOOTER", array(
-        'query' => array(
-          'utm_source' => "eclipse_foundation",
-          'utm_medium' => "featured_footer",
-          'utm_campaign' => "eclipse_ide_2019_06",
-        ),
-        'absolute' => TRUE
-      ));
-      $content = '<p style="font-size:16px;">Now Available</p>
-            <h2 style="font-size:52px;"><strong>Eclipse IDE 2019-06</strong></h2>
-            <p>Get the latest version of the Eclipse IDE.</p>
-            <ul class="list-inline">
-              <li><a class="btn btn-primary" href="'. $btn_url .'">Download</a></li>
-              <li><a class="btn btn-default" href="https://www.eclipse.org/eclipseide/">Learn More</a></li>
-            </ul>';
-
-    if(time() >= strtotime("15 July 2019 8:00") && time() < strtotime("31 July 2019 8:00")) {
-      $content = '<h2><strong>New eBook: The Business Value of Open Source</strong></h2>
-                  <p>Fuel your company\'s digital transformation with the help of our free eBook!</p>
-          <a class="btn btn-primary btn-lg" href="http://bit.ly/2l9NHoW">Download now</a>';
-    }
+    $featured_story = $this->getFeaturedStory($this->getFeaturedStoryXml());
 
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
@@ -202,7 +182,9 @@ EOHTML;
       <div class="container">
         <div class="row">
           <div class="{$main_container_col}">
-            {$content}
+            {$featured_story['title']}
+            {$featured_story['body']}
+            {$featured_story['link']}
           </div>
           {$promo_html}
         </div>

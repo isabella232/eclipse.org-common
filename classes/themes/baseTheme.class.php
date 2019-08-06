@@ -105,6 +105,11 @@ class BaseTheme {
   protected $extra_header_html = "";
 
   /**
+   * Featured story xml path
+   */
+  protected $featured_story_xml = "";
+
+  /**
    * Links for the footer
    *
    * @var array
@@ -342,18 +347,42 @@ class BaseTheme {
   }
 
   /**
+   * Get a featured story xml path
+   *
+   * @return string
+   */
+  public function getFeaturedStoryXml() {
+    if (empty($this->featured_story_xml)) {
+      $this->setFeaturedStoryXml();
+    }
+    return $this->featured_story_xml;
+  }
+
+  /**
+   * Set a featured story xml path
+   *
+   * @param string $url
+   */
+  public function setFeaturedStoryXml($url = "") {
+    $this->featured_story_xml = realpath(dirname(__FILE__) . "/../../data/featured-story.xml");
+    if (!empty($url) && file_exists($url)) {
+      $this->featured_story_xml = $url;
+    }
+  }
+
+  /**
    * Get a featured story from the provided xml file
    *
    * @param $xml_file
    *
    * @return array
    */
-  public function getFeaturedStory($xml_file) {
+  public function getFeaturedStory() {
     $App = $this->_getApp();
     require_once($App->getBasePath() . '/classes/ads/featuredStory.class.php');
     $FeaturedStory = new FeaturedStory();
     if ($FeaturedStory instanceof FeaturedStory) {
-      $FeaturedStory->setXmlData($xml_file);
+      $FeaturedStory->setXmlData($this->getFeaturedStoryXml());
       $featured_story = $FeaturedStory->getFeaturedStory();
       if (!empty($featured_story)) {
         if (!empty($featured_story['bg_image'])) {
