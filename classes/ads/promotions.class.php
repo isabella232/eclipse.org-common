@@ -130,6 +130,14 @@ class Promotions {
       'weight' => 10
     );
 
+    $promos[] = array(
+      'url' => 'PROMO_ECE2019',
+      'imageurl' => '/membership/promo/images/ece2019_register_now_200x200.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 10
+    );
+
     if (!empty($filter)) {
       $filter_promo = array();
       foreach ($promos as $ad) {

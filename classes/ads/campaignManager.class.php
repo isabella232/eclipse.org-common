@@ -243,7 +243,7 @@ class CampaignManager extends Campaign{
     $campaign_name = $App->returnQuotedString($App->sqlSanitize($this->getCampaignName()));
     $campaign_target = $App->returnQuotedString($App->sqlSanitize($this->getCampaignTarget()));
     $campaign_end_date = $App->returnQuotedString($App->sqlSanitize($this->getCampaignEndDate()));
-    $campaign_portal_ID = $App->returnQuotedString($App->sqlSanitize($this->Friend->getEmail()));
+    $campaign_portal_ID = $App->returnQuotedString($App->sqlSanitize($this->Friend->getUID()));
     $campaign_group = $App->returnQuotedString($App->sqlSanitize($this->getCampaignGroup()));
 
     // Define default message
