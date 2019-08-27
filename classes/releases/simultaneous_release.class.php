@@ -54,6 +54,9 @@ class SimultaneousRelease {
    */
   public function getProjects() {
     $path = $this->getFilePath();
+    if (empty($path)) {
+      return array();
+    }
     $json_data = json_decode(file_get_contents($path), TRUE);
     if (!empty($json_data)) {
       $json_data = reset($json_data);
