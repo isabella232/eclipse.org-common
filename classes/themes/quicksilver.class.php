@@ -41,12 +41,8 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    if(time() >= strtotime("15 July 2019 8:00") && time() < strtotime("31 July 2019 8:00")) {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/ebook-banner.jpg);border-bottom:1px solid #ccc;",'style');
-    }
-    else {
-      $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/images/2019-06-bg.jpg);border-bottom:1px solid #ccc;",'style');
-    }
+    $featured_story = $this->getFeaturedStory($this->getFeaturedStoryXml());
+    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/". $featured_story['bg_image'] .");border-bottom:1px solid #ccc;",'style');
 
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
