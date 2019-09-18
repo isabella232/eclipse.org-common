@@ -123,14 +123,6 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTAONE',
-      'imageurl' => '/membership/promo/images/livestream_website_banner.png',
-      'memberName' => 'JakartaOne',
-      'type' => 'strat_ad',
-      'weight' => 10
-    );
-
-    $promos[] = array(
       'url' => 'PROMO_ECE2019',
       'imageurl' => '/membership/promo/images/ece2019_register_now_200x200.png',
       'memberName' => 'EclipseFoundation',
