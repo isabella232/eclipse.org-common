@@ -80,6 +80,7 @@ class Downloads extends DownloadsProject {
     $Project->setProjectType($this->projects['runtime_platforms']['title']);
     $Project->setDownloadUrl64Bit('https://projects.eclipse.org/projects/ee4j.glassfish/downloads');
     $Project->setLearnMoreUrl('https://projects.eclipse.org/projects/ee4j.glassfish');
+    $Project->setProjectsAttributes('image','height','75');
     $this->newProject($Project);
 
     // Runtime Platforms item
