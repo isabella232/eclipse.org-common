@@ -2096,6 +2096,13 @@ class App {
       if ($this->devmode || $this->logsql) {
         $this->SQLBacktrace();
       }
+      # capture and flush the buffer
+      $html = ob_get_contents();
+      ob_end_clean();
+      header('HTTP/1.1 500 Internal Server Error');
+
+      # Send the error to the screen. This may not be desirable
+      echo $html;
       exit();
     }
   }
