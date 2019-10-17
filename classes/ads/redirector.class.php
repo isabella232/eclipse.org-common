@@ -82,7 +82,7 @@ class Redirector {
     if (empty($tag)) {
       return FALSE;
     }
-    $sql = "SELECT TargetUrl as url FROM Campaigns WHERE CampaignKey = " . $App->returnQuotedString($App->sqlSanitize($tag)) . " AND DateExpires > CURDATE()";
+    $sql = "SELECT TargetUrl as url FROM Campaigns WHERE CampaignKey = " . $App->returnQuotedString($App->sqlSanitize($tag));
     $result = $App->eclipse_sql($sql);
     if ($row = mysql_fetch_assoc($result)) {
       return $row;
