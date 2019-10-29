@@ -22,7 +22,7 @@ class FeaturedStory {
    *
    * @return array
    */
-  public function getFeaturedStory() {
+  public function getFeaturedStory($add_backup_items = TRUE) {
 
     $data = $this->getXmlData();
     if (empty($data['item'])) {
@@ -32,13 +32,18 @@ class FeaturedStory {
     $default_item = array();
     $valid_items = array();
     foreach ($data['item'] as $item) {
-      if (empty($item['start_date']) && empty($item['end_date'])) {
+      if (!empty($item['default'])) {
         $default_item = $item;
-        continue;
       }
       if(time() >= strtotime($item['start_date']) && time() < strtotime($item['end_date'])) {
         $valid_items[] = $item;
       }
+    }
+
+    // If we should add back up items and the XML
+    // did not return any valid or default items
+    if ($add_backup_items && empty($default_item) && empty($valid_items)) {
+      $valid_items = $this->getBackupItems();
     }
 
     // Return the featured items if the array is not empty
@@ -51,6 +56,31 @@ class FeaturedStory {
 
     // Otherwise return the default item
     return $default_item;
+  }
+
+  /**
+   * Get back up items to be printed in the featured story section
+   *
+   * @return array
+   */
+  private function getBackupItems() {
+    $backup_items = array();
+    $backup_items[] = array(
+      'prefix' => '',
+      'title' => '<h2><strong>Sign up to the Eclipse Newsletter</strong></h2>',
+      'body' => '<p>A fresh new issue delivered monthly</p>',
+      'link' => '<a class="btn btn-primary btn-lg" href="https://eclipsecon.us6.list-manage.com/subscribe/post">Subscribe</a>',
+      'bg_image' => 'images/2019-06-bg.jpg'
+    );
+    $backup_items[] = array(
+      'prefix' => '',
+      'title' => '<h2><strong>Donate to the Eclipse Foundation</strong></h2>',
+      'body' => '<p>Power the Eclipse Community with your donation</p>',
+      'link' => '<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/donate/">Donate</a>',
+      'bg_image' => 'images/2019-06-bg.jpg'
+    );
+
+    return $backup_items;
   }
 
   /**
