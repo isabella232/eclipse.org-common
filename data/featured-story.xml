@@ -10,11 +10,11 @@
     <bg_image>images/2019-06-bg.jpg</bg_image>
   </item>
   <item>
-    <title><![CDATA[<h2><strong>The 2019 IoT Commercial Adoption Survey is here!</strong></h2>]]></title>
+    <title><![CDATA[<h2><strong>Take the 2019 IoT Commercial Adoption survey today!</strong></h2>]]></title>
     <body><![CDATA[<p></p>]]></body>
     <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/eclipse-iotcomm">Take the survey</a>]]></link>
     <start_date>21 October 2019 1:00</start_date>
-    <end_date>28 October 2019 23:59</end_date>
+    <end_date>29 November 2019 23:59</end_date>
     <bg_image>images/iotcomm_bkgbanner.png</bg_image>
   </item>
   <item>
