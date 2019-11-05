@@ -806,14 +806,18 @@ class App {
    * @return boolean
    */
   function getPreventCaching() {
+    if ($this->prevent_caching) {
+      return TRUE;
+    }
     $Session = $this->useSession();
     $gid = $Session->getGID();
     if (!empty($gid)) {
-      return TRUE;
+      $this->prevent_caching = TRUE;
     }
 
-    return (is_bool($this->prevent_caching)) ? $this->prevent_caching : FALSE;
+    return $this->prevent_caching;
   }
+
 
   /**
    * Get Alpha code
