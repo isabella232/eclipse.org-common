@@ -38,17 +38,6 @@ class PromotedDownloads extends EclipseAds {
     $Ad->setType('empty');
     $this->newAd($Ad);
 
-
-    // YATTA
-    $Ad = new Ad();
-    $Ad->setTitle('Yatta Launcher for Eclipse');
-    $Ad->setBody('Install, launch, and share your Eclipse IDE. Stop configuring. Start Coding.');
-    $Ad->setImage('/downloads/images/launcherIcon42.png');
-    $Ad->setCampaign('PROMO_DOWNLOAD_YATTA');
-    $Ad->setUrl("https://www.eclipse.org/go/" . $Ad->getCampaign());
-    $Ad->setWeight(20);
-    $Ad->setType('default');
-    $this->newAd($Ad);
   }
 
   /**
