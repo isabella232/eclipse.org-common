@@ -71,7 +71,7 @@ class Promotions {
       'memberID' => 655,
       'memberName' => 'CA',
       'type' => 'strategic',
-      'weight' => 10
+      'weight' => 8
     );
 
     // Strategic Member Ads
@@ -80,7 +80,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/oepe_ad_200x200.jpg',
       'memberName' => 'Oracle',
       'type' => 'strat_ad',
-      'weight' => 10
+      'weight' => 8
     );
 
     $promos[] = array(
@@ -88,14 +88,14 @@ class Promotions {
       'imageurl' => '/membership/promo/images/ibm200x200-ibm_cloud.jpg',
       'memberName' => 'IBM',
       'type' => 'strat_ad',
-      'weight' => 10
+      'weight' => 8
     );
     $promos[] = array(
       'url' => 'PROMO_SAP',
       'imageurl' => '/membership/promo/images/sap200x200.jpg',
       'memberName' => 'SAP',
       'type' => 'strat_ad',
-      'weight' => 10
+      'weight' => 8
     );
 
     $promos[] = array(
@@ -119,7 +119,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/fujitsu_200px.jpg',
       'memberName' => 'Fujitsu',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -135,7 +135,15 @@ class Promotions {
       'imageurl' => '/membership/promo/images/iot_comm_survey_2019.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 11
+      'weight' => 10
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_KONDUIT',
+      'imageurl' => '/membership/promo/images/konduit.jpg',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 8
     );
 
     if (!empty($filter)) {
