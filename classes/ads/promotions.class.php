@@ -47,17 +47,9 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PAID_YATTA',
-      'imageurl' => '/membership/promo/images/Yatta-Eclipse-Banner-Ad-1.png',
-      'memberName' => 'YATTA',
-      'type' => 'paid',
-      'weight' => 8
-    );
-
-    $promos[] = array(
-      'url' => 'PAID_CLOUDBEES',
-      'imageurl' => '/membership/promo/images/cloudbees-200x200-2.jpg',
-      'memberName' => 'Itemis',
+      'url' => 'PROMO_KONDUIT',
+      'imageurl' => '/membership/promo/images/konduit.jpg',
+      'memberName' => 'Konduit',
       'type' => 'strat_ad',
       'weight' => 8
     );
@@ -103,7 +95,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Sirius_ad_200.png',
       'memberName' => 'Obeo',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -111,7 +103,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/PapyrusCEA.gif',
       'memberName' => 'CEA',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -119,32 +111,41 @@ class Promotions {
       'imageurl' => '/membership/promo/images/fujitsu_200px.jpg',
       'memberName' => 'Fujitsu',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 7
     );
 
     $promos[] = array(
-      'url' => 'PROMO_SNYK',
-      'imageurl' => '/membership/promo/images/snyk.png',
+      'url' => 'PROMO_JAKARTA_EE_CC',
+      'imageurl' => '/membership/promo/images/jakarta-ee-community-call.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 8
     );
 
     $promos[] = array(
-      'url' => 'PROMO_IOT_SURVEY',
-      'imageurl' => '/membership/promo/images/iot_comm_survey_2019.png',
-      'memberName' => 'EclipseFoundation',
-      'type' => 'strat_ad',
-      'weight' => 10
-    );
-
-    $promos[] = array(
-      'url' => 'PROMO_KONDUIT',
-      'imageurl' => '/membership/promo/images/konduit.jpg',
+      'url' => 'PROMO_JAKARTA_TED_TALKS',
+      'imageurl' => '/membership/promo/images/jakarta-ted-talks.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 8
     );
+
+    $promos[] = array(
+      'url' => 'PROMO_CLOUD_NATIVE',
+      'imageurl' => '/membership/promo/images/cloud-native.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 7
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_BUSINESS_VALUE',
+      'imageurl' => '/membership/promo/images/business-valueof-open-source.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 8
+    );
+
 
     if (!empty($filter)) {
       $filter_promo = array();
