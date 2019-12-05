@@ -133,6 +133,7 @@ class Membership {
     $rs = $this->App->eclipse_sql($sql);
     while ($row = mysql_fetch_assoc($rs)) {
       $row = $this->_mb_convert_encoding($row);
+      $row['name'] = $this->App->checkPlain($row['name']);
       $row['body'] = stripcslashes($row['body']);
       $row['full_text'] = stripcslashes($row['full_text']);
       $row['title_link'] = "";
