@@ -132,7 +132,6 @@ class Membership {
 
     $rs = $this->App->eclipse_sql($sql);
     while ($row = mysql_fetch_assoc($rs)) {
-      $row = $this->_mb_convert_encoding($row);
       $row['name'] = $this->App->checkPlain($row['name']);
       $row['body'] = stripcslashes($row['body']);
       $row['full_text'] = stripcslashes($row['full_text']);
@@ -244,7 +243,6 @@ class Membership {
 
     $return = array();
     while ($row = mysql_fetch_assoc($result)) {
-      $row = $this->_mb_convert_encoding($row);
       $row['teaser'] = $this->_ellipsis($row['teaser']);
       $return[] = $row;
     }
@@ -284,7 +282,6 @@ class Membership {
     $result = $this->App->marketplace_sql($sql);
 
     while ($row = mysql_fetch_assoc($result)) {
-      $row = $this->_mb_convert_encoding($row);
       $row['teaser'] = empty($row['teaser']) ? '' : $this->_ellipsis($row['teaser']);
       $row['training'] = empty($row['training']) ? '' : $this->_ellipsis($row['training']);
       $row['consulting'] = empty($row['consulting']) ? '' : $this->_ellipsis($row['consulting']);
@@ -315,7 +312,6 @@ class Membership {
     $result = $this->App->eclipse_sql($sql);
 
     while ($row = mysql_fetch_assoc($result)) {
-      $row = $this->_mb_convert_encoding($row);
       $return[] = $row;
     }
 
@@ -400,21 +396,6 @@ class Membership {
    * */
   protected function setMemberName($_val){
     $this->current_name = $_val;
-  }
-
-  /**
-   * Fix db encoding problems
-   *
-   * @param unknown $row
-   * @return unknown
-   */
-  private function _mb_convert_encoding($row){
-    foreach($row as $key => &$r) {
-      if ($key != 'large_logo' && $key != 'small_logo') {
-        $r = mb_convert_encoding($r, 'Windows-1252', 'UTF-8');
-      }
-    }
-    return $row;
   }
 
   /**
