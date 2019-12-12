@@ -116,15 +116,15 @@ class Promotions {
 
     $promos[] = array(
       'url' => 'PROMO_JAKARTA_EE_CC',
-      'imageurl' => '/membership/promo/images/jakarta-ee-community-call.png',
+      'imageurl' => '/membership/promo/images/jakartaee-community-call.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 8
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_TED_TALKS',
-      'imageurl' => '/membership/promo/images/jakarta-ted-talks.png',
+      'url' => 'PROMO_JAKARTA_TECH_TALKS',
+      'imageurl' => '/membership/promo/images/jakartaee-tech-talk.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 8
