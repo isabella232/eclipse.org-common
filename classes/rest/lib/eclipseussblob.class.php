@@ -38,7 +38,7 @@ class EclipseUSSBlob extends RestClient{
 
     switch ($this->getEnvShortName()) {
       case 'local':
-        $this->setBaseUrl('https://api.php53.dev.docker');
+        $this->setBaseUrl('https://api.php56.dev.docker');
         break;
       case 'staging':
         $this->setBaseUrl('https://api-staging.eclipse.org');
@@ -89,7 +89,7 @@ class EclipseUSSBlob extends RestClient{
    *
    * @return Response $data
    */
-  public function getBlob($application_token = "", $blob_key = "", $username = "") {
+  public function getBlob($application_token = "", $blob_key = "") {
     $etag = $this->getEtag();
     if (!empty($etag)) {
       $this->setHeader(array(
@@ -98,9 +98,6 @@ class EclipseUSSBlob extends RestClient{
     }
 
     $url = 'uss/blob/';
-    if (!empty($username)) {
-      $url =  'account/profile/' . $username . '/blob/';
-    }
     $url .= $application_token . '/' . $blob_key;
     $data = $this->get($url);
     $this->unsetHeader('If-None-Match');
@@ -116,11 +113,8 @@ class EclipseUSSBlob extends RestClient{
    *
    * @return Response $data
    */
-  public function indexBlob($application_token = "", $page = 1, $pagesize = 20, $username = "") {
+  public function indexBlob($application_token = "", $page = 1, $pagesize = 20) {
     $url = 'uss/blob/' . $application_token;
-    if (!empty($username)) {
-      $url = 'account/profile/' . $username . '/blob/' . $application_token;
-    }
     $data = $this->get($url . '?page=' . $page . '&pagesize=' . $pagesize);
     return $data;
   }
@@ -134,8 +128,8 @@ class EclipseUSSBlob extends RestClient{
    *
    * @return Response $data
    */
-  public function indexAllBlob($application_token = "", $page = 1, $pagesize = 20, $username = "") {
-    $data = $this->indexBlob($application_token, $page, $pagesize, $username);
+  public function indexAllBlob($application_token = "", $page = 1, $pagesize = 20) {
+    $data = $this->indexBlob($application_token, $page, $pagesize);
 
     $return = array();
     $return[] = $data;
