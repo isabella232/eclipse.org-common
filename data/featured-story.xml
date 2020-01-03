@@ -11,6 +11,17 @@
     <default>1</default>
   </item>
   <item>
+    <prefix><![CDATA[<h2 class="margin-top-10 margin-bottom-0 fw-700">Cloud Native for Java Day</h2>]]></prefix>
+    <title><![CDATA[<h3 class="margin-top-30"><strong>Build Enterprise Java on Kubernetes!</strong></h3>]]></title>
+    <body><![CDATA[<p>A co-located event with KubeCon + CloudNativeCon EU on March 30, 2020</p>]]></body>
+    <link><![CDATA[<a class="btn btn-primary btn-lg" href="http://eclipse-5413615.hs-sites.com/cn4j-day">Register Today</a>]]></link>
+    <start_date>1 January 2020 00:00</start_date>
+    <end_date>7 February 2020 00:59</end_date>
+    <bg_image>images/cn4j_bkgbanner.png</bg_image>
+    <bg_pos>bottom</bg_pos>
+    <default>0</default>
+  </item>
+  <item>
     <title><![CDATA[<h2><strong>Take the 2019 IoT Commercial Adoption survey today!</strong></h2>]]></title>
     <body><![CDATA[<p></p>]]></body>
     <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/eclipse-iotcomm">Take the survey</a>]]></link>

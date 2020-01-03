@@ -385,8 +385,13 @@ class BaseTheme {
       $FeaturedStory->setXmlData($this->getFeaturedStoryXml());
       $featured_story = $FeaturedStory->getFeaturedStory();
       if (!empty($featured_story)) {
+        // allows for us to set position of bg image, to better adjust for different content formats
+        $bg_pos = "initial";
+        if (!empty($featured_story['bg_pos'])) {
+          $bg_pos = $featured_story['bg_pos'];
+        }
         if (!empty($featured_story['bg_image'])) {
-          $this->setExtraHeaders('<style>.featured-story-block-content:before {background-image:url(//www.eclipse.org/home/' . $featured_story['bg_image'] . ');}</style>');
+          $this->setExtraHeaders('<style>.featured-story-block-content:before {background-image:url(//www.eclipse.org/home/' . $featured_story['bg_image'] . ');background-position:'.$bg_pos.';}</style>');
         }
         return $featured_story;
       }

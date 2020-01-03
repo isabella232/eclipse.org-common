@@ -41,9 +41,6 @@ class Quicksilver extends solstice {
     // Featured footer
     $this->setAttributes('featured-footer', 'featured-footer featured-footer-newsletter');
 
-    $featured_story = $this->getFeaturedStory($this->getFeaturedStoryXml());
-    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/". $featured_story['bg_image'] .");border-bottom:1px solid #ccc;",'style');
-
     // Set attributes on main sidebar
     $this->setAttributes('main-sidebar', 'main-sidebar-default-margin');
 
@@ -171,7 +168,14 @@ EOHTML;
     }
 
     $featured_story = $this->getFeaturedStory($this->getFeaturedStoryXml());
-
+    // allows for us to set position of bg image, to better adjust for different content formats
+    $bg_pos = "initial";
+    if ($featured_story['bg_pos'] != null) {
+      $bg_pos = $featured_story['bg_pos'];
+    }
+    // If not set at this time, wrong backgrounds can be set on the footer if there are multiple valid stories
+    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/". $featured_story['bg_image'] .");border-bottom:1px solid #ccc;background-position:".$bg_pos.";",'style');
+    
     return <<<EOHTML
     <!-- Sign Up to our Newsletter -->
     <div{$this->getAttributes('featured-footer')}>
