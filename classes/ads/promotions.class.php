@@ -43,7 +43,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/froglogic.gif',
       'memberName' => 'FrogLogic',
       'type' => 'paid',
-      'weight' => 8
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -51,7 +51,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/konduit.jpg',
       'memberName' => 'Konduit',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
     );
 
     /**
@@ -63,7 +63,7 @@ class Promotions {
       'memberID' => 655,
       'memberName' => 'CA',
       'type' => 'strategic',
-      'weight' => 8
+      'weight' => 7
     );
 
     // Strategic Member Ads
@@ -72,7 +72,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/oepe_ad_200x200.jpg',
       'memberName' => 'Oracle',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -80,14 +80,14 @@ class Promotions {
       'imageurl' => '/membership/promo/images/ibm200x200-ibm_cloud.jpg',
       'memberName' => 'IBM',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
     );
     $promos[] = array(
       'url' => 'PROMO_SAP',
       'imageurl' => '/membership/promo/images/sap200x200.jpg',
       'memberName' => 'SAP',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -95,7 +95,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Sirius_ad_200.png',
       'memberName' => 'Obeo',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -103,7 +103,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/PapyrusCEA.gif',
       'memberName' => 'CEA',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -111,7 +111,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/fujitsu_200px.jpg',
       'memberName' => 'Fujitsu',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -119,7 +119,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakartaee-community-call.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -127,7 +127,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakartaee-tech-talk.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -135,7 +135,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/cloud-native.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -143,7 +143,15 @@ class Promotions {
       'imageurl' => '/membership/promo/images/business-valueof-open-source.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_JAKARTA_EE_CLOUD_NATIVE',
+      'imageurl' => '/membership/promo/images/cloud_native.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 13
     );
 
 
