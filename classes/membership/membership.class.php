@@ -293,6 +293,35 @@ class Membership {
   }
 
   /**
+   * Fetch membership logo
+   *
+   * @return array
+   */
+  public function fetchMemberLogo() {
+    $unaccepted_ids = array(1322, 1324, 1325, 1328);
+    if (empty($this->id) || in_array((int)$this->id, $unaccepted_ids)) {
+      return array();
+    }
+
+    $sql = "SELECT
+      ORG.organization_id as id,
+      ORGI.small_logo as small_logo,
+      ORGI.large_logo as large_logo,
+      ORGI.small_mime as small_mime,
+      ORGI.large_mime as large_mime
+    FROM organizations as ORG
+    LEFT JOIN OrganizationInformation as ORGI on ORGI.OrganizationID = ORG.organization_id
+    WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')
+    and ORG.organization_id = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
+    $rs = $this->App->eclipse_sql($sql);
+
+    while ($row = mysql_fetch_assoc($rs)) {
+      $this->profile['logo_information'] = $row;
+    }
+    return $this->profile;
+  }
+
+  /**
    * Fetch Member products
    *
    * @return multitype:|multitype:unknown
