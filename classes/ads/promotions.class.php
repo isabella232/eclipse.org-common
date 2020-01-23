@@ -51,7 +51,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/konduit.jpg',
       'memberName' => 'Konduit',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 4
     );
 
     /**
@@ -63,7 +63,7 @@ class Promotions {
       'memberID' => 655,
       'memberName' => 'CA',
       'type' => 'strategic',
-      'weight' => 7
+      'weight' => 5
     );
 
     // Strategic Member Ads
@@ -72,7 +72,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/oepe_ad_200x200.jpg',
       'memberName' => 'Oracle',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -80,14 +80,14 @@ class Promotions {
       'imageurl' => '/membership/promo/images/ibm200x200-ibm_cloud.jpg',
       'memberName' => 'IBM',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 5
     );
     $promos[] = array(
       'url' => 'PROMO_SAP',
       'imageurl' => '/membership/promo/images/sap200x200.jpg',
       'memberName' => 'SAP',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -95,7 +95,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/Sirius_ad_200.png',
       'memberName' => 'Obeo',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -103,7 +103,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/PapyrusCEA.gif',
       'memberName' => 'CEA',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -111,12 +111,12 @@ class Promotions {
       'imageurl' => '/membership/promo/images/fujitsu_200px.jpg',
       'memberName' => 'Fujitsu',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
       'url' => 'PROMO_JAKARTA_EE_CC',
-      'imageurl' => '/membership/promo/images/jakartaee-community-call.png',
+      'imageurl' => '/membership/promo/images/jakarta-ee-community-call.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 7
@@ -151,7 +151,32 @@ class Promotions {
       'imageurl' => '/membership/promo/images/cloud_native.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 13
+      'weight' => 9
+    );
+
+
+    $promos[] = array(
+      'url' => 'PROMO_JAKARTA_TECH_TALKS_FEB12',
+      'imageurl' => '/membership/promo/images/jakarta-ee-community-call_feb12.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 6
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_JAKARTA_TECH_TALKS_JAN27',
+      'imageurl' => '/membership/promo/images/jakartaee-tech-talk_jan27.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 6
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_JAKARTA_TECH_TALKS_JAN14',
+      'imageurl' => '/membership/promo/images/jakartaee-tech-talk_jan14.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 6
     );
 
 
