@@ -8,7 +8,7 @@
     <start_date>1 October 2019 00:00</start_date>
     <end_date>21 October 2019 00:59</end_date>
     <bg_image>images/2019-06-bg.jpg</bg_image>
-    <default>1</default>
+    <default>0</default>
   </item>
   <item>
     <prefix><![CDATA[<h2 class="margin-top-10 margin-bottom-0 fw-700">Cloud Native for Java Day</h2>]]></prefix>
@@ -37,6 +37,6 @@
     <start_date>18 December 2019 10:00</start_date>
     <end_date>10 January 2020 23:59</end_date>
     <bg_image>images/iotcomm_bkgbanner.png</bg_image>
-    <default>0</default>
+    <default>1</default>
   </item>
 </featured_story>
