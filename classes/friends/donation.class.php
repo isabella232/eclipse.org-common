@@ -355,7 +355,7 @@ class Donation {
     }
 
     // Format the amount
-    $donation_amount = number_format($donation_amount, 2);
+    $donation_amount = number_format($donation_amount, 2, '.', '');
 
     $this->donation_amount = $donation_amount;
     $this->_set_donation_benefit_level();
