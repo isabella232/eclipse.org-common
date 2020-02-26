@@ -156,8 +156,8 @@ class Promotions {
 
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_TECH_TALKS_FEB12',
-      'imageurl' => '/membership/promo/images/jakarta-ee-community-call_feb12.png',
+      'url' => 'PROMO_JAKARTA_TECH_TALKS_MAR18',
+      'imageurl' => '/membership/promo/images/jakarta-ee-community-call_mar18.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 6
