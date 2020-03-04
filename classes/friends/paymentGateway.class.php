@@ -157,7 +157,11 @@ class PaymentGateway extends Payment {
       'is_anonymous' => $this->Donation->get_donation_is_anonymous(),
       'redirect_url' => $this->get_gateway_redirect(),
       'status' => $this->Donation->get_donation_status(),
-      'email_paypal' => $this->Donation->Donor->get_donor_paypal_email()
+      'email_paypal' => $this->Donation->Donor->get_donor_paypal_email(),
+      'landing_page' => $this->Donation->get_donation_landing_page(),
+      'file_id' => $this->Donation->get_donation_file_id(),
+      'scope' => $this->Donation->get_donation_scope(),
+      'campaign' => $this->Donation->get_donation_campaign(),
     );
 
     if ($update) {
@@ -173,7 +177,11 @@ class PaymentGateway extends Payment {
       'email',
       'email_paypal',
       'amount',
-      'domain'
+      'domain',
+      'landing_page',
+      'scope',
+      'campaign',
+      'file_id'
     );
 
     $sql = $this->_sql_on_duplicate_update('friends_process', $fields, $possible_null_field);
@@ -189,6 +197,10 @@ class PaymentGateway extends Payment {
     $this->Donation->set_donation_subscription($this->App->getHTTPParameter('subscription'));
     $this->Donation->set_donation_is_anonymous($this->App->getHTTPParameter('is_anonymous'));
     $this->Donation->set_donation_status('new_donation_form');
+    $this->Donation->set_donation_landing_page($this->App->getHTTPParameter('landing_page'));
+    $this->Donation->set_donation_file_id($this->App->getHTTPParameter('file_id'));
+    $this->Donation->set_donation_scope($this->App->getHTTPParameter('scope'));
+    $this->Donation->set_donation_campaign($this->App->getHTTPParameter('campaign'));
     $this->_set_gateway_redirect();
     $this->update_friends_process_table();
   }

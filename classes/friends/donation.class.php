@@ -83,6 +83,34 @@ class Donation {
   public $donation_status = "";
 
   /**
+   * Donation landing page
+   *
+   * @var string
+   */
+  public $donation_landing_page = NULL;
+
+  /**
+   * Donation file_id
+   *
+   * @var integer
+   */
+  public $donation_file_id = NULL;
+
+  /**
+   * Donation scope
+   *
+   * @var string
+   */
+  public $donation_scope = NULL;
+
+  /**
+   * Donation campaign
+   *
+   * @var string
+   */
+  public $donation_campaign = NULL;
+
+  /**
    * If this is a subscription donation or not.
    *
    * @var unknown
@@ -313,6 +341,54 @@ class Donation {
   }
 
   /**
+   * Get $donation_landing_page
+   *
+   * @return string
+   */
+  public function get_donation_landing_page() {
+    if (empty($this->donation_landing_page)){
+      $this->set_donation_landing_page('donate');
+    }
+    return strtoupper($this->donation_landing_page);
+  }
+
+  /**
+   * Get $donation_file_id
+   *
+   * @return string
+   */
+  public function get_donation_file_id() {
+    if (!is_numeric($this->donation_file_id)) {
+      $this->donation_file_id = NULL;
+    }
+    return $this->donation_file_id;
+  }
+
+  /**
+   * Get $donation_scope
+   *
+   * @return string
+   */
+  public function get_donation_scope() {
+    if (!is_string($this->donation_scope)) {
+      $this->donation_scope = NULL;
+    }
+    return $this->donation_scope;
+  }
+
+  /**
+   * Get $donation_campaign
+   *
+   * @return string
+   */
+  public function get_donation_campaign() {
+    if (!is_string($this->donation_campaign)) {
+      $this->donation_campaign = NULL;
+    }
+    return $this->donation_campaign;
+  }
+
+  /**
    * Get donation_subscription value
    *
    * @return unknown
@@ -320,7 +396,6 @@ class Donation {
   public function get_donation_subscription(){
     return (int)$this->donation_subscription;
   }
-
 
   /**
    * Get id for transaction
@@ -446,6 +521,61 @@ class Donation {
   }
 
   /**
+   * Set donation $landing_page
+   *
+   * @param string $page
+   */
+  public function set_donation_landing_page($page) {
+    $page = strtolower($page);
+    $available = array(
+      'donate', // eclipse.org/donate/
+      'download', // eclipse.org/downloads/
+      'eclipse_ide', // eclipse.org/donate/ide/
+    );
+
+    if (in_array($page, $available)) {
+      $this->donation_landing_page = strtoupper($page);
+    }
+  }
+
+    /**
+   * Get $donation_file_id
+   *
+   * @return string
+   */
+  public function set_donation_file_id($file_id) {
+    if (!empty($file_id) && is_numeric($file_id) && $file_id <= 2147483647){
+      $this->donation_file_id = $file_id;
+    }
+
+    return $this->donation_file_id;
+  }
+
+  /**
+   * Get $donation_scope
+   *
+   * @return string
+   */
+  public function set_donation_scope($scope = "") {
+    if (!empty($scope) && is_string($scope)){
+      $this->donation_scope = substr($scope, 0, 32);
+    }
+    return $this->donation_scope;
+  }
+
+  /**
+   * Get $donation_campaign
+   *
+   * @return string
+   */
+  public function set_donation_campaign($campaign = "") {
+    if (!empty($campaign) && is_string($campaign)){
+      $this->donation_campaign = substr($campaign, 0, 32);
+    }
+    return $this->donation_campaign;
+  }
+
+  /**
    * Set donation subscription value
    * @param string $donation_subscription
    */
@@ -486,6 +616,10 @@ class Donation {
       $this->set_donation_message($process['message']);
       $this->set_donation_subscription($process['subscription']);
       $this->set_donation_is_anonymous($process['is_anonymous']);
+      $this->set_donation_landing_page($process['landing_page']);
+      $this->set_donation_file_id($process['file_id']);
+      $this->set_donation_scope($process['scope']);
+      $this->set_donation_campaign($process['campaign']);
       $this->Donor->set_donor_email($process['email']);
       $this->Donor->set_donor_paypal_email($process['email_paypal']);
       $this->Donor->set_donor_uid($process['uid']);
