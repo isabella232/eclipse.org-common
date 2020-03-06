@@ -337,6 +337,65 @@ class EditMembership extends Membership{
   }
 
   /**
+   * Is the user a valid maintainer for org?
+   *
+   * @param string $email
+   * @param number $member_id
+   * @return boolean
+   */
+  public function isMaintainer($email, $member_id) {
+    $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($member_id));
+    $email = $this->App->returnQuotedString($this->App->sqlSanitize($email));
+
+    $sql = 'SELECT p.EMail FROM OrganizationContacts as oc
+    LEFT JOIN People as p
+    ON oc.PersonID = p.PersonID
+    WHERE oc.OrganizationID = ' . $member_id . '
+    AND p.EMail = ' . $email . '
+    AND (oc.Relation = "CR" OR oc.Relation = "MA" OR oc.Relation = "DE" OR oc.Relation = "MPE")';
+
+    $result = $this->App->foundation_sql($sql);
+
+    while ($row = mysql_fetch_assoc($result)) {
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
+  /**
+   * Validate token
+   *
+   * @param string $email
+   * @param number $member_id
+   * @param string $token
+   *
+   * @return boolean
+   */
+  public function validateToken($email, $member_id, $token) {
+    $token = $this->App->returnQuotedString($this->App->sqlSanitize($token));
+    $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($member_id));
+    $email = $this->App->returnQuotedString($this->App->sqlSanitize($email));
+    $subnet = $this->App->returnQuotedString($this->App->sqlSanitize($this->App->getSubnet()));
+
+    // Check to see if the token is there and valid
+    $sql = 'SELECT ValidUntil FROM OrganizationTokens WHERE Token = ' . $token
+    . ' and OrganizationID = ' . $member_id
+    . ' and Email = ' . $email
+    . ' and Subnet = ' . $subnet;
+    $result = $this->App->eclipse_sql($sql);
+
+    while ($row = mysql_fetch_assoc($result)) {
+      // Check to see if the token has expired
+      $current_time = date('Y-m-d H:i:s');
+      if ($row['ValidUntil'] > $current_time) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
    * Validate the user
    * - Check if the logged in user is a maintainer of the selected Member
    * - Check if the token submitted is valid
@@ -344,53 +403,45 @@ class EditMembership extends Membership{
    * @param string
    * */
   public function validateUser(){
-    $email = $this->App->returnQuotedString($this->App->sqlSanitize($this->fetchUserEmail()));
-    $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
-    $token = $this->App->returnQuotedString($this->App->sqlSanitize($this->getToken()));
-    $_has_eclipse_account = "";
-    $_is_maintainer = array();
-    $_valid_token = array();
-    $user_verified = FALSE;
+    $member_id = $this->id;
 
-    if(!empty($member_id) && !empty($email)){
-      $sql_maintainer = 'SELECT
-                         p.EMail
-                         FROM OrganizationContacts as oc
-                         LEFT JOIN People as p
-                         ON oc.PersonID = p.PersonID
-                         WHERE oc.OrganizationID = '. $member_id .'
-                         AND p.EMail = '. $email .'
-                         AND (oc.Relation = "CR" OR oc.Relation = "MA" OR oc.Relation = "DE" OR oc.Relation = "MPE")';
-      $result_maintainer = $this->App->foundation_sql($sql_maintainer);
-
-      while ($row = mysql_fetch_assoc($result_maintainer)) {
-        $_is_maintainer[] = $row['EMail'];
-        break;
-      }
+    if (empty($member_id)) {
+      return FALSE;
     }
 
-    if(!empty($member_id) && !empty($token)){
-      // Check to see if the token is there and valid
-      $sql_token = 'SELECT *
-                    FROM OrganizationTokens
-                    WHERE Token = ' . $token;
-      $result_token = $this->App->eclipse_sql($sql_token);
+    $user_is_logged_in = FALSE;
+    if ($this->Session->isLoggedIn()) {
+      $user_is_logged_in = TRUE;
+      $Friend = $this->Session->getFriend();
+      $friend_uid = $Friend->getUID();
+      $friend_email = $Friend->getEmail();
+      if (!empty($friend_uid) && !empty($friend_email)) {
 
-      while ($row = mysql_fetch_assoc($result_token)) {
-        // Check to see if the token has expired
-        $current_time = date('Y-m-d H:i:s');
-        if($row['ValidUntil'] > $current_time && $row['Subnet'] == $this->App->getSubnet()){
-          $_valid_token[] = $row['Token'];
-          break;
+        $admin = array(
+          'pmisingnameu8g' => 'perri.lavergne@eclipse-foundation.org',
+          'zfazli' => 'zahra.fazli@eclipse-foundation.org',
+          'webdev' => 'webdev@eclipse.org'
+        );
+
+        // Is the user an admin?
+        foreach ($admin as $admin_username => $admin_email) {
+          if (strtolower($friend_uid) === $admin_username && strtolower($friend_email) === $admin_email) {
+            return TRUE;
+          }
+        }
+
+        // Is the user a maintainer?
+        if ($this->isMaintainer($Friend->getEmail(), $member_id)) {
+          return TRUE;
         }
       }
     }
-
-    // Is a Maintainer AND has an Eclipse Account
-    if(!empty($_is_maintainer) || !empty($_valid_token)){
-      $user_verified = TRUE;
+    // Is this a valid token for the user?
+    if ($this->validateToken($this->fetchUserEmail(), $member_id, $this->getToken())) {
+      return TRUE;
     }
-    return $user_verified;
+
+    return FALSE;
   }
 
   /**
