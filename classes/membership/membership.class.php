@@ -77,7 +77,7 @@ class Membership {
         'members' => array(),
         'img' => '/membership/images/type/associate-members.png',
         'title' => 'Associate Members',
-      ),
+      )
     );
   }
 
@@ -122,7 +122,7 @@ class Membership {
       ORGI.large_mime as large_mime
     FROM organizations as ORG
     LEFT JOIN OrganizationInformation as ORGI on ORGI.OrganizationID = ORG.organization_id
-    WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')
+    WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP', 'OHAP')
     and ORG.organization_id NOT IN (1322, 1324, 1325, 1328)";
 
     if (!is_null($this->id)) {
@@ -181,7 +181,7 @@ class Membership {
 
 
       switch($row['member_type']) {
-        case 'AP':
+        case 'AP' || 'OHAP':
           $this->members['solutions']['members'][] = $row;
           break;
         case 'AS':
@@ -311,7 +311,7 @@ class Membership {
       ORGI.large_mime as large_mime
     FROM organizations as ORG
     LEFT JOIN OrganizationInformation as ORGI on ORGI.OrganizationID = ORG.organization_id
-    WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP')
+    WHERE ORG.member_type in ('SD', 'SC', 'AP', 'AS', 'ENTRP', 'OHAP')
     and ORG.organization_id = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
     $rs = $this->App->eclipse_sql($sql);
 
