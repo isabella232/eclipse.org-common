@@ -181,7 +181,8 @@ class Membership {
 
 
       switch($row['member_type']) {
-        case 'AP' || 'OHAP':
+        case 'AP':
+        case 'OHAP':
           $this->members['solutions']['members'][] = $row;
           break;
         case 'AS':
@@ -190,7 +191,8 @@ class Membership {
         case 'ENTRP':
           $this->members['enterprise']['members'][] = $row;
           break;
-        case 'SD' || 'SC':
+        case 'SD':
+        case 'SC':
           $this->members['strategic']['members'][] = $row;
           break;
       }
