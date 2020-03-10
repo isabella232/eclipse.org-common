@@ -27,7 +27,7 @@
     <start_date>18 December 2019 10:00</start_date>
     <end_date>10 January 2020 23:59</end_date>
     <bg_image>images/iotcomm_bkgbanner.png</bg_image>
-    <default>1</default>
+    <default>0</default>
   </item>
   <item>
     <title><![CDATA[<h2 class="margin-top-30"><strong>Download the IoT Commercial Adoption Survey 2019 Results</strong></h2>]]></title>
@@ -47,6 +47,6 @@
     <end_date>15 April 2020 00:59</end_date>
     <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
     <bg_pos>bottom</bg_pos>
-    <default>0</default>
+    <default>1</default>
   </item>
 </featured_story>
