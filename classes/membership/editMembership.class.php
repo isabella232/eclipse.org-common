@@ -235,12 +235,15 @@ class EditMembership extends Membership{
    * */
   public function fetchUserEmail(){
     if ($this->getToken() != "") {
-      return $this->_fetchEmailBasedOnToken();
+      $mail = $this->_fetchEmailBasedOnToken();
     }
-    if($this->Session->isLoggedIn()){
+
+    if(empty($mail) && $this->Session->isLoggedIn()){
       $Friend = $this->Session->getFriend();
-      return $Friend->getEmail();
+      $mail = $Friend->getEmail();
     }
+
+    return !empty($mail) ? $mail : "";
   }
 
   /**
@@ -250,47 +253,51 @@ class EditMembership extends Membership{
   public function fetchMemberMaintainers($_users = ""){
     $_email = $this->App->returnQuotedString($this->App->sqlSanitize($this->fetchUserEmail()));
     $_member_id = $this->App->returnQuotedString($this->App->sqlSanitize($this->id));
-    $sql = 'SELECT
-            p.PersonID, p.FName, p.LName, p.EMail, p.Phone,
-            group_concat("",
-            CASE oc.Relation
-               WHEN "MPE" THEN "Membership Page Editor"
-               WHEN "DE"  THEN "Delegate"
-               WHEN "MA"  THEN "Marketing"
-               WHEN "CR"  THEN "Company Representative"
-            END) as Type
-            FROM People as p
-            LEFT JOIN OrganizationContacts as oc
-              ON p.PersonID = oc.PersonID ';
-    if ($_users == EDITMEMBERSHIP_LOGGED_IN_USER) {
-      $sql .= 'WHERE p.EMail = '. $_email;
-    }
-    else {
-      $sql .= 'WHERE p.EMail IN
-                (SELECT
-                  p.Email
-                  FROM OrganizationContacts as oc
-                  LEFT JOIN People as p
-                  ON oc.PersonID = p.PersonID
-                  WHERE OrganizationID = ' . $_member_id . '
-                )';
-    }
-    $sql .= 'AND (oc.Relation = "CR" OR oc.Relation = "MA" OR oc.Relation = "DE" OR oc.Relation = "MPE")
-            AND OrganizationID = ' . $_member_id . '
-            GROUP BY p.PersonID';
-    $result = $this->App->foundation_sql($sql);
+    if (!empty($_member_id)) {
+      $sql = 'SELECT
+              p.PersonID, p.FName, p.LName, p.EMail, p.Phone,
+              group_concat("",
+              CASE oc.Relation
+                 WHEN "MPE" THEN "Membership Page Editor"
+                 WHEN "DE"  THEN "Delegate"
+                 WHEN "MA"  THEN "Marketing"
+                 WHEN "CR"  THEN "Company Representative"
+              END) as Type
+              FROM People as p
+              LEFT JOIN OrganizationContacts as oc
+                ON p.PersonID = oc.PersonID ';
 
-    // Build the array containing the Employees of this Member
-    $_contacts = array();
-    while ($row = mysql_fetch_assoc($result)) {
-      $_contacts[$row['PersonID']]['PersonID'] = $row['PersonID'];
-      $_contacts[$row['PersonID']]['FName'] = $row['FName'];
-      $_contacts[$row['PersonID']]['LName'] = $row['LName'];
-      $_contacts[$row['PersonID']]['EMail'] = $row['EMail'];
-      $_contacts[$row['PersonID']]['Phone'] = ($row['Phone'] != NULL ? $row['Phone'] : 'N/A');
-      $_contacts[$row['PersonID']]['Type'] = ($row['Type'] != NULL ? $row['Type'] : 'N/A');
+      if ($_users == EDITMEMBERSHIP_LOGGED_IN_USER) {
+        $sql .= 'WHERE p.EMail = '. $_email;
+      }
+      else {
+        $sql .= 'WHERE p.EMail IN
+                  (SELECT
+                    p.Email
+                    FROM OrganizationContacts as oc
+                    LEFT JOIN People as p
+                    ON oc.PersonID = p.PersonID
+                    WHERE OrganizationID = ' . $_member_id . '
+                  )';
+      }
+      $sql .= 'AND (oc.Relation = "CR" OR oc.Relation = "MA" OR oc.Relation = "DE" OR oc.Relation = "MPE")
+              AND OrganizationID = ' . $_member_id . '
+              GROUP BY p.PersonID';
+      $result = $this->App->foundation_sql($sql);
+
+      // Build the array containing the Employees of this Member
+      $_contacts = array();
+      while ($row = mysql_fetch_assoc($result)) {
+        $_contacts[$row['PersonID']]['PersonID'] = $row['PersonID'];
+        $_contacts[$row['PersonID']]['FName'] = $row['FName'];
+        $_contacts[$row['PersonID']]['LName'] = $row['LName'];
+        $_contacts[$row['PersonID']]['EMail'] = $row['EMail'];
+        $_contacts[$row['PersonID']]['Phone'] = ($row['Phone'] != NULL ? $row['Phone'] : 'N/A');
+        $_contacts[$row['PersonID']]['Type'] = ($row['Type'] != NULL ? $row['Type'] : 'N/A');
+      }
     }
-    return $_contacts;
+
+    return !empty($_contacts) ? $_contacts : array();
   }
 
   /**
@@ -339,60 +346,95 @@ class EditMembership extends Membership{
   /**
    * Is the user a valid maintainer for org?
    *
-   * @param string $email
-   * @param number $member_id
    * @return boolean
    */
-  public function isMaintainer($email, $member_id) {
-    $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($member_id));
-    $email = $this->App->returnQuotedString($this->App->sqlSanitize($email));
+  public function isMaintainer() {
+    $member_id = $this->id;
+    $email = $this->fetchUserEmail();
+    if (!empty($email) && !empty($member_id)) {
+      $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($member_id));
+      $email = $this->App->returnQuotedString($this->App->sqlSanitize($email));
 
-    $sql = 'SELECT p.EMail FROM OrganizationContacts as oc
+      $sql = 'SELECT p.EMail FROM OrganizationContacts as oc
     LEFT JOIN People as p
     ON oc.PersonID = p.PersonID
     WHERE oc.OrganizationID = ' . $member_id . '
     AND p.EMail = ' . $email . '
     AND (oc.Relation = "CR" OR oc.Relation = "MA" OR oc.Relation = "DE" OR oc.Relation = "MPE")';
 
-    $result = $this->App->foundation_sql($sql);
+      $result = $this->App->foundation_sql($sql);
 
-    while ($row = mysql_fetch_assoc($result)) {
-      return TRUE;
+      while ($row = mysql_fetch_assoc($result)) {
+        $return = TRUE;
+        break;
+      }
     }
 
-    return FALSE;
+    return !empty($return) ? TRUE : FALSE;
   }
 
   /**
    * Validate token
    *
-   * @param string $email
-   * @param number $member_id
-   * @param string $token
+   * @return boolean
+   */
+  public function validateToken() {
+    $member_id = $this->id;
+    $token = $this->getToken();
+    $email = $this->fetchUserEmail();
+    if (!empty($email) && !empty($member_id) && !empty($token)) {
+      $token = $this->App->returnQuotedString($this->App->sqlSanitize($token));
+      $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($member_id));
+      $email = $this->App->returnQuotedString($this->App->sqlSanitize($email));
+      $subnet = $this->App->returnQuotedString($this->App->sqlSanitize($this->App->getSubnet()));
+
+      // Check to see if the token is there and valid
+      $sql = 'SELECT ValidUntil FROM OrganizationTokens WHERE Token = ' . $token
+      . ' and OrganizationID = ' . $member_id
+      . ' and Email = ' . $email
+      . ' and Subnet = ' . $subnet;
+
+      $result = $this->App->eclipse_sql($sql);
+
+      while ($row = mysql_fetch_assoc($result)) {
+        // Check to see if the token has expired
+        $current_time = date('Y-m-d H:i:s');
+        if ($row['ValidUntil'] > $current_time) {
+          $return = TRUE;
+          break;
+        }
+      }
+    }
+
+    return !empty($return) ? TRUE : FALSE;
+  }
+
+  /**
+   * Is logged-in user an admin?
    *
    * @return boolean
    */
-  public function validateToken($email, $member_id, $token) {
-    $token = $this->App->returnQuotedString($this->App->sqlSanitize($token));
-    $member_id = $this->App->returnQuotedString($this->App->sqlSanitize($member_id));
-    $email = $this->App->returnQuotedString($this->App->sqlSanitize($email));
-    $subnet = $this->App->returnQuotedString($this->App->sqlSanitize($this->App->getSubnet()));
+  public function isAdmin(){
+     $admins = array(
+      'pmisingnameu8g' => 'perri.lavergne@eclipse-foundation.org',
+      'zfazli' => 'zahra.fazli@eclipse-foundation.org',
+      'webdev' => 'webdev@eclipse.org'
+    );
 
-    // Check to see if the token is there and valid
-    $sql = 'SELECT ValidUntil FROM OrganizationTokens WHERE Token = ' . $token
-    . ' and OrganizationID = ' . $member_id
-    . ' and Email = ' . $email
-    . ' and Subnet = ' . $subnet;
-    $result = $this->App->eclipse_sql($sql);
+    $Friend = $this->Session->getFriend();
+    $friend_uid = strtolower($Friend->getUID());
+    $friend_email = strtolower($Friend->getEmail());
 
-    while ($row = mysql_fetch_assoc($result)) {
-      // Check to see if the token has expired
-      $current_time = date('Y-m-d H:i:s');
-      if ($row['ValidUntil'] > $current_time) {
-        return TRUE;
+    $valid = FALSE;
+     // Is the user an admin?
+    foreach ($admins as $username => $email) {
+      if ($friend_uid === $username && $friend_email === $email) {
+        $valid = TRUE;
+        break;
       }
     }
-    return FALSE;
+
+    return !empty($valid) ? TRUE : FALSE;
   }
 
   /**
@@ -403,45 +445,25 @@ class EditMembership extends Membership{
    * @param string
    * */
   public function validateUser(){
-    $member_id = $this->id;
 
-    if (empty($member_id)) {
-      return FALSE;
+    $valid = FALSE;
+
+    // Is the logged in user an admin?
+    if ($this->isAdmin()) {
+       $valid = TRUE;
     }
 
-    $user_is_logged_in = FALSE;
-    if ($this->Session->isLoggedIn()) {
-      $user_is_logged_in = TRUE;
-      $Friend = $this->Session->getFriend();
-      $friend_uid = $Friend->getUID();
-      $friend_email = $Friend->getEmail();
-      if (!empty($friend_uid) && !empty($friend_email)) {
-
-        $admin = array(
-          'pmisingnameu8g' => 'perri.lavergne@eclipse-foundation.org',
-          'zfazli' => 'zahra.fazli@eclipse-foundation.org',
-          'webdev' => 'webdev@eclipse.org'
-        );
-
-        // Is the user an admin?
-        foreach ($admin as $admin_username => $admin_email) {
-          if (strtolower($friend_uid) === $admin_username && strtolower($friend_email) === $admin_email) {
-            return TRUE;
-          }
-        }
-
-        // Is the user a maintainer?
-        if ($this->isMaintainer($Friend->getEmail(), $member_id)) {
-          return TRUE;
-        }
-      }
+    // Is the user a maintainer?
+    if (!$valid && $this->isMaintainer()) {
+      $valid = TRUE;
     }
+
     // Is this a valid token for the user?
-    if ($this->validateToken($this->fetchUserEmail(), $member_id, $this->getToken())) {
-      return TRUE;
+    if (!$valid && $this->validateToken()) {
+      $valid = TRUE;
     }
 
-    return FALSE;
+    return !empty($valid) ? TRUE : FALSE;
   }
 
   /**
