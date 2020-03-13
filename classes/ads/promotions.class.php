@@ -147,20 +147,11 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_EE_CLOUD_NATIVE',
-      'imageurl' => '/membership/promo/images/cloud_native.png',
-      'memberName' => 'EclipseFoundation',
-      'type' => 'strat_ad',
-      'weight' => 6
-    );
-
-
-    $promos[] = array(
       'url' => 'PROMO_JAKARTA_TECH_TALKS_MAR18',
       'imageurl' => '/membership/promo/images/jakarta-ee-community-call_mar18.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 8
     );
 
     $promos[] = array(
@@ -168,7 +159,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakartaee-tech-talk_jan27.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 8
     );
 
     $promos[] = array(
@@ -176,7 +167,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakartaee-tech-talk_feb18.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 7
     );
 
     $promos[] = array(
