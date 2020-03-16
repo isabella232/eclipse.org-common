@@ -558,7 +558,7 @@ class Donation {
    */
   public function set_donation_scope($scope = "") {
     if (!empty($scope) && is_string($scope)){
-      $this->donation_scope = substr($scope, 0, 32);
+      $this->donation_scope = substr($scope, 0, 128);
     }
     return $this->donation_scope;
   }
@@ -570,7 +570,7 @@ class Donation {
    */
   public function set_donation_campaign($campaign = "") {
     if (!empty($campaign) && is_string($campaign)){
-      $this->donation_campaign = substr($campaign, 0, 32);
+      $this->donation_campaign = substr($campaign, 0, 128);
     }
     return $this->donation_campaign;
   }
