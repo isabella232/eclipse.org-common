@@ -471,7 +471,7 @@ class Donation {
    */
   public function set_donation_is_anonymous($value) {
   $this->donation_is_anonymous = 1;
-    if ($value == 'recognition' || $value === 0) {
+    if ($value == 'recognition' || ($value === 0 || $value === '0')) {
       $this->donation_is_anonymous = 0;
     }
   }
