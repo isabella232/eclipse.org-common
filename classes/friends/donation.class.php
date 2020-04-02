@@ -470,8 +470,8 @@ class Donation {
    * @param unknown $value
    */
   public function set_donation_is_anonymous($value) {
-    $this->donation_is_anonymous = 1;
-    if ($value != "is_anonymous" && $value != 1) {
+  $this->donation_is_anonymous = 1;
+    if ($value == 'recognition' || $value === 0) {
       $this->donation_is_anonymous = 0;
     }
   }
