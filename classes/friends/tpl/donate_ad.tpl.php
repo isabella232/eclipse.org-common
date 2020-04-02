@@ -60,7 +60,7 @@ $Paypal = new Paypal();
 
           <div class="checkbox">
             <label>
-              <input class="recognition-checkbox" type="checkbox" value="" name="recognition">
+              <input class="recognition-checkbox" type="checkbox" value="" name="is_anonymous">
               I want to be listed on the recognition page
             </label>
           </div>
