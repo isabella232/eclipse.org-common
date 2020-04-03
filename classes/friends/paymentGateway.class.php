@@ -140,9 +140,23 @@ class PaymentGateway extends Payment {
   }
 
   /**
+   * Maintenance for friends_process table
+   */
+  public function maintenance(){
+    $table = 'friends_process';
+    if ($this->_get_debug_mode()) {
+      $table = 'testing_' . $table;
+    }
+    $sql = 'DELETE from ' . $table .' WHERE timestamp  <= (NOW() - INTERVAL 3 MONTH)
+    AND status != "COMPLETED" AND status != "CONFIRMED" ORDER BY timestamp DESC';
+    return $this->App->eclipse_sql($sql);
+  }
+
+  /**
    * Store form values from donation form or process script
    */
   public function update_friends_process_table($update = FALSE) {
+    $this->maintenance();
     $fields = array(
       'id_unique' => $this->Donation->get_donation_random_invoice_id(),
       'uid' => $this->Donation->Donor->get_donor_uid(),
