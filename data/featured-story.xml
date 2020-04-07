@@ -40,6 +40,16 @@
     <default>0</default>
   </item>
   <item>
+    <title><![CDATA[<h2 class="margin-top-30"><strong>Jakarta EE 2020 Developer Survey</strong></h2>]]></title>
+    <body><![CDATA[<p style="margin-top:0;text-transform:none;font-size:20px;" class="heading-underline heading-underline-extended">Take the Enterprise Java Ecosystem's Leading Survey Today!</p><p>April 6 to April 30</p>]]></body>
+    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/Y67ML5T">Take the Survey</a>]]></link>
+    <start_date>7 April 2020 00:00</start_date>
+    <end_date>30 April 2020 11:59</end_date>
+    <bg_image>images/jakartaee-dev-survey-2020.png</bg_image>
+    <bg_pos>bottom</bg_pos>
+    <default>0</default>
+  </item>
+  <item>
     <title><![CDATA[<h2 class="margin-top-30"><strong>The Eclipse IDE 2020-03 is now available!</strong></h2>]]></title>
     <body><![CDATA[<p></p>]]></body>
     <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Download now</a>]]></link>
