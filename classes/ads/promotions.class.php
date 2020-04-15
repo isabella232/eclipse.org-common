@@ -54,18 +54,6 @@ class Promotions {
       'weight' => 4
     );
 
-    /**
-     * Other Ads (70%)
-     */
-
-    // Strategic Members
-    $promos[] = array(
-      'memberID' => 655,
-      'memberName' => 'CA',
-      'type' => 'strategic',
-      'weight' => 5
-    );
-
     // Strategic Member Ads
     $promos[] = array(
       'url' => 'PROMO_ORACLE',
@@ -175,7 +163,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/eclipse_ide_donation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 3
+      'weight' => 8
     );
 
     $promos[] = array(
