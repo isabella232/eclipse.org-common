@@ -151,19 +151,11 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_TECH_TALKS_FEB18',
-      'imageurl' => '/membership/promo/images/jakartaee-tech-talk_feb18.png',
-      'memberName' => 'EclipseFoundation',
-      'type' => 'strat_ad',
-      'weight' => 4
-    );
-
-    $promos[] = array(
       'url' => 'PROMO_ECLIPSE_IDE_DONATION',
       'imageurl' => '/membership/promo/images/eclipse_ide_donation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 12
     );
 
     $promos[] = array(
