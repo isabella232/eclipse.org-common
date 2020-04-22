@@ -47,6 +47,7 @@ class Breadcrumb extends Menu {
     "eclipseide" => "Eclipse IDE",
     "errors" => "Errors",
     "europa" => "Europa",
+    "europe" => "Europe",
     "friends" => "Friends of Eclipse",
     "galileo" => "Galileo",
     "ganymede" => "Ganymede",
