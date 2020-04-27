@@ -62,7 +62,9 @@ mix.scripts([
     'node_modules/owl.carousel/dist/owl.carousel.min.js',
     'node_modules/eclipsefdn-solstice-assets/js/solstice.cookies.js',
     'node_modules/eclipsefdn-solstice-assets/js/solstice.js',
-    'node_modules/eclipsefdn-solstice-assets/js/solstice.donate.js'
+    'node_modules/eclipsefdn-solstice-assets/js/solstice.donate.js',
+    'node_modules/jquery-eclipsefdn-api/dist/jquery.eclipsefdn-api.min.js'
+
 ], 'public/javascript/main.min.js');
 
 mix.scripts([
