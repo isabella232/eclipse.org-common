@@ -21,7 +21,6 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "eclipsefdn-solstice-assets": "0.0.85",
-    "jquery": "3.3.1" 
+    "eclipsefdn-solstice-assets": "0.0.86"
   }
 }
