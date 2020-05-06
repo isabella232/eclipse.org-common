@@ -1,52 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featured_story>
   <item>
-    <prefix><![CDATA[<h2 class="margin-top-10 margin-bottom-0 fw-700">Cloud Native for Java Day</h2>]]></prefix>
-    <title><![CDATA[<h3 class="margin-top-30"><strong>Build Enterprise Java on Kubernetes!</strong></h3>]]></title>
-    <body><![CDATA[<p>A co-located event with KubeCon + CloudNativeCon EU on March 30, 2020</p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="http://eclipse-5413615.hs-sites.com/cn4j-day">Register Today</a>]]></link>
-    <start_date>1 January 2020 00:00</start_date>
-    <end_date>7 February 2020 00:59</end_date>
-    <bg_image>images/cn4j_bkgbanner.png</bg_image>
-    <bg_pos>bottom</bg_pos>
-    <default>0</default>
-  </item>
-  <item>
-    <title><![CDATA[<h2><strong>Take the 2019 IoT Commercial Adoption survey today!</strong></h2>]]></title>
-    <body><![CDATA[<p></p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/eclipse-iotcomm">Take the survey</a>]]></link>
-    <start_date>21 October 2019 1:00</start_date>
-    <end_date>29 November 2019 23:59</end_date>
+    <title><![CDATA[<h2><strong>JakartaOne Livestream Cloud Native for Java</strong></h2>]]></title>
+    <body><![CDATA[<p>Build Enterprise Java on Kubernetes!</p>]]></body>
+    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://jakartaone.org/cn4j2020/">Register today</a>]]></link>
+    <start_date>6 May 2020 00:00</start_date>
+    <end_date>12 May 2020 23:59</end_date>
     <bg_image>images/iotcomm_bkgbanner.png</bg_image>
-    <default>0</default>
-  </item>
-  <item>
-    <title><![CDATA[<h2><strong>The Eclipse IDE 2019-12 is&nbsp;now&nbsp;available!</strong></h2>]]></title>
-    <body><![CDATA[<p></p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide/">Download now</a>]]></link>
-    <start_date>18 December 2019 10:00</start_date>
-    <end_date>10 January 2020 23:59</end_date>
-    <bg_image>images/iotcomm_bkgbanner.png</bg_image>
-    <default>0</default>
-  </item>
-  <item>
-    <title><![CDATA[<h2 class="margin-top-30"><strong>Download the IoT Commercial Adoption Survey 2019 Results</strong></h2>]]></title>
-    <body><![CDATA[<p></p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="http://bit.ly/2019IoTsurvey">Get the results</a>]]></link>
-    <start_date>10 March 2020 00:00</start_date>
-    <end_date>18 March 2020 9:59</end_date>
-    <bg_image>images/iotcomm_bkgbanner.png</bg_image>
-    <bg_pos>bottom</bg_pos>
-    <default>0</default>
-  </item>
-  <item>
-    <title><![CDATA[<h2 class="margin-top-30"><strong>Jakarta EE 2020 Developer Survey</strong></h2>]]></title>
-    <body><![CDATA[<p style="text-transform:none;font-size:20px;margin-bottom:10px;">Take the Enterprise Java Ecosystem's Leading Survey Today!</p><p style="font-size:20px;"><strong>April 6 to May 5</strong></p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/Y67ML5T">Take the Survey</a>]]></link>
-    <start_date>7 April 2020 00:00</start_date>
-    <end_date>6 May 2020 03:00</end_date>
-    <bg_image>images/jakartaee-dev-survey-2020.png</bg_image>
-    <bg_pos>bottom</bg_pos>
     <default>0</default>
   </item>
   <item>
