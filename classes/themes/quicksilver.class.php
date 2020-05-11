@@ -173,6 +173,12 @@ EOHTML;
     if (!empty($featured_story['bg_pos'])) {
       $bg_pos = $featured_story['bg_pos'];
     }
+
+    $prefix = "";
+    if (!empty($featured_story['prefix'])) {
+      $prefix = $featured_story['prefix'];
+    }
+
     // If not set at this time, wrong backgrounds can be set on the footer if there are multiple valid stories
     $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/". $featured_story['bg_image'] .");border-bottom:1px solid #ccc;border-top:1px solid #ccc;background-position:".$bg_pos.";",'style');
 
@@ -182,7 +188,7 @@ EOHTML;
       <div class="container">
         <div class="row">
           <div class="{$main_container_col}">
-            {$featured_story['prefix']}
+            {$prefix}
             {$featured_story['title']}
             {$featured_story['body']}
             {$featured_story['link']}

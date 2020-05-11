@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featured_story>
   <item>
+    <title><![CDATA[<h2 style="margin-top:10px;"><strong>The Eclipse Foundation Transitions to Europe</strong></h2>]]></title>
+    <body><![CDATA[<p>Expanding the Global Level Playing Field for Open Collaboration</p>]]></body>
+    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/europe">Learn More</a>]]></link>
+    <start_date>12 May 2020 01:00</start_date>
+    <end_date>1 June 2020 11:59</end_date>
+    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
+    <bg_pos>bottom</bg_pos>
+    <default>0</default>
+  </item>
+  <item>
     <prefix><![CDATA[<h4 class="margin-top-10 margin-bottom-0 fw-200">IOT 2020 DEVELOPER SURVEY</h4>]]></prefix>
     <title><![CDATA[<h2 style="margin-top:10px;"><strong>TAKE THE SURVEY TODAY</strong></h2>]]></title>
     <body><![CDATA[<p>May 11, 2020</p>]]></body>
