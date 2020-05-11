@@ -182,6 +182,7 @@ EOHTML;
       <div class="container">
         <div class="row">
           <div class="{$main_container_col}">
+            {$featured_story['prefix']}
             {$featured_story['title']}
             {$featured_story['body']}
             {$featured_story['link']}
