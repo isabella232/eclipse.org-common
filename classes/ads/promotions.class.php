@@ -103,8 +103,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_TECH_TALKS',
-      'imageurl' => '/membership/promo/images/jakartaee-tech-talk.png',
+      'url' => 'PROMO_IOT_DEV_SURVEY_2020',
+      'imageurl' => '/membership/promo/images/iot-dev-survey-2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 9
