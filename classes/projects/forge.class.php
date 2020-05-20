@@ -64,22 +64,6 @@ class Forge {
           'hudson.eclipse.org',
           'ci.eclipse.org'
         )
-      ),
-      'locationtech' => array(
-        'id' => 'locationtech',
-        'name' => 'LocationTech',
-        'url' => 'https://www.locationtech.org',
-        'hudson_domain' => array(
-          'hudson.locationtech.org'
-        )
-      ),
-      'polarsys' => array(
-        'id' => 'polarsys',
-        'name' => 'PolarSys',
-        'url' => 'https://www.polarsys.org',
-        'hudson_domain' => array(
-          'hudson.polarsys.org'
-        )
       )
     );
 
