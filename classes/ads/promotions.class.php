@@ -119,24 +119,24 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_BUSINESS_VALUE',
-      'imageurl' => '/membership/promo/images/business-valueof-open-source.png',
+      'url' => 'PROMO_ENABLING_TRANSFORMATION',
+      'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 9
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_TECH_TALKS_MAR18',
-      'imageurl' => '/membership/promo/images/jakarta-ee-community-call_mar18.png',
+      'url' => 'PROMO_JAKARTA_TECH_TALKS_MAY19',
+      'imageurl' => '/membership/promo/images/jakarta-ee-community-call_may19.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 9
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_TECH_TALKS_JAN27',
-      'imageurl' => '/membership/promo/images/jakartaee-tech-talk_jan27.png',
+      'url' => 'PROMO_IOT_EDGE_VIRTUAL_DAY',
+      'imageurl' => '/membership/promo/images/iot_edge_virtual_day_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 8
