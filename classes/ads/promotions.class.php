@@ -107,7 +107,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/iot-dev-survey-2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 9
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -115,7 +115,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/cloud-native.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -123,7 +123,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 9
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -131,7 +131,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta-ee-community-call_may19.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 9
+      'weight' => 7
     );
 
     $promos[] = array(
@@ -139,12 +139,20 @@ class Promotions {
       'imageurl' => '/membership/promo/images/iot_edge_virtual_day_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
+      'weight' => 7
+    );
+    
+    $promos[] = array(
+      'url' => 'PROMO_IOT_COMM_SURVEY_2019',
+      'imageurl' => '/membership/promo/images/iot_commercial_adoption_survey2019.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
       'weight' => 8
     );
 
     $promos[] = array(
-      'url' => 'PROMO_IOT_COMM_SURVEY_2019',
-      'imageurl' => '/membership/promo/images/iot_commercial_adoption_survey2019.png',
+      'url' => 'PROMO_JAKARTA_EE_YOUTUBE',
+      'imageurl' => '/membership/promo/images/jakarta_ee_youtube_ad.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 8
