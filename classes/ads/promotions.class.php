@@ -103,8 +103,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_IOT_DEV_SURVEY_2020',
-      'imageurl' => '/membership/promo/images/iot-dev-survey-2020.png',
+      'url' => 'PROMO_OPEN_SOURCE_AI_2020',
+      'imageurl' => '/membership/promo/images/open-source-ai.jpg',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 7
