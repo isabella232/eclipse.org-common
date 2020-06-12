@@ -377,13 +377,13 @@ class BaseTheme {
    *
    * @return array
    */
-  public function getFeaturedStory() {
+  public function getFeaturedStory($type = "footer") {
     $App = $this->_getApp();
     require_once($App->getBasePath() . '/classes/ads/featuredStory.class.php');
     $FeaturedStory = new FeaturedStory();
     if ($FeaturedStory instanceof FeaturedStory) {
       $FeaturedStory->setXmlData($this->getFeaturedStoryXml());
-      $featured_story = $FeaturedStory->getFeaturedStory();
+      $featured_story = $FeaturedStory->getFeaturedStory($type);
       if (!empty($featured_story)) {
         // allows for us to set position of bg image, to better adjust for different content formats
         $bg_pos = "initial";

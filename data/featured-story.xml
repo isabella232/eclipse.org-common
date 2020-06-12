@@ -60,4 +60,27 @@
     <bg_pos>bottom</bg_pos>
     <default>0</default>
   </item>
+  
+  <item>
+    <title><![CDATA[<h2 class="margin-top-30"><strong>The Eclipse IDE 2020-06 is now available!</strong></h2>]]></title>
+    <body><![CDATA[<p></p>]]></body>
+    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/downloads">Download Now</a>]]></link>
+    <start_date>17 June 2020 01:00</start_date>
+    <end_date>17 July 2020 23:59</end_date>
+    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
+    <bg_pos>bottom</bg_pos>
+    <default>0</default>
+    <type>footer</type>
+  </item>
+  <item>
+    <title><![CDATA[<h2 class="margin-top-30"><strong>The Eclipse IDE 2020-06 is now available!</strong></h2>]]></title>
+    <body><![CDATA[<p></p>]]></body>
+    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide">Download Now</a>]]></link>
+    <start_date>27 June 2020 01:00</start_date>
+    <end_date>17 July 2020 23:59</end_date>
+    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
+    <bg_pos>bottom</bg_pos>
+    <default>0</default>
+    <type>story</type>
+  </item>
 </featured_story>

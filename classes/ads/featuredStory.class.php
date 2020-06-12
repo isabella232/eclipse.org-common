@@ -22,7 +22,7 @@ class FeaturedStory {
    *
    * @return array
    */
-  public function getFeaturedStory($add_backup_items = TRUE) {
+  public function getFeaturedStory($type = 'both') {
 
     $data = $this->getXmlData();
     if (empty($data['item'])) {
@@ -35,6 +35,11 @@ class FeaturedStory {
       if (!empty($item['default'])) {
         $default_item = $item;
       }
+
+      if (isset($item['type']) && $item['type'] !== NULL && $item['type'] !== 'both' && $type !== $item['type']) {
+        continue;
+      }
+
       if(time() >= strtotime($item['start_date']) && time() < strtotime($item['end_date'])) {
         $valid_items[] = $item;
       }
@@ -42,7 +47,7 @@ class FeaturedStory {
 
     // If we should add back up items and the XML
     // did not return any valid or default items
-    if ($add_backup_items && empty($default_item) && empty($valid_items)) {
+    if (empty($default_item) && empty($valid_items)) {
       $valid_items = $this->getBackupItems();
     }
 

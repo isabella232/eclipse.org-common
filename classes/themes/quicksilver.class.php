@@ -167,7 +167,7 @@ EOHTML;
       }
     }
 
-    $featured_story = $this->getFeaturedStory($this->getFeaturedStoryXml());
+    $featured_story = $this->getFeaturedStory('footer');
     // allows for us to set position of bg image, to better adjust for different content formats
     $bg_pos = "initial";
     if (!empty($featured_story['bg_pos'])) {
