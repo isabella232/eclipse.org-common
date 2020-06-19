@@ -127,16 +127,16 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_TECH_TALKS_MAY19',
-      'imageurl' => '/membership/promo/images/jakarta-ee-community-call_may19.png',
+      'url' => 'PROMO_JAKARTA_EE_9_PARTY',
+      'imageurl' => '/membership/promo/images/jakarta_ee_9_release_party.jpg',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 7
     );
 
     $promos[] = array(
-      'url' => 'PROMO_IOT_EDGE_VIRTUAL_DAY',
-      'imageurl' => '/membership/promo/images/iot_edge_virtual_day_2020.png',
+      'url' => 'PROMO_JAKARTA_EE_9_MILESTONE_RELEASE',
+      'imageurl' => '/membership/promo/images/jakarta_ee_9_milestone_release.jpg',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 7
