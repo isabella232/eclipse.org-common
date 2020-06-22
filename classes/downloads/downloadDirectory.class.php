@@ -170,10 +170,10 @@ class DownloadDirectory {
    */
   private function _getProjectID() {
     $group = $this->getLdapGroupByGid(filegroup($this->getCurrentDirectory()));
-    if (empty($group['name'])) {
+    if (empty($group)) {
       return "";
     }
-    return $group['name'];
+    return $group;
   }
 
   /**
