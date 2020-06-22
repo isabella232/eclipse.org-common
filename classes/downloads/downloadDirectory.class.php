@@ -14,6 +14,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/app.class.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/eclipse.org-common/system/session.class.php");
+require_once("/home/data/httpd/eclipse-php-classes/system/ldapconnection.class.php");
 
 class DownloadDirectory {
 
@@ -168,7 +169,7 @@ class DownloadDirectory {
    * @return string
    */
   private function _getProjectID() {
-    $group = posix_getgrgid(filegroup($this->getCurrentDirectory()));
+    $group = $this->getLdapGroupByGid(filegroup($this->getCurrentDirectory()));
     if (empty($group['name'])) {
       return "";
     }
@@ -318,5 +319,15 @@ class DownloadDirectory {
     $output .= '<input disabled id="deletesubmit" class="btn btn-xs ' . $button_class . '" type="submit" value="' . $button_text . '" />';
     $output .= "</form>";
     return $output;
+  }
+
+  /**
+   * Get the LDAP Group name, by gid
+   *
+   * @return string
+   */
+  public function getLdapGroupByGid($gid) {
+    $LDAPConnection = new LDAPConnection();
+    return $LDAPConnection->getGroupByGid($gid);
   }
 }
