@@ -418,7 +418,8 @@ class EditMembership extends Membership{
      $admins = array(
       'pmisingnameu8g' => 'perri.lavergne@eclipse-foundation.org',
       'zfazli' => 'zahra.fazli@eclipse-foundation.org',
-      'webdev' => 'webdev@eclipse.org'
+      'webdev' => 'webdev@eclipse.org',
+      'cwitt' => 'christie.witt@eclipse-foundation.org'
     );
 
     $Friend = $this->Session->getFriend();
