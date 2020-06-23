@@ -29,6 +29,12 @@ class DownloadDirectory {
   private $processing_paths = array();
 
   /**
+   *
+   * The directory to work with
+   */
+ private $basedir = "";  
+
+  /**
    * Person ID
    */
   private $person_id = "";
@@ -56,12 +62,17 @@ class DownloadDirectory {
 
     $input_disabled = '';
     $suffix_text = '';
-    if (!empty($processing_paths[$path])) {
+    if (array_key_exists($path, $processing_paths)) {
       $action = 'archived';
       if ($this->_isArchiveDomain()) {
         $action = 'deleted';
       }
       $suffix_text = '<span class="small">(This file is being ' . $action . ')</span>';
+
+      # examine the token (return value from the handler
+      if(!empty($processing_paths[$path])) {
+          $suffix_text = '<span class="small">(File cannot be ' . $action . ': ' . $processing_paths[$path] . '. Please contact webmaster.)</span>';
+      }
       $input_disabled = 'disabled="disabled"';
     }
 
@@ -88,12 +99,17 @@ class DownloadDirectory {
 
     $input_disabled = '';
     $suffix_text = '';
-    if (!empty($processing_paths[$path])) {
+    if (array_key_exists($path, $processing_paths)) {
       $action = 'archived';
       if ($this->_isArchiveDomain()) {
         $action = 'deleted';
       }
       $suffix_text = '<span class="small">(This folder is being ' . $action . ')</span>';
+
+      # examine the token (return value from the handler
+      if(!empty($processing_paths[$path])) {
+        $suffix_text = '<span class="small">(Folder cannot be ' . $action . ': ' . $processing_paths[$path] . '. Please contact webmaster.)</span>';
+      }
       $input_disabled = 'disabled="disabled"';
     }
 
@@ -136,7 +152,7 @@ class DownloadDirectory {
       $action = "DOWNLOAD_DELETE";
     }
 
-    $sql = "SELECT password as Path
+    $sql = "SELECT password as Path, token
       FROM account_requests
       WHERE fname = " . $this->App->returnQuotedString($this->App->sqlSanitize($action)) . "
       AND lname = " . $this->App->returnQuotedString($this->App->sqlSanitize($action));
@@ -147,9 +163,8 @@ class DownloadDirectory {
     }
 
     while($myrow = mysql_fetch_array($result)) {
-      $this->processing_paths[$myrow['Path']] = $myrow['Path'];
+      $this->processing_paths[$myrow['Path']] = $myrow['token'];
     }
-
     return $this->processing_paths;
   }
 
@@ -169,7 +184,7 @@ class DownloadDirectory {
    * @return string
    */
   private function _getProjectID() {
-    $group = $this->getLdapGroupByGid(filegroup($this->getCurrentDirectory()));
+    $group = $this->getLdapGroupByGid(filegroup($this->basedir));
     if (empty($group)) {
       return "";
     }
@@ -182,7 +197,6 @@ class DownloadDirectory {
    * @return bool
    */
   private function _insertRequest() {
-
     if (empty($_POST['paths_to_archive'])) {
       return FALSE;
     }
@@ -222,7 +236,7 @@ class DownloadDirectory {
           " . $this->App->returnQuotedString($this->App->sqlSanitize($action)) . ",
           " . $this->App->returnQuotedString($this->App->sqlSanitize($path)) . ",
           " . $this->App->returnQuotedString($this->App->sqlSanitize($this->App->getRemoteIPAddress())) . ",
-          " . $this->App->returnQuotedString($this->App->sqlSanitize(date("Y-m-d h:i:s"))) . ",
+          NOW(),
           NULL
           )";
       $this->App->eclipse_sql($sql);
@@ -253,10 +267,8 @@ class DownloadDirectory {
       WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->_getPersonID())) . "
       AND ProjectID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->_getProjectID())) . "
       AND Relation = " . $this->App->returnQuotedString("CM") . "
-      AND InactiveDate IS NULL";
-
+      AND (InactiveDate IS NULL OR InactiveDate = '0000-00-00')";
     $result = $this->App->foundation_sql($sql);
-
     $is_committer = FALSE;
     while($myrow = mysql_fetch_array($result)) {
       if ($myrow['count']) {
@@ -274,7 +286,12 @@ class DownloadDirectory {
    *
    * @return string
    */
-  public function getFormOutput($files, $dirs) {
+  public function getFormOutput($files, $dirs, $basedir=null) {
+
+    if($basedir === null) {
+      $basedir = $this->getCurrentDirectory();
+    }
+    $this->basedir = $basedir;
 
     $output = "";
     $html_checkboxes = array();
@@ -306,7 +323,7 @@ class DownloadDirectory {
     // we can safely insert a new request on page reload
     $this->_insertRequest();
 
-    $output .= '<form class="downloads-directory" method="post">';
+    $output .= '<form class="downloads-directory" method="post" action="/errors/filehandler.php">';
     $output .= implode("", $html_checkboxes);
 
     $button_text = 'Archive';
@@ -318,6 +335,7 @@ class DownloadDirectory {
 
     $output .= '<input disabled id="deletesubmit" class="btn btn-xs ' . $button_class . '" type="submit" value="' . $button_text . '" />';
     $output .= "</form>";
+    $output .= "<span class='small'>File and folder operations make take several seconds to complete. Refresh the page to get current status.</span>";
     return $output;
   }
 
