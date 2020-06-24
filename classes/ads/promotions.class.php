@@ -127,8 +127,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_EE_9_PARTY',
-      'imageurl' => '/membership/promo/images/jakarta_ee_9_release_party.jpg',
+      'url' => 'PROMO_JAKARTA_EE_DEV_SURVEY_2020',
+      'imageurl' => '/membership/promo/images/jakarta_ee_developer_survey_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 7
