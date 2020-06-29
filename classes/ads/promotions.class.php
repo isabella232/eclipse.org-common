@@ -103,8 +103,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_OPEN_SOURCE_AI_2020',
-      'imageurl' => '/membership/promo/images/open-source-ai.jpg',
+      'url' => 'PROMO_EUROPEAN_RESEARCH_CASE_STUDY_2020',
+      'imageurl' => '/membership/promo/images/european-research-innovation-case-studies.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 7
