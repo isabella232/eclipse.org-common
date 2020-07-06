@@ -160,7 +160,7 @@ class App {
    *
    * @var string
    */
-  private $OGDescription = "The Eclipse Foundation - home to a global community, the Eclipse IDE, Jakarta EE and over 350 open source projects, including runtimes, tools and frameworks.";
+  private $OGDescription = "The Eclipse Foundation - home to a global community, the Eclipse IDE, Jakarta EE and over 375 open source projects, including runtimes, tools and frameworks.";
 
   /**
    * Open Graph Protocol image
