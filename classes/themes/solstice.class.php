@@ -35,9 +35,11 @@ class Solstice extends baseTheme {
     $this->setFooterLinks("about_us", "About Us", $this->getBaseUrl() . "org/", "region_1", 1);
     $this->setFooterLinks("contact_us", "Contact Us", $this->getBaseUrl() . "org/foundation/contact.php", "region_1", 2);
     $this->setFooterLinks("donate", "Donate", $this->getBaseUrl() . "donate", "region_1", 3);
-    $this->setFooterLinks("governance", "Governance", $this->getBaseUrl() . "org/documents/", "region_1", 4);
-    $this->setFooterLinks("logo_and_artwork", "Logo and Artwork", $this->getBaseUrl() . "artwork/", "region_1", 5);
-    $this->setFooterLinks("board_of_directors", "Board of Directors", $this->getBaseUrl() . "org/foundation/directors.php", "region_1", 6);
+    $this->setFooterLinks("members", "Members", $this->getBaseUrl() . "membership/", "region_1", 4);
+    $this->setFooterLinks("governance", "Governance", $this->getBaseUrl() . "org/documents/", "region_1", 5);
+    $this->setFooterLinks("code_of_conduct", "Code of Conduct", $this->getBaseUrl() . "org/documents/Community_Code_of_Conduct.php", "region_1", 6);
+    $this->setFooterLinks("logo_and_artwork", "Logo and Artwork", $this->getBaseUrl() . "artwork/", "region_1", 7);
+    $this->setFooterLinks("board_of_directors", "Board of Directors", $this->getBaseUrl() . "org/foundation/directors.php", "region_1", 8);
 
     $this->setFooterLinks("privary_policy", "Privacy Policy", $this->getBaseUrl() . "legal/privacy.php", "region_2", 1);
     $this->setFooterLinks("terms_of_use", "Terms of Use", $this->getBaseUrl() . "legal/termsofuse.php", "region_2", 2);
@@ -53,7 +55,7 @@ class Solstice extends baseTheme {
     $this->setFooterLinks("marketplace", "Marketplace", "//marketplace.eclipse.org", "region_3", 6);
 
     $this->setFooterLinks("ide_and_tools", "IDE and Tools", $this->getBaseUrl() . "ide/", "region_4", 1);
-    $this->setFooterLinks("projects", "Community of Projects", $this->getBaseUrl() . "projects", "region_4", 2);
+    $this->setFooterLinks("projects", "Projects", $this->getBaseUrl() . "projects", "region_4", 2);
     $this->setFooterLinks("working_groups", "Working Groups", $this->getBaseUrl() . "org/workinggroups/", "region_4", 3);
     $this->setFooterLinks("research", "Research@Eclipse", $this->getBaseUrl() . "org/research/", "region_4", 4);
     $this->setFooterLinks("security", "Report a Vulnerability", $this->getBaseUrl() . "security/", "region_4", 5);

@@ -1202,7 +1202,7 @@ EOHTML;
         break;
     }
 
-    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v1.10"/>' . PHP_EOL;
+    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v0.105"/>' . PHP_EOL;
 
     // Add og:metatags if they haven't been set.
     // @todo: deprecated og functions in App().
@@ -1335,7 +1335,7 @@ EOHTML;
         $return .= '<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,100" rel="stylesheet" type="text/css"/>';
         break;
       default:
-        $return .= '<link href="//fonts.googleapis.com/css?family=Libre+Franklin:400,700,300,600,100" rel="stylesheet" type="text/css"/>';
+        $return .= '<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" type="text/css"/>';
     }
 
     return $return. PHP_EOL;
@@ -1975,9 +1975,9 @@ EOHTML;
     }
     $Menu = new Menu();
     $Menu->setMenuItemList(array());
-    $Menu->addMenuItem("Members", $base_url . "membership/", "_self");
-    $Menu->addMenuItem("Working Groups", $base_url . "org/workinggroups/", "_self");
     $Menu->addMenuItem("Projects", $base_url . "projects/", "_self");
+    $Menu->addMenuItem("Working Groups", $base_url . "org/workinggroups/", "_self");
+    $Menu->addMenuItem("Members", $base_url . "membership/", "_self");
     return $Menu;
   }
 
