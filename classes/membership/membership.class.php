@@ -77,6 +77,14 @@ class Membership {
         'members' => array(),
         'img' => '/membership/images/type/associate-members.png',
         'title' => 'Associate Members',
+      ),
+      'committer' => array(
+        'content_class' => 'tab-pane',
+        'level' => 'committer',
+        'list_class' => '',
+        'members' => array(),
+        'img' => '/membership/images/type/committer-members.png',
+        'title' => 'Committer Members',
       )
     );
   }
@@ -152,12 +160,30 @@ class Membership {
       }
 
       $row['title_link'] .= $row['name'];
-      $small_logo_src = '/membership/images/eclipse-mp-member-144x69.png';
+      
+      $small_logo_src = '';
+      $large_logo_src = '';
+      switch($row['member_type']) {
+        case 'AP':
+        case 'OHAP':
+          $small_logo_src = '/membership/images/type/solutions-members.png';
+          $large_logo_src = '/membership/images/type/solutions-members.png';
+          break;
+        case 'AS':
+          $small_logo_src = '/membership/images/type/associate-members.png';
+          $large_logo_src = '/membership/images/type/associate-members.png';
+          break;
+        case 'SD':
+        case 'SC':
+          $small_logo_src = '/membership/images/type/strategic-members.png';
+          $large_logo_src = '/membership/images/type/strategic-members.png';
+          break;
+      }
       if (!empty($row['small_logo'])) {
         $small_logo_src = 'data:' . $row['small_mime'] . ';base64,' . base64_encode($row['small_logo']);
       }
-
-      $large_logo_src = '/membership/images/eclipse-mp-member-144x69.png';
+      $row['small_logo_src'] = $small_logo_src;
+      
       if (!empty($row['large_logo'])) {
         $large_logo_src = 'data:' . $row['large_mime'] . ';base64,' . base64_encode($row['large_logo']);
         $row['large_logo_website_link'] .= '<img src="' . $large_logo_src . '"  title="' . $row['name'] . '" class="img-responsive padding-bottom-25"/>';
@@ -165,6 +191,7 @@ class Membership {
       else{
         $row['large_logo_website_link'] = '<h1>' . $row['name']. '</h1>';
       }
+      $row['large_logo_src'] = $large_logo_src;
 
       $row['small_logo_link'] .= '<img src="' . $small_logo_src . '"  title="' . $row['name'] . '" class="img-responsive"/>';
       $row['large_logo_link'] .= '<img src="' . $large_logo_src . '"  title="' . $row['name'] . '" class="img-responsive"/>';
@@ -178,7 +205,6 @@ class Membership {
       if (filter_var($row['website'], FILTER_VALIDATE_URL)) {
         $row['large_logo_website_link']  .= '</a>';
       }
-
 
       switch($row['member_type']) {
         case 'AP':
