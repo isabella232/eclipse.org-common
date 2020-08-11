@@ -32,12 +32,22 @@ class DownloadDirectory {
    *
    * The directory to work with
    */
- private $basedir = "";  
+ private $basedir = "";
 
   /**
    * Person ID
    */
   private $person_id = "";
+
+  /**
+   * LDAP Group
+   */
+  private $ldap_group = NULL;
+
+  /**
+   * User is committer
+   */
+  private $user_is_committer = NULL;
 
   public function __construct() {
     $this->App = new App();
@@ -262,6 +272,10 @@ class DownloadDirectory {
    */
   private function _userIsCommitterOnProject() {
 
+    if (!is_null($this->user_is_committer)) {
+      return $this->user_is_committer;
+    }
+
     $sql = "SELECT count(1) as count
       FROM PeopleProjects
       WHERE PersonID = " . $this->App->returnQuotedString($this->App->sqlSanitize($this->_getPersonID())) . "
@@ -269,14 +283,14 @@ class DownloadDirectory {
       AND Relation = " . $this->App->returnQuotedString("CM") . "
       AND (InactiveDate IS NULL OR InactiveDate = '0000-00-00')";
     $result = $this->App->foundation_sql($sql);
-    $is_committer = FALSE;
+    $this->user_is_committer = FALSE;
     while($myrow = mysql_fetch_array($result)) {
       if ($myrow['count']) {
-        $is_committer = TRUE;
+        $this->user_is_committer = TRUE;
       }
     }
 
-    return $is_committer;
+    return $this->user_is_committer;
   }
 
 
@@ -345,7 +359,11 @@ class DownloadDirectory {
    * @return string
    */
   public function getLdapGroupByGid($gid) {
+    if (!is_null($this->ldap_group)) {
+      return $this->ldap_group;
+    }
     $LDAPConnection = new LDAPConnection();
-    return $LDAPConnection->getGroupByGid($gid);
+    $this->ldap_group = $LDAPConnection->getGroupByGid($gid);
+    return $this->ldap_group;
   }
 }
