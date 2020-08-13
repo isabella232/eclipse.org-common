@@ -103,11 +103,27 @@ class Promotions {
     );
 
     $promos[] = array(
+      'url' => 'PROMO_RED_HAT',
+      'imageurl' => '/membership/promo/images/redhat-ad.jpg',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 6
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_FOKUS',
+      'imageurl' => '/membership/promo/images/fokus_promo.jpg',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 6
+    );
+
+    $promos[] = array(
       'url' => 'PROMO_EUROPEAN_RESEARCH_CASE_STUDY_2020',
       'imageurl' => '/membership/promo/images/european-research-innovation-case-studies.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -115,7 +131,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/cloud-native.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -123,7 +139,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -131,7 +147,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta_ee_developer_survey_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -139,7 +155,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta_ee_9_milestone_release.jpg',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -147,7 +163,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/iot_commercial_adoption_survey2019.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 7
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -157,15 +173,6 @@ class Promotions {
       'type' => 'strat_ad',
       'weight' => 8
     );
-
-    $promos[] = array(
-      'url' => 'PROMO_RED_HAT',
-      'imageurl' => '/membership/promo/images/redhat-ad.jpg',
-      'memberName' => 'EclipseFoundation',
-      'type' => 'strat_ad',
-      'weight' => 6
-    );
-
 
     if (!empty($filter)) {
       $filter_promo = array();
