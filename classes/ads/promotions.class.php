@@ -127,8 +127,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_CLOUD_NATIVE',
-      'imageurl' => '/membership/promo/images/cloud-native.png',
+      'url' => 'PROMO_SAM_IOT_2020',
+      'imageurl' => '/membership/promo/images/sam_iot_2020_register.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 5
