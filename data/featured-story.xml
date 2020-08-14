@@ -74,15 +74,15 @@
     <type>story</type>
   </item>
   <item>
-    <title><![CDATA[<h2 class="margin-top-30"><strong>The 2020 Jakarta Developer Survey Results are Now Available</strong></h2>]]></title>
-    <body><![CDATA[<p>Download the Results of the Enterprise Java Ecosystem's Leading Survey Today!</p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://outreach.jakartaee.org/2020-developer-survey-report">Get The Results</a>]]></link>
-    <start_date>27 June 2020 01:00</start_date>
-    <end_date>22 October 2020 23:59</end_date>
+    <title><![CDATA[<h2 class="margin-top-30"><strong>Register now for Eclipse SAM IoT 2020</strong></h2>]]></title>
+    <body><![CDATA[<p>Virtual Conference on Security, Artificial Intelligence, and Modeling for the Next Generation Internet of Things.</p>]]></body>
+    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eventbrite.de/e/eclipse-sam-iot-2020-tickets-107823242220">Register now</a>]]></link>
+    <start_date>14 August 2020 01:00</start_date>
+    <end_date>15 September 2020 23:59</end_date>
     <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
     <bg_pos>bottom</bg_pos>
     <default>0</default>
-    <type>both</type>
+    <type>story</type>
   </item>
   <item>
     <title><![CDATA[<h2 class="margin-top-30"><strong>Join us for EclipseCon 2020</strong></h2>]]></title>
