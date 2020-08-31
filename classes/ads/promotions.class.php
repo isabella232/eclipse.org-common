@@ -119,11 +119,19 @@ class Promotions {
     );
 
     $promos[] = array(
+      'url' => 'PROMO_HUAWEI',
+      'imageurl' => '/membership/promo/images/huawei-ad-eclipse-hdc.jpg',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 5
+    );
+
+    $promos[] = array(
       'url' => 'PROMO_EUROPEAN_RESEARCH_CASE_STUDY_2020',
       'imageurl' => '/membership/promo/images/european-research-innovation-case-studies.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 4
     );
 
     $promos[] = array(
@@ -131,7 +139,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/sam_iot_2020_register.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 4
     );
 
     $promos[] = array(
@@ -139,7 +147,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 4
     );
 
     $promos[] = array(
@@ -147,7 +155,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta_ee_developer_survey_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 4
     );
 
     $promos[] = array(
@@ -155,7 +163,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta_ee_9_milestone_release.jpg',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 4
     );
 
     $promos[] = array(
