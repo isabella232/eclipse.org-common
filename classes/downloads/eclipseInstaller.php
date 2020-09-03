@@ -67,7 +67,7 @@ class EclipseInstaller extends EclipseEnv {
    * @param string $text
    * @return boolean
    */
-  public function addlink($platform = '', $url = '', $text = '') {
+  public function addlink($platform = '', $url = '', $text = '', $jre = FALSE) {
 
     if(!isset($this->platform[$this->_removeSpaces($platform)])) {
       return FALSE;
@@ -81,6 +81,7 @@ class EclipseInstaller extends EclipseEnv {
       'url' => $url,
       'text' => $text,
       'text_prefix' => 'Download',
+      'jre' => $jre
     );
 
     $this->setPlatform($platform_array);
@@ -102,6 +103,7 @@ class EclipseInstaller extends EclipseEnv {
     }
 
     if (!empty($layout)) {
+      $installer_alert_text = $this->getInstallerAlertText();
       switch ($layout) {
         case 'layout_a':
           $release_title = $this->getReleaseShortName(TRUE);
@@ -120,6 +122,36 @@ class EclipseInstaller extends EclipseEnv {
       $html = ob_get_clean();
     }
     return $html;
+  }
+
+  /**
+   * Return the installer alert text
+   *
+   * @return string
+   */
+  function getInstallerAlertText() {
+    $release_name = $this->getReleaseShortName(TRUE) . " " . $this->getReleaseType();
+
+    $download_links = $this->getDownloadLinks();
+
+    $platforms = array();
+    foreach ($download_links as $platform) {
+      foreach ($platform['links'] as $link) {
+
+        if ($link['jre'] === TRUE) {
+          $platforms[] = $link['platform'];
+        }
+      }
+    }
+
+    if (empty($platforms)) {
+      return "";
+    }
+
+    $string_platforms = implode(', ', $platforms);
+    $string_platforms = substr_replace($string_platforms, ' and', strrpos($string_platforms, ','), 1);
+
+    return "The Eclipse Installer " . $release_name . " now includes a JRE for " . $string_platforms . ".";
   }
 
   /**
@@ -345,23 +377,23 @@ class EclipseInstaller extends EclipseEnv {
     $eclipse_env = $this->getEclipseEnv();
 
     if (!empty($data['files']['mac64'])) {
-      $this->addlink('Mac OS X', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['mac64']['url']), "64 bit");
+      $this->addlink('Mac OS X', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['mac64']['url']), "64 bit", $data['files']['mac64']['jre']);
     }
 
     if (!empty($data['files']['win32'])) {
-      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win32']['url']), '32 bit');
+      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win32']['url']), '32 bit', $data['files']['win32']['jre']);
     }
 
     if (!empty($data['files']['win64'])) {
-      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win64']['url']), '64 bit');
+      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win64']['url']), '64 bit', $data['files']['win64']['jre']);
     }
 
     if (!empty($data['files']['linux32'])) {
-      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux32']['url']), '32 bit');
+      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux32']['url']), '32 bit', $data['files']['linux32']['jre']);
     }
 
     if (!empty($data['files']['linux64'])) {
-      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux64']['url']), "64 bit");
+      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux64']['url']), "64 bit", $data['files']['linux64']['jre']);
     }
   }
 

@@ -17,6 +17,15 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 ?>
 
 <div class="text-center">
+  <?php if (!empty($installer_alert_text)): ?>
+    <div class="row">
+      <div class="col-xs-12 col-xs-offset-6 col-md-18 col-md-offset-3">
+        <div class="downloads-eclipse-installer-alert">
+          <p><?php print $installer_alert_text; ?></p>
+        </div>
+      </div>
+    </div>
+  <?php endif; ?>
   <span class="downloads-logo vertical-align"><img height="50" alt="Eclipse" src="/downloads/assets/public/images/logo-eclipse.png"></span>
   <h3>Get <strong>Eclipse IDE <?php print $release_title; ?></strong></h3>
   <p>Install your favorite desktop IDE packages.</p>

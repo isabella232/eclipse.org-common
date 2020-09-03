@@ -15,6 +15,16 @@
 //if name of the file requested is the same as the current file, the script will exit directly.
 if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
 ?>
+<?php if (!empty($installer_alert_text)): ?>
+  <div class="eclipse-installer-alert">
+    <div class="row">
+      <div class="col-sm-24">
+        <p><?php print $installer_alert_text; ?></p>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>
+
 <div class="eclipse-installer content">
   <div class="row">
     <div class="col-md-16">
