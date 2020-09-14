@@ -171,7 +171,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/iot_commercial_adoption_survey2019.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 4
     );
 
     $promos[] = array(
@@ -179,7 +179,15 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta_ee_youtube_ad.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 8
+      'weight' => 4
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_FUTURE_DEV',
+      'imageurl' => '/membership/promo/images/future-dev-summit-ad.jpg',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 6
     );
 
     if (!empty($filter)) {
