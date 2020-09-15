@@ -1,77 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featured_story>
   <item>
-    <title><![CDATA[<h2 style="margin-top:10px;"><strong>The Eclipse Foundation Transitions to Europe</strong></h2>]]></title>
-    <body><![CDATA[<p>Enabling Global Collaboration on Open Source Innovation</p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/europe">Learn More</a>]]></link>
-    <start_date>12 May 2020 01:00</start_date>
-    <end_date>1 June 2020 11:59</end_date>
-    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
-    <bg_pos>bottom</bg_pos>
-    <default>0</default>
-  </item>
-  <item>
-    <prefix><![CDATA[<h4 class="margin-top-10 margin-bottom-0 fw-200">2020 IOT DEVELOPER SURVEY</h4>]]></prefix>
-    <title><![CDATA[<h2 style="margin-top:10px;"><strong>TAKE THE IOT INDUSTRY'S LEADING DEVELOPER SURVEY TODAY</strong></h2>]]></title>
-    <body><![CDATA[<p>May 11 - July 10, 2020</p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.surveymonkey.com/r/Eclipsebanner">Take the Survey</a>]]></link>
-    <start_date>11 May 2020 01:00</start_date>
-    <end_date>10 July 2020 23:59</end_date>
-    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
-    <bg_pos>bottom</bg_pos>
-    <default>0</default>
-  </item>
-  <item>
-    <title><![CDATA[<h2><strong>JakartaOne Livestream Cloud Native for Java</strong></h2>]]></title>
-    <body><![CDATA[<p>Build Enterprise Java on Kubernetes!</p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://jakartaone.org/cn4j2020/">Register today</a>]]></link>
-    <start_date>6 May 2020 00:00</start_date>
-    <end_date>12 May 2020 23:59</end_date>
-    <bg_image>images/iotcomm_bkgbanner.png</bg_image>
-    <default>0</default>
-  </item>
-  <item>
-    <title><![CDATA[<h2 class="margin-top-30"><strong>Submit your talk for EclipseCon&nbsp;2020</strong></h2>]]></title>
-    <body><![CDATA[<p>Early bird submissions are due June 3, and the final deadline is June 15.</p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipsecon.org/2020/cfp">Submit a proposal</a>]]></link>
-    <start_date>25 May 2020 01:00</start_date>
-    <end_date>3 June 2020 23:59</end_date>
-    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
-    <bg_pos>bottom</bg_pos>
-    <default>0</default>
-  </item>
-  <item>
-    <title><![CDATA[<h2 class="margin-top-30"><strong>Don't miss out! Submit your talk for EclipseCon 2020</strong></h2>]]></title>
-    <body><![CDATA[<p>The final deadline for EclipseCon proposals is Monday, June 15.</p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipsecon.org/2020/cfp">Submit a proposal</a>]]></link>
-    <start_date>8 June 2020 01:00</start_date>
-    <end_date>15 June 2020 23:59</end_date>
-    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
-    <bg_pos>bottom</bg_pos>
-    <default>0</default>
-  </item>
-  
-  <item>
-    <title><![CDATA[<h2 class="margin-top-30"><strong>The Eclipse IDE 2020-06 is now available!</strong></h2>]]></title>
-    <body><![CDATA[<p></p>]]></body>
-    <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/downloads">Download Now</a>]]></link>
-    <start_date>17 June 2020 01:00</start_date>
-    <end_date>17 July 2020 23:59</end_date>
-    <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
-    <bg_pos>bottom</bg_pos>
-    <default>0</default>
-    <type>footer</type>
-  </item>
-  <item>
-    <title><![CDATA[<h2 class="margin-top-30"><strong>The Eclipse IDE 2020-06 is now available!</strong></h2>]]></title>
+    <title><![CDATA[<h2 class="margin-top-30"><strong>The Eclipse IDE 2020-09 is now available!</strong></h2>]]></title>
     <body><![CDATA[<p></p>]]></body>
     <link><![CDATA[<a class="btn btn-primary btn-lg" href="https://www.eclipse.org/eclipseide">Download Now</a>]]></link>
-    <start_date>27 June 2020 01:00</start_date>
-    <end_date>17 July 2020 23:59</end_date>
+    <start_date>16 September 2020 10:00</start_date>
+    <end_date>31 December 2020 23:59</end_date>
     <bg_image>images/eclipse-ide-2020-03.jpg</bg_image>
     <bg_pos>bottom</bg_pos>
     <default>1</default>
-    <type>story</type>
+    <type>both</type>
   </item>
   <item>
     <title><![CDATA[<h2 class="margin-top-30"><strong>Register now for Eclipse SAM IoT 2020</strong></h2>]]></title>
