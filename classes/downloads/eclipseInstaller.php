@@ -139,7 +139,7 @@ class EclipseInstaller extends EclipseEnv {
       foreach ($platform['links'] as $link) {
 
         if ($link['jre'] === TRUE) {
-          $platforms[] = $link['platform'];
+          $platforms[] = str_replace(' ', '&nbsp;', $link['platform']);
         }
       }
     }
