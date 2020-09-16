@@ -55,6 +55,58 @@ class DownloadDirectory {
   }
 
   /**
+   * Get current path
+   *
+   * @param string $file
+   *
+   * @return string
+   */
+  private function _getPath($file) {
+    if (empty($file)) {
+      return "";
+    }
+
+    $file = $this->App->checkPlain($file);
+    $current_dir_path = $this->getCurrentDirectory();
+
+    // Remove the last directory from the path
+    $current_dir_path_array = explode('/', $current_dir_path);
+    $count = count($current_dir_path_array);
+    $current_dir = $current_dir_path_array[$count - 1];
+    unset($current_dir_path_array[$count - 1]);
+
+    // Scan through the parent's current directory to find out
+    // the proper way to write the current directory.
+    $parent_path = implode('/', $current_dir_path_array);
+    $scanned_dirs = scandir($parent_path);
+    foreach ($scanned_dirs as $scanned_dir) {
+      if (!is_dir($parent_path . "/" . $scanned_dir)) {
+        continue;
+      }
+
+      // Get the scanned directory's name if we are finding a match.
+      // This will prevent case sensitive issues.
+      if (strtolower($current_dir) == strtolower($scanned_dir)) {
+        $parent_path .= "/" . $scanned_dir;
+        break;
+      }
+    }
+
+    // Add a slash if ever its missing
+    if (substr($current_dir, -1) !== "/") {
+      $parent_path .= "/";
+    }
+
+    // Validate if we're dealing with an existing file or directory
+    $file_path = $parent_path . $file;
+    if (is_file($file_path) || is_dir($file_path)) {
+      return $file_path;
+    }
+
+    return "";
+  }
+
+  /**
    * Get the output HTML of a file
    *
    * @return string
@@ -65,9 +117,7 @@ class DownloadDirectory {
       return "";
     }
 
-    $file = $this->App->checkPlain($file);
-
-    $path = $_SERVER['REQUEST_URI'] . $file;
+    $path = $this->_getPath($file);
     $processing_paths = $this->_getProcessingRequests();
 
     $input_disabled = '';
@@ -104,7 +154,7 @@ class DownloadDirectory {
       return "";
     }
 
-    $path = $_SERVER['REQUEST_URI'] . $directory;
+    $path = $this->_getPath($directory);
     $processing_paths = $this->_getProcessingRequests();
 
     $input_disabled = '';
@@ -195,6 +245,7 @@ class DownloadDirectory {
    */
   private function _getProjectID() {
     $group = $this->getLdapGroupByGid(filegroup($this->basedir));
+
     if (empty($group)) {
       return "";
     }
