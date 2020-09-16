@@ -184,7 +184,7 @@ class Promotions {
 
     $promos[] = array(
       'url' => 'PROMO_FUTURE_DEV',
-      'imageurl' => '/membership/promo/images/future-dev-summit-ad.jpg',
+      'imageurl' => '/membership/promo/images/future-dev-summit-ad.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 6
