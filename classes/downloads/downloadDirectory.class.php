@@ -49,9 +49,45 @@ class DownloadDirectory {
    */
   private $user_is_committer = NULL;
 
+  private $request_uri = "";
+
   public function __construct() {
     $this->App = new App();
 
+  }
+
+  /**
+   * Get current path
+   *
+   * @param string $file
+   *
+   * @return string
+   */
+  private function _getPath($file) {
+    if (empty($file)) {
+      return "";
+    }
+
+    $file = $this->App->checkPlain($file);
+    $current_dir_path = $this->_getUri();
+
+    // Remove the last directory from the path
+    $current_dir_path_array = explode('/', $current_dir_path);
+    $count = count($current_dir_path_array);
+    unset($current_dir_path_array[$count - 1]);
+
+    // Scan through the parent's current directory to find out
+    // the proper way to write the current directory.
+    $parent_path = implode('/', $current_dir_path_array);
+    $parent_path = rtrim($parent_path, '/') . "/";
+
+    // Validate if we're dealing with an existing file or directory
+    $file_path = $parent_path . $file;
+    if (is_file($this->getCurrentDirectory() . $file) || is_dir($this->getCurrentDirectory() . $file)) {
+      return $file_path;
+    }
+
+    return "";
   }
 
   /**
@@ -65,9 +101,7 @@ class DownloadDirectory {
       return "";
     }
 
-    $file = $this->App->checkPlain($file);
-
-    $path = $_SERVER['REQUEST_URI'] . $file;
+    $path = $this->_getPath($file);
     $processing_paths = $this->_getProcessingRequests();
 
     $input_disabled = '';
@@ -87,7 +121,7 @@ class DownloadDirectory {
     }
 
     $link = "<img src='//dev.eclipse.org/small_icons/actions/edit-copy.png'><a href='" . $path . "'> " . $file . "</a>";
-    if (!$this->_userIsCommitterOnProject()) {
+    if (empty($path) || !$this->_userIsCommitterOnProject()) {
       return '<p>'.$link.'</p>';
     }
     return '<p><input ' . $input_disabled . ' type="checkbox" name="paths_to_archive[]" value="'. $path .'"> - ' . $link . ' ' . $suffix_text . '</p>';
@@ -104,7 +138,7 @@ class DownloadDirectory {
       return "";
     }
 
-    $path = $_SERVER['REQUEST_URI'] . $directory;
+    $path = $this->_getPath($directory);
     $processing_paths = $this->_getProcessingRequests();
 
     $input_disabled = '';
@@ -125,7 +159,7 @@ class DownloadDirectory {
 
     $link = "<img src='//dev.eclipse.org/small_icons/places/folder.png'><a href='" . $path . "'> " . $directory . "</a> " . $suffix_text;
 
-    if ($directory === ".." || !$this->_userIsCommitterOnProject()) {
+    if (empty($path) || $directory === ".." || !$this->_userIsCommitterOnProject()) {
       return '<p>'.$link.'</p>';
     }
 
@@ -179,13 +213,24 @@ class DownloadDirectory {
   }
 
   /**
+   * Get uri
+   *
+   * @return string
+   */
+  private function _getUri() {
+    if (empty($this->request_uri)) {
+      $this->request_uri = $_SERVER['REQUEST_URI'];
+    }
+    return str_replace("?d", "", $this->request_uri);
+  }
+
+  /**
    * Get the url of the current directory
    *
    * @return string
    */
   public function getCurrentDirectory() {
-    $_SERVER['REQUEST_URI'] = str_replace("?d", "", $_SERVER['REQUEST_URI']);
-    return $_SERVER['DOCUMENT_ROOT'] . urldecode($_SERVER['REQUEST_URI']);
+    return $_SERVER['DOCUMENT_ROOT'] . urldecode($this->_getUri());
   }
 
   /**
@@ -195,6 +240,7 @@ class DownloadDirectory {
    */
   private function _getProjectID() {
     $group = $this->getLdapGroupByGid(filegroup($this->basedir));
+
     if (empty($group)) {
       return "";
     }
