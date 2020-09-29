@@ -334,7 +334,7 @@ class BaseTheme {
     $this->setAttributes('footer4', 'footer-other', 'id');
 
     // Default theme js file
-    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js?var=0.0.116', 'src');
+    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js?var=0.0.119', 'src');
   }
 
   /**
@@ -347,56 +347,14 @@ class BaseTheme {
   }
 
   /**
-   * Get a featured story xml path
-   *
-   * @return string
-   */
-  public function getFeaturedStoryXml() {
-    if (empty($this->featured_story_xml)) {
-      $this->setFeaturedStoryXml();
-    }
-    return $this->featured_story_xml;
-  }
-
-  /**
-   * Set a featured story xml path
-   *
-   * @param string $url
-   */
-  public function setFeaturedStoryXml($url = "") {
-    $this->featured_story_xml = realpath(dirname(__FILE__) . "/../../data/featured-story.xml");
-    if (!empty($url) && file_exists($url)) {
-      $this->featured_story_xml = $url;
-    }
-  }
-
-  /**
    * Get a featured story from the provided xml file
    *
    * @param $xml_file
    *
    * @return array
    */
-  public function getFeaturedStory($type = "footer") {
-    $App = $this->_getApp();
-    require_once($App->getBasePath() . '/classes/ads/featuredStory.class.php');
-    $FeaturedStory = new FeaturedStory();
-    if ($FeaturedStory instanceof FeaturedStory) {
-      $FeaturedStory->setXmlData($this->getFeaturedStoryXml());
-      $featured_story = $FeaturedStory->getFeaturedStory($type);
-      if (!empty($featured_story)) {
-        // allows for us to set position of bg image, to better adjust for different content formats
-        $bg_pos = "initial";
-        if (!empty($featured_story['bg_pos'])) {
-          $bg_pos = $featured_story['bg_pos'];
-        }
-        if (!empty($featured_story['bg_image'])) {
-          $this->setExtraHeaders('<style>.featured-story-block-content:before {background-image:url(//www.eclipse.org/home/' . $featured_story['bg_image'] . ');background-position:'.$bg_pos.';}</style>');
-        }
-        return $featured_story;
-      }
-    }
-    return array();
+  public function getFeaturedStoryFooter() {
+   return '<div class="eclipsefdn-featured-story featured-footer" data-publish-target="eclipse_org"><div class="container featured-container"></div></div>';
   }
 
   /**
@@ -1202,7 +1160,7 @@ EOHTML;
         break;
     }
 
-    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v0.114"/>' . PHP_EOL;
+    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v0.119"/>' . PHP_EOL;
 
     // Add og:metatags if they haven't been set.
     // @todo: deprecated og functions in App().

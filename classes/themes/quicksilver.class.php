@@ -154,49 +154,6 @@ EOHTML;
    * @see BaseTheme::getFooterPrexfix()
    */
   public function getFooterPrexfix() {
-    $main_container_col = "col-sm-24";
-    $promo_html = "";
-
-    $promo_path = realpath(dirname(__FILE__) . "/../ads/promotions.class.php");
-    if ($promo_path) {
-      include_once ($promo_path);
-      $foundation_promo = Promotions::output(array('foundation'));
-      if (!empty($foundation_promo)) {
-        $main_container_col = "col-sm-10 col-sm-offset-3 margin-bottom-20";
-        $promo_html = '<div class="col-sm-8">' . $foundation_promo . '</div>';
-      }
-    }
-
-    $featured_story = $this->getFeaturedStory('footer');
-    // allows for us to set position of bg image, to better adjust for different content formats
-    $bg_pos = "initial";
-    if (!empty($featured_story['bg_pos'])) {
-      $bg_pos = $featured_story['bg_pos'];
-    }
-
-    $prefix = "";
-    if (!empty($featured_story['prefix'])) {
-      $prefix = $featured_story['prefix'];
-    }
-
-    // If not set at this time, wrong backgrounds can be set on the footer if there are multiple valid stories
-    $this->setAttributes('featured-footer', "background-size:cover;background-image:url(https://eclipse.org/home/". $featured_story['bg_image'] .");border-bottom:1px solid #ccc;border-top:1px solid #ccc;background-position:".$bg_pos.";",'style');
-
-    return <<<EOHTML
-    <!-- Sign Up to our Newsletter -->
-    <div{$this->getAttributes('featured-footer')}>
-      <div class="container">
-        <div class="row">
-          <div class="{$main_container_col}">
-            {$prefix}
-            {$featured_story['title']}
-            {$featured_story['body']}
-            {$featured_story['link']}
-          </div>
-          {$promo_html}
-        </div>
-      </div>
-    </div>
-EOHTML;
+    return $this->getFeaturedStoryFooter();
   }
 }
