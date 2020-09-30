@@ -135,8 +135,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_SAM_IOT_2020',
-      'imageurl' => '/membership/promo/images/sam_iot_2020_register.png',
+      'url' => 'PROMO_ECLIPSE_KUKSA',
+      'imageurl' => '/membership/promo/images/eclipse-kuksa.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 4
@@ -159,8 +159,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTA_EE_9_MILESTONE_RELEASE',
-      'imageurl' => '/membership/promo/images/jakarta_ee_9_milestone_release.jpg',
+      'url' => 'PROMO_JAKARTAONE_REGISTER_TODAY',
+      'imageurl' => '/membership/promo/images/jakartaone-register-today.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 4
