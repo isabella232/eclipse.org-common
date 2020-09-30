@@ -62,13 +62,13 @@ class Membership {
         'img' => '/membership/images/type/enterprise-members.png',
         'title' => 'Enterprise Members',
       ),
-      'solutions' => array(
+      'contributing' => array(
         'content_class' => 'tab-pane',
-        'level' => 'solutions',
+        'level' => 'contributing',
         'list_class' => '',
         'members' => array(),
-        'img' => '/membership/images/type/solutions-members.png',
-        'title' => 'Solutions Members',
+        'img' => '/membership/images/type/contributing-members.png',
+        'title' => 'Contributing Members',
       ),
       'associate' => array(
         'content_class' => 'tab-pane',
@@ -166,8 +166,8 @@ class Membership {
       switch($row['member_type']) {
         case 'AP':
         case 'OHAP':
-          $small_logo_src = '/membership/images/type/solutions-members.png';
-          $large_logo_src = '/membership/images/type/solutions-members.png';
+          $small_logo_src = '/membership/images/type/contributing-members.png';
+          $large_logo_src = '/membership/images/type/contributing-members.png';
           break;
         case 'AS':
           $small_logo_src = '/membership/images/type/associate-members.png';
@@ -209,7 +209,7 @@ class Membership {
       switch($row['member_type']) {
         case 'AP':
         case 'OHAP':
-          $this->members['solutions']['members'][] = $row;
+          $this->members['contributing']['members'][] = $row;
           break;
         case 'AS':
           $this->members['associate']['members'][] = $row;
