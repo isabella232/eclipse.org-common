@@ -112,6 +112,7 @@ class EclipseInstaller extends EclipseEnv {
           break;
         case 'layout_b':
           $release_title = $this->getReleaseShortName(TRUE) . '&nbsp;' . $this->getReleaseType();
+          $release_title_default = $this->getReleaseShortName() . '&nbsp;' . $this->getReleaseType();
           $download_count = $this->total_download_count;
           $installer_links = $this->getInstallerArray();
           $tpl = "views/view.installer-b.php";

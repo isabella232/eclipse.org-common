@@ -40,9 +40,10 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
         <?php endif;?>
         <li class="visible-md visible-lg">
           <?php if (!empty($download_count)) :?>
-            <strong><i class="fa fa-download"></i> <?php print number_format($download_count);?> Downloads</strong>
+            <strong><i class="fa fa-download"></i> <?php print number_format($download_count);?> Installer Downloads</strong>
           <?php endif;?>
         </li>
+        <li class="visible-md visible-lg package-download-count" release-title="<?php print $release_title_default; ?>"></li>
       </ul>
     </div>
     <div class="col-md-8 eclipse-installer-download-col">
