@@ -75,7 +75,7 @@ class Downloads extends DownloadsProject {
     // Runtime Platforms item
     $Project = new DownloadsProject();
     $Project->setTitle('GlassFish');
-    $Project->setDescription('Eclipse GlassFish provides a complete application server which serves as the reference implementation for the Jakarta EE specification.');
+    $Project->setDescription('Eclipse GlassFish provides a complete application server which serves as a compatible implementation for the Jakarta EE specification.');
     $Project->setLogo('assets/public/images/logo-glassfish.png');
     $Project->setProjectType($this->projects['runtime_platforms']['title']);
     $Project->setDownloadUrl64Bit('https://projects.eclipse.org/projects/ee4j.glassfish/downloads');
