@@ -1,7 +1,7 @@
 <?php
 /**
  * ********************************************************************
- * Copyright (c) 2006-2018 Eclipse Foundation and others.
+ * Copyright (c) 2006-2020 Eclipse Foundation and others.
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -57,14 +57,14 @@ class App {
    *
    * @var string
    */
-  private $OUR_DOWNLOAD_URL = "http://download1.eclipse.org";
+  private $OUR_DOWNLOAD_URL = "https://download.eclipse.org";
 
   /**
    * Public download URL
    *
    * @var string
    */
-  private $PUB_DOWNLOAD_URL = "http://download.eclipse.org";
+  private $PUB_DOWNLOAD_URL = "https://download.eclipse.org";
 
   /**
    * Download base path
