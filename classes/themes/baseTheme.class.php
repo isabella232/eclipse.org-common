@@ -251,6 +251,13 @@ class BaseTheme {
   protected $toolbar_left_content = "";
 
   /**
+   * Position of sidebar Nav
+   *
+   * @var string
+   */
+  protected $nav_position = "default";
+
+  /**
    * Constructor
    */
   function __construct($App = NULL) {
@@ -1719,10 +1726,40 @@ EOHTML;
   }
 
   /**
+   * Set Nav Position
+   *
+   * @param string $position
+   * @return string
+   */
+  public function setNavPosition ($position = 'default') {
+    $valid_position = array('default', 'left');
+    $position = strtolower($position);
+    if (in_array($position, $valid_position)) {
+      $this->nav_position = $position;
+    }
+    return $this->nav_position;
+  }
+
+  /**
+   * Get Nav Position
+   *
+   * @return string
+   */
+  public function getNavPosition () {
+    return $this->nav_position;
+  }
+
+  /**
    * Get page $html
    */
   public function getHtml() {
-
+    $nav_position = $this->getNavPosition();
+    $content_col_classes = ($this->getThemeFile('nav') ? 'col-md-18' : 'col-md-24');
+    $nav_col_classes = 'col-md-6';
+    if ($nav_position === 'left') {
+      $content_col_classes .= ' col-md-push-6';
+      $nav_col_classes .= ' col-md-pull-18';
+    }
     // Define the body content
     $body = $this->getDeprecatedMessage();
     $body .= $this->getHeaderNav();
@@ -1733,6 +1770,15 @@ EOHTML;
     // If Title is in the Header
     $html_page_title = "";
     if ($this->getDisplayHeaderTitle()) {
+      $header_content_col_classes = $content_col_classes;
+      $header_nav_col_classes = $nav_col_classes;
+      if ($nav_position === 'left') {
+        $header_nav_col_classes .= ' reset';
+      }
+      else{
+        $header_content_col_classes .= ' reset';
+      }
+
       // Remove attributes of breadcrumbs
       $this->removeAttributes('breadcrumbs', 'breadcrumbs-default-margin');
 
@@ -1741,11 +1787,11 @@ EOHTML;
 
       // Define Main page Title
       $html_page_title = '<div class="main-page-title"><div class="container">';
-      $html_page_title .= '<div class="' . ($nav = $this->getThemeFile('nav') ? 'col-sm-18' : 'col-sm-24') . ' reset">';
+      $html_page_title .= '<div class="' . $header_content_col_classes . ' main-col-content">';
       $html_page_title .= '<h1>' . $this->getPageTitle() . '</h1>';
       $html_page_title .= '</div>';
       if ($nav = $this->getThemeFile('nav')) {
-        $html_page_title .= '<div class="col-md-6">' . $nav . '</div>';
+        $html_page_title .= '<div class="' . $header_nav_col_classes . ' main-col-sidebar-nav">' . $nav . '</div>';
       }
       $html_page_title .= '</div></div>';
 
@@ -1758,8 +1804,8 @@ EOHTML;
     if ($nav = $this->getThemeFile('nav')) {
       $body_content = $body;
       $body = '<div class="row">';
-      $body .= '<div class="col-md-18">' . $body_content . '</div>';
-      $body .= '<div class="col-md-6">' . $nav . '</div>';
+      $body .= '<div class="' . $content_col_classes . ' main-col-content">' . $body_content . '</div>';
+      $body .= '<div class="' . $nav_col_classes . ' main-col-sidebar-nav">' . $nav . '</div>';
       $body .= '</div>';
     }
 
@@ -1773,7 +1819,6 @@ EOHTML;
         </div>
       </main>
 EOHTML;
-
   }
 
   /**
