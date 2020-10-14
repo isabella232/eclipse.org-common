@@ -16,6 +16,8 @@ class Directors {
 
   private $directors = array();
 
+  private $aisbl_directors = array();
+
   private $path_to_boardbio = "/org/foundation/boardbios";
 
   public function __construct(App $App) {
@@ -33,6 +35,19 @@ class Directors {
       $this->directors = $this->_fetchInfo();
     }
     return $this->directors;
+  }
+
+  /**
+   * This function returns an array of AISBL directors with their bio
+   *
+   * @return array
+   *
+   */
+  public function getAISBLDirectors() {
+    if (empty($this->aisbl_directors)) {
+      $this->aisbl_directors = $this->_fetchInfo("BRBE");
+    }
+    return $this->aisbl_directors;
   }
 
   /**
@@ -72,19 +87,24 @@ class Directors {
    *
    * @return array
    * */
-  private function _fetchInfo() {
+  private function _fetchInfo($relation = "BR") {
     $directors = array();
 
     // Members with company relationships
     $sql = "SELECT p.FName, p.LName, o.Name1 as Param, o.OrganizationID
             FROM  People as p, OrganizationContacts as oc, Organizations as o
             WHERE p.PersonID = oc.PersonID
-            AND oc.Relation = 'BR'
+            AND oc.Relation = '". $relation ."'
             AND oc.OrganizationID = o.OrganizationID";
     $result = $this->App->foundation_sql($sql);
 
     while($row = mysql_fetch_assoc($result)) {
       $directors[ucwords($row['LName'] . ', ' . $row['FName'])] = $this->_fetchBioFromFile($row);
+    }
+
+    if ($relation != "BR") {
+      ksort($directors);
+      return $directors;
     }
 
     // Elected add-in provider reps
