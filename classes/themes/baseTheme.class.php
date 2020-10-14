@@ -1768,39 +1768,6 @@ EOHTML;
     $body .= $this->getThemeVariables('main_container_html');
     $body .= $this->html;
 
-    // If Title is in the Header
-    $html_page_title = "";
-    if ($this->getDisplayHeaderTitle()) {
-      $header_content_col_classes = $content_col_classes;
-      $header_nav_col_classes = $nav_col_classes;
-      if ($nav_position === 'left') {
-        $header_nav_col_classes .= ' reset';
-      }
-      else{
-        $header_content_col_classes .= ' reset';
-      }
-
-      // Remove attributes of breadcrumbs
-      $this->removeAttributes('breadcrumbs', 'breadcrumbs-default-margin');
-
-      // Set attributes for sidebar
-      $this->setAttributes('main-sidebar', 'hidden-sm hidden-xs');
-
-      // Define Main page Title
-      $html_page_title = '<div class="main-page-title"><div class="container">';
-      $html_page_title .= '<div class="' . $header_content_col_classes . ' main-col-content">';
-      $html_page_title .= '<h1>' . $this->getPageTitle() . '</h1>';
-      $html_page_title .= '</div>';
-      if ($nav = $this->getThemeFile('nav')) {
-        $html_page_title .= '<div class="' . $header_nav_col_classes . ' main-col-sidebar-nav">' . $nav . '</div>';
-      }
-      $html_page_title .= '</div></div>';
-
-      // Reset attributes for sidebar that will be in the body
-      $this->removeAttributes('main-sidebar', 'hidden-sm hidden-xs');
-      $this->setAttributes('main-sidebar', 'hidden-md hidden-lg');
-    }
-
     // set a different body if there's a sidebar
     if ($nav = $this->getThemeFile('nav')) {
       $body_content = $body;
@@ -1814,7 +1781,6 @@ EOHTML;
     return <<<EOHTML
       {$this->getBreadcrumbHtml()}
       <main{$this->getAttributes('main')}>
-        {$html_page_title}
         <div{$this->getAttributes('main-container')}>
           {$body}
         </div>
