@@ -323,6 +323,7 @@ class BaseTheme {
     // Set attributes on main content
     $this->setAttributes('main', 'main', 'role');
     $this->setAttributes('main', 'no-promo');
+    $this->setAttributes('main', 'content', 'id');
     $this->setAttributes('main-container', 'novaContent');
     $this->setAttributes('main-container', 'novaContent', 'id');
 
