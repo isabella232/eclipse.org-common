@@ -167,8 +167,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_IOT_COMM_SURVEY_2019',
-      'imageurl' => '/membership/promo/images/iot_commercial_adoption_survey2019.png',
+      'url' => 'PROMO_IOT_DEV_SURVEY_2020',
+      'imageurl' => '/membership/promo/images/iot_dev_survey_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 4
