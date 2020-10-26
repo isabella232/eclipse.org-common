@@ -378,7 +378,7 @@ class EclipseInstaller extends EclipseEnv {
     $eclipse_env = $this->getEclipseEnv();
 
     if (!empty($data['files']['mac64'])) {
-      $this->addlink('macOS', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['mac64']['url']), "64 bit", $data['files']['mac64']['jre']);
+      $this->addlink('macOS', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['mac64']['url']), "x86-64", $data['files']['mac64']['jre']);
     }
 
     if (!empty($data['files']['win32'])) {
@@ -386,7 +386,7 @@ class EclipseInstaller extends EclipseEnv {
     }
 
     if (!empty($data['files']['win64'])) {
-      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win64']['url']), '64 bit', $data['files']['win64']['jre']);
+      $this->addlink('Windows', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['win64']['url']), 'x86-64', $data['files']['win64']['jre']);
     }
 
     if (!empty($data['files']['linux32'])) {
@@ -394,7 +394,7 @@ class EclipseInstaller extends EclipseEnv {
     }
 
     if (!empty($data['files']['linux64'])) {
-      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux64']['url']), "64 bit", $data['files']['linux64']['jre']);
+      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux64']['url']), "x86-64", $data['files']['linux64']['jre']);
     }
   }
 
