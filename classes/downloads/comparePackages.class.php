@@ -121,11 +121,11 @@ class ComparePackages {
       $this->updatePackages($this->prefix_package . "Linux.xml");
     }
     elseif ($od == "macosx" || $od == "cocoa64") {
-      $this->display = "Mac OS X";
+      $this->display = "macOS";
       $this->updatePackages($this->prefix_package . "Cocoa.xml");
     }
     elseif ($od == "carbon") {
-      $this->display = "Mac OS X";
+      $this->display = "macOS";
       $this->updatePackages($this->prefix_package . "Carbon.xml");
     }
     else {
@@ -325,8 +325,8 @@ class ComparePackages {
       'shortname' => 'Linux'
     );
     $this->platform['macosx'] = array(
-      'name' => 'Mac OS X (Cocoa)',
-      'shortname' => 'Mac OS X'
+      'name' => 'macOS',
+      'shortname' => 'macOS'
     );
   }
 }

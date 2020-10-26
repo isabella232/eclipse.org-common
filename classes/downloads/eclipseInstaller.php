@@ -39,7 +39,7 @@ class EclipseInstaller extends EclipseEnv {
    */
   function __construct($release = 'latest') {
     parent::__construct();
-    $this->_addPlaform('Mac OS X');
+    $this->_addPlaform('macOS');
     $this->_addPlaform('Windows');
     $this->_addPlaform('Linux');
 
@@ -377,7 +377,7 @@ class EclipseInstaller extends EclipseEnv {
     $eclipse_env = $this->getEclipseEnv();
 
     if (!empty($data['files']['mac64'])) {
-      $this->addlink('Mac OS X', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['mac64']['url']), "64 bit", $data['files']['mac64']['jre']);
+      $this->addlink('macOS', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['mac64']['url']), "64 bit", $data['files']['mac64']['jre']);
     }
 
     if (!empty($data['files']['win32'])) {
