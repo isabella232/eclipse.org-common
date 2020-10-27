@@ -30,7 +30,7 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
     <div class="col-md-16">
       <h2>Try the Eclipse <strong>Installer <small class="white"><?php print $release_title; ?></small></strong></h2>
       <p>The easiest way to install and update your Eclipse Development Environment.</p>
-      <ul class="list-inline margin-bottom-0">
+      <ul class="list-unstyled margin-bottom-0">
         <?php if ($this->getAllowToggle()) :?>
         <li>
           <a data-target="#collapseEinstaller" class="solstice-collapse orange" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseEinstaller">
@@ -38,12 +38,12 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){exit();}
           </a>
         </li>
         <?php endif;?>
-        <li class="visible-md visible-lg">
+        <li>
           <?php if (!empty($download_count)) :?>
             <strong><i class="fa fa-download"></i> <?php print number_format($download_count);?> Installer Downloads</strong>
           <?php endif;?>
         </li>
-        <li class="visible-md visible-lg package-download-count" release-title="<?php print $release_title_default; ?>"></li>
+        <li class="package-download-count" release-title="<?php print $release_title_default; ?>"></li>
       </ul>
     </div>
     <div class="col-md-8 eclipse-installer-download-col">
