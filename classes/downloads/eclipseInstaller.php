@@ -280,7 +280,7 @@ class EclipseInstaller extends EclipseEnv {
   public function getInstallerLinks($version = NULL, $os = NULL) {
 
     $os_client = $this->_getClientOS();
-    $accepted_os = array('windows','macosx','linux');
+    $accepted_os = array('windows','macos','linux');
     if (!empty($os) && in_array($os, $accepted_os)) {
       $os_client = $os;
     }
@@ -329,12 +329,12 @@ class EclipseInstaller extends EclipseEnv {
       return $download_links;
     }
 
-   $accepted_version = array('64bit','32bit');
+   $accepted_version = array('x86_64','32bit');
     if (!empty($version) && !in_array($version, $accepted_version)) {
       return array();
     }
 
-    $accepted_os = array('windows','macosx','linux');
+    $accepted_os = array('windows','macos','linux');
     if (!empty($os) && !in_array($os, $accepted_os)) {
       return array();
     }
@@ -427,7 +427,7 @@ class EclipseInstaller extends EclipseEnv {
       $os = "linux";
     }
     if ($client_os == "macosx" || $client_os == "cocoa64" || $client_os == "carbon") {
-      $os = "macosx";
+      $os = "macos";
     }
 
     // Check if the OS has been selected manually

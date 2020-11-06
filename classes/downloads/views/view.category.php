@@ -24,7 +24,7 @@
         <!-- Installer -->
         <div class="col-md-10th col-sm-24">
           <div class="downloads-installer">
-            <?php print $this->Installer->output('64bit'); ?>
+            <?php print $this->Installer->output('x86_64'); ?>
           </div>
         </div>
       <?php endif;?>
