@@ -135,8 +135,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_ECLIPSE_KUKSA',
-      'imageurl' => '/membership/promo/images/eclipse-kuksa.png',
+      'url' => 'PROMO_PAYARA_CASE_STUDY',
+      'imageurl' => '/membership/promo/images/ad12-payara-case-study.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 4
