@@ -916,7 +916,7 @@ EOHTML;
    * @return string
    */
   public function getCopyrightNotice() {
-    return 'Copyright &copy; Eclipse Foundation, Inc. All Rights Reserved.';
+    return 'Copyright &copy; Eclipse Foundation. All Rights Reserved.';
   }
 
   /**
