@@ -329,7 +329,7 @@ class EclipseInstaller extends EclipseEnv {
       return $download_links;
     }
 
-   $accepted_version = array('x86_64','32bit');
+   $accepted_version = array('x86_64','32bit', 'AArch64');
     if (!empty($version) && !in_array($version, $accepted_version)) {
       return array();
     }
@@ -395,6 +395,10 @@ class EclipseInstaller extends EclipseEnv {
 
     if (!empty($data['files']['linux64'])) {
       $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linux64']['url']), "x86_64", $data['files']['linux64']['jre']);
+    }
+
+    if (!empty($data['files']['linuxaarch64'])) {
+      $this->addlink('Linux', str_replace('www.eclipse.org', $eclipse_env['domain'], $data['files']['linuxaarch64']['url']), "AArch64", $data['files']['linuxaarch64']['jre']);
     }
   }
 
