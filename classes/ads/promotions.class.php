@@ -143,8 +143,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_PAYARA_CASE_STUDY',
-      'imageurl' => '/membership/promo/images/ad12-payara-case-study.png',
+      'url' => 'PROMO_CEDALO_CASE_STUDY',
+      'imageurl' => '/membership/promo/images/promo_cedalo_case_study.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 4
