@@ -39,7 +39,7 @@ class Promotions {
      * PAID ads (30%)
      */
     $promos[] = array(
-      'url' => 'FROGLOGIC_JAVA',
+      'url' => 'PAID_FROGLOGIC_BANNER_1',
       'imageurl' => '/membership/promo/images/banner_1_froglogic.png',
       'memberName' => 'FrogLogic',
       'type' => 'paid',
@@ -47,7 +47,7 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'FROGLOGIC_JAVA_LEARN_MORE',
+      'url' => 'PAID_FROGLOGIC_BANNER_2',
       'imageurl' => '/membership/promo/images/banner_2_froglogic_proven_java_learn_more.png',
       'memberName' => 'FrogLogic',
       'type' => 'paid',
