@@ -386,7 +386,7 @@ class DownloadDirectory {
     $output .= '<form class="downloads-directory" method="post" action="/errors/filehandler.php">';
     $output .= implode("", $html_checkboxes);
 
-    $button_text = 'Archive';
+    $button_text = 'Move to archive.eclipse.org';
     $button_class = 'btn-primary';
     if ($this->_isArchiveDomain()) {
       $button_text = 'Delete';
