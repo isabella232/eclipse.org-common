@@ -155,7 +155,15 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 4
+      'weight' => 2
+    );
+
+    $promos[] = array(
+      'url' => 'PROMO_ENABLING_TRANSFORMATION_JS',
+      'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
+      'memberName' => 'EclipseFoundation',
+      'type' => 'strat_ad',
+      'weight' => 2
     );
 
     $promos[] = array(
@@ -249,6 +257,12 @@ class Promotions {
     if (empty($array) || empty($array['url']) || empty($array['imageurl']) || empty($array['memberName'])) {
       return "";
     }
+
+    if ($array['url'] === "PROMO_ENABLING_TRANSFORMATION_JS") {
+      $return = '<div class="eclipsefnd-ad-js-plugin" data-publish-target="eclipse_org"></div>';
+      return $return;
+    }
+
     $CampaignImpression = new CampaignImpression($array['url']);
     $impression_id = $CampaignImpression->recordImpression();
     return '<div class="eclipsefnd-ad ad-strategic ad-strategic-default"><a href="/go/' . $array['url'] . '?impression_id=' . $impression_id . '" rel="nofollow" style="background-image: url(\'' . $array['imageurl'] . '\')">' . $array['memberName'] . '</a></div>';
