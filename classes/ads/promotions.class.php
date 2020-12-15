@@ -135,7 +135,7 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_EUROPEAN_RESEARCH_CASE_STUDY_2020',
+      'url' => 'PROMO_EUROPEAN_RESEARCH_CASE_STU',
       'imageurl' => '/membership/promo/images/european-research-innovation-case-studies.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
