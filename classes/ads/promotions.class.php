@@ -155,16 +155,16 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 2
+      'weight' => 4
     );
 
-    $promos[] = array(
+    /*$promos[] = array(
       'url' => 'PROMO_ENABLING_TRANSFORMATION_JS',
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 2
-    );
+    );*/
 
     $promos[] = array(
       'url' => 'PROMO_JAKARTA_EE_DEV_SURVEY_2020',
