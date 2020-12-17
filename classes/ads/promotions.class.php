@@ -167,8 +167,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_JAKARTAONE_REGISTER_TODAY',
-      'imageurl' => '/membership/promo/images/jakartaone-register-today.png',
+      'url' => 'PROMO_OPENADX_MANIFESTO',
+      'imageurl' => '/membership/promo/images/openadx_whitepaper.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 6
