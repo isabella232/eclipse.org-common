@@ -153,7 +153,7 @@ $Theme->generatePage();
 
 <h2>Templates</h2>
 <?php
-  $themes = array('default','eclipse_ide', 'polarsys', 'locationtech');
+  $themes = array('default','eclipse_ide');
 ?>
 <?php foreach ($themes as $t) :?>
     <h3><?php print ucfirst($t);?></h3>

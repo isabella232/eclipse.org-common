@@ -28,8 +28,6 @@ $pageAuthor = "Christopher Guindon";
 
 $theme = NULL;
 $allowed_themes = array(
-  'polarsys',
-  'locationtech',
   'solstice',
   'eclipse_ide',
   'quicksilver'

@@ -19,7 +19,7 @@ $App = new App();
 
 // To change the theme change the following NULL value
 // To one of the following:
-// "solstice", "quicksilver", "eclipse_ide", "jakarta", "locationtech", "polarsys"
+// "solstice", "quicksilver", "eclipse_ide", "jakarta"
 $theme = NULL;
 $Theme = $App->getThemeClass($theme);
 

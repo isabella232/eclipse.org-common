@@ -143,8 +143,6 @@ class App {
    * @var array
    */
   private $valid_themes = array(
-    "polarsys",
-    "locationtech",
     "solstice"
   );
 
@@ -1073,9 +1071,7 @@ class App {
    */
   function getThemeClass($_theme = "quicksilver") {
     $themes = array(
-      'locationtech',
       'eclipse_ide',
-      'polarsys',
       'quicksilver',
       'jakarta',
       'nova'

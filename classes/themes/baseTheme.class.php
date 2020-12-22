@@ -30,7 +30,7 @@ class BaseTheme {
   /**
    * Theme base url
    *
-   * For example ://www.polarsys.org
+   * For example ://www.eclipse.org
    *
    * @var string
    */
@@ -656,29 +656,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return FALSE;
   }
 
-  function getBareboneAssets() {
-    $url = $this->getEclipseUrl() . $this->getThemeUrl("solstice") . "public/stylesheets/";
-    $current_theme = $this->getTheme();
-
-    $themes = array(
-      'locationtech',
-      'polarsys'
-    );
-
-    if (in_array($current_theme, $themes)) {
-      $url .= $current_theme . '-';
-    }
-    $url .= 'barebone.min.css';
-    return <<<EOHTML
-    <style type="text/css">
-    @import url('{$url}')
-    </style>
-    <script
-      src="{$this->getEclipseUrl()}/eclipse.org-common/themes/solstice/public/javascript/barebone.min.js">
-    </script>
-EOHTML;
-  }
-
   /**
    * Set $base_url
    *
@@ -1147,14 +1124,6 @@ EOHTML;
 
     $styles_name = 'styles';
     switch ($this->getTheme()) {
-      case 'locationtech':
-        $styles_name = 'locationtech';
-        break;
-
-      case 'polarsys':
-        $styles_name = 'polarsys';
-        break;
-
       case 'quicksilver':
         $styles_name = 'quicksilver';
         break;
@@ -1296,8 +1265,6 @@ EOHTML;
     // Load proper font for each theme
     switch ($this->getTheme()) {
       case 'solstice':
-      case 'polarsys':
-      case 'locationtech':
         $return .= '<link href="//fonts.googleapis.com/css?family=Open+Sans:400,700,300,600,100" rel="stylesheet" type="text/css"/>';
         break;
       default:
@@ -2432,7 +2399,6 @@ EOHTML;
         $this->setAttributes('main-menu-ul-navbar', 'navbar-right');
         $this->setDisplayHeaderRight(FALSE);
         $this->setAlternateLayout(TRUE);
-        print $this->getBareboneAssets();
         print $this->getThemeFile('menu');
         break;
 

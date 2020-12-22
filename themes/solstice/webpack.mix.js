@@ -25,10 +25,6 @@ mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/_barebone/footer
 mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/table.less', 'public/stylesheets/table.min.css');
 
 //mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/forums.less', 'public/stylesheets/forums.min.css');
-//mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/locationtech/styles.less', 'public/stylesheets/locationtech.min.css');
-//mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/locationtech/barebone.less', 'public/stylesheets/locationtech-barebone.min.css');
-//mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/polarsys/styles.less', 'public/stylesheets/polarsys.min.css');
-//mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/polarsys/barebone.less', 'public/stylesheets/polarsys-barebone.min.css');
 //mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/styles.less', 'public/stylesheets/styles.min.css');
 
 // Copy cookieconsent files
