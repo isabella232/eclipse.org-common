@@ -155,7 +155,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 4
+      'weight' => 2
     );
 
     $promos[] = array(
@@ -163,7 +163,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 0
+      'weight' => 2
     );
 
     $promos[] = array(
