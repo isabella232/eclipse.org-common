@@ -143,8 +143,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_CEDALO_CASE_STUDY',
-      'imageurl' => '/membership/promo/images/promo_cedalo_case_study.png',
+      'url' => 'PROMO_OBEO_CASE_STUDY',
+      'imageurl' => '/membership/promo/images/promo_obeo_case_study.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 4
@@ -183,8 +183,8 @@ class Promotions {
     );
 
     $promos[] = array(
-      'url' => 'PROMO_IOT_DEV_SURVEY_2020',
-      'imageurl' => '/membership/promo/images/iot_dev_survey_2020.png',
+      'url' => 'PROMO_IOT_EDGE_COMMERCIAL_2021',
+      'imageurl' => '/membership/promo/images/iot_2021_edge_commercial_adoption_survey.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
       'weight' => 6
