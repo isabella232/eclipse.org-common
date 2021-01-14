@@ -342,7 +342,7 @@ class BaseTheme {
     $this->setAttributes('footer4', 'footer-other', 'id');
 
     // Default theme js file
-    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js?var=0.0.132', 'src');
+    $this->setAttributes('script-theme-main-js', $this->getThemeUrl('solstice') . 'public/javascript/main.min.js?var=0.0.137-3', 'src');
   }
 
   /**
@@ -1168,7 +1168,7 @@ EOHTML;
         break;
     }
 
-    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v0.130"/>' . PHP_EOL;
+    $return = '<link rel="stylesheet" href="' . $this->getThemeUrl('solstice') . 'public/stylesheets/' . $styles_name . '.min.css?v0.137-3"/>' . PHP_EOL;
 
     // Add og:metatags if they haven't been set.
     // @todo: deprecated og functions in App().

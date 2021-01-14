@@ -13,6 +13,7 @@
     "type": "git",
     "url": "git://git.eclipse.org/gitroot/www.eclipse.org/eclipse.org-common.git"
   },
+  "browserslist": "last 5 version, > 0.2%, not dead, IE 11",
   "scripts": {
     "dev": "NODE_ENV=development webpack --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "NODE_ENV=development webpack --watch --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -21,6 +22,6 @@
   },
   "readmeFilename": "README.md",
   "dependencies": {
-    "eclipsefdn-solstice-assets": "0.0.136"
+    "eclipsefdn-solstice-assets": "^0.0.137"
   }
 }

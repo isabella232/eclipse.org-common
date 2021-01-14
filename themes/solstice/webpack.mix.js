@@ -35,7 +35,7 @@ mix.less('node_modules/eclipsefdn-solstice-assets/less/solstice/table.less', 'pu
 mix.copy('node_modules/cookieconsent/build/cookieconsent.min.css', 'public/stylesheets/vendor/cookieconsent/cookieconsent.min.css');
 mix.copy('node_modules/cookieconsent/build/cookieconsent.min.js', 'public/javascript/vendor/cookieconsent/cookieconsent.min.js');
 
-mix.scripts([
+mix.babel([
     'node_modules/cookieconsent/src/cookieconsent.js',
     'node_modules/eclipsefdn-solstice-assets/js/solstice.cookieconsent.js'
   ], 
@@ -44,14 +44,14 @@ mix.scripts([
 
 // Copy eclipsefdn videos file
 mix.less('node_modules/eclipsefdn-solstice-assets/less/_components/eclipsefdn-video.less', 'public/stylesheets/eclipsefdn-video.min.css');
-mix.scripts([
+mix.babel([
   'node_modules/eclipsefdn-solstice-assets/js/eclipsefdn.videos.js'
 ], 
 'public/javascript/eclipsefdn.videos.min.js'
 );
 
 // JavaScript
-mix.scripts([
+mix.babel([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     'node_modules/cookieconsent/src/cookieconsent.js',
@@ -67,7 +67,7 @@ mix.scripts([
     'node_modules/eclipsefdn-solstice-assets/js/eclipsefdn.ads.js'
 ], 'public/javascript/main.min.js');
 
-mix.scripts([
+mix.babel([
     'node_modules/jquery/dist/jquery.min.js',
     'node_modules/bootstrap/dist/js/bootstrap.js',
 ], 'public/javascript/barebone.min.js');
