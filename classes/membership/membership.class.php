@@ -193,8 +193,8 @@ class Membership {
       }
       $row['large_logo_src'] = $large_logo_src;
 
-      $row['small_logo_link'] .= '<img src="' . $small_logo_src . '"  title="' . $row['name'] . '" class="img-responsive"/>';
-      $row['large_logo_link'] .= '<img src="' . $large_logo_src . '"  title="' . $row['name'] . '" class="img-responsive"/>';
+      $row['small_logo_link'] .= '<img src="' . $small_logo_src . '"  title="' . $row['name'] . '" class="img-responsive center-block"/>';
+      $row['large_logo_link'] .= '<img src="' . $large_logo_src . '"  title="' . $row['name'] . '" class="img-responsive center-block"/>';
 
       if (!empty($row['id'])) {
         $row['title_link'] .= '</a>';
