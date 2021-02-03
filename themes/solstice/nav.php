@@ -59,4 +59,5 @@ if (!empty($navigation['#items'])) :
       </div>
     <?php endif;?>
   </aside>
+  <?php print $navigation['html_block_suffix']; ?>
 <?php endif;?>

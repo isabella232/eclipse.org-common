@@ -32,6 +32,13 @@ class Nav {
 
   private $HTMLBlock = "";
 
+  /**
+   * Store html to use after <aside>
+   *
+   * @var string
+   */
+  private $HTMLBlockSuffix = "";
+
   # Main constructor
   function __construct() {
     $www_prefix = "";
@@ -42,6 +49,28 @@ class Nav {
       $www_prefix = $App->getWWWPrefix();
     }
   }
+
+  /**
+   * Get $HTMLBlockSuffix
+   *
+   * @return string
+   */
+  public function getHtmlBlockSuffix() {
+    return $this->HTMLBlockSuffix;
+  }
+
+  /**
+   * Set $HTMLBlockSuffix
+   *
+   * @return string
+   */
+  public function setHtmlBlockSuffix($html = "") {
+    if (!empty($html) && is_string($html)) {
+      $this->HTMLBlockSuffix = $html;
+    }
+    return $this->HTMLBlockSuffix;
+  }
+
 
   function getLinkList() {
     return $this->LinkList;

@@ -2092,12 +2092,14 @@ EOHTML;
       '#items' => array(),
       'link_count' => 0,
       'img_separator' => '<img src="' . $base_url . 'public/images/template/separator.png"/>',
-      'html_block' => ''
+      'html_block' => '',
+      'html_block_suffix' => '',
     );
     if ($this->Nav instanceof Nav) {
       // add faux class to #novaContent
       $variables['link_count'] = $this->Nav->getLinkCount();
       $variables['html_block'] = $this->Nav->getHTMLBlock();
+      $variables['html_block_suffix'] = $this->Nav->getHTMLBlockSuffix();
       for ($i = 0; $i < $variables['link_count']; $i++) {
         $variables['#items'][] = $this->Nav->getLinkAt($i);
       }
