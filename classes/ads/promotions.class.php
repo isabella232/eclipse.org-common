@@ -139,15 +139,15 @@ class Promotions {
       'imageurl' => '/membership/promo/images/european-research-innovation-case-studies.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 4
+      'weight' => 5
     );
 
     $promos[] = array(
-      'url' => 'PROMO_OBEO_CASE_STUDY',
-      'imageurl' => '/membership/promo/images/promo_obeo_case_study.png',
+      'url' => 'PROMO_ITEMIS_CASE_STUDY',
+      'imageurl' => '/membership/promo/images/itemis-open-source-case-study.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 4
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -155,7 +155,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 2
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -163,7 +163,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 2
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -171,15 +171,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta_ee_developer_survey_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 4
-    );
-
-    $promos[] = array(
-      'url' => 'PROMO_OPENADX_MANIFESTO',
-      'imageurl' => '/membership/promo/images/openadx_whitepaper.png',
-      'memberName' => 'EclipseFoundation',
-      'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     $promos[] = array(
@@ -187,15 +179,15 @@ class Promotions {
       'imageurl' => '/membership/promo/images/iot_2021_edge_commercial_adoption_survey.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
-
+ 
     $promos[] = array(
       'url' => 'PROMO_JAKARTA_EE_YOUTUBE',
       'imageurl' => '/membership/promo/images/jakarta_ee_youtube_ad.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 6
+      'weight' => 5
     );
 
     if (!empty($filter)) {
