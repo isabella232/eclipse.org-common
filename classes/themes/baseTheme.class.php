@@ -2100,8 +2100,29 @@ EOHTML;
       $variables['link_count'] = $this->Nav->getLinkCount();
       $variables['html_block'] = $this->Nav->getHTMLBlock();
       $variables['html_block_suffix'] = $this->Nav->getHTMLBlockSuffix();
+      $parent_item = "";
       for ($i = 0; $i < $variables['link_count']; $i++) {
-        $variables['#items'][] = $this->Nav->getLinkAt($i);
+
+        $link = $this->Nav->getLinkAt($i);
+
+        if ($link->getTarget() === "__SEPARATOR") {
+          $variables['#items'][$parent_item]['item'] = $link;
+          continue;
+        }
+
+        $level = $link->getLevel();
+        if (is_numeric($level) && (int)$level === 1) {
+          $parent_item = $i;
+          $variables['#items'][$parent_item]['item'] = $link;
+          $variables['#items'][$parent_item]['children'] = array();
+        }
+        else {
+          $variables['#items'][$parent_item]['children'][] = $link;
+        }
+
+        if ($_SERVER['REQUEST_URI'] === $link->getUrl()) {
+          $variables['#items'][$parent_item]['classes'] = "in";
+        }
       }
     }
 
