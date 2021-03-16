@@ -139,7 +139,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/european-research-innovation-case-studies.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -147,7 +147,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/itemis-open-source-case-study.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -155,7 +155,7 @@ class Promotions {
       'imageurl' => '/membership/promo/images/enabling_digital_transformation.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 6
     );
 
     $promos[] = array(
@@ -171,17 +171,9 @@ class Promotions {
       'imageurl' => '/membership/promo/images/jakarta_ee_developer_survey_2020.png',
       'memberName' => 'EclipseFoundation',
       'type' => 'strat_ad',
-      'weight' => 5
+      'weight' => 6
     );
 
-    $promos[] = array(
-      'url' => 'PROMO_IOT_EDGE_COMMERCIAL_2021',
-      'imageurl' => '/membership/promo/images/iot_2021_edge_commercial_adoption_survey.png',
-      'memberName' => 'EclipseFoundation',
-      'type' => 'strat_ad',
-      'weight' => 5
-    );
- 
     $promos[] = array(
       'url' => 'PROMO_JAKARTA_EE_YOUTUBE',
       'imageurl' => '/membership/promo/images/jakarta_ee_youtube_ad.png',
